@@ -1,4 +1,4 @@
-import { Chat } from '@/types/types';
+import { Chat } from '@/types';
 type Props = {
     chat: Chat;
 };

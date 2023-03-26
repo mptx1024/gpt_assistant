@@ -1,7 +1,7 @@
 // this code provides a data structure for managing messages organized in a tree-like structure, with methods for adding, updating, and retrieving messages, as well as methods for getting specific subsets of nodes, such as roots and leaves.
 // Each message is represented as a node in the tree, and nodes can have children and a parent.
 
-import { Message } from './types';
+import { Message } from '.';
 
 export interface Node extends Message {
     parent: Node | null;
