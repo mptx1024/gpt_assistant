@@ -25,8 +25,6 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
     //The primary purpose of the counter variable is to track the number of times the text chunks have been enqueued into the ReadableStream. The condition mentioned earlier ensures that the first two newline characters are not processed or enqueued into the stream.
     let counter = 0;
-    console.log(`counter: ${counter}`);
-
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
         headers: {
             'Content-Type': 'application/json',

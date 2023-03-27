@@ -1,13 +1,17 @@
 import { useState } from 'react';
-
+import { Chat } from '@/types';
 interface UseChatResult {
     generatedMessage: string;
     loading: boolean;
     generate: () => void;
 }
-
+interface Props {
+    currentChat: Chat;
+}
+// https://stackoverflow.com/questions/65688201/react-custom-hook-cant-get-an-async-function
+// use useRef to get a reference to the generated message
 export default function useChat(): UseChatResult {
-    const [generatedMessage, setGeneratedMessage] = useState<string>('old');
+    const [generatedMessage, setGeneratedMessage] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
     const prompt = 'write a python hello world program';

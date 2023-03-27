@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { Chat, Message } from '@/types';
-import ChatMessage from './Message';
+import ChatMessage from './ChatMessage';
 import useChat from './useChat';
+
+
 
 export default function ChatPage() {
     //     const markdown = `Here is some JavaScript code:
@@ -9,6 +11,8 @@ export default function ChatPage() {
     // console.log('It works!')
     // ~~~
     // `;
+
+    
     const { generatedMessage, loading, generate } = useChat();
     const run = async () => {
         console.log(`generatedMessage before: ${generatedMessage}`);

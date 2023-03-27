@@ -19,7 +19,7 @@ export interface Message {
 
 export interface Chat {
     id: string;
-    messages: MessageTree;
+    messages: Message[];
     title?: string | null; // |: Union Types ≥
     created: number;
     updated: number;

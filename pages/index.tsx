@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import Message from '@/components/Chat/Message';
+import Message from '@/components/Chat/ChatMessage';
 import Chat from '@/components/Chat/Chat';
 const inter = Inter({ subsets: ['latin'] });
 import useChat from '@/components/Chat/useChat';

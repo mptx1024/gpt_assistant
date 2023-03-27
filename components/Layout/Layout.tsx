@@ -4,17 +4,22 @@ import Header from '@/components/Header/Header';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Chat from '@/components/Chat/Chat';
 import Input from '../Input';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { toggleSidebar, selectSidebar } from '../Sidebar/sidebarSlice';
 type Props = { children: React.ReactNode };
 export default function Layout({ children }: Props) {
     const [activeTab, setActiveTab] = useState('home');
-    const [sidebarVisible, setSidebarVisible] = useState(false);
-    const toggleSidebar = () => {
-        setSidebarVisible(!sidebarVisible);
-    };
     const handleTabChange = (tab: string) => {
         setActiveTab(tab);
     };
+    // const [sidebarVisible, setSidebarVisible] = useState(false);
+    // const toggleSidebar = () => {
+    //     setSidebarVisible(!sidebarVisible);
+    // };
+    const isSidebarOpen = useAppSelector((state) => state.sidebar.open);
+    const dispatch = useAppDispatch();
+    const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
     return (
         <div>
             <Head>
@@ -27,14 +32,14 @@ export default function Layout({ children }: Props) {
                 <Sidebar
                     activeTab={activeTab}
                     onTabChange={handleTabChange}
-                    visible={sidebarVisible}
-                    toggleSidebar={toggleSidebar}
+                    isSidebarOpen={isSidebarOpen}
+                    toggleSidebar={onClickSidebar}
                 />
                 <main
                     className={`flex flex-col flex-grow h-screen transition-width duration-300 items-center justify-between
-                    ${sidebarVisible ? 'ml-64' : ''}`}
+                    ${isSidebarOpen ? 'ml-64' : ''}`}
                 >
-                    <Header toggleSidebar={toggleSidebar} />
+                    <Header toggleSidebar={onClickSidebar} />
                     {/* <div className='debug-1'> */}
                     {children}
                     <Input />

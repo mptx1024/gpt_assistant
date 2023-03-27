@@ -5,12 +5,12 @@ interface Props {
     activeTab: string;
     onTabChange: (tab: string) => void;
     toggleSidebar: () => void;
-    visible: boolean;
+    isSidebarOpen: boolean;
 }
 
-export default function Sidebar({ activeTab, onTabChange, visible, toggleSidebar }: Props) {
+export default function Sidebar({ activeTab, onTabChange, isSidebarOpen, toggleSidebar }: Props) {
     const sidebarClasses = `fixed top-0 left-0 transform transition-transform h-screen w-64 bg-gray-800 text-white ${
-        visible ? 'translate-x-0' : '-translate-x-full'
+        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
     }`;
     return (
         <div className={sidebarClasses}>
