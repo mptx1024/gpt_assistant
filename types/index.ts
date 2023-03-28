@@ -14,7 +14,6 @@ export interface Message {
     timestamp: number; // epoch time
     role: string;
     content: string;
-    parameters?: Parameters;
 }
 
 export interface Chat {
@@ -22,7 +21,8 @@ export interface Chat {
     messages: Message[];
     title?: string | null; // |: Union Types ≥
     created: number;
-    updated: number;
+    // updated: number;
+
     // deleted?: boolean;
 }
 

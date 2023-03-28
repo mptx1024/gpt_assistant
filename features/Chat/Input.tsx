@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { FiSend } from 'react-icons/fi';
-type Props = {};
-export default function Input({}: Props) {
-    const [content, setContent] = useState('');
+type Props = {
+    handleSubmit: () => void;
+    setUserInput: (input: string) => void;
+    userInput: string;
+};
+export default function Input({ handleSubmit, setUserInput, userInput }: Props) {
     const [isTyping, setIsTyping] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setContent(event.target.value);
+        setUserInput(event.target.value);
     };
-
-    const handleSubmit = () => {};
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && !event.shiftKey) {
@@ -24,7 +25,7 @@ export default function Input({}: Props) {
             <textarea
                 className='text-base p-2 w-full resize-none outline-none dark:bg-transparent'
                 placeholder='Type here...'
-                value={content}
+                value={userInput}
                 rows={1}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}

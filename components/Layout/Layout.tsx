@@ -2,8 +2,8 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import Header from '@/components/Header/Header';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import Chat from '@/components/Chat/Chat';
-import Input from '../Input';
+import Chat from '@/features/Chat/ChatPage';
+import Input from '../../features/Chat/Input';
 import { useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggleSidebar, selectSidebar } from '../Sidebar/sidebarSlice';
@@ -42,7 +42,7 @@ export default function Layout({ children }: Props) {
                     <Header toggleSidebar={onClickSidebar} />
                     {/* <div className='debug-1'> */}
                     {children}
-                    <Input />
+
                     {/* </div> */}
                 </main>
             </div>
