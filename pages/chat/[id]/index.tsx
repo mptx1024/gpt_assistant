@@ -8,3 +8,4 @@ export default function ChatPage({}: Props) {
 
     return <div>Chat: {id}</div>;
 }
+

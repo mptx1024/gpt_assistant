@@ -16,10 +16,15 @@ export interface Message {
     content: string;
 }
 
+export interface UserSubmitMessage {
+    chatID: string;
+    content: string;
+}
+
 export interface Chat {
     id: string;
     messages: Message[];
-    title?: string | null; // |: Union Types ≥
+    title?: string | null;
     created: number;
     // updated: number;
 

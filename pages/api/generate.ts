@@ -19,17 +19,18 @@ const handler = async (req: Request): Promise<Response> => {
           - trim chat with tokenizer 
     */
     // let messagesToSend: Message[] = [];
+
+    if (!messages) {
+        console.log('No messages provided');
+        return new Response('No messages in the request', { status: 400 });
+    }
+
     const messagesToSend: OpenAIMessage[] = messages.map((message: Message) => {
         return {
-            role: 'user',
+            role: message.role,
             content: message.content,
         };
     });
-
-    if (!prompt) {
-        console.log('No prompt provided');
-        return new Response('No prompt in the request', { status: 400 });
-    }
 
     const payload: OpenAIStreamPayload = {
         model: 'gpt-3.5-turbo',

@@ -3,35 +3,22 @@ import { Chat, Message } from '@/types';
 import type { RootState } from '../../store';
 
 const initialState = {
-    chats: [] as Chat[],
+    // chats: [] as Chat[],
+    messages: [] as Message[],
 };
 
-export const chatsSlice = createSlice({
-    name: 'chats',
+export const chatSlice = createSlice({
+    name: 'chat',
     initialState,
     reducers: {
-        setChats: (state, action: PayloadAction<Chat[]>) => {
-            state.chats = action.payload;
+        setMessages: (state, action: PayloadAction<Message[]>) => {
+            state.messages = action.payload;
         },
-        addChat: (state, action: PayloadAction<Chat>) => {
-            state.chats.push(action.payload);
-        },
-        updateChat: (state, action: PayloadAction<Chat>) => {
-            const chatIndex = state.chats.findIndex((c) => c.id === action.payload.id);
-            if (chatIndex !== -1) {
-                state.chats[chatIndex] = action.payload;
-            }
-        }
-
     },
 });
 
-export const { setChats } = chatsSlice.actions;
-
-// export const setChats = (state: RootState) => state.sidebar.open;
-
-export default chatsSlice.reducer;
-
+export const { setMessages } = chatSlice.actions;
+export default chatSlice.reducer;
 
 /**
 // example of pulling date from localStorage and setting initalState:

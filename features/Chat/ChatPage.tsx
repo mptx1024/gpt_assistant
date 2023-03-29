@@ -1,30 +1,43 @@
-import { useEffect, useState } from 'react';
-import { Chat, Message } from '@/types';
+import { useEffect, useState, useRef, memo } from 'react';
 import Input from './Input';
 import ChatMessage from './ChatMessage';
-import useChat from './hooks/useChat';
+import ChatManagerInstance, { ChatManager } from './utils/chatManager';
+import { UserSubmitMessage, Message } from '@/types';
+import { setMessages } from './chatSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '@/store';
 
-export default function ChatPage({ chatId }: { chatId: string | undefined }) {
-    const { generatedMessage, loading, generate } = useChat({ chatId });
+function ChatPage({ chatID }: { chatID: string }) {
+    console.log('🚀 ~ file: ChatPage.tsx:11 ~ ChatPage ~ chatID:', chatID);
     const [userInput, setUserInput] = useState('');
+    const chatManager = useRef<ChatManager>(ChatManagerInstance);
+    console.log(`chatManger.chats.size: ${chatManager.current.chats.size}`);
 
-    const handleSubmit = () => {
-        console.log(`user input: ${userInput}`);
+    const dispatch = useDispatch<AppDispatch>();
+    const messages = useSelector((state: RootState) => state.chat.messages);
 
-        generate({ userInput });
+    const updateMessages = (newMessages: Message[]) => {
+        dispatch(setMessages(newMessages));
+    };
+
+    const handleSubmit = async () => {
+        await chatManager.current.generateReply({ chatID, content: userInput }, updateMessages);
         setUserInput('');
     };
+
     return (
         <div>
-            Chat
-            <ChatMessage message={generatedMessage} />
+            {messages.length === 0 ? (
+                <div>No messages yet</div>
+            ) : (
+                <div>
+                    {messages.map((message, index) => (
+                        <ChatMessage key={index} message={message.content} />
+                    ))}
+                </div>
+            )}
             <Input handleSubmit={handleSubmit} setUserInput={setUserInput} userInput={userInput} />
         </div>
     );
 }
-
-//     const markdown = `Here is some JavaScript code:
-// ~~~js
-// console.log('It works!')
-// ~~~
-// `;
+export default memo(ChatPage);

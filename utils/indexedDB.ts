@@ -3,10 +3,10 @@ import * as idb from 'idb-keyval';
 let supported = true;
 const inMemoryCache = new Map<string, any>();
 
-const testDB = indexedDB.open('idb-test');
-testDB.onerror = () => {
-    supported = false;
-};
+// const testDB = indexedDB.open('test');
+// testDB.onerror = () => {
+//     supported = false;
+// };
 
 export async function keys() {
     if (supported) {

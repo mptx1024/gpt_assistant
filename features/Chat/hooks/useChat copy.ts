@@ -21,12 +21,12 @@ export default function useChat({ chatId }: Props): UseChatResult {
         messages: [],
         created: Date.now(),
     };
-    // if (!chatId) {
-    //     // create new chat
-    //     // save to idb
-    // } else {
-    //     // load existing chat from idb
-    // }
+    if (!chatId) {
+        // create new chat
+        // save to idb
+    } else {
+        // load existing chat from idb
+    }
 
     // generate reply message
     const generate = async ({ userInput }: { userInput: string }): Promise<void> => {
@@ -34,7 +34,7 @@ export default function useChat({ chatId }: Props): UseChatResult {
         console.log('🚀 ~ file: useChat.ts:29 ~ generate ~ userInput:', userInput);
         // create a new message
         const message: Message = {
-            id: Date.now().toString(),
+            id: uuid(),
             chatID: chatId ?? '',
             timestamp: Date.now(),
             role: 'user',
@@ -43,6 +43,7 @@ export default function useChat({ chatId }: Props): UseChatResult {
 
         // Update currentChat
         currentChat?.messages.push(message);
+        console.log('🚀 ~ file: useChat.ts:46 ~ generate ~ currentChat:', currentChat);
 
         setLoading(true);
         const response = await fetch('/api/generate', {
@@ -50,9 +51,7 @@ export default function useChat({ chatId }: Props): UseChatResult {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                currentChat,
-            }),
+            body: JSON.stringify(currentChat),
         });
 
         if (!response.ok) {
@@ -60,12 +59,12 @@ export default function useChat({ chatId }: Props): UseChatResult {
             throw new Error(response.statusText);
         }
         // This data is a ReadableStream
-        const data = response.body;
+        const data: ReadableStream<Uint8Array> | null = response.body;
         if (!data) {
             return;
         }
 
-        const reader = data.getReader();
+        const reader: ReadableStreamDefaultReader<Uint8Array> = data.getReader();
         const decoder = new TextDecoder();
         let done = false;
 
