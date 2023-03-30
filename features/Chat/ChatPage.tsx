@@ -3,25 +3,23 @@ import Input from './Input';
 import ChatMessage from './ChatMessage';
 import ChatManagerInstance, { ChatManager } from './utils/chatManager';
 import { UserSubmitMessage, Message } from '@/types';
-import { setMessages } from './chatSlice';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@/store';
+import { setMessages } from './chatSlice';
 
 function ChatPage({ chatID }: { chatID: string }) {
-    console.log('🚀 ~ file: ChatPage.tsx:11 ~ ChatPage ~ chatID:', chatID);
     const [userInput, setUserInput] = useState('');
-    const chatManager = useRef<ChatManager>(ChatManagerInstance);
-    console.log(`chatManger.chats.size: ${chatManager.current.chats.size}`);
-
     const dispatch = useDispatch<AppDispatch>();
-    const messages = useSelector((state: RootState) => state.chat.messages);
+    const chatManager = useRef<ChatManager>(ChatManagerInstance);
 
-    const updateMessages = (newMessages: Message[]) => {
-        dispatch(setMessages(newMessages));
-    };
+    const messages = useSelector((state: RootState) => {
+        console.log('in useSelector');
+        return state.chat.messages;
+    });
 
     const handleSubmit = async () => {
-        await chatManager.current.generateReply({ chatID, content: userInput }, updateMessages);
+        await chatManager.current.generateReply({ chatID, content: userInput });
         setUserInput('');
     };
 

@@ -1,16 +1,23 @@
 import * as idb from '@/utils/indexedDB';
 import { v4 as uuid } from 'uuid';
 import { Chat, Message, UserSubmitMessage } from '@/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch, store } from '@/store';
+import { setMessages } from '../chatSlice';
 
 export class ChatManager {
     public chats = new Map<string, Chat>();
-    private loaded = false;
+    public loaded = false;
     public activeReply: string = '';
 
     constructor() {
         this.load();
     }
-    public async generateReply(userInput: UserSubmitMessage, updateMessages: (messages: Message[]) => void) {
+
+    public async generateReply(
+        userInput: UserSubmitMessage
+        // updateMessages: (messages: Message[]) => void
+    ) {
         console.log(`userInput->chatID`, userInput.chatID);
 
         const currentChat = this.chats.get(userInput.chatID);
@@ -63,13 +70,16 @@ export class ChatManager {
             done = doneReading;
             const chunkValue = decoder.decode(value);
 
-            const updatedMessages = JSON.parse(JSON.stringify(currentChat.messages));
-            updatedMessages[updatedMessages.length - 1].content += chunkValue;
+            const updatedMessages = currentChat.messages.map((message, index) => {
+                if (index === currentChat.messages.length - 1) {
+                    return { ...message, content: message.content + chunkValue };
+                }
+                return message;
+            });
 
-            currentChat.messages[currentChat.messages.length - 1].content += chunkValue;
-            updateMessages(updatedMessages); // Update messages with a new array to trigger re-render
+            currentChat.messages = updatedMessages;
+            store.dispatch(setMessages([...currentChat.messages]));
         }
-        console.log(`done: ${done}`);
 
         await this.save();
     }
@@ -86,14 +96,16 @@ export class ChatManager {
         return chat.id;
     }
 
-    public getChat(id: string | undefined): Chat {
+    public async getChat(id: string): Promise<Chat | null> {
+        await this.load();
         console.log('in getChat id: ', id);
-
-        if (id === undefined) {
-            id = this.createChat();
+        const chat = this.chats.get(id);
+        if (chat) {
+            console.log('in getChat chat: ', chat);
+            store.dispatch(setMessages([...chat.messages]));
         }
 
-        return this.chats.get(id) as Chat;
+        return chat || null;
     }
 
     public deleteChat(id: string) {
@@ -104,14 +116,16 @@ export class ChatManager {
     public async regenerate() {}
 
     private async load() {
+        console.log(`loading chats...`);
+
         const chats = await idb.get('chats');
-        console.log(`loaded chats. current chats #: ${this.chats.size}; chats: ${JSON.stringify(this.chats)}`);
 
         if (chats) {
             for (const chat of chats) {
                 this.chats.set(chat.id, chat);
             }
         }
+        console.log(`loaded chats. current chats #: ${this.chats.size}; chats: ${this.chats}`);
         this.loaded = true;
     }
 
