@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import sidebarReducer from '../components/Sidebar/sidebarSlice';
-import chatReducer from '../features/Chat/chatSlice';
+import sidebarReducer from './sidebarSlice';
+import chatReducer from './chatSlice';
 export const store = configureStore({
     reducer: {
         sidebar: sidebarReducer,

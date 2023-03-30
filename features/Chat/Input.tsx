@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import ChatManagerInstance, { ChatManager } from './utils/chatManager';
 import { FiSend } from 'react-icons/fi';
+
 type Props = {
-    handleSubmit: () => void;
-    setUserInput: (input: string) => void;
-    userInput: string;
+    chatID: string;
 };
-export default function Input({ handleSubmit, setUserInput, userInput }: Props) {
+
+export default function Input({ chatID }: Props) {
     const [isTyping, setIsTyping] = useState(false);
+    const [userInput, setUserInput] = useState('');
+    const chatManager = useRef<ChatManager>(ChatManagerInstance);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserInput(event.target.value);
+    };
+    const handleSubmit = async () => {
+        await chatManager.current.generateReply({ chatID, content: userInput });
+        setUserInput('');
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             handleSubmit();
-            // handle sending message
         }
     };
 

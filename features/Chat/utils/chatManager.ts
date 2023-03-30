@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { Chat, Message, UserSubmitMessage } from '@/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch, store } from '@/store';
-import { setMessages } from '../chatSlice';
+import { setMessages } from '../../../store/chatSlice';
 
 export class ChatManager {
     public chats = new Map<string, Chat>();

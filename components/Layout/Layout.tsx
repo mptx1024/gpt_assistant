@@ -6,7 +6,7 @@ import Chat from '@/features/Chat/ChatPage';
 import Input from '../../features/Chat/Input';
 import { useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toggleSidebar, selectSidebar } from '../Sidebar/sidebarSlice';
+import { toggleSidebar, selectSidebar } from '../../store/sidebarSlice';
 type Props = { children: React.ReactNode };
 export default function Layout({ children }: Props) {
     const [activeTab, setActiveTab] = useState('home');
