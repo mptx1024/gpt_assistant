@@ -1,16 +1,13 @@
 import { useEffect, useState, useRef, memo } from 'react';
 import Input from './Input';
 import ChatMessage from './ChatMessage';
-
+import { Message } from '@/types';
+import { selectChatById } from '@/store/chatsSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '@/store';
+import { RootState, AppDispatch, } from '@/store';
 
 function ChatPage({ chatID }: { chatID: string }) {
-    const dispatch = useDispatch<AppDispatch>();
-
-    const messages = useSelector((state: RootState) => {
-        return state.chat.messages;
-    });
+    let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
 
     return (
         <div>

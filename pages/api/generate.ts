@@ -25,7 +25,7 @@ const handler = async (req: Request): Promise<Response> => {
         return new Response('No messages in the request', { status: 400 });
     }
 
-    const messagesToSend: OpenAIMessage[] = messages.map((message: Message) => {
+    const messagesToSend: OpenAIMessage[] = messages.map((message: Message, index) => {
         return {
             role: message.role,
             content: message.content,

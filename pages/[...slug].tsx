@@ -3,10 +3,9 @@ import { Suspense } from 'react';
 type Props = {};
 export default function CatchAll({}: Props) {
     const router = useRouter();
-    console.log('🚀 ~ file: [[...slug]].tsx:7 ~ CatchAll ~ router.query:', router.query);
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        router.push('/chat/2b1757d0-006f-4081-b9cc-f755bd313cf1');
+        router.push('/chat/7f0011e6-f577-4b17-ac60-ad968b5b9404');
     };
     return (
         <Suspense fallback={null}>

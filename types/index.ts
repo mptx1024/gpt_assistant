@@ -27,7 +27,6 @@ export interface Chat {
     title?: string | null;
     created: number;
     // updated: number;
-
     // deleted?: boolean;
 }
 

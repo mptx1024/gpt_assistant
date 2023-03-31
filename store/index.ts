@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import sidebarReducer from './sidebarSlice';
-import chatReducer from './chatSlice';
+import chatsReducer from './chatsSlice';
 export const store = configureStore({
     reducer: {
         sidebar: sidebarReducer,
-        chat: chatReducer,
+        chats: chatsReducer,
     },
 });
 
