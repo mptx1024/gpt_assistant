@@ -15,8 +15,8 @@ export default function DynamicChatPage() {
     }
 
     return (
-        <Suspense fallback={null}>
+        // <Suspense fallback={null}>
             <ChatPage chatID={id} />
-        </Suspense>
+        // </Suspense>
     );
 }

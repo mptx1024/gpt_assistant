@@ -16,16 +16,7 @@ export const chatsSlice = createSlice({
         updateOne: chatsAdapter.updateOne,
         removeOne: chatsAdapter.removeOne,
         removeAll: chatsAdapter.removeAll,
-        // createNewChat: (state, action: PayloadAction<{ title: string }>) => {
-        //     const { title } = action.payload;
-        //     const newChat: Chat = {
-        //         id: uuid(),
-        //         title,
-        //         messages: [],
-        //         created: Date.now(),
-        //     };
-        //     state.entities[newChat.id] = newChat;
-        // }
+
         addSingleMessage: (state, action: PayloadAction<{ chatID: string; message: Message }>) => {
             const { chatID, message } = action.payload;
             const existingChat = state.entities[chatID];
@@ -39,6 +30,7 @@ export const chatsSlice = createSlice({
                 });
             }
         },
+        // for streaming updates    
         updateSingleMessage: (state, action: PayloadAction<{ chatID: string; chunkValue: string }>) => {
             const { chatID, chunkValue } = action.payload;
             const existingChat = state.entities[chatID];
