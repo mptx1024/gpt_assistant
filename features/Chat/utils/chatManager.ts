@@ -13,7 +13,6 @@ import {
 } from '@/store/chatsSlice';
 
 export class ChatManager {
-    public chats = new Map<string, Chat>();
     public loaded = false;
     public activeReply: string = '';
 
@@ -23,17 +22,6 @@ export class ChatManager {
 
     public async generateReply(userInput: UserSubmitMessage) {
         const { chatID, content } = userInput;
-        // const currentChat = store.getState().chats[chatID];
-        // const currentChat = selectChatById(store.getState(), chatID);
-        // console.log(
-        //     '🚀 ~ file: chatManager.ts:21 ~ ChatManager ~ generateReply ~ currentChat:',
-        //     currentChat?.id,
-        //     `chats: ${JSON.stringify(currentChat?.messages)}`
-        // );
-
-        // if (!currentChat) {
-        //     throw new Error('Chat not found');
-        // }
         const userMessage: Message = {
             id: uuid(),
             chatID,
@@ -92,42 +80,29 @@ export class ChatManager {
             messages: [],
             created: Date.now(),
         };
-        // this.chats.set(chat.id, chat);
         store.dispatch(setOne(chat));
         console.log('in createChat chat.id: ', chat.id);
 
         return chat.id;
     }
 
-    // update redux store with the given chat
-    public async getChat(id: string) {
-        await this.load();
-        const chat = this.chats.get(id);
-        if (chat) {
-            // store.dispatch(updateChatMessages({ chatID: id, messages: [...chat.messages] }));
-        }
-    }
+    // public async getChat(id: string) {
+    //     await this.load();
+    // }
 
-    public deleteChat(id: string) {
-        this.chats.delete(id);
-    }
-
+    public deleteChat(id: string) {}
     public stopGenerating() {}
     public async regenerate() {}
 
     private async load() {
         const chats: Chat[] = await idb.get('chats');
-        console.log(`in load chats. current chats #: ${this.chats.size}; chats: ${this.chats}`);
 
         if (chats) {
             store.dispatch(setAll(chats));
-            for (const chat of chats) {
-                this.chats.set(chat.id, chat);
-            }
         }
-        console.log(`loaded chats. current chats #: ${this.chats.size}; chats: ${this.chats}`);
         this.loaded = true;
     }
+
     // save all chats to indexedDB
     private async save() {
         const chats = selectAllChats(store.getState());

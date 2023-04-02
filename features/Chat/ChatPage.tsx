@@ -3,8 +3,8 @@ import Input from './Input';
 import ChatMessage from './ChatMessage';
 import { Message } from '@/types';
 import { selectChatById } from '@/store/chatsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch, } from '@/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 function ChatPage({ chatID }: { chatID: string }) {
     let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
@@ -12,7 +12,7 @@ function ChatPage({ chatID }: { chatID: string }) {
     return (
         <div>
             {messages.length === 0 ? (
-                <div>No messages yet</div>
+                <div>new msg. show home page stuff</div>
             ) : (
                 <div>
                     {messages.map((message, index) => (

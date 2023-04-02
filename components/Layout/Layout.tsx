@@ -30,8 +30,6 @@ export default function Layout({ children }: Props) {
             </Head>
             <div className='flex'>
                 <Sidebar
-                    activeTab={activeTab}
-                    onTabChange={handleTabChange}
                     isSidebarOpen={isSidebarOpen}
                     toggleSidebar={onClickSidebar}
                 />
