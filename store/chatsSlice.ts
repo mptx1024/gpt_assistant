@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
+import { startAppListening } from './listenerMiddleware';
 import { Chat, Message } from '@/types';
 import type { RootState } from '.';
+import * as idb from '@/utils/indexedDB';
 
 const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
@@ -30,7 +32,7 @@ export const chatsSlice = createSlice({
                 });
             }
         },
-        // for streaming updates    
+        // for streaming updates
         updateSingleMessage: (state, action: PayloadAction<{ chatID: string; chunkValue: string }>) => {
             const { chatID, chunkValue } = action.payload;
             const existingChat = state.entities[chatID];
@@ -41,10 +43,17 @@ export const chatsSlice = createSlice({
                 };
             }
         },
+        updateTitle: (state, action: PayloadAction<{ chatID: string; title: string }>) => {
+            const { chatID, title } = action.payload;
+            const existingChat = state.entities[chatID];
+            if (existingChat) {
+                existingChat.title = title;
+            }
+        },
     },
 });
 
-export const { setOne, setAll, updateOne, removeOne, removeAll, addSingleMessage, updateSingleMessage } =
+export const { setOne, setAll, updateOne, removeOne, removeAll, addSingleMessage, updateSingleMessage, updateTitle } =
     chatsSlice.actions;
 export default chatsSlice.reducer;
 
@@ -53,26 +62,3 @@ export const { selectById: selectChatById, selectAll: selectAllChats } = chatsAd
     (state: RootState) => state.chats
 );
 
-// reducers: {
-//     setChats: (state, action: PayloadAction<Chat[]>) => {
-//         for (let i = 0; i < action.payload?.length; i++) {
-//             const chat = action.payload[i];
-//             state.chats[chat.id] = chat;
-//         }
-//         console.log(`in chatSlice setChats state.chats' size: ${Object.keys(state.chats).length}`);
-//     },
-//     updateChatMessages: (state, action: PayloadAction<{ chatID: string; messages: Message[] }>) => {
-//         console.log(`in chatSlice updateChatMessages, messages: ${JSON.stringify(action.payload.messages)}`);
-
-//         const { chatID, messages } = action.payload;
-//         if (state.chats[chatID]) {
-//             state.chats[chatID].messages = messages;
-//         } else {
-//             state.chats[chatID] = {
-//                 id: chatID,
-//                 messages: messages,
-//                 created: Date.now(),
-//             };
-//         }
-//     },
-// },

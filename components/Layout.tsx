@@ -2,24 +2,42 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import Header from '@/components/Header/Header';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import Chat from '@/features/Chat/ChatPage';
-import Input from '../../features/Chat/Input';
-import { useCallback, useState } from 'react';
+import { Chat } from '@/types';
+import * as idb from '@/utils/indexedDB';
+import { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toggleSidebar, selectSidebar } from '../../store/sidebarSlice';
+import { setAll } from '@/store/chatsSlice';
+import { toggleSidebar, selectSidebar } from '../store/sidebarSlice';
+
 type Props = { children: React.ReactNode };
+
 export default function Layout({ children }: Props) {
-    const [activeTab, setActiveTab] = useState('home');
-    const handleTabChange = (tab: string) => {
-        setActiveTab(tab);
-    };
-    // const [sidebarVisible, setSidebarVisible] = useState(false);
-    // const toggleSidebar = () => {
-    //     setSidebarVisible(!sidebarVisible);
-    // };
-    const isSidebarOpen = useAppSelector((state) => state.sidebar.open);
     const dispatch = useAppDispatch();
+    console.log(`in layout: rendered`);
+
+    const isSidebarOpen = useAppSelector((state) => state.sidebar.open);
     const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
+
+    // Add a loading state
+    // const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadChats = async () => {
+            const chats: Chat[] = await idb.get('chats');
+
+            dispatch(setAll(chats));
+            console.log(`in layout: loaded chats`);
+
+            // Set loading state to false after chats are loaded
+            // setLoading(false);
+        };
+        loadChats();
+    }, []);
+
+    // Conditionally render app content based on the loading state
+    // return loading ? (
+    //     <div>Loading...</div>
+    // ) : (
     return (
         <div>
             <Head>
@@ -29,19 +47,13 @@ export default function Layout({ children }: Props) {
                 <link rel='icon' href='/favicon.ico' />
             </Head>
             <div className='flex'>
-                <Sidebar
-                    isSidebarOpen={isSidebarOpen}
-                    toggleSidebar={onClickSidebar}
-                />
+                <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={onClickSidebar} />
                 <main
                     className={`flex flex-col flex-grow h-screen transition-width duration-300 items-center justify-between
                     ${isSidebarOpen ? 'ml-64' : ''}`}
                 >
                     <Header toggleSidebar={onClickSidebar} />
-                    {/* <div className='debug-1'> */}
                     {children}
-
-                    {/* </div> */}
                 </main>
             </div>
         </div>

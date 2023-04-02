@@ -1,26 +1,28 @@
-import { Suspense, useEffect } from 'react';
-
+import { Suspense, useEffect, useState } from 'react';
 import ChatPage from '@/features/Chat/ChatPage';
 import { useAppDispatch } from '@/store/hooks';
-import { setOne } from '@/store/chatsSlice';
+import { setOne, setAll } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 import { v4 as uuid } from 'uuid';
 
 export default function Landing() {
-    console.log(`in the landing page`);
+    const [newChat, setNewChat] = useState<string>();
+    console.log(`in landing page`);
 
     const dispatch = useAppDispatch();
-    const newChat: Chat = {
-        id: uuid(),
-        messages: [],
-        created: Date.now(),
-    };
+
     useEffect(() => {
+        const newChat: Chat = {
+            id: uuid(),
+            messages: [],
+            created: Date.now(),
+        };
+        setNewChat(newChat.id);
         dispatch(setOne(newChat));
+        console.log(`in the landing page; new chat: ${newChat.id}`);
     }, []);
-    return (
-        <Suspense fallback={null}>
-            <ChatPage chatID={newChat.id} />
-        </Suspense>
-    );
+    if (!newChat) {
+        return <div>loading...</div>;
+    }
+    return <ChatPage chatID={newChat} />;
 }
