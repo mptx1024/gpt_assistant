@@ -4,7 +4,6 @@ import { Chat, Message, UserSubmitMessage } from '@/types';
 import { RootState, AppDispatch, store } from '@/store';
 import {
     setAll,
-    updateOne,
     setOne,
     selectChatById,
     selectAllChats,
@@ -17,7 +16,7 @@ export class ChatManager {
     public activeReply: string = '';
 
     constructor() {
-        this.load();
+        // this.load();
     }
 
     public async generateReply(userInput: UserSubmitMessage) {
@@ -71,49 +70,42 @@ export class ChatManager {
             store.dispatch(updateSingleMessage({ chatID, chunkValue }));
         }
 
-        await this.save();
+        // await this.save();
     }
 
-    public createChat(): string {
-        const chat: Chat = {
-            id: uuid(),
-            messages: [],
-            created: Date.now(),
-        };
-        store.dispatch(setOne(chat));
-        console.log('in createChat chat.id: ', chat.id);
-
-        return chat.id;
-    }
-
-    // public async getChat(id: string) {
-    //     await this.load();
+    // public createChat(): string {
+    //     const chat: Chat = {
+    //         id: uuid(),
+    //         messages: [],
+    //         created: Date.now(),
+    //     };
+    //     store.dispatch(setOne(chat));
+    //     return chat.id;
     // }
 
-    public deleteChat(id: string) {}
     public stopGenerating() {}
     public async regenerate() {}
 
-    private async load() {
-        const chats: Chat[] = await idb.get('chats');
+    // private async load() {
+    //     const chats: Chat[] = await idb.get('chats');
 
-        if (chats) {
-            store.dispatch(setAll(chats));
-        }
-        this.loaded = true;
-    }
+    //     // if (chats) {
+    //     //     store.dispatch(setAll(chats));
+    //     // }
+    //     this.loaded = true;
+    // }
 
     // save all chats to indexedDB
-    private async save() {
-        const chats = selectAllChats(store.getState());
-        let chatsToSave: Chat[] = [];
-        for (const chatID in chats) {
-            if (chats[chatID].messages.length > 0) {
-                chatsToSave.push(chats[chatID]);
-            }
-            await idb.set('chats', chatsToSave);
-        }
-    }
+    // private async save() {
+    //     const chats = selectAllChats(store.getState());
+    //     let chatsToSave: Chat[] = [];
+    //     for (const chatID in chats) {
+    //         if (chats[chatID].messages.length > 0) {
+    //             chatsToSave.push(chats[chatID]);
+    //         }
+    //         await idb.set('chats', chatsToSave);
+    //     }
+    // }
 }
 const chatManager = new ChatManager();
 export default chatManager;

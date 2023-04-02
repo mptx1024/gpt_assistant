@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import ChatManagerInstance, { ChatManager } from './utils/chatManager';
 import { FiSend } from 'react-icons/fi';
+import { Chat } from '@/types';
 
 type Props = {
     chatID: string;
