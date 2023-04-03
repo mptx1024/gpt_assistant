@@ -7,7 +7,6 @@ export default function DynamicChatPage() {
     const router = useRouter();
     const chatID = useRef<string | null>(null);
     const { id } = router.query;
-    console.log('🚀 ~ file: index.tsx:12 ~ DynamicChatPage ~ id:', id);
     if (typeof id === 'string') {
         chatID.current = id;
     }

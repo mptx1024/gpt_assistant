@@ -7,15 +7,16 @@ import * as idb from '@/utils/indexedDB';
 import { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAll } from '@/store/chatsSlice';
-import { toggleSidebar, selectSidebar } from '../store/sidebarSlice';
+import { toggleSidebar } from '../store/uiSlice';
+import SettingModal from './Sidebar/SettingModal';
+import UsageModal from './Sidebar/UsageModal';
 
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
-    console.log(`in layout: rendered`);
 
-    const isSidebarOpen = useAppSelector((state) => state.sidebar.open);
+    const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
     const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
 
     // Add a loading state
@@ -34,10 +35,6 @@ export default function Layout({ children }: Props) {
         loadChats();
     }, []);
 
-    // Conditionally render app content based on the loading state
-    // return loading ? (
-    //     <div>Loading...</div>
-    // ) : (
     return (
         <div>
             <Head>
@@ -55,6 +52,8 @@ export default function Layout({ children }: Props) {
                     <Header toggleSidebar={onClickSidebar} />
                     {children}
                 </main>
+                <SettingModal />
+                <UsageModal />
             </div>
         </div>
     );

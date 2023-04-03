@@ -46,7 +46,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         setRename(false);
         setRemove(false);
     };
-    
+
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
@@ -56,14 +56,14 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
-        }
-    },[chatRef])
+        };
+    }, [chatRef]);
 
     return (
         <Link href={`/chat/${encodeURIComponent(chat.id)}`} onClick={() => onClickChat(chat.id)}>
             <div
                 ref={chatRef}
-                className='flex gap-2 items-center py-1 px-2 mx-2 hover:bg-gray-700 rounded-lg cursor-pointer'
+                className='flex gap-2 items-center py-1 px-2 mx-2 h-10 hover:bg-gray-700 rounded-md cursor-pointer'
             >
                 <div className='flex items-center'>
                     <HiChatBubbleLeftEllipsis className='w-4 h-4 mr-2' />
