@@ -10,7 +10,7 @@ import { setAll } from '@/store/chatsSlice';
 import { toggleSidebar } from '../store/uiSlice';
 import SettingModal from './Sidebar/SettingModal';
 import UsageModal from './Sidebar/UsageModal';
-
+import Input from '../features/Chat/Input';
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
@@ -43,10 +43,10 @@ export default function Layout({ children }: Props) {
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <div className='flex'>
+            <div className='fixed flex h-full w-full'>
                 <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={onClickSidebar} />
                 <main
-                    className={`flex flex-col flex-grow h-screen transition-width duration-300 items-center justify-between
+                    className={`flex flex-col flex-grow h-full w-full transition-width duration-300 items-center justify-between relative
                     ${isSidebarOpen ? 'ml-64' : ''}`}
                 >
                     <Header toggleSidebar={onClickSidebar} />

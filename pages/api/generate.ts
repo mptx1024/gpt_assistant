@@ -25,24 +25,33 @@ const handler = async (req: Request): Promise<Response> => {
         return new Response('No messages in the request', { status: 400 });
     }
 
-    const messagesToSend: OpenAIMessage[] = messages.map((message: Message, index) => {
+    let messagesToSend: OpenAIMessage[] = messages.map((message: Message, index) => {
         return {
             role: message.role,
             content: message.content,
         };
     });
+    messagesToSend = [
+        {
+            role: 'system',
+            content:
+                "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.",
+        },
+        ...messagesToSend,
+    ];
+    console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
     const payload: OpenAIStreamPayload = {
         model: 'gpt-3.5-turbo',
         // messages: [{ role: 'user', content: prompt }],
         messages: messagesToSend,
-        temperature: 0.7,
+        temperature: 1,
         // top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-        max_tokens: 200,
+        // frequency_penalty: 0,
+        // presence_penalty: 0,
+        max_tokens: 1000,
         stream: true,
-        n: 1,
+        // n: 1,
     };
 
     const stream = await OpenAIStream(payload);

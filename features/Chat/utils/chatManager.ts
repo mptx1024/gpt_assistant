@@ -31,6 +31,7 @@ export class ChatManager {
         store.dispatch(addSingleMessage({ chatID, message: userMessage }));
 
         const currentChat = selectChatById(store.getState(), chatID);
+        console.log('🚀 ~ file: chatManager.ts:35 ~ ChatManager ~ generateReply ~ currentChat:', currentChat);
 
         const response = await fetch('/api/generate', {
             method: 'POST',
@@ -67,6 +68,7 @@ export class ChatManager {
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
+
             store.dispatch(updateSingleMessage({ chatID, chunkValue }));
         }
 
@@ -109,3 +111,7 @@ export class ChatManager {
 }
 const chatManager = new ChatManager();
 export default chatManager;
+
+// "1. ColorZilla - a browser extension that allows you to pick any color from a web page and get its CSS code.\n2. Adobe Color - a website that provides a color wheel and allows you to choose and save color palettes, as well as generate color themes from uploaded images.\n3. CSS Color Names - a website that provides a comprehensive list of all the named colors in CSS, along with their hexadecimal values."
+
+// "To use Tailwind with React, you need to install the `tailwindcss` package and configure it in your project. Here's a simple example of how to use Tailwind with React:\n\n1. Install Tailwind and its dependencies:\n\n```\nnpm install tailwindcss postcss autoprefixer\n```\n\n2. Create a `postcss.config.js` file in the root of your project and add the following code:\n\n```\nmodule.exports = {\n  plugins: [\n    require('tailwindcss'),\n    require('autoprefixer'),\n  ],\n}\n```\n\n3. Create a `tailwind.config.js` file in the root of your project and add the following code:\n\n```\nmodule.exports = {\n  purge: [],\n  darkMode: false,\n  theme: {\n    extend: {},\n  },\n  variants: {},\n  plugins: [],\n}\n```\n\n4. Import the Tailwind styles in your `index.css` file:\n\n```\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n```\n\n5. Import the `index.css` file in your `index.js` file:\n\n```\nimport './index.css';\n```\n\n6. Use Tailwind classes in your React components:\n\n```\nimport React from 'react';\n\nfunction App() {\n  return (\n    <div className=\"bg-gray-100 p-4\">\n      <h1 className=\"text-2xl font-bold text-gray-800\">Hello, world!</h1>\n      <p className=\"mt-4 text-gray-600\">This is a simple example of using Tailwind with React.</p>\n    </div>\n  );\n}\n\nexport default App;\n```\n\nIn this example, we're using Tailwind classes to style the background color, padding, font size, font weight, and text color of the `div`, `h1`, and `p` elements."

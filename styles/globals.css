@@ -4,19 +4,18 @@
 /*
 @layer is a directive introduced in Tailwind CSS v2.1, which allows you to organize your custom CSS by "layer." By doing this, you ensure that your custom styles respect the same specificity and cascade order that Tailwind CSS uses internally. There are three layers: base, components, and utilities.
 
-
 Regarding border-[1px] instead of just border, this is a new feature in Tailwind CSS v2.2 called "arbitrary value support." It allows you to create utility classes with custom values directly in your HTML by using square brackets.
 
 border-[1px] generates a utility class for a 1px border, which might not be available by default in the built-in border utilities. This feature gives you more flexibility when you need a specific value that isn't provided by the default configuration
 */
 @layer utilities {
     .debug-1 {
-        @apply border-[1px] border-red-500;
+        @apply border-[1px] border-red-900;
     }
     .debug-2 {
-        @apply border-[1px] border-blue-500;
+        @apply border-[1px] border-yellow-500;
     }
     .debug-3 {
-        @apply border-[1px] border-dashed border-black;
+        @apply border-[1px] border-dashed border-green-600;
     }
 }

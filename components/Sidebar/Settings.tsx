@@ -29,7 +29,7 @@ const Settings = (props: Props) => {
                 </div>
                 <div
                     tabIndex={0}
-                    className='dropdown-content flex items-center shadow bg-base-100 rounded-lg w-48 gap-3 text-primary-content p-3'
+                    className='dropdown-content flex items-center shadow rounded-lg w-48 gap-3 text-primary-content p-3'
                 >
                     Are you sure?
                     <HiCheck className='w-5 h-5 cursor-pointer hover:bg-gray-700' onClick={onConfirmClearChats} />
