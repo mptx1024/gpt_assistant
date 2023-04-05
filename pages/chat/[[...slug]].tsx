@@ -6,7 +6,7 @@ import { Chat } from '@/types';
 import { v4 as uuid } from 'uuid';
 
 export default function Landing() {
-    const [newChat, setNewChat] = useState<string>();
+    const [newChat, setNewChat] = useState<string>('');
     console.log(`in landing page`);
 
     const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export default function Landing() {
         setNewChat(newChat.id);
         dispatch(setOne(newChat));
         console.log(`in the landing page; new chat: ${newChat.id}`);
-    }, []);
+    }, [dispatch]);
     if (!newChat) {
         return <div>loading...</div>;
     }

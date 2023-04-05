@@ -51,7 +51,7 @@ export const chatsSlice = createSlice({
             }
         },
 
-        // for editing a message
+        // for editing a message & regenerateing reply
         deleteMessageUpTo: (state, action: PayloadAction<{ message: Message }>) => {
             const { chatID, id: messageID } = action.payload.message;
             const existingChat = state.entities[chatID];
@@ -59,17 +59,12 @@ export const chatsSlice = createSlice({
                 let updatedMessages: Message[] = [];
                 for (let i = 0; i < existingChat.messages.length; i++) {
                     if (existingChat.messages[i].id === messageID) {
-                        console.log(`in deleteMessageupTo. deleting message ${existingChat.messages[i].content}`);
-
-                        // existingChat.messages.splice(i, 1);
                         break;
                     }
                     updatedMessages.push(existingChat.messages[i]);
                 }
                 existingChat.messages = updatedMessages;
             }
-
-            console.log(`finished deleteMessageUpTo. length of messages: ${existingChat?.messages.length}`);
         },
     },
 });

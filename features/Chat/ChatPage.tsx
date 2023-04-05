@@ -4,9 +4,11 @@ import { Message } from '@/types';
 import { selectChatById } from '@/store/chatsSlice';
 import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
+import useChat from './hooks/useChat';
 
-function ChatPage({ chatID }: { chatID: string }) {
+const ChatPage = memo(function ChatPage({ chatID }: { chatID: string }) {
+    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
     let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
 
     const lastMessageRef = useRef<HTMLDivElement>(null);
@@ -24,7 +26,7 @@ function ChatPage({ chatID }: { chatID: string }) {
             {messages && (
                 <div id='messages-box' className='mb-32'>
                     {messages.map((message, index) => (
-                        <ChatMessage key={index} message={message} />
+                        <ChatMessage key={index} message={message} generateReply={generateReply} />
                     ))}
                 </div>
             )}
@@ -34,9 +36,10 @@ function ChatPage({ chatID }: { chatID: string }) {
                 className='absolute left-1/2 transform -translate-x-1/2 bottom-0 flex flex-col justify-center items-center w-full
                 bg-gradient-to-b from-transparent via-white to-white'
             >
-                <Input chatID={chatID} />
+                <Input chatID={chatID} generateReply={generateReply} regenerate={regenerate} isLoading={isLoading} setStopGenerating={setStopGenerating}/>
             </div>
         </div>
     );
-}
+});
+
 export default ChatPage;

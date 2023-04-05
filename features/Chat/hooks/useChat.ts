@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback, useEffect, Dispatch, SetStateAction } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Chat, Message, UserSubmitMessage, OpenAIMessage } from '@/types';
 import { RootState, AppDispatch, store } from '@/store';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+
 import {
     setAll,
     setOne,
@@ -9,45 +11,51 @@ import {
     selectAllChats,
     addSingleMessage,
     updateSingleMessage,
+    deleteMessageUpTo,
 } from '@/store/chatsSlice';
 
 interface UseChatResult {
-    generatedMessage: string;
-    loading: boolean;
-    generateReply: (userInput: UserSubmitMessage) => void;
+    // generatedMessage: string;
+    isLoading: boolean;
+    generateReply: (userInput: string) => void;
+    regenerate: () => void;
+    setStopGenerating: () => void;
 }
 interface Props {
-    chatID: string | undefined;
+    chatID: string;
 }
-// https://stackoverflow.com/questions/65688201/react-custom-hook-cant-get-an-async-function
-// use useRef to get a reference to the generated message
+
 export default function useChat({ chatID }: Props): UseChatResult {
-    const [generatedMessage, setGeneratedMessage] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
-    let currentChat: Chat;
-    currentChat = {
-        id: uuid(),
-        messages: [],
-        created: Date.now(),
+    const isLoadingRef = useRef<boolean>(false);
+    const stopGeneratingRef = useRef<boolean>(false);
+    const dispatch = useAppDispatch();
+    const setStopGenerating = () => {
+        stopGeneratingRef.current = true;
+    };
+    const regenerate = async () => {
+        const currentChat = selectChatById(store.getState(), chatID);
+        let lastUserInput = currentChat?.messages[currentChat.messages.length - 2];
+        if (lastUserInput && lastUserInput.role === 'user') {
+            dispatch(deleteMessageUpTo({ message: lastUserInput }));
+            generateReply(lastUserInput.content);
+        }
     };
 
-    // generate reply message
-    const generateReply = async (userInput: UserSubmitMessage) => {
-        const { chatID, content } = userInput;
+    const generateReply = async (userInput: string) => {
         const userMessage: Message = {
             id: uuid(),
             chatID,
             timestamp: Date.now(),
             role: 'user',
-            content: content,
+            content: userInput,
         };
-        store.dispatch(addSingleMessage({ chatID, message: userMessage }));
+        dispatch(addSingleMessage({ chatID, message: userMessage }));
 
         const currentChat = selectChatById(store.getState(), chatID);
         console.log('🚀 ~ file: chatManager.ts:35 ~ ChatManager ~ generateReply ~ currentChat:', currentChat);
 
-        setLoading(true);
-        
+        isLoadingRef.current = true;
+
         const response = await fetch('/api/generate', {
             method: 'POST',
             headers: {
@@ -80,19 +88,24 @@ export default function useChat({ chatID }: Props): UseChatResult {
         let done = false;
 
         while (!done) {
+            if (stopGeneratingRef.current) {
+                break;
+            }
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
-
             store.dispatch(updateSingleMessage({ chatID, chunkValue }));
         }
 
-        // await this.save();
+        isLoadingRef.current = false;
+        stopGeneratingRef.current = false;
     };
 
     return {
-        generatedMessage,
-        loading,
+        // generatedMessage,
+        isLoading: isLoadingRef.current,
         generateReply,
+        regenerate,
+        setStopGenerating,
     };
 }

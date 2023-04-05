@@ -4,21 +4,20 @@ import { useState } from 'react';
 import { HiPencilSquare, HiOutlineClipboard } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
 import { copyToClipboard } from '@/utils/chats';
-import useChat from './hooks/useChat';
 import { deleteMessageUpTo } from '@/store/chatsSlice';
 import { useDispatch } from 'react-redux';
 
 interface Props {
     message: Message;
+    generateReply: (content: string) => void;
 }
 
-export default function ChatMessage({ message }: Props) {
+export default function ChatMessage({ message, generateReply }: Props) {
     const [isHovered, setIsHovered] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState('');
     const dispatch = useDispatch();
-    const { generateReply } = useChat({ chatID: message.chatID });
 
     const handleCopyToClipboard = async () => {
         await copyToClipboard(message.content, setIsCopied);
@@ -29,10 +28,10 @@ export default function ChatMessage({ message }: Props) {
     };
 
     const handleSaveChanges = () => {
-        // first change chat history in store ??
+        // change chat history in store
         dispatch(deleteMessageUpTo({ message }));
-        // then ...
-        generateReply({ chatID: message.chatID, content: editedContent });
+        // then regenerate reply
+        generateReply(editedContent);
         setIsEditing(false);
         setEditedContent('');
     };
