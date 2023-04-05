@@ -1,21 +1,21 @@
 import React, { useState, useRef } from 'react';
-import ChatManagerInstance, { ChatManager } from './utils/chatManager';
 import { FiSend } from 'react-icons/fi';
 import { HiArrowPath } from 'react-icons/hi2';
-
+import useChat from './hooks/useChat';
 type Props = {
     chatID: string;
 };
 
 export default function Input({ chatID }: Props) {
     const [userInput, setUserInput] = useState('');
-    const chatManager = useRef<ChatManager>(ChatManagerInstance);
+    const { loading, generateReply } = useChat({ chatID });
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserInput(event.target.value);
     };
+
     const handleSubmit = async () => {
-        await chatManager.current.generateReply({ chatID, content: userInput });
+        generateReply({ chatID, content: userInput });
         setUserInput('');
     };
 

@@ -1,18 +1,27 @@
 import { useState } from 'react';
-import { Chat, Message, OpenAIMessage } from '@/types';
 import { v4 as uuid } from 'uuid';
+import { Chat, Message, UserSubmitMessage, OpenAIMessage } from '@/types';
+import { RootState, AppDispatch, store } from '@/store';
+import {
+    setAll,
+    setOne,
+    selectChatById,
+    selectAllChats,
+    addSingleMessage,
+    updateSingleMessage,
+} from '@/store/chatsSlice';
 
 interface UseChatResult {
     generatedMessage: string;
     loading: boolean;
-    generate: ({ userInput }: { userInput: string }) => Promise<void>;
+    generateReply: (userInput: UserSubmitMessage) => void;
 }
 interface Props {
-    chatId: string | undefined;
+    chatID: string | undefined;
 }
 // https://stackoverflow.com/questions/65688201/react-custom-hook-cant-get-an-async-function
 // use useRef to get a reference to the generated message
-export default function useChat({ chatId }: Props): UseChatResult {
+export default function useChat({ chatID }: Props): UseChatResult {
     const [generatedMessage, setGeneratedMessage] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     let currentChat: Chat;
@@ -21,31 +30,24 @@ export default function useChat({ chatId }: Props): UseChatResult {
         messages: [],
         created: Date.now(),
     };
-    if (!chatId) {
-        // create new chat
-        // save to idb
-    } else {
-        // load existing chat from idb
-    }
 
     // generate reply message
-    const generate = async ({ userInput }: { userInput: string }): Promise<void> => {
-        const prompt = 'write a c++ hello world program';
-        console.log('🚀 ~ file: useChat.ts:29 ~ generate ~ userInput:', userInput);
-        // create a new message
-        const message: Message = {
+    const generateReply = async (userInput: UserSubmitMessage) => {
+        const { chatID, content } = userInput;
+        const userMessage: Message = {
             id: uuid(),
-            chatID: chatId ?? '',
+            chatID,
             timestamp: Date.now(),
             role: 'user',
-            content: userInput,
+            content: content,
         };
+        store.dispatch(addSingleMessage({ chatID, message: userMessage }));
 
-        // Update currentChat
-        currentChat?.messages.push(message);
-        console.log('🚀 ~ file: useChat.ts:46 ~ generate ~ currentChat:', currentChat);
+        const currentChat = selectChatById(store.getState(), chatID);
+        console.log('🚀 ~ file: chatManager.ts:35 ~ ChatManager ~ generateReply ~ currentChat:', currentChat);
 
         setLoading(true);
+        
         const response = await fetch('/api/generate', {
             method: 'POST',
             headers: {
@@ -58,13 +60,22 @@ export default function useChat({ chatId }: Props): UseChatResult {
             console.log(`woops.. ${response.statusText}`);
             throw new Error(response.statusText);
         }
-        // This data is a ReadableStream
-        const data: ReadableStream<Uint8Array> | null = response.body;
-        if (!data) {
-            return;
-        }
 
-        const reader: ReadableStreamDefaultReader<Uint8Array> = data.getReader();
+        let reply: Message = {
+            id: uuid(),
+            chatID: chatID,
+            timestamp: Date.now(),
+            role: 'assistant',
+            content: '',
+        };
+        store.dispatch(addSingleMessage({ chatID, message: reply }));
+
+        // This data is a ReadableStream
+        const data: ReadableStream<Uint8Array> | undefined | null = response.body;
+        if (!data) {
+            throw new Error('Server error');
+        }
+        const reader: ReadableStreamDefaultReader<Uint8Array> = data?.getReader();
         const decoder = new TextDecoder();
         let done = false;
 
@@ -72,23 +83,16 @@ export default function useChat({ chatId }: Props): UseChatResult {
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
-            setGeneratedMessage((prev) => prev + chunkValue);
-        }
-        setLoading(false);
 
-        // create a new message for the reply
-        // const message: Message = {
-        //     id: Date.now().toString(),
-        //     chatID: chatId ?? '',
-        //     timestamp: Date.now(),
-        //     role: 'user',
-        //     content: userInput,
-        // };
+            store.dispatch(updateSingleMessage({ chatID, chunkValue }));
+        }
+
+        // await this.save();
     };
 
     return {
         generatedMessage,
         loading,
-        generate,
+        generateReply,
     };
 }

@@ -50,15 +50,44 @@ export const chatsSlice = createSlice({
                 existingChat.title = title;
             }
         },
+
+        // for editing a message
+        deleteMessageUpTo: (state, action: PayloadAction<{ message: Message }>) => {
+            const { chatID, id: messageID } = action.payload.message;
+            const existingChat = state.entities[chatID];
+            if (existingChat) {
+                let updatedMessages: Message[] = [];
+                for (let i = 0; i < existingChat.messages.length; i++) {
+                    if (existingChat.messages[i].id === messageID) {
+                        console.log(`in deleteMessageupTo. deleting message ${existingChat.messages[i].content}`);
+
+                        // existingChat.messages.splice(i, 1);
+                        break;
+                    }
+                    updatedMessages.push(existingChat.messages[i]);
+                }
+                existingChat.messages = updatedMessages;
+            }
+
+            console.log(`finished deleteMessageUpTo. length of messages: ${existingChat?.messages.length}`);
+        },
     },
 });
 
-export const { setOne, setAll, updateOne, removeOne, removeAll, addSingleMessage, updateSingleMessage, updateTitle } =
-    chatsSlice.actions;
+export const {
+    setOne,
+    setAll,
+    updateOne,
+    removeOne,
+    removeAll,
+    addSingleMessage,
+    updateSingleMessage,
+    updateTitle,
+    deleteMessageUpTo,
+} = chatsSlice.actions;
 export default chatsSlice.reducer;
 
 // Selectors
 export const { selectById: selectChatById, selectAll: selectAllChats } = chatsAdapter.getSelectors(
     (state: RootState) => state.chats
 );
-

@@ -10,7 +10,6 @@ export interface Parameters {
 export interface Message {
     id: string;
     chatID: string;
-    parentID?: string;
     timestamp: number; // epoch time
     role: string;
     content: string;

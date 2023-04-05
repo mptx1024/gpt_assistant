@@ -7,13 +7,14 @@ import chatsReducer, {
     addSingleMessage,
     updateSingleMessage,
     updateTitle,
+    deleteMessageUpTo,
 } from './chatsSlice';
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
 import { Chat, Message } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
 startAppListening({
-    matcher: isAnyOf(removeOne, removeAll, addSingleMessage, updateSingleMessage, updateTitle),
+    matcher: isAnyOf(removeOne, removeAll, addSingleMessage, updateSingleMessage, updateTitle, deleteMessageUpTo),
 
     effect: async (action, listenerApi) => {
         const chats: Chat[] = selectAllChats(store.getState());
