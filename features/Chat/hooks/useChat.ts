@@ -4,7 +4,7 @@ import { Chat, Message, UserSubmitMessage, OpenAIMessage } from '@/types';
 import { RootState, AppDispatch, store } from '@/store';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { selectApiKey } from '@/store/apiKeySlice';
-
+import { errorMessage } from '@/utils/config';
 import {
     selectChatById,
     selectAllChats,
@@ -75,11 +75,11 @@ export default function useChat({ chatID }: Props): UseChatResult {
 
         if (!response.ok) {
             if (response.status === 401) {
-                const unauthorizedMsg = `It seems the API key you entered can't be authorized by OpenAI server. Please make sure you've entered a valid OpenAI API key and try again 🙏🏼`;
-                dispatch(updateSingleMessage({ chatID, chunkValue: unauthorizedMsg }));
+                dispatch(updateSingleMessage({ chatID, chunkValue: errorMessage.unauthorizedMsg }));
+            } else if (response.status === 400) {
+                dispatch(updateSingleMessage({ chatID, chunkValue: errorMessage.badRequestMsg }));
             } else {
-                const serverErrorMsg = `Oops.. it seems there is an error on the OpenAI server 🙈 Please try again later.`;
-                dispatch(updateSingleMessage({ chatID, chunkValue: serverErrorMsg }));
+                dispatch(updateSingleMessage({ chatID, chunkValue: errorMessage.serverErrorMsg }));
             }
             return;
         }

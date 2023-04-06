@@ -1,9 +1,10 @@
-import { OpenAIStream, OpenAIStreamPayload } from '../../utils/OpenAIStream';
-import { Message, OpenAIMessage, Chat } from '@/types';
-
-// if (!process.env.OPENAI_API_KEY) {
-//     throw new Error('Missing env var from OpenAI');
-// }
+import { OpenAIStream } from '../../utils/OpenAIStream';
+import { Message, OpenAIMessage, Chat, OpenAIStreamPayload } from '@/types';
+import { chatHistoryTrimer } from '@/utils/tokenizer';
+// import { init, Tiktoken } from '@dqbd/tiktoken/lite/init';
+// // @ts-expect-error
+// import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
+// import model from '@dqbd/tiktoken/encoders/cl100k_base.json';
 
 export const config = {
     runtime: 'edge',
@@ -13,36 +14,30 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`incoming request: ${req.method} ${req.url}`);
 
     const { currentChat, apiKey } = await req.json();
-
-    /* TODO: 
-        1. Prepare messagesToSend (openai.ts -> createStreamingCatCompletion())
-          - unshift to add system prompt??
-          - trim chat with tokenizer 
-    */
-    // let messagesToSend: Message[] = [];
-
+    
     if (!currentChat.messages) {
         console.log('No messages provided');
         return new Response('No messages in the request', { status: 400 });
     }
 
-    let messagesToSend: OpenAIMessage[] = currentChat.messages.map((message: Message) => {
+    let messages: OpenAIMessage[] = currentChat.messages.map((message: Message) => {
         return {
             role: message.role,
             content: message.content,
         };
     });
 
-    messagesToSend = [
-        {
-            role: 'system',
-            content:
-                "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. Respond using markdown.",
-        },
-        ...messagesToSend,
-    ];
+    const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
+        messages,
+        systemPrompt: currentChat.systemPrompt.content,
+        tokenLimit: currentChat.model.tokenLimit,
+    });
 
-    // console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
+    if (!isTrimSuccess) {
+        console.log('Trimming failed');
+        return new Response('Trimming failed', { status: 400 });
+    }
+    console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
     const payload: OpenAIStreamPayload = {
         model: 'gpt-3.5-turbo',

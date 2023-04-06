@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
+    reactStrictMode: true,
     async redirects() {
         return [
             {
@@ -9,6 +9,14 @@ const nextConfig = {
                 permanent: true,
             },
         ];
+    },
+    webpack(config, { isServer, dev }) {
+        config.experiments = {
+            asyncWebAssembly: true,
+            layers: true,
+        };
+
+        return config;
     },
 };
 
