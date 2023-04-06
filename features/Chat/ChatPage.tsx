@@ -10,7 +10,8 @@ import useChat from './hooks/useChat';
 const ChatPage = memo(function ChatPage({ chatID }: { chatID: string }) {
     const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
     let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
-
+    if (messages.length === 1) {};
+    
     const lastMessageRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

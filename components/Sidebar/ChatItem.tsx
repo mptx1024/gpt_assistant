@@ -65,7 +65,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                 ref={chatRef}
                 className='flex gap-2 items-center py-1 px-2 mx-2 h-10 hover:bg-gray-700 rounded-md cursor-pointer'
             >
-                <div className='flex items-center'>
+                <div className='flex items-center w-44 '>
                     <HiChatBubbleLeftEllipsis className='w-4 h-4 mr-2' />
                     {rename ? (
                         <input
@@ -76,7 +76,13 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                             className=' max-w-xs truncate w-36'
                         />
                     ) : (
-                        <div className='truncate w-36'>{chat.title || chat.id.substring(0, 20)}</div>
+                        <div
+                            className={`overflow-hidden whitespace-nowrap truncate text-based ${
+                                chat.title ? 'animate-typing' : ''
+                            }`}
+                        >
+                            {chat.title || chat.id.substring(0, 20)}
+                        </div>
                     )}
                 </div>
                 {chat.id === currentChat &&

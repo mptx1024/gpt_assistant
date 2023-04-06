@@ -9,3 +9,5 @@ export const copyToClipboard = async (text: string, setIsCopied: (value: boolean
         console.error('Failed to copy text: ', err);
     }
 };
+
+export const generateTitle = (title: string) => {};

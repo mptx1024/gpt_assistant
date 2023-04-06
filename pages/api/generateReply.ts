@@ -1,10 +1,6 @@
 import { OpenAIStream } from '../../utils/OpenAIStream';
 import { Message, OpenAIMessage, Chat, OpenAIStreamPayload } from '@/types';
 import { chatHistoryTrimer } from '@/utils/tokenizer';
-// import { init, Tiktoken } from '@dqbd/tiktoken/lite/init';
-// // @ts-expect-error
-// import wasm from '../../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
-// import model from '@dqbd/tiktoken/encoders/cl100k_base.json';
 
 export const config = {
     runtime: 'edge',

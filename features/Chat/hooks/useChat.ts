@@ -1,17 +1,11 @@
-import { useState, useRef, useCallback, useEffect, Dispatch, SetStateAction } from 'react';
+import { useRef } from 'react';
 import { v4 as uuid } from 'uuid';
-import { Chat, Message, UserSubmitMessage, OpenAIMessage } from '@/types';
-import { RootState, AppDispatch, store } from '@/store';
+import { Message } from '@/types';
+import { store } from '@/store';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { selectApiKey } from '@/store/apiKeySlice';
 import { errorMessage } from '@/utils/config';
-import {
-    selectChatById,
-    selectAllChats,
-    addSingleMessage,
-    updateSingleMessage,
-    deleteMessageUpTo,
-} from '@/store/chatsSlice';
+import { selectChatById, addSingleMessage, updateSingleMessage, deleteMessageUpTo } from '@/store/chatsSlice';
 
 interface UseChatResult {
     // generatedMessage: string;
@@ -56,7 +50,7 @@ export default function useChat({ chatID }: Props): UseChatResult {
 
         const currentChat = selectChatById(store.getState(), chatID);
 
-        const response = await fetch('/api/generate', {
+        const response = await fetch('/api/generateReply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
