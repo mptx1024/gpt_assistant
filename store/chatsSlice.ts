@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
 import { startAppListening } from './listenerMiddleware';
-import { Chat, Message } from '@/types';
+import { Chat, Message, SystemPrompt, OpenAIModels } from '@/types';
+import { defaultSystemPrompt } from '@/utils/config';
 import type { RootState } from '.';
-import * as idb from '@/utils/indexedDB';
 
 const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
@@ -29,6 +29,8 @@ export const chatsSlice = createSlice({
                     id: chatID,
                     messages: [message],
                     created: Date.now(),
+                    systemPrompt: defaultSystemPrompt,
+                    model: OpenAIModels['gpt-3.5-turbo'],
                 });
             }
         },

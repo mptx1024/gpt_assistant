@@ -19,13 +19,19 @@ startAppListening({
     matcher: isAnyOf(removeOne, removeAll, addSingleMessage, updateSingleMessage, updateTitle, deleteMessageUpTo),
 
     effect: async (action, listenerApi) => {
-        const chats: Chat[] = selectAllChats(store.getState());
-        let chatsToSave: Chat[] = [];
-        for (const chatID in chats) {
-            if (chats[chatID].messages.length > 0) {
-                chatsToSave.push(chats[chatID]);
+        if (action.type === 'chats/removeAll') {
+            await idb.del('chats');
+        } else if (action.type === 'chats/setOne') {
+// fetch title 
+        } else {
+            const chats: Chat[] = selectAllChats(store.getState());
+            let chatsToSave: Chat[] = [];
+            for (const chatID in chats) {
+                if (chats[chatID].messages.length > 0) {
+                    chatsToSave.push(chats[chatID]);
+                }
+                await idb.set('chats', chatsToSave);
             }
-            await idb.set('chats', chatsToSave);
         }
     },
 });

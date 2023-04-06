@@ -26,11 +26,10 @@ export default function Layout({ children }: Props) {
     useEffect(() => {
         const loadChats = async () => {
             const chats: Chat[] = await idb.get('chats');
-
-            dispatch(setAll(chats));
+            if (chats) {
+                dispatch(setAll(chats));
+            }
             console.log(`in layout: loaded chats`);
-
-            // Set loading state to false after chats are loaded
             setIsLoading(false);
         };
         loadChats();

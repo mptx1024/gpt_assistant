@@ -1,7 +1,13 @@
 import { HiTrash, HiCalculator, HiCheck, HiOutlineXMark, HiOutlineCog6Tooth } from 'react-icons/hi2';
-import { useState } from 'react';
+
+import { removeAll } from '@/store/chatsSlice';
+import { useAppDispatch } from '@/store/hooks';
+import { useRouter } from 'next/router';
+
 interface Props {}
 const Settings = (props: Props) => {
+    const dispatch = useAppDispatch();
+    const router = useRouter();
     const onClickUsage = () => {
         // Your implementation for Usage onClick event
     };
@@ -12,9 +18,12 @@ const Settings = (props: Props) => {
 
     const onConfirmClearChats = () => {
         // Your implementation for clearing chats
+
         if (document.activeElement instanceof HTMLElement) {
             document.activeElement.blur();
         }
+        dispatch(removeAll());
+        router.push('/chat');
     };
 
     return (
@@ -57,7 +66,7 @@ const Settings = (props: Props) => {
                 className='btn m-1 flex gap-5 items-center justify-start py-1 px-2 mx-2 text-md hover:bg-gray-700 rounded-md cursor-pointer'
             >
                 <HiOutlineCog6Tooth className='w-4 h-4' />
-                API Settings
+                Settings
             </label>
         </div>
     );

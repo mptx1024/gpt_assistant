@@ -12,18 +12,12 @@ export default function Landing() {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        const systemPrompt: SystemPrompt = {
-            content: defaultSystemPrompt,
-            name: 'default',
-            id: uuid(),
-        };
-
         const model = OpenAIModels[modelID];
         const newChat: Chat = {
             id: uuid(),
             messages: [],
             created: Date.now(),
-            systemPrompt: systemPrompt,
+            systemPrompt: defaultSystemPrompt,
             model: model,
         };
         setNewChatID(newChat.id);
