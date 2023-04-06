@@ -1,6 +1,6 @@
 import { Chat } from '@/types';
 import NewChat from './NewChat';
-import Settings from './Settings';
+import Settings from './settings/Settings';
 import { selectAllChats } from '@/store/chatsSlice';
 import { useSelector } from 'react-redux';
 import ChatList from './ChatList';

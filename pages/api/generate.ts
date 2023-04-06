@@ -1,8 +1,9 @@
 import { OpenAIStream, OpenAIStreamPayload } from '../../utils/OpenAIStream';
 import { Message, OpenAIMessage, Chat } from '@/types';
-if (!process.env.OPENAI_API_KEY) {
-    throw new Error('Missing env var from OpenAI');
-}
+
+// if (!process.env.OPENAI_API_KEY) {
+//     throw new Error('Missing env var from OpenAI');
+// }
 
 export const config = {
     runtime: 'edge',
@@ -11,7 +12,7 @@ export const config = {
 const handler = async (req: Request): Promise<Response> => {
     console.log(`incoming request: ${req.method} ${req.url}`);
 
-    const { messages } = (await req.json()) as Chat;
+    const { currentChat, apiKey } = await req.json();
 
     /* TODO: 
         1. Prepare messagesToSend (openai.ts -> createStreamingCatCompletion())
@@ -20,17 +21,18 @@ const handler = async (req: Request): Promise<Response> => {
     */
     // let messagesToSend: Message[] = [];
 
-    if (!messages) {
+    if (!currentChat.messages) {
         console.log('No messages provided');
         return new Response('No messages in the request', { status: 400 });
     }
 
-    let messagesToSend: OpenAIMessage[] = messages.map((message: Message, index) => {
+    let messagesToSend: OpenAIMessage[] = currentChat.messages.map((message: Message) => {
         return {
             role: message.role,
             content: message.content,
         };
     });
+
     messagesToSend = [
         {
             role: 'system',
@@ -39,7 +41,8 @@ const handler = async (req: Request): Promise<Response> => {
         },
         ...messagesToSend,
     ];
-    console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
+
+    // console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
     const payload: OpenAIStreamPayload = {
         model: 'gpt-3.5-turbo',
@@ -54,8 +57,22 @@ const handler = async (req: Request): Promise<Response> => {
         // n: 1,
     };
 
-    const stream = await OpenAIStream(payload);
-    return new Response(stream);
+    try {
+        const stream = await OpenAIStream(payload, apiKey);
+        return new Response(stream);
+    } catch (error: any) {
+        console.log(`error.message: ${error.message}; error.cause: ${error.cause};`);
+        if (error.cause === 401) {
+            return new Response(null, {
+                status: 401,
+                statusText: error.message,
+            });
+        }
+        return new Response(null, {
+            status: 500,
+            statusText: error.message,
+        });
+    }
 };
 
 export default handler;

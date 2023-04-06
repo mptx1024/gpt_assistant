@@ -1,5 +1,6 @@
 import { configureStore, isAnyOf } from '@reduxjs/toolkit';
 import uiReducer from './uiSlice';
+import apiKeyReducer from './apiKeySlice';
 import chatsReducer, {
     selectAllChats,
     removeOne,
@@ -11,6 +12,7 @@ import chatsReducer, {
 } from './chatsSlice';
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
 import { Chat, Message } from '@/types';
+
 import * as idb from '@/utils/indexedDB';
 
 startAppListening({
@@ -31,6 +33,7 @@ export const store = configureStore({
     reducer: {
         ui: uiReducer,
         chats: chatsReducer,
+        apiKey: apiKeyReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });

@@ -36,7 +36,13 @@ const ChatPage = memo(function ChatPage({ chatID }: { chatID: string }) {
                 className='absolute left-1/2 transform -translate-x-1/2 bottom-0 flex flex-col justify-center items-center w-full
                 bg-gradient-to-b from-transparent via-white to-white'
             >
-                <Input chatID={chatID} generateReply={generateReply} regenerate={regenerate} isLoading={isLoading} setStopGenerating={setStopGenerating}/>
+                <Input
+                    chatID={chatID}
+                    generateReply={generateReply}
+                    regenerate={regenerate}
+                    isLoading={isLoading}
+                    setStopGenerating={setStopGenerating}
+                />
             </div>
         </div>
     );

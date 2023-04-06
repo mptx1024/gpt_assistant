@@ -8,9 +8,9 @@ import { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAll } from '@/store/chatsSlice';
 import { toggleSidebar } from '../store/uiSlice';
-import SettingModal from './Sidebar/SettingModal';
-import UsageModal from './Sidebar/UsageModal';
-import Input from '../features/Chat/Input';
+import SettingModal from './Sidebar/settings/SettingModal';
+import UsageModal from './Sidebar/settings/UsageModal';
+
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {

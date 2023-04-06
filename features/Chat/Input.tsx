@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FiSend } from 'react-icons/fi';
-import { HiArrowPath } from 'react-icons/hi2';
+import { HiArrowPath, HiOutlineKey } from 'react-icons/hi2';
+import { useAppSelector } from '@/store/hooks';
+
 type Props = {
     chatID: string;
     generateReply: (content: string) => void;
@@ -9,8 +11,11 @@ type Props = {
     setStopGenerating: () => void;
 };
 
-export default function Input({ chatID, generateReply, regenerate, isLoading, setStopGenerating }: Props) {
+export default React.memo(function Input({ chatID, generateReply, regenerate, isLoading, setStopGenerating }: Props) {
     const [userInput, setUserInput] = useState('');
+
+    const apiKey = useAppSelector((state) => state.apiKey.apiKey);
+    // console.log(`apiKey: ${JSON.stringify(apiKey)}`);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserInput(event.target.value);
@@ -34,6 +39,15 @@ export default function Input({ chatID, generateReply, regenerate, isLoading, se
         }
     };
 
+    if (!apiKey) {
+        return (
+            <label className='btn btn-primary capitalize gap-2 my-10' htmlFor='setting-modal'>
+                <HiOutlineKey size='1rem' />
+                Enter Your openAI API Key to Start
+            </label>
+        );
+    }
+
     return (
         <div className='flex flex-col items-center mb-4 w-10/12 max-w-3xl'>
             {isLoading ? (
@@ -50,6 +64,7 @@ export default function Input({ chatID, generateReply, regenerate, isLoading, se
                     Regenerate
                 </button>
             )}
+
             <div className='flex justify-between items-center w-full border border-slate-30 rounded-lg overflow-hidden '>
                 <textarea
                     className='text-base p-2 w-full resize-none outline-none'
@@ -69,4 +84,4 @@ export default function Input({ chatID, generateReply, regenerate, isLoading, se
             </div>
         </div>
     );
-}
+});

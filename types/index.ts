@@ -25,8 +25,8 @@ export interface Chat {
     messages: Message[];
     title?: string | null;
     created: number;
-    // updated: number;
-    // deleted?: boolean;
+    systemPrompt?: string;
+    model?: string;
 }
 
 export interface OpenAIMessage {

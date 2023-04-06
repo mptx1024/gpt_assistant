@@ -3,10 +3,9 @@ import { v4 as uuid } from 'uuid';
 import { Chat, Message, UserSubmitMessage, OpenAIMessage } from '@/types';
 import { RootState, AppDispatch, store } from '@/store';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { selectApiKey } from '@/store/apiKeySlice';
 
 import {
-    setAll,
-    setOne,
     selectChatById,
     selectAllChats,
     addSingleMessage,
@@ -28,6 +27,7 @@ interface Props {
 export default function useChat({ chatID }: Props): UseChatResult {
     const isLoadingRef = useRef<boolean>(false);
     const stopGeneratingRef = useRef<boolean>(false);
+    const apiKey = useAppSelector(selectApiKey);
     const dispatch = useAppDispatch();
     const setStopGenerating = () => {
         stopGeneratingRef.current = true;
@@ -42,6 +42,8 @@ export default function useChat({ chatID }: Props): UseChatResult {
     };
 
     const generateReply = async (userInput: string) => {
+        isLoadingRef.current = true;
+
         const userMessage: Message = {
             id: uuid(),
             chatID,
@@ -49,34 +51,38 @@ export default function useChat({ chatID }: Props): UseChatResult {
             role: 'user',
             content: userInput,
         };
+
         dispatch(addSingleMessage({ chatID, message: userMessage }));
 
         const currentChat = selectChatById(store.getState(), chatID);
-        console.log('🚀 ~ file: chatManager.ts:35 ~ ChatManager ~ generateReply ~ currentChat:', currentChat);
-
-        isLoadingRef.current = true;
 
         const response = await fetch('/api/generate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(currentChat),
+            body: JSON.stringify({ currentChat, apiKey }),
         });
 
-        if (!response.ok) {
-            console.log(`woops.. ${response.statusText}`);
-            throw new Error(response.statusText);
-        }
-
-        let reply: Message = {
+        const reply: Message = {
             id: uuid(),
             chatID: chatID,
             timestamp: Date.now(),
             role: 'assistant',
             content: '',
         };
-        store.dispatch(addSingleMessage({ chatID, message: reply }));
+        dispatch(addSingleMessage({ chatID, message: reply }));
+
+        if (!response.ok) {
+            if (response.status === 401) {
+                const unauthorizedMsg = `It seems the API key you entered can't be authorized by OpenAI server. Please make sure you've entered a valid OpenAI API key and try again 🙏🏼`;
+                dispatch(updateSingleMessage({ chatID, chunkValue: unauthorizedMsg }));
+            } else {
+                const serverErrorMsg = `Oops.. it seems there is an error on the OpenAI server 🙈 Please try again later.`;
+                dispatch(updateSingleMessage({ chatID, chunkValue: serverErrorMsg }));
+            }
+            return;
+        }
 
         // This data is a ReadableStream
         const data: ReadableStream<Uint8Array> | undefined | null = response.body;
@@ -94,7 +100,7 @@ export default function useChat({ chatID }: Props): UseChatResult {
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
-            store.dispatch(updateSingleMessage({ chatID, chunkValue }));
+            dispatch(updateSingleMessage({ chatID, chunkValue }));
         }
 
         isLoadingRef.current = false;
