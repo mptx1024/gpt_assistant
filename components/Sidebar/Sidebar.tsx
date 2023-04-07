@@ -19,7 +19,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     return (
         <div className={sidebarClasses}>
             <NewChat toggleSidebar={toggleSidebar} />
-            <ChatList chats={chats} />
+            <ChatList chats={chats} isSidebarOpen={isSidebarOpen} />
             <Settings />
         </div>
     );

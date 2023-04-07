@@ -28,7 +28,7 @@ module.exports = {
                 },
             },
             animation: {
-                typing: 'typing 2s steps(20) alternate, blink .7s',
+                typing: 'typing 2s steps(30) alternate',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },
         },
