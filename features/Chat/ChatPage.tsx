@@ -6,12 +6,14 @@ import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
 import { useEffect, useRef, memo } from 'react';
 import useChat from './hooks/useChat';
+import { Transition } from '@headlessui/react';
 
 const ChatPage = memo(function ChatPage({ chatID }: { chatID: string }) {
     const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
     let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
-    if (messages.length === 1) {};
-    
+    if (messages.length === 1) {
+    }
+
     const lastMessageRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -25,7 +27,7 @@ const ChatPage = memo(function ChatPage({ chatID }: { chatID: string }) {
             {messages.length === 0 && <div>new msg. show home page stuff</div>}
 
             {messages && (
-                <div id='messages-box' className='mb-32'>
+                <div id='messages-box' className='mb-32 animate-slideIn'>
                     {messages.map((message, index) => (
                         <ChatMessage key={index} message={message} generateReply={generateReply} />
                     ))}

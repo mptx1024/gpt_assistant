@@ -26,9 +26,20 @@ module.exports = {
                         borderColor: 'white',
                     },
                 },
+                slideIn: {
+                    '0%': {
+                        opacity: '0%',
+                        transform: 'translateY(20px)',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                        transform: 'translateY(0px)',
+                    },
+                },
             },
             animation: {
-                typing: 'typing 2s steps(30) alternate',
+                typing: 'typing 0.7s  alternate',
+                slideIn: 'slideIn 0.4s ease',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },
         },

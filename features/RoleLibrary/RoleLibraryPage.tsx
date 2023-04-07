@@ -24,7 +24,7 @@ const RoleLibraryPage = (props: Props) => {
     return (
         <div className='h-full w-full'>
             <Transition
-                className='my-16 '
+                className='my-16'
                 appear={true}
                 show={true}
                 enter='transition-all ease-in-out duration-500 delay-[200ms]'
