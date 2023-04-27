@@ -1,2 +1,0 @@
-import { SystemPrompt } from "@/types";
-

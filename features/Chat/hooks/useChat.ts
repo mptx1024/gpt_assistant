@@ -49,7 +49,7 @@ export default function useChat({ chatID }: Props): UseChatResult {
         dispatch(addSingleMessage({ chatID, message: userMessage }));
 
         const currentChat = selectChatById(store.getState(), chatID);
-
+        
         const response = await fetch('/api/generateReply', {
             method: 'POST',
             headers: {

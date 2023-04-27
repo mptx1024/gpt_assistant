@@ -21,9 +21,9 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         setRename(true);
         setTitle(chat.title || chat.id.substring(0, 20));
     };
-    const onClickChat = (id: string) => {
-        setCurrentChat(chat.id);
-    };
+    // const onClickChat = (id: string) => {
+    //     setCurrentChat(chat.id);
+    // };
     const onClickRemove = () => {
         setRemove(true);
     };
@@ -58,7 +58,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
     }, [chatRef]);
 
     return (
-        <Link href={`/chat/${encodeURIComponent(chat.id)}`} onClick={() => onClickChat(chat.id)}>
+        <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
             <div
                 ref={chatRef}
                 className={`flex gap-2 items-center py-1 px-2 mx-2 h-10 hover:bg-gray-700 rounded-md cursor-pointer relative 

@@ -18,7 +18,6 @@ export default function Layout({ children }: Props) {
 
     const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
     const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
-    console.log(`in Layout`);
 
     // Add a loading state
     const [isLoading, setIsLoading] = useState(true);

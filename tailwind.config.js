@@ -49,7 +49,7 @@ module.exports = {
             visibility: ['group-hover'],
         },
     },
-    plugins: [require('@tailwindcss/typography'), require('daisyui')],
+    plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp'), require('daisyui')],
     // plugins: [],
     daisyui: {
         styled: true,

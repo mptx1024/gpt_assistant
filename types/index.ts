@@ -28,14 +28,19 @@ export interface Chat {
     title?: string | null;
     created: number;
     systemPrompt: SystemPrompt;
-    model?: OpenAIModel;
+    model: OpenAIModel;
 }
 
 export interface SystemPrompt {
-    content: string;
-    name: string;
+    prompt: string;
+    role: string;
     id: string;
 }
+export const defaultSystemPrompt: SystemPrompt = {
+    prompt: `You are ChatGPT, a large language model trained by OpenAI. Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+    role: 'default',
+    id: '001',
+};
 
 export interface OpenAIStreamPayload {
     model: string;
@@ -61,9 +66,6 @@ export enum OpenAIModelID {
     GPT_4 = 'gpt-4',
 }
 
-// in case the `DEFAULT_MODEL` environment variable is not set or set to an unsupported model
-export const fallbackModelID = OpenAIModelID.GPT_3_5;
-
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     [OpenAIModelID.GPT_3_5]: {
         id: OpenAIModelID.GPT_3_5,
@@ -85,3 +87,9 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
 //     preserveSystemPrompt: boolean;
 //     preserveFirstUserMessage: boolean;
 // }
+
+export interface Setting {
+    apiToken: string;
+    theme: string;
+    model: OpenAIModelID;
+}

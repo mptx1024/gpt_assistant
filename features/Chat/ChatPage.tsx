@@ -1,17 +1,21 @@
 import Input from './Input';
 import ChatMessage from './ChatMessage';
-import { Message } from '@/types';
+import { Message, Chat } from '@/types';
 import { selectChatById } from '@/store/chatsSlice';
 import { useSelector } from 'react-redux';
 import { RootState, store } from '@/store';
 import { useEffect, useRef, memo } from 'react';
 import useChat from './hooks/useChat';
-import { Transition } from '@headlessui/react';
 
-const ChatPage = memo(function ChatPage({ chatID }: { chatID: string }) {
-    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
-    let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
-    if (messages.length === 1) {
+interface Props {
+    chat: Chat;
+}
+const ChatPage = memo(function ChatPage({ chat }: Props) {
+    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID: chat.id });
+    // let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
+    let messages: Message[] = chat.messages;
+    // redirect
+    if (messages.length === 0) {
     }
 
     const lastMessageRef = useRef<HTMLDivElement>(null);
@@ -40,7 +44,6 @@ const ChatPage = memo(function ChatPage({ chatID }: { chatID: string }) {
                 bg-gradient-to-b from-transparent via-white to-white'
             >
                 <Input
-                    chatID={chatID}
                     generateReply={generateReply}
                     regenerate={regenerate}
                     isLoading={isLoading}

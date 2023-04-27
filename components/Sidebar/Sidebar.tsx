@@ -11,7 +11,8 @@ interface Props {
 }
 
 export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
-    const chats: Chat[] | null = useSelector(selectAllChats).filter((chat) => chat.messages.length > 0);
+    const chats: Chat[] | null = useSelector(selectAllChats)
+    // .filter((chat) => chat.messages.length > 0);
 
     const sidebarClasses = `fixed top-0 left-0 flex flex-col transform transition-transform h-screen w-full sm:w-64 bg-gray-800 text-white ${
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full'

@@ -1,4 +1,4 @@
-import RoleLibraryPage from '@/features/RoleLibrary/RoleLibraryPage';
+import RoleLibraryPage from '@/features/AiRole/RoleLibraryPage';
 
 function Landing() {
     return <RoleLibraryPage />;

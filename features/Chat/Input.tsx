@@ -4,14 +4,13 @@ import { HiArrowPath, HiOutlineKey } from 'react-icons/hi2';
 import { useAppSelector } from '@/store/hooks';
 
 type Props = {
-    chatID: string;
     generateReply: (content: string) => void;
     regenerate: () => void;
     isLoading: boolean;
     setStopGenerating: () => void;
 };
 
-export default React.memo(function Input({ chatID, generateReply, regenerate, isLoading, setStopGenerating }: Props) {
+export default React.memo(function Input({ generateReply, regenerate, isLoading, setStopGenerating }: Props) {
     const [userInput, setUserInput] = useState('');
 
     const apiKey = useAppSelector((state) => state.apiKey.apiKey);

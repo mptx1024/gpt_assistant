@@ -9,6 +9,7 @@ import chatsReducer, {
     updateSingleMessage,
     updateTitle,
     deleteMessageUpTo,
+    setOne,
 } from './chatsSlice';
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
 import { Chat, Message } from '@/types';
@@ -16,13 +17,21 @@ import { Chat, Message } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
 startAppListening({
-    matcher: isAnyOf(removeOne, removeAll, addSingleMessage, updateSingleMessage, updateTitle, deleteMessageUpTo),
+    matcher: isAnyOf(
+        setOne,
+        removeOne,
+        removeAll,
+        addSingleMessage,
+        updateSingleMessage,
+        updateTitle,
+        deleteMessageUpTo
+    ),
 
     effect: async (action, listenerApi) => {
         if (action.type === 'chats/removeAll') {
             await idb.del('chats');
         } else if (action.type === 'chats/setOne') {
-// fetch title 
+            // fetch title
         } else {
             const chats: Chat[] = selectAllChats(store.getState());
             let chatsToSave: Chat[] = [];
@@ -35,6 +44,7 @@ startAppListening({
         }
     },
 });
+
 export const store = configureStore({
     reducer: {
         ui: uiReducer,
