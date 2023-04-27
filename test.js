@@ -1,4 +1,4 @@
-const months = ['Jan', 'March', 'April', 'June'];
-months.splice(2, 1);
-// Inserts at index 1
-console.log(months);
+const cards = Array.from({ length: 10 }).map((_, index) => (
+        index
+    ))
+console.log(cards); // Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

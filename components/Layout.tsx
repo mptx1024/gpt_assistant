@@ -18,7 +18,6 @@ export default function Layout({ children }: Props) {
 
     const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
     const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
-    console.log(`in Layout`);
 
     // Add a loading state
     const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +44,7 @@ export default function Layout({ children }: Props) {
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <div className='fixed flex h-full w-full'>
+            <div className='fixed flex h-full w-full items-stretch'>
                 <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={onClickSidebar} />
                 <main
                     className={`flex flex-col flex-grow h-full w-full transition-width duration-300 items-center justify-between relative

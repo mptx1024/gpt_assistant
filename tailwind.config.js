@@ -26,9 +26,20 @@ module.exports = {
                         borderColor: 'white',
                     },
                 },
+                slideIn: {
+                    '0%': {
+                        opacity: '0%',
+                        transform: 'translateY(20px)',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                        transform: 'translateY(0px)',
+                    },
+                },
             },
             animation: {
-                typing: 'typing 2s steps(20) alternate, blink .7s',
+                typing: 'typing 0.7s  alternate',
+                slideIn: 'slideIn 0.4s ease',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },
         },
@@ -38,7 +49,7 @@ module.exports = {
             visibility: ['group-hover'],
         },
     },
-    plugins: [require('@tailwindcss/typography'), require('daisyui')],
+    plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp'), require('daisyui')],
     // plugins: [],
     daisyui: {
         styled: true,

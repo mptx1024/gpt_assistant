@@ -1,19 +1,17 @@
 import { useRouter } from 'next/router';
-import { Suspense, useEffect, useRef, useState } from 'react';
-
+import { selectChatById } from '@/store/chatsSlice';
+import { useSelector } from 'react-redux';
+import { RootState, store } from '@/store';
 import ChatPage from '@/features/Chat/ChatPage';
-
+import { Chat } from '@/types';
 export default function DynamicChatPage() {
     const router = useRouter();
-    const chatID = useRef<string | null>(null);
     const { id } = router.query;
-    if (typeof id === 'string') {
-        chatID.current = id;
+    const chat = useSelector((state: RootState) => selectChatById(state, id as string));
+    if (!chat) {
+        router.push('/role');
+        return null;
     }
 
-    if (!chatID.current) {
-        return <div>No Chat Found</div>;
-    }
-
-    return <ChatPage chatID={chatID.current} />;
+    return <ChatPage chat={chat} />;
 }

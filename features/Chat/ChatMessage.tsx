@@ -76,14 +76,22 @@ export default function ChatMessage({ message, generateReply }: Props) {
                         </div>
                     </div>
                 )}
-                {isHovered && !isEditing && (
-                    <div className='flex gap-2'>
+                {!isEditing && (
+                    <div
+                        className={`flex gap-2 absolute right-10 opacity-0 
+                        transition-all ease-in-out duration-300 ${isHovered ? 'opacity-100 right-0' : ''}`}
+                    >
                         {!isCopied ? (
-                            <HiOutlineClipboard onClick={handleCopyToClipboard} className='cursor-pointer' />
+                            <HiOutlineClipboard
+                                onClick={handleCopyToClipboard}
+                                className='cursor-pointer hover:scale-110'
+                            />
                         ) : (
                             <TbClipboardCheck className='text-green-500' />
                         )}
-                        {message.role === 'user' && <HiPencilSquare onClick={handleEdit} className='cursor-pointer' />}
+                        {message.role === 'user' && (
+                            <HiPencilSquare onClick={handleEdit} className='cursor-pointer hover:scale-110' />
+                        )}
                     </div>
                 )}
             </div>

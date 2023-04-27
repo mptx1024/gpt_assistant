@@ -1,7 +1,6 @@
 import { FC, useState, useRef, useEffect } from 'react';
 import { HiPencilSquare, HiTrash, HiCheck, HiOutlineXMark, HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
 import { Chat } from '@/types';
-import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { updateTitle, removeOne } from '@/store/chatsSlice';
 import Link from 'next/link';
@@ -13,7 +12,6 @@ interface ChatItemProps {
 }
 
 const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
-    const router = useRouter();
     const [rename, setRename] = useState(false);
     const [remove, setRemove] = useState(false);
     const [title, setTitle] = useState('');
@@ -23,9 +21,9 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         setRename(true);
         setTitle(chat.title || chat.id.substring(0, 20));
     };
-    const onClickChat = (id: string) => {
-        setCurrentChat(chat.id);
-    };
+    // const onClickChat = (id: string) => {
+    //     setCurrentChat(chat.id);
+    // };
     const onClickRemove = () => {
         setRemove(true);
     };
@@ -37,7 +35,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         } else if (remove) {
             // TODO: remove chat
             dispatch(removeOne(chat.id));
-            router.push('/chat');
+            // router.push('/chat');
         }
         onClickCancel();
     };
@@ -60,10 +58,12 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
     }, [chatRef]);
 
     return (
-        <Link href={`/chat/${encodeURIComponent(chat.id)}`} onClick={() => onClickChat(chat.id)}>
+        <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
             <div
                 ref={chatRef}
-                className='flex gap-2 items-center py-1 px-2 mx-2 h-10 hover:bg-gray-700 rounded-md cursor-pointer'
+                className={`flex gap-2 items-center py-1 px-2 mx-2 h-10 hover:bg-gray-700 rounded-md cursor-pointer relative 
+                [&_.chat-item-btns]:hover:opacity-100 [&_.chat-item-btns]:hover:right-2 
+                ${currentChat === chat.id ? 'bg-gray-700' : ''}`}
             >
                 <div className='flex items-center w-44 '>
                     <HiChatBubbleLeftEllipsis className='w-4 h-4 mr-2' />
@@ -85,24 +85,23 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                         </div>
                     )}
                 </div>
-                {chat.id === currentChat &&
-                    (rename || remove ? (
-                        <div className='flex items-center gap-1'>
-                            <HiCheck className='w-4 h-4 text-slate-400 hover:text-slate-50' onClick={onClickConfirm} />
-                            <HiOutlineXMark
-                                className='w-4 h-4 text-slate-400 hover:text-slate-50'
-                                onClick={onClickCancel}
-                            />
-                        </div>
-                    ) : (
-                        <div className='flex items-center gap-1'>
-                            <HiPencilSquare
-                                className='w-4 h-4 text-slate-400 hover:text-slate-50'
-                                onClick={onClickRename}
-                            />
-                            <HiTrash className='w-4 h-4 text-slate-400 hover:text-slate-50' onClick={onClickRemove} />
-                        </div>
-                    ))}
+                {rename || remove ? (
+                    <div className='flex items-center gap-1'>
+                        <HiCheck className='w-4 h-4 text-slate-400 hover:text-slate-50' onClick={onClickConfirm} />
+                        <HiOutlineXMark
+                            className='w-4 h-4 text-slate-400 hover:text-slate-50'
+                            onClick={onClickCancel}
+                        />
+                    </div>
+                ) : (
+                    <div className='chat-item-btns flex items-center gap-1 absolute -right-3 opacity-0 transition-all ease-in duration-200'>
+                        <HiPencilSquare
+                            className='w-4 h-4 text-slate-400 hover:text-slate-50 '
+                            onClick={onClickRename}
+                        />
+                        <HiTrash className='w-4 h-4 text-slate-400 hover:text-slate-50' onClick={onClickRemove} />
+                    </div>
+                )}
             </div>
         </Link>
     );

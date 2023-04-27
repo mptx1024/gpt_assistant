@@ -3,6 +3,7 @@ import { HiTrash, HiCalculator, HiCheck, HiOutlineXMark, HiOutlineCog6Tooth } fr
 import { removeAll } from '@/store/chatsSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface Props {}
 const Settings = (props: Props) => {
@@ -23,7 +24,7 @@ const Settings = (props: Props) => {
             document.activeElement.blur();
         }
         dispatch(removeAll());
-        router.push('/chat');
+        // router.push('/chat');
     };
 
     return (
@@ -41,7 +42,9 @@ const Settings = (props: Props) => {
                     className='dropdown-content flex items-center shadow rounded-lg w-48 gap-3 text-primary-content p-3'
                 >
                     Are you sure?
-                    <HiCheck className='w-5 h-5 cursor-pointer hover:bg-gray-700' onClick={onConfirmClearChats} />
+                    <Link href={'/chat'}>
+                        <HiCheck className='w-5 h-5 cursor-pointer hover:bg-gray-700' onClick={onConfirmClearChats} />
+                    </Link>
                     <HiOutlineXMark
                         className='w-5 h-5 cursor-pointer hover:bg-gray-700 '
                         onClick={() => {

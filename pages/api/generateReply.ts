@@ -9,8 +9,8 @@ export const config = {
 const handler = async (req: Request): Promise<Response> => {
     console.log(`incoming request: ${req.method} ${req.url}`);
 
-    const { currentChat, apiKey } = await req.json();
-    
+    const { currentChat, apiKey } = (await req.json()) as { currentChat: Chat; apiKey: string };
+
     if (!currentChat.messages) {
         console.log('No messages provided');
         return new Response('No messages in the request', { status: 400 });
@@ -25,7 +25,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
         messages,
-        systemPrompt: currentChat.systemPrompt.content,
+        systemPrompt: currentChat.systemPrompt.prompt,
         tokenLimit: currentChat.model.tokenLimit,
     });
 

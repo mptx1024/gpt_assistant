@@ -6,9 +6,18 @@ export default function CatchAll({}: Props) {
 
     return (
         <Suspense fallback={null}>
-            <>
-                <div>catch all : {router.asPath}</div>
-            </>
+            <div>
+                <div className='[&_.a-child-class]:text-5xl'>
+                    <p className='a-child-class'>first</p>
+                    <p className='a-child-class'>second</p>
+                    <p className='a-child-class'>thrid</p>
+                    <p className='a-child-class'>forth</p>
+                    <div>
+                        <p className='a-child-class'>nested</p>
+                    </div>
+                </div>
+                catch all : {router.asPath}
+            </div>
         </Suspense>
     );
 }
