@@ -1,11 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { Fragment, useState } from 'react';
-interface Props {
-    children: React.ReactNode;
-    isOpen: boolean;
-    toggleModal: () => void;
-}
-const Modal = (props: Props) => {
+
+
+const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal: () => void }) => {
     return (
         // Use the `Transition` component at the root level
         <Transition show={props.isOpen} as={'div'} className='fixed' onClick={props.toggleModal}>

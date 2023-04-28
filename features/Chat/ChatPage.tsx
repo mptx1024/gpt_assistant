@@ -12,7 +12,7 @@ interface Props {
 }
 const ChatPage = memo(function ChatPage({ chat }: Props) {
     const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID: chat.id });
-    // let messages: Message[] = useSelector((state: RootState) => selectChatById(state, chatID)?.messages || []);
+
     let messages: Message[] = chat.messages;
     // redirect
     if (messages.length === 0) {

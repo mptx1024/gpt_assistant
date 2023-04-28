@@ -64,7 +64,7 @@ export default React.memo(function Input({ generateReply, regenerate, isLoading,
                 </button>
             )}
 
-            <div className='flex justify-between items-center w-full border border-slate-30 rounded-lg overflow-hidden '>
+            <div className='flex justify-between items-center w-full border border-slate-300 rounded-lg overflow-hidden '>
                 <textarea
                     className='text-base p-2 w-full resize-none outline-none'
                     placeholder='Type here...'
