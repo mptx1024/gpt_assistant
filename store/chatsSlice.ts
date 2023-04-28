@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
-import { startAppListening } from './listenerMiddleware';
 import { Chat, Message, SystemPrompt, OpenAIModels, defaultSystemPrompt } from '@/types';
 
 import type { RootState } from '.';
@@ -25,15 +24,7 @@ export const chatsSlice = createSlice({
             if (existingChat) {
                 existingChat.messages = [...existingChat.messages, message];
             }
-            // else {
-            //     chatsAdapter.addOne(state, {
-            //         id: chatID,
-            //         messages: [message],
-            //         created: Date.now(),
-            //         systemPrompt: defaultSystemPrompt,
-            //         model: OpenAIModels['gpt-3.5-turbo'],
-            //     });
-            // }
+
         },
         // for streaming updates
         updateSingleMessage: (state, action: PayloadAction<{ chatID: string; chunkValue: string }>) => {

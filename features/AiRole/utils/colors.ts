@@ -12,6 +12,9 @@
 //     'orange',
 //     'gray',
 // ];
+export const getRandomColor = (): string => {
+    return colors[Math.floor(Math.random() * colors.length)];
+};
 
 export const colors: string[] = [
     'bg-red-400',

@@ -1,6 +1,5 @@
 import { Chat, SystemPrompt, defaultSystemPrompt, OpenAIModelID, OpenAIModels } from '@/types';
 import { v4 as uuid } from 'uuid';
-import { Dispatch } from 'redux';
 import { store } from '@/store';
 import { setOne } from '@/store/chatsSlice';
 

@@ -11,8 +11,18 @@ import chatsReducer, {
     deleteMessageUpTo,
     setOne,
 } from './chatsSlice';
+
+import roleReducer, {
+    setOneRole,
+    updateOneRole,
+    removeOneRole,
+    removeAllRoles,
+    selectRoleById,
+    selectAllRoles,
+} from './rolesSlice';
+
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
-import { Chat, Message } from '@/types';
+import { Chat, Message, SystemPrompt } from '@/types';
 
 import * as idb from '@/utils/indexedDB';
 
@@ -30,9 +40,11 @@ startAppListening({
     effect: async (action, listenerApi) => {
         if (action.type === 'chats/removeAll') {
             await idb.del('chats');
-        } else if (action.type === 'chats/setOne') {
-            // fetch title
-        } else {
+        }
+        // else if (action.type === 'chats/setOne') {
+        //     //
+        // }
+        else {
             const chats: Chat[] = selectAllChats(store.getState());
             let chatsToSave: Chat[] = [];
             for (const chatID in chats) {
@@ -45,11 +57,26 @@ startAppListening({
     },
 });
 
+startAppListening({
+    matcher: isAnyOf(setOneRole, updateOneRole, removeOneRole, removeAllRoles),
+
+    effect: async (action, listenerApi) => {
+        if (action.type === 'roles/removeAll') {
+            await idb.del('roles');
+        } else {
+            const roles: SystemPrompt[] = selectAllRoles(store.getState());
+            console.log('🚀 ~ file: index.ts:68 ~ effect: ~ roles:', roles);
+            await idb.set('roles', roles);
+        }
+    },
+});
+
 export const store = configureStore({
     reducer: {
         ui: uiReducer,
-        chats: chatsReducer,
         apiKey: apiKeyReducer,
+        chats: chatsReducer,
+        roles: roleReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
