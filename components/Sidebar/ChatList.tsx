@@ -4,14 +4,13 @@ import ChatItem from './ChatItem';
 
 interface ChatListProps {
     chats: Chat[] | null;
-    isSidebarOpen: boolean;
 }
 
-const ChatList: FC<ChatListProps> = ({ chats, isSidebarOpen }) => {
+const ChatList: FC<ChatListProps> = ({ chats }) => {
     const [currentChat, setCurrentChat] = useState<string>('');
 
     return (
-        <div className={`debug-1 flex flex-col gap-2 my-2 h-1/2`}>
+        <div className='debug-1 flex flex-col gap-2 my-2 h-1/2'>
             {chats?.map((chat) => (
                 <ChatItem key={chat.id} chat={chat} currentChat={currentChat} setCurrentChat={setCurrentChat} />
             ))}

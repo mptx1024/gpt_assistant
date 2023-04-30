@@ -1,69 +1,49 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import ModalWrapper from '@/components/Modal';
+import Button from '@/components/Button';
+import { SystemPrompt } from '@/types';
+import { createPortal } from 'react-dom';
 
 interface Props {
     isOpen: boolean;
+    bgColor?: string;
+    role?: SystemPrompt;
     toggleModal: () => void;
+    handleClickConfirm: () => void;
+    handleClickEdit?: () => void;
 }
 
-export default function RoleModal({ isOpen, toggleModal }: Props) {
-    return (
-        // Use the `Transition` component at the root level
-        <Transition show={isOpen} as={Fragment}>
-            <Dialog onClose={toggleModal}>
-                {/*
-        Use one Transition.Child to apply one transition to the backdrop...
-      */}
-                <Transition.Child
-                    as={Fragment}
-                    enter='ease-out duration-300'
-                    enterFrom='opacity-0'
-                    enterTo='opacity-100'
-                    leave='ease-in duration-200'
-                    leaveFrom='opacity-100'
-                    leaveTo='opacity-0'
-                >
-                    <div className='fixed inset-0 bg-black/30' />
-                </Transition.Child>
+const RoleModal = (props: Props) => {
+    return createPortal(
+        <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
+            <div
+                onClick={(e) => e.stopPropagation()} // prevent modal from closing
+                className={`flex flex-col space-y-4 absolute w-full max-w-lg rounded-2xl p-6 overflow-hidden text-left shadow-xl ${props.bgColor}`}
+            >
+                <h3 className='role-title font-bold text-white text-lg sm:text-xl'>{props.role?.role}</h3>
+                <p className='role-prompt text-base text-gray-200'>{props.role?.prompt}</p>
+                <div className='flex gap-2'>
+                    <Button
+                        text={'Use'}
+                        onClick={props.handleClickConfirm}
+                        className={`border border-gray-50 ${props.bgColor} `}
+                    />
+                    {props.handleClickEdit && (
+                        <Button
+                            text={'Edit'}
+                            onClick={props.handleClickEdit}
+                            className={`border border-gray-50 ${props.bgColor}`}
+                        />
+                    )}
 
-                {/*
-        ...and another Transition.Child to apply a separate transition
-        to the contents.
-      */}
-                <Transition.Child
-                    as={Fragment}
-                    enter='ease-out duration-300'
-                    enterFrom='opacity-0 scale-50'
-                    enterTo='opacity-100 scale-100'
-                    leave='ease-in duration-200'
-                    leaveFrom='opacity-100 scale-100'
-                    leaveTo='opacity-0 scale-95'
-                >
-                    <div className='fixed inset-0 flex items-center justify-center text-center'>
-                        <Dialog.Panel className='w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all'>
-                            <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
-                                Payment successful
-                            </Dialog.Title>
-                            <div className='mt-2'>
-                                <p className='text-sm text-gray-500'>
-                                    Your payment has been successfully submitted. We’ve sent you an email with all of
-                                    the details of your order.
-                                </p>
-                            </div>
-
-                            <div className='mt-4'>
-                                <button
-                                    type='button'
-                                    className='inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
-                                    onClick={toggleModal}
-                                >
-                                    Got it, thanks!
-                                </button>
-                            </div>
-                        </Dialog.Panel>
-                    </div>
-                </Transition.Child>
-            </Dialog>
-        </Transition>
+                    <Button
+                        text={'Close'}
+                        onClick={props.toggleModal}
+                        className={`border border-gray-50 ${props.bgColor} `}
+                    />
+                </div>
+            </div>
+        </ModalWrapper>,
+        document.body
     );
-}
+};
+export default RoleModal;

@@ -21,7 +21,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     return (
         <div className={sidebarClasses}>
             <NewChat toggleSidebar={toggleSidebar} />
-            <ChatList chats={chats} isSidebarOpen={isSidebarOpen} />
+            <ChatList chats={chats} />
             <RoleList roles={roles} />
             <Settings />
         </div>
