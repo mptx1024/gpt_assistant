@@ -12,7 +12,7 @@ import chatsReducer, {
     setOne,
 } from './chatsSlice';
 
-import roleReducer, {
+import rolesReducer, {
     setOneRole,
     updateOneRole,
     removeOneRole,
@@ -76,7 +76,7 @@ export const store = configureStore({
         ui: uiReducer,
         apiKey: apiKeyReducer,
         chats: chatsReducer,
-        roles: roleReducer,
+        roles: rolesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
