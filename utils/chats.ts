@@ -1,7 +1,8 @@
-import { Chat, SystemPrompt, defaultSystemPrompt, OpenAIModelID, OpenAIModels } from '@/types';
 import { v4 as uuid } from 'uuid';
+
 import { store } from '@/store';
 import { setOne } from '@/store/chatsSlice';
+import { Chat, SystemPrompt, defaultSystemPrompt, OpenAIModelID, OpenAIModels } from '@/types';
 
 export const copyToClipboard = async (text: string, setIsCopied: (value: boolean) => void): Promise<void> => {
     try {
@@ -18,7 +19,7 @@ export const copyToClipboard = async (text: string, setIsCopied: (value: boolean
 export const createNewChat = (
     systemPrompt: SystemPrompt = defaultSystemPrompt,
     modelID: OpenAIModelID = OpenAIModelID.GPT_3_5,
-    title: string = ''
+    title = ''
 ): string => {
     const newChat: Chat = {
         id: uuid(),
@@ -32,4 +33,6 @@ export const createNewChat = (
     return newChat.id;
 };
 
-export const generateTitle = (title: string) => {};
+export const generateTitle = (title: string) => {
+    // TODO
+};

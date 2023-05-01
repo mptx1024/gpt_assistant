@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
-import { Chat, Message, SystemPrompt, OpenAIModels, defaultSystemPrompt } from '@/types';
+
+import { Chat, Message } from '@/types';
 
 import type { RootState } from '.';
 
@@ -24,7 +25,6 @@ export const chatsSlice = createSlice({
             if (existingChat) {
                 existingChat.messages = [...existingChat.messages, message];
             }
-
         },
         // for streaming updates
         updateSingleMessage: (state, action: PayloadAction<{ chatID: string; chunkValue: string }>) => {
@@ -50,7 +50,7 @@ export const chatsSlice = createSlice({
             const { chatID, id: messageID } = action.payload.message;
             const existingChat = state.entities[chatID];
             if (existingChat) {
-                let updatedMessages: Message[] = [];
+                const updatedMessages: Message[] = [];
                 for (let i = 0; i < existingChat.messages.length; i++) {
                     if (existingChat.messages[i].id === messageID) {
                         break;

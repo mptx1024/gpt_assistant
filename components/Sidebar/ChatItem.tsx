@@ -1,9 +1,11 @@
 import { FC, useState, useRef, useEffect } from 'react';
-import { HiPencilSquare, HiTrash, HiCheck, HiOutlineXMark, HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
-import { Chat } from '@/types';
-import { useDispatch } from 'react-redux';
-import { updateTitle, removeOne } from '@/store/chatsSlice';
+
 import Link from 'next/link';
+import { HiPencilSquare, HiTrash, HiCheck, HiOutlineXMark, HiChatBubbleLeftEllipsis } from 'react-icons/hi2';
+import { useDispatch } from 'react-redux';
+
+import { updateTitle, removeOne } from '@/store/chatsSlice';
+import { Chat } from '@/types';
 
 interface ChatItemProps {
     chat: Chat;
@@ -21,7 +23,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         setEdit(true);
         setTitle(chat.title || chat.id.substring(0, 20));
     };
-    const onClickChat = (id: string) => {
+    const onClickChat = () => {
         setCurrentChat(chat.id);
     };
     const onClickRemove = () => {
@@ -59,7 +61,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
 
     return (
         <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
-            <div ref={chatRef} onClick={() => onClickChat(chat.id)}>
+            <div ref={chatRef} onClick={() => onClickChat()}>
                 <div
                     className={`flex gap-2 items-center py-1 px-2 mx-2 h-10 hover:bg-gray-700 rounded-md cursor-pointer relative 
                 [&_.chat-item-btns]:hover:opacity-100 [&_.chat-item-btns]:hover:right-2 ${

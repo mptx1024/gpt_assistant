@@ -1,10 +1,12 @@
-import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
+
+import { Transition } from '@headlessui/react';
+import { createPortal } from 'react-dom';
 
 const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal: () => void }) => {
-    return (
+    return createPortal(
         // Use the `Transition` component at the root level
-        <Transition show={props.isOpen} as={'div'} className='fixed' onClick={props.toggleModal}>
+        <Transition show={props.isOpen} as={'div'} onClick={props.toggleModal}>
             {/* Use one Transition.Child to apply one transition to the backdrop...*/}
             <Transition.Child
                 as={Fragment}
@@ -31,7 +33,8 @@ const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal:
             >
                 <div className='fixed inset-0 flex items-center justify-center text-center'>{props.children}</div>
             </Transition.Child>
-        </Transition>
+        </Transition>,
+        document.body
     );
 };
 export default Modal;

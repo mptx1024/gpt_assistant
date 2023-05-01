@@ -1,6 +1,7 @@
-import { HiOutlineXMark, HiPlus } from 'react-icons/hi2';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { HiOutlineXMark, HiPlus } from 'react-icons/hi2';
+
 import { createNewChat } from '@/utils/chats';
 interface Props {
     toggleSidebar: () => void;

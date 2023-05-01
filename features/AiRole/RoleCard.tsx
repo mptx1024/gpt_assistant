@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { SystemPrompt, Chat } from '@/types';
-import { useRouter } from 'next/router';
-import { createNewChat } from '@/utils/chats';
-import RoleModal from './RoleModal';
+import { SystemPrompt } from '@/types';
+
 interface Props {
     role: SystemPrompt;
     bgColor: string;

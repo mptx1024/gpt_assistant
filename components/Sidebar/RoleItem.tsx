@@ -1,4 +1,7 @@
+import { FiUser } from 'react-icons/fi';
+
 import { SystemPrompt } from '@/types';
+
 import SidebarCard from './SidebarCard';
 interface Props {
     role: SystemPrompt;
@@ -13,6 +16,7 @@ const RoleItem = (props: Props) => {
     return (
         <div onClick={handleClick}>
             <SidebarCard>
+                <FiUser />
                 <div> {props.role.role}</div>
             </SidebarCard>
         </div>

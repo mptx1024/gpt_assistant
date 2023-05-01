@@ -1,17 +1,19 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useMemo } from 'react';
+
+import { useRouter } from 'next/router';
 import { HiPlus } from 'react-icons/hi2';
-import RoleCard from './RoleCard';
-import rolesList from './utils/roleLibarary.json';
+
 import Button from '@/components/Button';
-import { colors, getRandomColor } from './utils/colors';
-import RoleEditor from './RoleEditor';
 import { SystemPrompt } from '@/types';
 import { createNewChat } from '@/utils/chats';
-import { useRouter } from 'next/router';
-import RoleModal from './RoleModal';
-interface Props {}
 
-const RoleLibraryPage = (props: Props) => {
+import RoleCard from './RoleCard';
+import RoleEditor from './RoleEditor';
+import RoleModal from './RoleModal';
+import { getRandomColor } from './utils/colors';
+import rolesList from './utils/roleLibarary.json';
+
+const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [isRoleCardModalOpen, setIsRoleCardModalOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<SystemPrompt>();
@@ -55,12 +57,7 @@ const RoleLibraryPage = (props: Props) => {
                     placeholder='Search AI Role Library'
                     className='border border-slate-300 rounded-lg overflow-hidden p-2'
                 />
-                <Button
-                    text={'Add Role'}
-                    icon={HiPlus}
-                    onClick={toggleEditor}
-                    className={'bg-blue-800 text-white border border-slate-300 rounded-lg overflow-hidden'}
-                />
+                <Button text={'Add Role'} icon={HiPlus} onClick={toggleEditor} />
                 <RoleEditor isOpen={isEditorOpen} toggleModal={toggleEditor} />
             </div>
             <div

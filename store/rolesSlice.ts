@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+
 import { SystemPrompt } from '@/types';
+
 import type { RootState } from '.';
 
 const rolesAdapter = createEntityAdapter<SystemPrompt>({
