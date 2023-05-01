@@ -35,6 +35,8 @@
                     "caseInsensitive": true
                 }
             }
-        ]
+        ],
+        "react/react-in-jsx-scope": "off",
+        "no-empty-function": "off"
     }
 }

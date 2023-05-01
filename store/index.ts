@@ -1,5 +1,8 @@
 import { configureStore, isAnyOf } from '@reduxjs/toolkit';
-import uiReducer from './uiSlice';
+
+import { Chat, SystemPrompt } from '@/types';
+import * as idb from '@/utils/indexedDB';
+
 import apiKeyReducer from './apiKeySlice';
 import chatsReducer, {
     selectAllChats,
@@ -11,20 +14,9 @@ import chatsReducer, {
     deleteMessageUpTo,
     setOne,
 } from './chatsSlice';
-
-import roleReducer, {
-    setOneRole,
-    updateOneRole,
-    removeOneRole,
-    removeAllRoles,
-    selectRoleById,
-    selectAllRoles,
-} from './rolesSlice';
-
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
-import { Chat, Message, SystemPrompt } from '@/types';
-
-import * as idb from '@/utils/indexedDB';
+import rolesReducer, { setOneRole, updateOneRole, removeOneRole, removeAllRoles, selectAllRoles } from './rolesSlice';
+import uiReducer from './uiSlice';
 
 startAppListening({
     matcher: isAnyOf(
@@ -46,7 +38,7 @@ startAppListening({
         // }
         else {
             const chats: Chat[] = selectAllChats(store.getState());
-            let chatsToSave: Chat[] = [];
+            const chatsToSave: Chat[] = [];
             for (const chatID in chats) {
                 if (chats[chatID].messages.length > 0) {
                     chatsToSave.push(chats[chatID]);
@@ -65,7 +57,6 @@ startAppListening({
             await idb.del('roles');
         } else {
             const roles: SystemPrompt[] = selectAllRoles(store.getState());
-            console.log('🚀 ~ file: index.ts:68 ~ effect: ~ roles:', roles);
             await idb.set('roles', roles);
         }
     },
@@ -76,7 +67,7 @@ export const store = configureStore({
         ui: uiReducer,
         apiKey: apiKeyReducer,
         chats: chatsReducer,
-        roles: roleReducer,
+        roles: rolesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });

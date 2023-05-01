@@ -2,11 +2,12 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import Header from '@/components/Header/Header';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { Chat } from '@/types';
+import { Chat, SystemPrompt } from '@/types';
 import * as idb from '@/utils/indexedDB';
 import { useCallback, useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAll } from '@/store/chatsSlice';
+import { setAllRoles } from '@/store/rolesSlice';
 import { toggleSidebar } from '../store/uiSlice';
 import SettingModal from './Sidebar/settings/SettingModal';
 import UsageModal from './Sidebar/settings/UsageModal';
@@ -19,19 +20,21 @@ export default function Layout({ children }: Props) {
     const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
     const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
 
-    // Add a loading state
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const loadChats = async () => {
+        const loadRecords = async () => {
+            const roles: SystemPrompt[] = await idb.get('roles');
+            if (roles) {
+                dispatch(setAllRoles(roles));
+            }
             const chats: Chat[] = await idb.get('chats');
             if (chats) {
                 dispatch(setAll(chats));
             }
-            console.log(`in layout: loaded chats`);
             setIsLoading(false);
         };
-        loadChats();
+        loadRecords();
     }, [dispatch]);
 
     return isLoading ? (

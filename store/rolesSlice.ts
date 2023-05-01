@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+
 import { SystemPrompt } from '@/types';
+
 import type { RootState } from '.';
 
 const rolesAdapter = createEntityAdapter<SystemPrompt>({
@@ -13,6 +15,7 @@ export const rolesSlice = createSlice({
     initialState,
     reducers: {
         setOne: rolesAdapter.setOne,
+        setAll: rolesAdapter.setAll,
         updateOne: rolesAdapter.updateOne,
         removeOne: rolesAdapter.removeOne,
         removeAll: rolesAdapter.removeAll,
@@ -21,6 +24,7 @@ export const rolesSlice = createSlice({
 
 export const {
     setOne: setOneRole,
+    setAll: setAllRoles,
     updateOne: updateOneRole,
     removeOne: removeOneRole,
     removeAll: removeAllRoles,
