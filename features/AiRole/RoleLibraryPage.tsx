@@ -1,5 +1,6 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
+import MiniSearch, { SearchResult } from 'minisearch';
 import { useRouter } from 'next/router';
 import { HiPlus } from 'react-icons/hi2';
 
@@ -20,6 +21,26 @@ const RoleLibraryPage = () => {
     const [selectedRoleColor, setSelectedRoleColor] = useState('');
     const router = useRouter();
 
+    const [searchInput, setSearchInput] = useState('');
+    const [searchResults, setSearchResults] = useState(rolesList);
+    
+    // minisearch
+    const miniSearch = useMemo(() => {
+        const search = new MiniSearch({
+            fields: ['role'],
+            storeFields: ['role', 'prompt'],
+        });
+        search.addAll(rolesList);
+        return search;
+    }, []);
+
+    useEffect(() => {
+        const matchedIdList = miniSearch.search(searchInput, { prefix: true, fuzzy: 0.2 }).map((match) => match.id);
+        if (matchedIdList.length !== 0) {
+            setSearchResults(rolesList.filter((role) => matchedIdList.includes(role.id)));
+        }
+    }, [miniSearch, searchInput]);
+
     const toggleEditor = () => {
         setIsEditorOpen(!isEditorOpen);
     };
@@ -37,7 +58,7 @@ const RoleLibraryPage = () => {
         setIsRoleCardModalOpen(false);
     };
 
-    const cards = rolesList.map((role, index) => {
+    const cards = searchResults.map((role, index) => {
         const color = cardColors[index];
         return (
             <RoleCard
@@ -54,6 +75,8 @@ const RoleLibraryPage = () => {
         <div className='h-full w-full overflow-y-scroll'>
             <div className='flex justify-center gap-5 my-5'>
                 <input
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
                     placeholder='Search AI Role Library'
                     className='border border-slate-300 rounded-lg overflow-hidden p-2'
                 />
