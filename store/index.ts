@@ -1,6 +1,6 @@
 import { configureStore, isAnyOf } from '@reduxjs/toolkit';
 
-import { Chat, SystemPrompt } from '@/types';
+import { Chat, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
 import apiKeyReducer from './apiKeySlice';
@@ -56,7 +56,7 @@ startAppListening({
         if (action.type === 'roles/removeAll') {
             await idb.del('roles');
         } else {
-            const roles: SystemPrompt[] = selectAllRoles(store.getState());
+            const roles: Role[] = selectAllRoles(store.getState());
             await idb.set('roles', roles);
         }
     },

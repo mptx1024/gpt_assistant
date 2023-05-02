@@ -5,15 +5,15 @@ import { HiOutlineBuildingLibrary, HiPlus } from 'react-icons/hi2';
 
 import RoleEditor from '@/features/AiRole/RoleEditor';
 import RoleModal from '@/features/AiRole/RoleModal';
-import { SystemPrompt } from '@/types';
+import { Role } from '@/types';
 import { createNewChat } from '@/utils/chats';
 import { deleteRole } from '@/utils/roles';
 
 import RoleItem from './RoleItem';
 import Button from '../Button';
 
-const RoleList = (props: { roles: SystemPrompt[] }) => {
-    const [selectedRole, setSelectedRole] = useState<SystemPrompt>();
+const RoleList = (props: { roles: Role[] }) => {
+    const [selectedRole, setSelectedRole] = useState<Role>();
     const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
     const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
     const router = useRouter();
@@ -48,9 +48,14 @@ const RoleList = (props: { roles: SystemPrompt[] }) => {
             <div className={`flex flex-col gap-2 my-2 h-1/2 overflow-y-auto`}>
                 <div className='flex justify-between items-center mx-3'>
                     <p className='text-base text-gray-300'>Assistants</p>
-                    <div className='flex'>
-                        <Button icon={HiPlus} onClick={toggleRoleEditor} className='' />
-                        <Button icon={HiOutlineBuildingLibrary} onClick={handleClickRoleLibrary} className='' />
+                    <div className='flex gap-1'>
+                        <Button size='sm' icon={HiPlus} onClick={toggleRoleEditor} />
+                        <Button
+                            size='sm'
+                            icon={HiOutlineBuildingLibrary}
+                            onClick={handleClickRoleLibrary}
+                            className=''
+                        />
                     </div>
                 </div>
                 {props.roles?.map((role) => (

@@ -1,21 +1,28 @@
-import { FC, useState, useRef, useEffect } from 'react';
-import { Chat } from '@/types';
-import ChatItem from './ChatItem';
+import { FC, useState } from "react";
+
+import { Chat } from "@/types";
+
+import ChatItem from "./ChatItem";
 
 interface ChatListProps {
-    chats: Chat[] | null;
+  chats: Chat[] | null;
 }
 
 const ChatList: FC<ChatListProps> = ({ chats }) => {
-    const [currentChat, setCurrentChat] = useState<string>('');
+  const [currentChat, setCurrentChat] = useState<string>("");
 
-    return (
-        <div className='debug-1 flex flex-col gap-2 my-2 h-1/2'>
-            {chats?.map((chat) => (
-                <ChatItem key={chat.id} chat={chat} currentChat={currentChat} setCurrentChat={setCurrentChat} />
-            ))}
-        </div>
-    );
+  return (
+    <div className=" my-2 flex h-1/2 flex-col gap-2">
+      {chats?.map((chat) => (
+        <ChatItem
+          key={chat.id}
+          chat={chat}
+          currentChat={currentChat}
+          setCurrentChat={setCurrentChat}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default ChatList;

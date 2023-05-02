@@ -1,10 +1,10 @@
-import { SystemPrompt } from '@/types';
+import { Role } from '@/types';
 
 interface Props {
-    role: SystemPrompt;
+    role: Role;
     bgColor: string;
     setSelectedRoleColor: (bgColor: string) => void;
-    setSelectedRole: (role: SystemPrompt) => void;
+    setSelectedRole: (role: Role) => void;
     toggleRoleCardModal: () => void;
 }
 
@@ -17,11 +17,11 @@ const RoleCard = (props: Props) => {
 
     return (
         <div
-            className={`${props.bgColor} rounded-lg p-2 sm:p-4 lg:p-6 hover:scale-105  transition-all ease-in-out cursor-pointer`}
+            className={`${props.bgColor} cursor-pointer rounded-lg p-2 transition-all ease-in-out  hover:scale-105 sm:p-4 lg:p-6`}
             onClick={handleClickCard}
         >
             <div className='mt-2'>
-                <h3 className='font-bold text-white text-lg sm:text-xl mb-1'>{props.role.role}</h3>
+                <h3 className='mb-1 text-lg font-bold text-white sm:text-xl'>{props.role.roleName}</h3>
                 <p className='text-sm text-gray-200 line-clamp-3'>{props.role.prompt}</p>
             </div>
         </div>

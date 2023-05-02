@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
 import { setOne } from '@/store/chatsSlice';
-import { Chat, SystemPrompt, defaultSystemPrompt, OpenAIModelID, OpenAIModels } from '@/types';
+import { Chat, Role, defaultSystemPrompt, OpenAIModelID, OpenAIModels } from '@/types';
 
 export const copyToClipboard = async (text: string, setIsCopied: (value: boolean) => void): Promise<void> => {
     try {
@@ -17,16 +17,16 @@ export const copyToClipboard = async (text: string, setIsCopied: (value: boolean
 };
 
 export const createNewChat = (
-    systemPrompt: SystemPrompt = defaultSystemPrompt,
+    systemPrompt: Role = defaultSystemPrompt,
     modelID: OpenAIModelID = OpenAIModelID.GPT_3_5,
     title = ''
 ): string => {
     const newChat: Chat = {
         id: uuid(),
         messages: [],
-        title: systemPrompt.role === 'default' ? 'New Chat' : systemPrompt.role,
+        title: systemPrompt.roleName === 'default' ? 'New Chat' : systemPrompt.roleName,
         created: Date.now(),
-        systemPrompt,
+        role: systemPrompt,
         model: OpenAIModels[modelID],
     };
     store.dispatch(setOne(newChat));

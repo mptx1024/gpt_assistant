@@ -1,11 +1,11 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import { SystemPrompt } from '@/types';
+import { Role } from '@/types';
 
 import type { RootState } from '.';
 
-const rolesAdapter = createEntityAdapter<SystemPrompt>({
-    selectId: (role: SystemPrompt) => role.id,
+const rolesAdapter = createEntityAdapter<Role>({
+    selectId: (role: Role) => role.id,
 });
 
 const initialState = rolesAdapter.getInitialState();

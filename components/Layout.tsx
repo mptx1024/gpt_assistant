@@ -1,16 +1,18 @@
-import Head from 'next/head';
-import { Inter } from 'next/font/google';
-import Header from '@/components/Header/Header';
-import Sidebar from '@/components/Sidebar/Sidebar';
-import { Chat, SystemPrompt } from '@/types';
-import * as idb from '@/utils/indexedDB';
 import { useCallback, useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+
+import Head from 'next/head';
+
+import Navbar from '@/components/Navbar/Navbar';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import { setAll } from '@/store/chatsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAllRoles } from '@/store/rolesSlice';
-import { toggleSidebar } from '../store/uiSlice';
+import { Chat, Role } from '@/types';
+import * as idb from '@/utils/indexedDB';
+
 import SettingModal from './Sidebar/settings/SettingModal';
 import UsageModal from './Sidebar/settings/UsageModal';
+import { toggleSidebar } from '../store/uiSlice';
 
 type Props = { children: React.ReactNode };
 
@@ -24,7 +26,7 @@ export default function Layout({ children }: Props) {
 
     useEffect(() => {
         const loadRecords = async () => {
-            const roles: SystemPrompt[] = await idb.get('roles');
+            const roles: Role[] = await idb.get('roles');
             if (roles) {
                 dispatch(setAllRoles(roles));
             }
@@ -35,7 +37,7 @@ export default function Layout({ children }: Props) {
             setIsLoading(false);
         };
         loadRecords();
-    }, [dispatch]);
+    }, []);
 
     return isLoading ? (
         <div className=''>loading...</div>
@@ -53,7 +55,7 @@ export default function Layout({ children }: Props) {
                     className={`flex flex-col flex-grow h-full w-full transition-width duration-300 items-center justify-between relative
                     ${isSidebarOpen ? 'ml-64' : ''}`}
                 >
-                    <Header toggleSidebar={onClickSidebar} />
+                    <Navbar toggleSidebar={onClickSidebar} isSidebarOpen={isSidebarOpen} />
                     {children}
                 </main>
                 <SettingModal />

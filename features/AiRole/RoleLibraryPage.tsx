@@ -1,11 +1,11 @@
 import { useState, useMemo, useEffect } from 'react';
 
-import MiniSearch, { SearchResult } from 'minisearch';
+import MiniSearch from 'minisearch';
 import { useRouter } from 'next/router';
 import { HiPlus } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
-import { SystemPrompt } from '@/types';
+import { Role } from '@/types';
 import { createNewChat } from '@/utils/chats';
 
 import RoleCard from './RoleCard';
@@ -17,18 +17,18 @@ import rolesList from './utils/roleLibarary.json';
 const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [isRoleCardModalOpen, setIsRoleCardModalOpen] = useState(false);
-    const [selectedRole, setSelectedRole] = useState<SystemPrompt>();
+    const [selectedRole, setSelectedRole] = useState<Role>();
     const [selectedRoleColor, setSelectedRoleColor] = useState('');
     const router = useRouter();
 
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState(rolesList);
-    
+
     // minisearch
     const miniSearch = useMemo(() => {
         const search = new MiniSearch({
-            fields: ['role'],
-            storeFields: ['role', 'prompt'],
+            fields: ['roleName'],
+            storeFields: ['roleName', 'prompt'],
         });
         search.addAll(rolesList);
         return search;
@@ -38,6 +38,8 @@ const RoleLibraryPage = () => {
         const matchedIdList = miniSearch.search(searchInput, { prefix: true, fuzzy: 0.2 }).map((match) => match.id);
         if (matchedIdList.length !== 0) {
             setSearchResults(rolesList.filter((role) => matchedIdList.includes(role.id)));
+        } else {
+            setSearchResults(rolesList);
         }
     }, [miniSearch, searchInput]);
 
@@ -80,7 +82,7 @@ const RoleLibraryPage = () => {
                     placeholder='Search AI Role Library'
                     className='border border-slate-300 rounded-lg overflow-hidden p-2'
                 />
-                <Button text={'Add Role'} icon={HiPlus} onClick={toggleEditor} />
+                <Button text={'Add Role'} icon={HiPlus} onClick={toggleEditor} size='lg' />
                 <RoleEditor isOpen={isEditorOpen} toggleModal={toggleEditor} />
             </div>
             <div

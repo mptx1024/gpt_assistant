@@ -27,18 +27,18 @@ export interface Chat {
     messages: Message[];
     title?: string | null;
     created: number;
-    systemPrompt: SystemPrompt;
+    role: Role;
     model: OpenAIModel;
 }
 
-export interface SystemPrompt {
+export interface Role {
     prompt: string;
-    role: string;
+    roleName: string;
     id: string;
 }
-export const defaultSystemPrompt: SystemPrompt = {
-    prompt: `You are ChatGPT, a large language model trained by OpenAI. Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
-    role: 'default',
+export const defaultSystemPrompt: Role = {
+    prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+    roleName: 'default',
     id: '001',
 };
 

@@ -25,7 +25,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
         messages,
-        systemPrompt: currentChat.systemPrompt.prompt,
+        systemPrompt: currentChat.role.prompt,
         tokenLimit: currentChat.model.tokenLimit,
     });
 

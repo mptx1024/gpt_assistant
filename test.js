@@ -1,47 +1,17 @@
-// import { colors, shades } from './features/AiRole/utils/colors';
-// import fs from 'fs';
-
-// const fullColors = [];
-
-// for (let i = 0; i < colors.length; i++) {
-//     for (let j = 0; j < shades.length; j++) {
-//         fullColors.push(`bg-${colors[i]}-${shades[j]}`);
-//     }
-// }
-
-// fs.writeFile('colors.ts', fullColors, (err) => {
-//     if (err) throw err;
-// })
 const fs = require('fs');
- const colors = [
-    'red',
-    'pink',
-    'purple',
-    'indigo',
-    'blue',
-    'cyan',
-    'teal',
-    'green',
-    'yellow',
-    'amber',
-    'orange',
-    'gray',
-];
 
-const shades = ['400', '500', '600', '700', '800', '900'];
+let lib = require('./features/AiRole/utils/roleLibarary.json');
 
-const fullColors = [];
-
-for (let i = 0; i < colors.length; i++) {
-    for (let j = 0; j < shades.length; j++) {
-        fullColors.push(`bg-${colors[i]}-${shades[j]}`);
-    }
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+for (let i = 0; i < lib.length; i++) {
+    lib[i]['roleName'] = lib[i]['role'];
+    delete lib[i]['role'];
+    lib[i]['prompt'] = capitalizeFirstLetter(lib[i]['prompt']);
 }
 
-const fullColorsAsTSCode = `export const fullColors: string[] = ['${fullColors.join("', '")}'];\n`;
-
-fs.writeFile('colors.ts', fullColorsAsTSCode, (err) => {
+fs.writeFile('./features/AiRole/utils/roleLibarary.json', JSON.stringify(lib, null, 2), (err) => {
     if (err) throw err;
-    console.log('Full colors array successfully written to colors.ts');
+    else console.log('The file has been saved!');
 });
-
