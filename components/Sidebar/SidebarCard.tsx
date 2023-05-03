@@ -4,7 +4,7 @@ const SidebarCard = (props: {
   isSelected?: boolean;
 }) => {
   const cardClasses =
-    "bg-gray-200 hover:bg-gray-300 dark:bg-gray-900 dark:hover:bg-gray-700 relative mx-2 flex h-12 animate-slideIn cursor-pointer items-center gap-2 rounded-md py-1 px-2 [&_.chat-item-btns]:hover:right-2 [&_.chat-item-btns]:hover:opacity-100";
+    "bg-light-bg-card hover:bg-light-bg-card-hover dark:text-dark-text dark:bg-dark-bg-card dark:hover:bg-dark-bg-card-hover relative mx-2 flex h-12 animate-slideIn cursor-pointer items-center gap-2 rounded-md py-1 px-2 [&_.chat-item-btns]:hover:right-2 [&_.chat-item-btns]:hover:opacity-100";
 
   return (
     <div

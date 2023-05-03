@@ -14,6 +14,7 @@ import { updateTitle, removeOne } from "@/store/chatsSlice";
 import { Chat } from "@/types";
 
 import SidebarCard from "./SidebarCard";
+import Button from "../Button";
 
 interface ChatItemProps {
   chat: Chat;
@@ -79,7 +80,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                 placeholder={chat.title || chat.id.substring(0, 20)}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-36 truncate border-none text-gray-500"
+                className="w-36 truncate border-none text-gray-500 focus:border-transparent"
               />
             ) : (
               <p
@@ -103,15 +104,9 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
               />
             </div>
           ) : (
-            <div className="chat-item-btns absolute -right-3 flex items-center gap-1 opacity-0 transition-all duration-200 ease-in">
-              <HiPencilSquare
-                className="h-4 w-4 text-slate-400 hover:text-slate-50 "
-                onClick={onClickEdit}
-              />
-              <HiTrash
-                className="h-4 w-4 text-slate-400 hover:text-slate-50"
-                onClick={onClickRemove}
-              />
+            <div className="chat-item-btns absolute -right-3 flex items-center opacity-0 transition-all duration-200 ease-in">
+              <Button onClick={onClickEdit} Icon={HiPencilSquare} size="sm" />
+              <Button onClick={onClickRemove} Icon={HiTrash} size="sm" />
             </div>
           )}
         </SidebarCard>

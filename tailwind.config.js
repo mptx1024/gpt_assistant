@@ -10,6 +10,20 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        "light-text": colors.slate[700],
+        "light-bg": colors.gray[50],
+
+        "dark-text": colors.slate[200],
+        "dark-bg": colors.slate[800],
+
+        "light-bg-card": colors.slate[200],
+        "light-bg-card-hover": colors.slate[300],
+
+        "dark-bg-card": colors.slate[900],
+        "dark-bg-card-hover": colors.slate[700],
+      },
+
       keyframes: {
         typing: {
           "0%": {
@@ -46,11 +60,13 @@ module.exports = {
       },
     },
   },
+
   variants: {
     extend: {
       visibility: ["group-hover"],
     },
   },
+
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/line-clamp"),

@@ -45,9 +45,9 @@ const RoleEditor = (props: Props) => {
         <div className="">
           <Button
             size="sm"
-            icon={HiOutlineXMark}
+            Icon={HiOutlineXMark}
             onClick={props.toggleModal}
-            className="mr-0 ml-auto"
+            shadow={true}
           />
         </div>
         <div>
@@ -76,12 +76,12 @@ const RoleEditor = (props: Props) => {
               className={inputClasses}
             />
           </div>
-          {/* <button type='submit'>save</button> */}
           <Button
             size="lg"
             type={"submit"}
-            text={"Save"}
-            className="w-20 bg-blue-800"
+            shadow={true}
+            border={true}
+            text="Save"
           />
         </form>
       </div>

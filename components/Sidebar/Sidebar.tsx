@@ -20,7 +20,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
   const roles: Role[] | null = useSelector(selectAllRoles);
 
   const sidebarClasses =
-    "fixed top-0 left-0 flex flex-col transform transition-transform h-screen w-full sm:w-64 bg-gray-50 dark:bg-slate-800 text-gray-700 dark:text-white";
+    "fixed top-0 left-0 flex flex-col transform transition-transform h-screen w-full sm:w-64 bg-light-bg text-light-text dark:bg-dark-bg dark:text-text-dark";
   return (
     <div
       className={cx(sidebarClasses, {
