@@ -1,3 +1,4 @@
+import clsx from "clsx";
 interface InputProps {
     required?: boolean;
     type?: string;
@@ -29,15 +30,18 @@ interface TexareaProps {
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     style?: string;
+    rows?: number;
 }
 export function Textarea(props: TexareaProps) {
+    const textAreaClasses = clsx(baseClasses, props.style, "overflow-y-scroll");
     return (
         <textarea
             required={props.required}
-            className={baseClasses}
+            className={textAreaClasses}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
+            rows={props.rows}
         />
     );
 }

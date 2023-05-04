@@ -73,6 +73,7 @@ const RoleEditor = (props: Props) => {
                             value={prompt}
                             onChange={handlePromptChange}
                             placeholder="Prompt"
+                            rows={10}
                         />
                     </div>
                     <Button size="lg" type={"submit"} shadow={true} border={true} text="Save" />

@@ -4,39 +4,16 @@ import { useRouter } from "next/router";
 import { HiOutlineBuildingLibrary, HiPlus } from "react-icons/hi2";
 
 import RoleEditor from "@/features/AiRole/RoleEditor";
-import RoleModal from "@/features/AiRole/RoleModal";
 import { Role } from "@/types";
-import { createNewChat } from "@/utils/chats";
-import { deleteRole } from "@/utils/roles";
 
 import RoleItem from "./RoleItem";
 import Button from "../Button";
 
 const RoleList = (props: { roles: Role[] }) => {
-    const [selectedRole, setSelectedRole] = useState<Role | undefined>(undefined);
-    const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
     const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
     const router = useRouter();
-    const toggleRoleModal = () => {
-        setIsRoleModalOpen(!isRoleModalOpen);
-    };
     const toggleRoleEditor = () => {
         setIsEditorOpen(!isEditorOpen);
-        toggleRoleModal();
-    };
-    const handleClickUse = () => {
-        const chatID = createNewChat(selectedRole);
-        router.push(`/chat/${chatID}`);
-        toggleRoleModal();
-    };
-    const handleClickEdit = () => {
-        setIsEditorOpen(true);
-    };
-    const handleClickDelete = () => {
-        if (selectedRole) {
-            deleteRole(selectedRole.id);
-        }
-        toggleRoleModal();
     };
 
     const handleClickRoleLibrary = () => {
@@ -64,31 +41,10 @@ const RoleList = (props: { roles: Role[] }) => {
                     </div>
                 </div>
                 {props.roles?.map((role) => (
-                    <RoleItem
-                        key={role.id}
-                        role={role}
-                        toggleModal={toggleRoleModal}
-                        setCurrentRole={setSelectedRole}
-                    />
+                    <RoleItem key={role.id} role={role} />
                 ))}
             </div>
-            {isEditorOpen ? (
-                <RoleEditor
-                    isOpen={isEditorOpen}
-                    toggleModal={toggleRoleEditor}
-                    role={selectedRole}
-                />
-            ) : (
-                <RoleModal
-                    isOpen={isRoleModalOpen}
-                    role={selectedRole}
-                    isTemplate={false}
-                    toggleModal={toggleRoleModal}
-                    handleClickConfirm={handleClickUse}
-                    handleClickEdit={handleClickEdit}
-                    handleClickDelete={handleClickDelete}
-                />
-            )}
+            {isEditorOpen && <RoleEditor isOpen={isEditorOpen} toggleModal={toggleRoleEditor} />}
         </>
     );
 };

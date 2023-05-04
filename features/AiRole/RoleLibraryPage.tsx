@@ -111,7 +111,7 @@ const RoleLibraryPage = () => {
                 role={selectedRole}
                 isTemplate={true}
                 toggleModal={toggleRoleCardModal}
-                handleClickConfirm={handleClickConfirm}
+                handleClickUse={handleClickConfirm}
             />
         </div>
     );
