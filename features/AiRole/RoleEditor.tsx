@@ -39,7 +39,7 @@ const RoleEditor = (props: Props) => {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="absolute flex w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg "
+                className="absolute flex w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
             >
                 <div className="flex justify-end">
                     <Button

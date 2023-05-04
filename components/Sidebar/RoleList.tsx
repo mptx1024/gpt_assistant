@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { useRouter } from 'next/router';
-import { HiOutlineBuildingLibrary, HiPlus } from 'react-icons/hi2';
+import { useRouter } from "next/router";
+import { HiOutlineBuildingLibrary, HiPlus } from "react-icons/hi2";
 
-import RoleEditor from '@/features/AiRole/RoleEditor';
-import RoleModal from '@/features/AiRole/RoleModal';
-import { Role } from '@/types';
-import { createNewChat } from '@/utils/chats';
-import { deleteRole } from '@/utils/roles';
+import RoleEditor from "@/features/AiRole/RoleEditor";
+import RoleModal from "@/features/AiRole/RoleModal";
+import { Role } from "@/types";
+import { createNewChat } from "@/utils/chats";
+import { deleteRole } from "@/utils/roles";
 
-import RoleItem from './RoleItem';
-import Button from '../Button';
+import RoleItem from "./RoleItem";
+import Button from "../Button";
 
 const RoleList = (props: { roles: Role[] }) => {
-    const [selectedRole, setSelectedRole] = useState<Role>();
+    const [selectedRole, setSelectedRole] = useState<Role | undefined>(undefined);
     const [isRoleModalOpen, setIsRoleModalOpen] = useState<boolean>(false);
     const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
     const router = useRouter();
@@ -40,18 +40,23 @@ const RoleList = (props: { roles: Role[] }) => {
     };
 
     const handleClickRoleLibrary = () => {
-        router.push('/role');
+        router.push("/role");
     };
 
     return (
         <>
             <div className={`my-2 flex h-1/2 flex-col gap-2 overflow-y-auto`}>
-                <div className='mx-3 flex items-center justify-between'>
-                    <p className='text-base text-gray-500 dark:text-gray-400'>Assistants</p>
-                    <div className='flex gap-1'>
-                        <Button size='sm' Icon={HiPlus} onClick={toggleRoleEditor} iconEffect={true} />
+                <div className="mx-3 flex items-center justify-between">
+                    <p className="text-base text-gray-500 dark:text-gray-400">Assistants</p>
+                    <div className="flex gap-1">
                         <Button
-                            size='sm'
+                            size="sm"
+                            Icon={HiPlus}
+                            onClick={toggleRoleEditor}
+                            iconEffect={true}
+                        />
+                        <Button
+                            size="sm"
                             Icon={HiOutlineBuildingLibrary}
                             onClick={handleClickRoleLibrary}
                             iconEffect={true}
@@ -68,12 +73,16 @@ const RoleList = (props: { roles: Role[] }) => {
                 ))}
             </div>
             {isEditorOpen ? (
-                <RoleEditor isOpen={isEditorOpen} toggleModal={toggleRoleEditor} role={selectedRole} />
+                <RoleEditor
+                    isOpen={isEditorOpen}
+                    toggleModal={toggleRoleEditor}
+                    role={selectedRole}
+                />
             ) : (
                 <RoleModal
                     isOpen={isRoleModalOpen}
-                    bgColor='bg-teal-500'
                     role={selectedRole}
+                    isTemplate={false}
                     toggleModal={toggleRoleModal}
                     handleClickConfirm={handleClickUse}
                     handleClickEdit={handleClickEdit}

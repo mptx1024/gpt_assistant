@@ -10,8 +10,7 @@ import { setAllRoles } from '@/store/rolesSlice';
 import { Chat, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
-import SettingModal from './Sidebar/settings/SettingModal';
-import UsageModal from './Sidebar/settings/UsageModal';
+
 import { toggleSidebar } from '../store/uiSlice';
 
 type Props = { children: React.ReactNode };
@@ -59,8 +58,6 @@ export default function Layout({ children }: Props) {
                     <Navbar toggleSidebar={onClickSidebar} isSidebarOpen={isSidebarOpen} />
                     {children}
                 </main>
-                <SettingModal />
-                <UsageModal />
             </div>
         </>
     );
