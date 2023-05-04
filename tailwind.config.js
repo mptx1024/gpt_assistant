@@ -1,76 +1,76 @@
 const colors = require("tailwindcss/colors");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./features/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        "light-text": colors.slate[700],
-        "light-bg": colors.gray[50],
+    darkMode: "class",
+    content: [
+        "./app/**/*.{js,ts,jsx,tsx}",
+        "./pages/**/*.{js,ts,jsx,tsx}",
+        "./components/**/*.{js,ts,jsx,tsx}",
+        "./features/**/*.{js,ts,jsx,tsx}",
+    ],
+    theme: {
+        extend: {
+            translate: ["dark"],
+            colors: {
+                "light-text": colors.slate[700],
+                "dark-text": colors.slate[200],
 
-        "dark-text": colors.slate[200],
-        "dark-bg": colors.slate[800],
+                "light-bg": colors.gray[50],
+                "dark-bg": colors.slate[800],
 
-        "light-bg-card": colors.slate[200],
-        "light-bg-card-hover": colors.slate[300],
+                "light-bg-card": colors.slate[200],
+                "light-bg-card-hover": colors.slate[300],
 
-        "dark-bg-card": colors.slate[900],
-        "dark-bg-card-hover": colors.slate[700],
-      },
+                "dark-bg-card": colors.slate[900],
+                "dark-bg-card-hover": colors.slate[700],
+            },
 
-      keyframes: {
-        typing: {
-          "0%": {
-            width: "0%",
-            visibility: "hidden",
-          },
-          "100%": {
-            width: "100%",
-          },
+            keyframes: {
+                typing: {
+                    "0%": {
+                        width: "0%",
+                        visibility: "hidden",
+                    },
+                    "100%": {
+                        width: "100%",
+                    },
+                },
+                blink: {
+                    "50%": {
+                        borderColor: "transparent",
+                    },
+                    "100%": {
+                        borderColor: "white",
+                    },
+                },
+                slideIn: {
+                    "0%": {
+                        opacity: "0%",
+                        transform: "translateY(20px)",
+                    },
+                    "100%": {
+                        opacity: "100%",
+                        transform: "translateY(0px)",
+                    },
+                },
+            },
+            animation: {
+                typing: "typing 0.9s alternate",
+                slideIn: "slideIn 0.4s ease",
+                // typing:'typing 2.7s ease-out .8s infinite alternate both',
+            },
         },
-        blink: {
-          "50%": {
-            borderColor: "transparent",
-          },
-          "100%": {
-            borderColor: "white",
-          },
-        },
-        slideIn: {
-          "0%": {
-            opacity: "0%",
-            transform: "translateY(20px)",
-          },
-          "100%": {
-            opacity: "100%",
-            transform: "translateY(0px)",
-          },
-        },
-      },
-      animation: {
-        typing: "typing 0.7s  alternate",
-        slideIn: "slideIn 0.4s ease",
-        // typing:'typing 2.7s ease-out .8s infinite alternate both',
-      },
     },
-  },
 
-  variants: {
-    extend: {
-      visibility: ["group-hover"],
+    variants: {
+        extend: {
+            visibility: ["group-hover"],
+        },
     },
-  },
 
-  plugins: [
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/line-clamp"),
-    require("@tailwindcss/forms"),
-    require("daisyui"),
-  ],
+    plugins: [
+        require("@tailwindcss/typography"),
+        require("@tailwindcss/line-clamp"),
+        require("daisyui"),
+    ],
 };

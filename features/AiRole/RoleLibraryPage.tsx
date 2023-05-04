@@ -79,12 +79,12 @@ const RoleLibraryPage = () => {
   });
   return (
     <div className="h-full w-full overflow-y-scroll">
-      <div className="my-5 flex justify-center gap-5">
+      <div className="my-4 flex justify-center gap-5">
         <input
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search AI Role Library"
-          className="overflow-hidden rounded-lg border border-slate-300 p-2"
+          className="overflow-hidden rounded-lg border-[1px] border-gray-300 p-3 outline-none"
         />
         <Button
           text={"Add Role"}
@@ -98,8 +98,6 @@ const RoleLibraryPage = () => {
       </div>
       <div
         className="
-                role-card-lib
-                debug-2
                 grid
                 animate-slideIn auto-cols-auto grid-cols-1 gap-2 
                 p-5 

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
-    sidebar: true,
+    sidebar: false,
     settingModal: false,
 };
 

@@ -1,8 +1,9 @@
 import { useState } from 'react';
+
 import { setApiKey } from '@/store/apiKeySlice';
 import { useAppDispatch } from '@/store/hooks';
-interface Props {}
-const SettingModal = (props: Props) => {
+
+const SettingModal = () => {
     const [key, setKey] = useState(localStorage.getItem('apiKey') || '');
     const dispatch = useAppDispatch();
 

@@ -6,7 +6,13 @@ import { createPortal } from 'react-dom';
 const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal: () => void }) => {
     return createPortal(
         // Use the `Transition` component at the root level
-        <Transition show={props.isOpen} as={'div'} onClick={props.toggleModal}>
+        <Transition
+            show={props.isOpen}
+            as={'div'}
+            appear={true}
+            onClick={props.toggleModal}
+            className='fixed inset-0 bg-black/30'
+        >
             {/* Use one Transition.Child to apply one transition to the backdrop...*/}
             <Transition.Child
                 as={Fragment}
@@ -17,7 +23,7 @@ const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal:
                 leaveFrom='opacity-100'
                 leaveTo='opacity-0'
             >
-                <div className='fixed inset-0 bg-black/30' />
+                <div />
             </Transition.Child>
 
             {/* ...and another Transition.Child to apply a separate transition

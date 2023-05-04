@@ -1,11 +1,14 @@
-import { Message } from '@/types';
-import Markdown from './Markdown';
 import { useState } from 'react';
+
 import { HiPencilSquare, HiOutlineClipboard } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
-import { copyToClipboard } from '@/utils/chats';
-import { deleteMessageUpTo } from '@/store/chatsSlice';
 import { useDispatch } from 'react-redux';
+
+import { deleteMessageUpTo } from '@/store/chatsSlice';
+import { Message } from '@/types';
+import { copyToClipboard } from '@/utils/chats';
+
+import Markdown from './Markdown';
 
 interface Props {
     message: Message;

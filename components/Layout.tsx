@@ -49,11 +49,12 @@ export default function Layout({ children }: Props) {
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
-            <div className='fixed flex h-full w-full items-stretch'>
+            <div className='fixed flex h-full w-full'>
                 <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={onClickSidebar} />
                 <main
-                    className={`flex flex-col flex-grow h-full w-full transition-width duration-300 items-center justify-between relative
-                    ${isSidebarOpen ? 'ml-64' : ''}`}
+                    className={`relative flex h-full w-full flex-grow flex-col items-center justify-between bg-light-bg transition-all duration-300 dark:bg-dark-bg ${
+                        isSidebarOpen ? 'ml-64' : ''
+                    }`}
                 >
                     <Navbar toggleSidebar={onClickSidebar} isSidebarOpen={isSidebarOpen} />
                     {children}
