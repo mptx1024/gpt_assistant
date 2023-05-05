@@ -1,17 +1,26 @@
-import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { useState, useCallback } from "react";
 
+import { HiOutlineCog8Tooth } from "react-icons/hi2";
+
+import SettingModal from "./settings/SettingModal";
 import Button from "../Button";
 
 const BottomSection = () => {
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const toggleSettingModal = useCallback(() => {
+        setIsSettingsOpen(!isSettingsOpen);
+    }, [isSettingsOpen]);
     return (
-        <div className="mt-auto flex flex-col border-t  border-red-700 py-3">
-            <label
-                htmlFor="setting-modal"
-                className="text-md btn m-1 mx-2 flex cursor-pointer items-center justify-start gap-5 rounded-md px-2 py-1 hover:bg-gray-700"
-            >
-                <HiOutlineCog6Tooth className="h-4 w-4" />
-                Settings
-            </label>
+        <div className="mt-auto flex flex-col border-t py-3">
+            <Button
+                onClick={toggleSettingModal}
+                Icon={HiOutlineCog8Tooth}
+                size="lg"
+                text={"Settings"}
+                border={true}
+                shadow={true}
+            />
+            <SettingModal isOpen={isSettingsOpen} toggleModal={toggleSettingModal} />
         </div>
     );
 };

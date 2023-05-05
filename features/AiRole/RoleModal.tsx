@@ -15,6 +15,8 @@ interface Props {
 }
 
 const RoleModal = (props: Props) => {
+    console.log(`RoleModal rendered`);
+
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
