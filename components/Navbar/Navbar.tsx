@@ -14,7 +14,7 @@ type Props = {
 };
 
 const navbarClasses =
-    "flex h-16 w-full items-center justify-between bg-light-bg px-4 dark:bg-dark-bg";
+    "flex h-16 w-full items-center justify-between bg-light-bg px-4 dark:bg-dark-bg transition-all duration-300";
 const btnGroupClasses = "flex items-center gap-2 ";
 
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
@@ -33,7 +33,9 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     return (
         <nav className={navbarClasses}>
             {isSidebarOpen ? null : <Button Icon={HiBars3} size="lg" onClick={toggleSidebar} />}
-            <p>{chat?.title}</p>
+            <p className="flex-grow text-center text-xl text-light-text dark:text-dark-text">
+                {chat?.title}
+            </p>
             <div className={btnGroupClasses}>
                 <Button Icon={HiPlus} size="lg" border={true} onClick={handleClickNewChat} />
 

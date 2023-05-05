@@ -3,7 +3,6 @@ import { Role } from '@/types';
 interface Props {
     role: Role;
     bgColor: string;
-    setSelectedRoleColor: (bgColor: string) => void;
     setSelectedRole: (role: Role) => void;
     toggleRoleCardModal: () => void;
 }
@@ -11,7 +10,6 @@ interface Props {
 const RoleCard = (props: Props) => {
     const handleClickCard = () => {
         props.toggleRoleCardModal();
-        props.setSelectedRoleColor(props.bgColor);
         props.setSelectedRole(props.role);
     };
 

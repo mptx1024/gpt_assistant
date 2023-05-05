@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { HiPlus } from "react-icons/hi2";
 
 import Button from "@/components/Button";
+import { Input } from "@/components/InputField";
 import { Role } from "@/types";
 import { createNewChat } from "@/utils/chats";
 
@@ -13,12 +14,10 @@ import RoleEditor from "./RoleEditor";
 import RoleModal from "./RoleModal";
 import { getRandomColor } from "./utils/colors";
 import rolesList from "./utils/roleLibarary.json";
-
 const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [isRoleCardModalOpen, setIsRoleCardModalOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<Role>();
-    const [selectedRoleColor, setSelectedRoleColor] = useState("");
     const router = useRouter();
 
     const [searchInput, setSearchInput] = useState("");
@@ -69,7 +68,6 @@ const RoleLibraryPage = () => {
                 key={index}
                 role={role}
                 bgColor={color}
-                setSelectedRoleColor={setSelectedRoleColor}
                 toggleRoleCardModal={toggleRoleCardModal}
                 setSelectedRole={setSelectedRole}
             />
@@ -77,12 +75,12 @@ const RoleLibraryPage = () => {
     });
     return (
         <div className="h-full w-full overflow-y-scroll">
-            <div className="my-4 flex justify-center gap-5">
-                <input
+            <div className="my-4 flex items-center justify-center gap-5">
+                <Input
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     placeholder="Search AI Role Library"
-                    className="overflow-hidden rounded-lg border-[1px] border-gray-300 p-3 outline-none"
+                    style="max-w-[15rem]"
                 />
                 <Button
                     text={"Add Role"}
@@ -92,7 +90,6 @@ const RoleLibraryPage = () => {
                     border={true}
                     size="lg"
                 />
-                <RoleEditor isOpen={isEditorOpen} toggleModal={toggleEditor} />
             </div>
             <div
                 className="
@@ -113,6 +110,7 @@ const RoleLibraryPage = () => {
                 toggleModal={toggleRoleCardModal}
                 handleClickUse={handleClickConfirm}
             />
+            <RoleEditor isOpen={isEditorOpen} toggleModal={toggleEditor} />
         </div>
     );
 };

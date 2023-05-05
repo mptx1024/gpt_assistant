@@ -1,4 +1,5 @@
 import clsx from "clsx";
+
 interface InputProps {
     required?: boolean;
     type?: string;
@@ -8,14 +9,14 @@ interface InputProps {
     style?: string;
 }
 const baseClasses =
-    "my-3 p-2 w-full overflow-hidden rounded-lg text-light-text dark:text-dark-text border-[1px] border-slate-300 outline-none focus:ring-1 focus:ring-cyan-700";
-// const test = "overflow-hidden rounded-lg border-[1px] border-gray-300 p-3 outline-none";
+    "my-3 p-2 w-full overflow-hidden rounded-lg text-light-text dark:text-dark-text border-[1px] border-slate-300 outline-none focus:border-spacing-1 focus:border-cyan-700";
 
 export function Input(props: InputProps) {
+    const inputClasses = clsx(baseClasses, props.style);
     return (
         <input
             required={props.required}
-            className={baseClasses}
+            className={inputClasses}
             type={props.type}
             placeholder={props.placeholder}
             value={props.value}

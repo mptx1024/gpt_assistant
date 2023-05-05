@@ -15,12 +15,12 @@ interface Props {
 }
 
 const btnClasses = {
-    base: "flex items-center justify-center gap-1 rounded-md max-w-xs font-normal transition-all text-light-text dark:text-dark-text active:scale-[0.8]",
+    base: "flex items-center justify-center  rounded-md max-w-xs max-h-[3rem] font-normal transition-all text-light-text dark:text-dark-text active:scale-[0.8]",
     shadow: "hover:bg-gray-200 dark:hover:bg-gray-700",
-    border: "border-[1px] border-gray-300 hover:border-cyan-600",
+    border: "border-[1px] border-gray-300 hover:border-cyan-700",
     sm: "px-1 py-1 text-sm",
     md: "px-1 py-1 text-base",
-    lg: "px-2 py-2 text-lg",
+    lg: "px-2 py-2 text-sm",
 };
 
 const iconClasses = {
@@ -62,7 +62,7 @@ const Button = ({
                     )}
                 />
             )}
-            {text && <p className="">{text}</p>}
+            {text && <p className="whitespace-nowrap">{text}</p>}
         </button>
     );
 };
