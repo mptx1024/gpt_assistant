@@ -15,7 +15,7 @@ module.exports = {
                 "light-text": colors.slate[700],
                 "dark-text": colors.slate[200],
 
-                "light-bg": colors.gray[50],
+                "light-bg": colors.slate[100],
                 "dark-bg": colors.slate[800],
 
                 "light-bg-card": colors.slate[200],
@@ -68,8 +68,5 @@ module.exports = {
         },
     },
 
-    plugins: [
-        require("@tailwindcss/typography"),
-        require("@tailwindcss/line-clamp"),
-    ],
+    plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp")],
 };
