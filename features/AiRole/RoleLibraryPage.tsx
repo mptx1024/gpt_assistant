@@ -80,7 +80,7 @@ const RoleLibraryPage = () => {
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     placeholder="Search AI Role Library"
-                    style="max-w-[15rem]"
+                    styles="max-w-[15rem]"
                 />
                 <Button
                     text={"Add Role"}

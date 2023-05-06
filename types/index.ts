@@ -36,11 +36,6 @@ export interface Role {
     roleName: string;
     id: string;
 }
-export const defaultSystemPrompt: Role = {
-    prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
-    roleName: 'default',
-    id: '001',
-};
 
 export interface OpenAIStreamPayload {
     model: string;
@@ -62,20 +57,20 @@ export interface OpenAIModel {
 }
 
 export enum OpenAIModelID {
-    GPT_3_5 = 'gpt-3.5-turbo',
-    GPT_4 = 'gpt-4',
+    GPT_3_5 = "gpt-3.5-turbo",
+    GPT_4 = "gpt-4",
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     [OpenAIModelID.GPT_3_5]: {
         id: OpenAIModelID.GPT_3_5,
-        name: 'GPT-3.5',
+        name: "GPT-3.5",
         maxLength: 12000,
         tokenLimit: 3000,
     },
     [OpenAIModelID.GPT_4]: {
         id: OpenAIModelID.GPT_4,
-        name: 'GPT-4',
+        name: "GPT-4",
         maxLength: 24000,
         tokenLimit: 6000,
     },
@@ -89,7 +84,39 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
 // }
 
 export interface Setting {
-    apiToken: string;
-    theme: string;
-    model: OpenAIModelID;
+    apiKey: string | null;
+    theme?: string;
+    modelSetting: {
+        model: OpenAIModel;
+        role: Role;
+        temperature: number;
+        frequency_penalty?: number;
+        presence_penalty?: number;
+        max_tokens: number;
+    };
+    chatSetting: {
+        auto_name: boolean;
+        attached_message_count: number;
+    };
 }
+
+export const defaultSystemPrompt: Role = {
+    prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+    roleName: "default",
+    id: "001",
+};
+
+export const defaultSetting: Setting = {
+    apiKey: null,
+    theme: "light",
+    modelSetting: {
+        model: OpenAIModels[OpenAIModelID.GPT_3_5],
+        role: defaultSystemPrompt,
+        temperature: 0.5,
+        max_tokens: 1000,
+    },
+    chatSetting: {
+        auto_name: true,
+        attached_message_count: 10,
+    },
+};
