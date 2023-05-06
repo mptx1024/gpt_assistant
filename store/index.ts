@@ -84,7 +84,7 @@ export const store = configureStore({
         getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
 
-// Update setting in localStorage
+// Update setting to localStorage
 store.subscribe(() => {
     localStorage.setItem("setting", JSON.stringify(store.getState().setting));
 });

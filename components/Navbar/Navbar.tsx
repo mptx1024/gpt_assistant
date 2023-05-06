@@ -21,6 +21,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
     const { id } = router.query;
     const chat = useSelector((state: RootState) => selectChatById(state, id as string));
+
     const { theme, setTheme } = useTheme();
     const handleClickNewChat = () => {
         const chatID = createNewChat();

@@ -11,7 +11,7 @@ const BottomSection = () => {
         setIsSettingsOpen(!isSettingsOpen);
     }, [isSettingsOpen]);
     return (
-        <div className="mt-auto flex flex-col border-t py-3">
+        <div className="mt-auto flex flex-col border-t p-3">
             <Button
                 onClick={toggleSettingModal}
                 Icon={HiOutlineCog8Tooth}

@@ -108,7 +108,6 @@ export const defaultSystemPrompt: Role = {
 
 export const defaultSetting: Setting = {
     apiKey: null,
-    theme: "light",
     modelSetting: {
         model: OpenAIModels[OpenAIModelID.GPT_3_5],
         role: defaultSystemPrompt,
