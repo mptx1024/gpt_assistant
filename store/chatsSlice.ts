@@ -1,16 +1,19 @@
-import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createEntityAdapter } from "@reduxjs/toolkit";
 
-import { Chat, Message } from '@/types';
+import { Chat, Message } from "@/types";
 
-import type { RootState } from '.';
+import type { RootState } from ".";
 
 const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
 });
+
+//TODO: fetch chats from indexedDB here
+//https:redux-toolkit.js.org/api/createEntityAdapter#getinitialstate
 const initialState = chatsAdapter.getInitialState();
 
 export const chatsSlice = createSlice({
-    name: 'chats',
+    name: "chats",
     initialState,
     reducers: {
         setOne: chatsAdapter.setOne,
@@ -27,13 +30,18 @@ export const chatsSlice = createSlice({
             }
         },
         // for streaming updates
-        updateSingleMessage: (state, action: PayloadAction<{ chatID: string; chunkValue: string }>) => {
+        updateSingleMessage: (
+            state,
+            action: PayloadAction<{ chatID: string; chunkValue: string }>
+        ) => {
             const { chatID, chunkValue } = action.payload;
             const existingChat = state.entities[chatID];
             if (existingChat) {
                 existingChat.messages[existingChat.messages.length - 1] = {
                     ...existingChat.messages[existingChat.messages.length - 1],
-                    content: existingChat.messages[existingChat.messages.length - 1].content + chunkValue,
+                    content:
+                        existingChat.messages[existingChat.messages.length - 1].content +
+                        chunkValue,
                 };
             }
         },

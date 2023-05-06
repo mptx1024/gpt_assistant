@@ -1,20 +1,21 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import { HiOutlineXMark } from 'react-icons/hi2';
+import { HiOutlineXMark } from "react-icons/hi2";
 
-import Button from '@/components/Button';
-import ModalWrapper from '@/components/Modal';
-import { SystemPrompt } from '@/types';
-import { addOrEditRole } from '@/utils/roles';
+import Button from "@/components/Button";
+import { Input, Textarea } from "@/components/InputField";
+import ModalWrapper from "@/components/Modal";
+import { Role } from "@/types";
+import { addOrEditRole } from "@/utils/roles";
 
 interface Props {
     isOpen: boolean;
     toggleModal: () => void;
-    role?: SystemPrompt;
+    role?: Role;
 }
 const RoleEditor = (props: Props) => {
-    const [title, setTitle] = useState<string>(props.role ? props.role.role : '');
-    const [prompt, setPrompt] = useState<string>(props.role ? props.role.prompt : '');
+    const [title, setTitle] = useState<string>(props.role ? props.role.roleName : "");
+    const [prompt, setPrompt] = useState<string>(props.role ? props.role.prompt : "");
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
     };
@@ -25,46 +26,57 @@ const RoleEditor = (props: Props) => {
     const handleClickSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         addOrEditRole(prompt, title, props.role);
-        setTitle('');
-        setPrompt('');
+        setTitle("");
+        setPrompt("");
         props.toggleModal();
     };
-
+    const handleClickClose = () => {
+        setTitle("");
+        setPrompt("");
+        props.toggleModal();
+    };
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className='flex flex-col space-y-4 absolute w-full max-w-lg rounded-xl p-6 overflow-hidden text-left shadow-xl bg-white'
+                className="absolute flex w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
             >
-                <div className=''>
-                    <Button icon={HiOutlineXMark} onClick={props.toggleModal} className='mr-0 ml-auto' />
+                <div className="flex justify-end">
+                    <Button
+                        size="sm"
+                        Icon={HiOutlineXMark}
+                        onClick={handleClickClose}
+                        shadow={true}
+                    />
                 </div>
                 <div>
-                    <p className='text-slate-800 text-xl'>Assistant Role</p>
+                    <p className="text-xl text-light-text dark:text-dark-text">Assistant Role</p>
                 </div>
                 <form onSubmit={(e) => handleClickSave(e)}>
                     <div>
-                        <label className='text-gray-700 text-base'>Title</label>
-                        <input
-                            required
-                            type='text'
-                            placeholder=''
+                        <label className="text-base text-light-text dark:text-dark-text">
+                            Title
+                        </label>
+                        <Input
                             value={title}
                             onChange={handleTitleChange}
-                            className='w-full p-2 my-3 rounded-lg border-slate-300 focus-visible:ring-1 overflow-hidden'
+                            required={true}
+                            placeholder="Title"
+                            type="text"
                         />
-                        <label className='text-gray-700 text-base'>Prompt Insturction</label>
 
-                        <textarea
-                            required
+                        <label className="text-base text-light-text dark:text-dark-text">
+                            Prompt Insturction
+                        </label>
+                        <Textarea
+                            required={true}
                             value={prompt}
-                            placeholder=''
                             onChange={handlePromptChange}
-                            className='w-full p-2 my-3 rounded-lg border-slate-300  focus-visible:ring-1 overflow-hidden'
+                            placeholder="Prompt"
+                            rows={10}
                         />
                     </div>
-                    {/* <button type='submit'>save</button> */}
-                    <Button type={'submit'} text={'Save'} className='w-20 bg-blue-800' />
+                    <Button size="lg" type={"submit"} shadow={true} border={true} text="Save" />
                 </form>
             </div>
         </ModalWrapper>

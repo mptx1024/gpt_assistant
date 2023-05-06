@@ -1,35 +1,68 @@
 //https://github.com/Yidadaa/ChatGPT-Next-Web/blob/main/app/components/button.tsx
+import clsx from "clsx";
 
-const Button = (props: {
+interface Props {
     onClick?: () => void;
-    icon?: React.ElementType;
+    Icon?: React.ElementType;
+    iconEffect?: boolean;
     text?: string;
-    bordered?: boolean;
+    border?: boolean;
     shadow?: boolean;
-    dark?: boolean;
-    className?: string;
     title?: string;
     disabled?: boolean;
-    type?: 'submit' | 'reset' | 'button' | undefined;
-}) => {
+    size: "sm" | "md" | "lg";
+    type?: "submit" | "reset" | "button" | undefined;
+}
+
+const btnClasses = {
+    base: "flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all text-light-text dark:text-dark-text active:scale-[0.8]",
+    shadow: "hover:bg-gray-200 dark:hover:bg-gray-700",
+    border: "border-[1px] border-gray-300 hover:border-cyan-700",
+    sm: "px-1 py-1 text-sm",
+    md: "px-1 py-1 text-base",
+    lg: "px-2 py-2 text-base",
+};
+
+const iconClasses = {
+    base: "text-light-text dark:text-dark-text ",
+    sm: "h-4 w-4",
+    md: "h-5 w-5",
+    lg: "h-6 w-6",
+    iconEffect: "hover:scale-125",
+};
+const Button = ({
+    onClick,
+    Icon,
+    iconEffect,
+    text,
+    border = false,
+    shadow = false,
+    disabled,
+    size,
+    type,
+}: Props) => {
     return (
         <button
-            type={props.type}
-            onClick={props.onClick}
-            disabled={props.disabled}
-            className={`
-            flex items-center justify-center gap-1 
-            rounded-md max-w-xs px-2 py-2 text-base font-normal
-            text-white
-            bg-gray-800 
-            hover:bg-gray-500
-            focus:outline-none 
-            focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 
-            transition-all duration-300 ease-in-out
-             ${props.className ?? ''}`}
+            type={type}
+            onClick={onClick}
+            disabled={disabled}
+            className={clsx(
+                btnClasses.base,
+                btnClasses[size],
+                shadow && btnClasses.shadow,
+                border && btnClasses.border
+            )}
         >
-            {props.icon && <props.icon className='h-4 w-4' />}
-            {props.text && <div className=''>{props.text}</div>}
+            {Icon && (
+                <Icon
+                    className={clsx(
+                        iconClasses.base,
+                        iconClasses[size],
+                        iconEffect && iconClasses.iconEffect
+                    )}
+                />
+            )}
+            {text && <p className="whitespace-nowrap">{text}</p>}
         </button>
     );
 };

@@ -1,49 +1,68 @@
-import { HiOutlineXMark } from 'react-icons/hi2';
+import { HiOutlineXMark } from "react-icons/hi2";
 
-import Button from '@/components/Button';
-import ModalWrapper from '@/components/Modal';
-import { SystemPrompt } from '@/types';
+import Button from "@/components/Button";
+import ModalWrapper from "@/components/Modal";
+import { Role } from "@/types";
 
 interface Props {
     isOpen: boolean;
-    bgColor?: string;
-    role?: SystemPrompt;
+    role?: Role;
+    isTemplate?: boolean;
     toggleModal: () => void;
-    handleClickConfirm: () => void;
+    handleClickUse: () => void;
     handleClickEdit?: () => void;
     handleClickDelete?: () => void;
 }
 
 const RoleModal = (props: Props) => {
+    console.log(`RoleModal rendered`);
+
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className={`flex flex-col space-y-3 absolute w-full max-w-lg max-h-fit rounded-2xl p-6 overflow-y-scroll text-left shadow-xl ${props.bgColor}`}
+                className="flex max-h-[70vh] min-h-[30vh] w-full max-w-lg flex-col justify-between space-y-3 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
             >
                 <div>
-                    <Button icon={HiOutlineXMark} onClick={props.toggleModal} className='mr-0 ml-auto' />
-                </div>
-                <h3 className='role-title font-bold text-white text-lg sm:text-xl'>{props.role?.role}</h3>
-                <p className='role-prompt text-base text-gray-200'>{props.role?.prompt}</p>
-                <div className='flex gap-2'>
-                    <Button
-                        text={'Use'}
-                        onClick={props.handleClickConfirm}
-                        className={`border border-gray-50 ${props.bgColor}`}
-                    />
-                    {props.handleClickEdit && (
+                    <div className="flex justify-end">
                         <Button
-                            text={'Edit'}
+                            size="sm"
+                            Icon={HiOutlineXMark}
+                            onClick={props.toggleModal}
+                            shadow={true}
+                        />
+                    </div>
+                    <h3 className="text-lg font-bold text-light-text dark:text-dark-text sm:text-xl">
+                        {props.role?.roleName}
+                    </h3>
+                </div>
+                <p className="h-[50%] max-h-[70%] overflow-y-scroll text-base text-light-text dark:text-dark-text">
+                    {props.role?.prompt}
+                </p>
+                <div id="btn-group" className="flex gap-2">
+                    <Button
+                        size="lg"
+                        text={"Use"}
+                        onClick={props.handleClickUse}
+                        shadow={true}
+                        border={true}
+                    />
+                    {!props.isTemplate && (
+                        <Button
+                            size="lg"
+                            text={"Edit"}
                             onClick={props.handleClickEdit}
-                            className={`border border-gray-50 ${props.bgColor}`}
+                            shadow={true}
+                            border={true}
                         />
                     )}
-                    {props.handleClickDelete && (
+                    {!props.isTemplate && (
                         <Button
-                            text={'Delete'}
+                            size="lg"
+                            text={"Delete"}
                             onClick={props.handleClickDelete}
-                            className={`border border-gray-50 ${props.bgColor}`}
+                            shadow={true}
+                            border={true}
                         />
                     )}
                 </div>

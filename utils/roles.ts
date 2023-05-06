@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
 import { setOneRole, removeOneRole } from '@/store/rolesSlice';
-import { SystemPrompt } from '@/types';
+import { Role } from '@/types';
 
 /**
  * Adds or edits a role with the given prompt, title, and optionally a SystemPrompt object.
@@ -12,10 +12,10 @@ import { SystemPrompt } from '@/types';
  * @param role An optional SystemPrompt object representing the role to edit.
  * @returns void
  */
-export const addOrEditRole = (prompt: string, title: string, role?: SystemPrompt): void => {
-    const newRole: SystemPrompt = {
+export const addOrEditRole = (prompt: string, title: string, role?: Role): void => {
+    const newRole: Role = {
         prompt,
-        role: title,
+        roleName: title,
         id: role ? role.id : uuid(),
     };
     store.dispatch(setOneRole(newRole));

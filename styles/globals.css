@@ -19,3 +19,9 @@ border-[1px] generates a utility class for a 1px border, which might not be avai
         @apply border-[1px] border-dashed border-green-600;
     }
 }
+
+/* Dark mode color transition */
+/* 
+body * {
+    @apply transition-colors duration-100 ease-in-out;
+} */
