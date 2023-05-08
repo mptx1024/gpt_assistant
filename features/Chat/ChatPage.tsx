@@ -30,7 +30,7 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
     }, [messages]);
 
     return (
-        <div className="flex h-screen w-full flex-col overflow-hidden overflow-y-scroll bg-slate-200 duration-300">
+        <div className="flex h-screen w-full flex-col overflow-hidden overflow-y-scroll  duration-300">
             {messages.length === 0 && <div>new msg. show home page stuff</div>}
 
             {messages && (
