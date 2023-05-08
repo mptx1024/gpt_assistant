@@ -30,7 +30,7 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
     }, [messages]);
 
     return (
-        <div className="flex h-screen w-full flex-col overflow-hidden overflow-y-scroll  duration-300">
+        <div className="flex h-screen w-full flex-col overflow-hidden overflow-y-auto bg-light-bg duration-300 dark:bg-dark-bg">
             {messages.length === 0 && <div>new msg. show home page stuff</div>}
 
             {messages && (
@@ -44,7 +44,7 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
             <div ref={lastMessageRef} />
             <div
                 className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2 transform flex-col items-center justify-center
-                bg-gradient-to-b from-transparent via-white to-white"
+                overflow-y-scroll bg-gradient-to-b from-transparent via-light-bg to-light-bg pt-4 dark:via-dark-bg dark:to-dark-bg"
             >
                 <Input
                     generateReply={generateReply}

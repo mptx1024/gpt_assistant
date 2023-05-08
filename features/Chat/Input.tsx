@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { FiSend } from "react-icons/fi";
-import { HiArrowPath, HiOutlineKey } from "react-icons/hi2";
+import { HiArrowPath, HiOutlineKey, HiShare, HiOutlineStopCircle } from "react-icons/hi2";
 
+import Button from "@/components/Button";
 import { useAppSelector } from "@/store/hooks";
 
 type Props = {
@@ -19,7 +20,6 @@ export default React.memo(function Input({
     setStopGenerating,
 }: Props) {
     const [userInput, setUserInput] = useState("");
-
     const apiKey = useAppSelector((state) => state.setting.apiKey);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -36,13 +36,22 @@ export default React.memo(function Input({
     const handleStopGenerating = () => {
         setStopGenerating();
     };
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
             handleSubmit();
         }
     };
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = "inherit";
+            // const scrollHeight = textareaRef.current.scrollHeight;
+            // textareaRef.current.style.height = scrollHeight + "px";
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    }, [userInput]);
 
     if (!apiKey) {
         return (
@@ -54,41 +63,55 @@ export default React.memo(function Input({
     }
 
     return (
-        <div className="mb-4 flex w-10/12 max-w-3xl flex-col items-center">
-            {isLoading ? (
-                <button
-                    onClick={handleStopGenerating}
-                    className="btn btn-sm btn-primary my-4 gap-2 px-5 py-1 capitalize"
-                >
-                    <HiArrowPath />
-                    Stop Generating
-                </button>
-            ) : (
-                <button
-                    onClick={handleRegenerate}
-                    className="btn btn-sm btn-primary my-4 gap-2 px-5 py-1 capitalize"
-                >
-                    <HiArrowPath />
-                    Regenerate
-                </button>
-            )}
-
-            <div className="flex w-full items-center justify-between overflow-hidden rounded-lg border border-slate-300 ">
+        <div className="debug-1 mb-4 flex w-10/12  max-w-3xl flex-grow flex-col md:w-8/12">
+            <div className="flex justify-center gap-2 py-1">
+                {isLoading ? (
+                    <Button
+                        onClick={handleStopGenerating}
+                        Icon={HiOutlineStopCircle}
+                        size="sm"
+                        text={"Stop Generating"}
+                        shadow={true}
+                        border={true}
+                        btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                    />
+                ) : (
+                    <Button
+                        onClick={handleRegenerate}
+                        Icon={HiArrowPath}
+                        size="sm"
+                        text={"Regenerate"}
+                        shadow={true}
+                        border={true}
+                        btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                    />
+                )}
+                <Button
+                    // onClick=
+                    Icon={HiShare}
+                    size="sm"
+                    text={"Share"}
+                    shadow={true}
+                    border={true}
+                    btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                />
+            </div>
+            <div className="focus-within:border-1 flex min-h-[5rem] w-full items-center rounded-md border border-slate-300 bg-light-bg shadow-sm focus-within:border-cyan-600 dark:bg-dark-bg">
                 <textarea
-                    className="w-full resize-none p-2 text-base outline-none"
-                    placeholder="Type here..."
+                    ref={textareaRef}
                     value={userInput}
-                    rows={1}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
+                    className="m-0 max-h-[20rem] w-full resize-none self-stretch bg-transparent px-2 py-2 outline-none"
                 />
-                <button
+                <Button
                     onClick={handleSubmit}
                     disabled={!userInput}
-                    className="cursor-pointer p-4 disabled:cursor-not-allowed "
-                >
-                    <FiSend className="text-slate-600 hover:text-slate-400 " />
-                </button>
+                    Icon={FiSend}
+                    size="md"
+                    shadow={true}
+                    btnStyles="mx-3"
+                />
             </div>
         </div>
     );

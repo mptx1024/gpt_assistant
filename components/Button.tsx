@@ -1,4 +1,4 @@
-//https://github.com/Yidadaa/ChatGPT-Next-Web/blob/main/app/components/button.tsx
+////////69//https://github.com/Yidadaa/ChatGPT-Next-Web/blob/main/app/components/button.tsx
 import clsx from "clsx";
 
 interface Props {
@@ -23,6 +23,7 @@ const btnClasses = {
     sm: "px-1 py-1 text-sm",
     md: "px-2 py-2 text-base",
     lg: "px-2 py-2 text-lg",
+    disabled: "cursor-not-allowed",
 };
 
 const iconClasses = {
@@ -30,7 +31,7 @@ const iconClasses = {
     sm: "h-4 w-4",
     md: "h-5 w-5",
     lg: "h-6 w-6",
-    iconEffect: "hover:scale-125",
+    iconEffect: "hover:scale-[1.1]",
 };
 const Button = ({
     onClick,
@@ -55,6 +56,7 @@ const Button = ({
                 btnClasses[size],
                 shadow && btnClasses.shadow,
                 border && btnClasses.border,
+                disabled && btnClasses.disabled,
                 btnStyles
             )}
         >
@@ -68,7 +70,7 @@ const Button = ({
                     )}
                 />
             )}
-            {text && <p className="m-0 whitespace-nowrap">{text}</p>}
+            {text && <p className="invisible mx-1 whitespace-nowrap md:visible">{text}</p>}
         </button>
     );
 };

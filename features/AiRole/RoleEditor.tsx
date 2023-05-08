@@ -65,7 +65,7 @@ const RoleEditor = (props: Props) => {
                             type="text"
                         />
 
-                        <label className="text-base text-light-text dark:text-dark-text">
+                        <label className="text-base text-light-text dark:text-dark-text ">
                             Prompt Insturction
                         </label>
                         <Textarea
