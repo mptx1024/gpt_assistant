@@ -1,6 +1,7 @@
 {
-    "plugins": ["prettier-plugin-tailwindcss"],
-    "tabWidth": 4,
-    "singleAttributePerLine": false,
-    "printWidth": 100
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tabWidth": 4,
+  "singleAttributePerLine": false,
+  "printWidth": 100,
+  "singleQuote": true
 }

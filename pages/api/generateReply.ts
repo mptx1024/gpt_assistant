@@ -1,10 +1,10 @@
-import { Message, OpenAIMessage, Chat, OpenAIStreamPayload } from "@/types";
-import { chatHistoryTrimer } from "@/utils/tokenizer";
+import { Message, OpenAIMessage, Chat, defaultModelParams, OpenAIStreamPayload } from '@/types';
+import { chatHistoryTrimer } from '@/utils/tokenizer';
 
-import { OpenAIStream } from "../../utils/OpenAIStream";
+import { OpenAIStream } from '../../utils/OpenAIStream';
 
 export const config = {
-    runtime: "edge",
+    runtime: 'edge',
 };
 
 const handler = async (req: Request): Promise<Response> => {
@@ -12,9 +12,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { currentChat, apiKey } = (await req.json()) as { currentChat: Chat; apiKey: string };
 
+    if (!currentChat.modelParams) {
+        currentChat.modelParams = defaultModelParams;
+    }
     if (!currentChat.messages) {
-        console.log("No messages provided");
-        return new Response("No messages in the request", { status: 400 });
+        console.log('No messages provided');
+        return new Response('No messages in the request', { status: 400 });
     }
 
     const messages: OpenAIMessage[] = currentChat.messages.map((message: Message) => {
@@ -31,22 +34,14 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     if (!isTrimSuccess) {
-        console.log("Trimming failed");
-        return new Response("Trimming failed", { status: 400 });
+        return new Response('Trimming failed', { status: 400 });
     }
-    console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
+    // console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
     const payload: OpenAIStreamPayload = {
-        model: "gpt-3.5-turbo",
-        // messages: [{ role: 'user', content: prompt }],
+        model: currentChat.model.id,
         messages: messagesToSend,
-        temperature: 1,
-        // top_p: 1,
-        // frequency_penalty: 0,
-        // presence_penalty: 0,
-        max_tokens: 1000,
-        stream: true,
-        // n: 1,
+        ...currentChat.modelParams,
     };
 
     try {

@@ -28,7 +28,7 @@ export const settingSlice = createSlice({
             } else if (type === "modelSetting") {
                 state.modelSetting = value;
             } else if (type === "chatSetting") {
-                state.chatSetting = value;
+                state.defaultChatSetting = value;
             }
         },
     },

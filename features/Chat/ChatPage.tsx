@@ -7,6 +7,7 @@ import { selectChatById } from "@/store/chatsSlice";
 import { Message, Chat } from "@/types";
 
 import ChatMessage from "./ChatMessage";
+import { ChatSettingCard } from "./ChatSetting";
 import useChat from "./hooks/useChat";
 import Input from "./Input";
 
@@ -30,11 +31,13 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
     }, [messages]);
 
     return (
-        <div className="flex h-screen w-full flex-col overflow-hidden overflow-y-auto bg-light-bg duration-300 dark:bg-dark-bg">
-            {messages.length === 0 && <div>new msg. show home page stuff</div>}
+        <div className="debug-1 flex h-full w-full flex-col items-center overflow-y-auto">
+            <div className="debug-1 my-3 bg-light-bg dark:bg-dark-bg">
+                <ChatSettingCard chat={chat} />
+            </div>
 
             {messages && (
-                <div id="messages-box" className="mb-32 animate-slideIn">
+                <div id="messages-section" className="mb-32 flex w-full animate-slideIn flex-col">
                     {messages.map((message, index) => (
                         <ChatMessage key={index} message={message} generateReply={generateReply} />
                     ))}

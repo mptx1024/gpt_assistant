@@ -70,7 +70,7 @@ const Button = ({
                     )}
                 />
             )}
-            {text && <p className="invisible mx-1 whitespace-nowrap md:visible">{text}</p>}
+            {text && <p className=" mx-1 whitespace-nowrap">{text}</p>}
         </button>
     );
 };

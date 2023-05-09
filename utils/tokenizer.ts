@@ -1,9 +1,10 @@
-import { OpenAIMessage } from '@/types';
+import model from "@dqbd/tiktoken/encoders/cl100k_base.json";
+import { init, Tiktoken } from "@dqbd/tiktoken/lite/init";
 
-import { init, Tiktoken } from '@dqbd/tiktoken/lite/init';
+import { OpenAIMessage } from "@/types";
+
 // @ts-expect-error
-import wasm from '../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module';
-import model from '@dqbd/tiktoken/encoders/cl100k_base.json';
+import wasm from "../node_modules/@dqbd/tiktoken/lite/tiktoken_bg.wasm?module";
 
 interface chatHistoryTrimerProps {
     messages: OpenAIMessage[];
@@ -36,16 +37,16 @@ export const chatHistoryTrimer = async (prop: chatHistoryTrimerProps) => {
 
     // trim messages
     for (let i = 0; i < messages.length && tokensLength > tokenLimit; i++) {
-        if (messages[i].role === 'user') {
+        if (messages[i].role === "user") {
             continue;
         }
-        messages[i].content = '';
+        messages[i].content = "";
         tokensLength -= tokenCache.get(messages[i].content)!;
     }
 
     const isTrimSuccess = tokensLength <= tokenLimit;
     messagesToSend = messagesToSend.filter((m) => m.content.length > 0);
-    messagesToSend = [{ role: 'system', content: systemPrompt }, ...messagesToSend];
+    messagesToSend = [{ role: "system", content: systemPrompt }, ...messagesToSend];
 
     return { messagesToSend, isTrimSuccess };
 };

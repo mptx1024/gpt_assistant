@@ -1,5 +1,5 @@
 import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser';
-import { OpenAIMessage } from '@/types';
+
 import { OpenAIStreamPayload } from '@/types';
 export type ChatGPTAgent = 'user' | 'system';
 
@@ -7,8 +7,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload, apiKey?: string
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
 
-    // console.log(`payload: ${JSON.stringify(payload)}`);
-
+    console.log(`payload: ${JSON.stringify(payload)}`);
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
         headers: {
             'Content-Type': 'application/json',

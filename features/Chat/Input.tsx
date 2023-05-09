@@ -63,7 +63,7 @@ export default React.memo(function Input({
     }
 
     return (
-        <div className="debug-1 mb-4 flex w-10/12  max-w-3xl flex-grow flex-col md:w-8/12">
+        <div className="debug-1 mb-4 flex w-10/12  max-w-3xl flex-grow flex-col lg:w-9/12">
             <div className="flex justify-center gap-2 py-1">
                 {isLoading ? (
                     <Button

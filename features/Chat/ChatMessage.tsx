@@ -47,16 +47,16 @@ export default function ChatMessage({ message, generateReply }: Props) {
         setIsEditing(false);
     };
     const messageBackdropClasses = clsx(
-        "group w-full text-gray-800 dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50",
+        "group dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50",
         {
-            "bg-light-bg dark:bg-dark-bg": message.role === "user",
-            "bg-slate-200 dark:bg-slate-700": message.role !== "user",
+            "bg-gray-200 dark:bg-gray-700": message.role === "user",
+            "bg-gray-100 dark:bg-gray-800": message.role !== "user",
         }
     );
     return (
         <div className={messageBackdropClasses}>
             <div
-                className=" m-auto flex gap-3 p-4 text-base
+                className="m-auto flex gap-3 p-4 text-base
             md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl
             "
             >
@@ -67,12 +67,12 @@ export default function ChatMessage({ message, generateReply }: Props) {
                     {!isEditing ? (
                         <Markdown message={message} />
                     ) : (
-                        <div className="flex-grow">
+                        <div className="">
                             <Textarea value={editedContent} onChange={handleEditContent} />
-                            <div className="mt-2 flex justify-end gap-3">
+                            <div className="mt-1 flex h-8 justify-end gap-2">
                                 <Button
                                     onClick={handleSaveChanges}
-                                    size="md"
+                                    size="sm"
                                     text="Save & Submit"
                                     shadow={true}
                                     border={true}
@@ -83,7 +83,7 @@ export default function ChatMessage({ message, generateReply }: Props) {
                                     text="Cancel"
                                     shadow={true}
                                     border={true}
-                                    size="md"
+                                    size="sm"
                                 />
                             </div>
                         </div>
