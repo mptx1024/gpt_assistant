@@ -12,11 +12,11 @@ module.exports = {
         extend: {
             translate: ['dark'],
             colors: {
-                'light-text': colors.slate[700],
-                'dark-text': colors.slate[200],
+                'light-text': colors.gray[600],
+                'dark-text': colors.gray[200],
 
-                'light-bg': colors.gray[100],
-                'dark-bg': colors.gray[800],
+                'light-bg': colors.neutral[100],
+                'dark-bg': colors.neutral[800],
 
                 'light-bg-card': colors.slate[200],
                 'light-bg-card-hover': colors.slate[300],
@@ -68,5 +68,9 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp')],
+    plugins: [
+        require('@tailwindcss/typography'),
+        require('@tailwindcss/line-clamp'),
+        require('@headlessui/tailwindcss'),
+    ],
 };

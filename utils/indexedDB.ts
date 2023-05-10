@@ -1,6 +1,6 @@
 // https://github.com/jakearchibald/idb-keyval
 import * as idb from 'idb-keyval';
-let supported = true;
+const supported = true;
 // const inMemoryCache = new Map<string, any>();
 
 // const testDB = indexedDB.open('test');

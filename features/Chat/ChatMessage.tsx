@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import clsx from "clsx";
-import { HiPencilSquare, HiOutlineClipboard } from "react-icons/hi2";
-import { TbClipboardCheck } from "react-icons/tb";
-import { useDispatch } from "react-redux";
+import clsx from 'clsx';
+import { HiPencilSquare, HiOutlineClipboard } from 'react-icons/hi2';
+import { TbClipboardCheck } from 'react-icons/tb';
+import { useDispatch } from 'react-redux';
 
-import Button from "@/components/Button";
-import { Textarea } from "@/components/InputField";
-import { deleteMessageUpTo } from "@/store/chatsSlice";
-import { Message } from "@/types";
-import { copyToClipboard } from "@/utils/chats";
+import Button from '@/components/Button';
+import { Textarea } from '@/components/InputField';
+import { deleteMessageUpTo } from '@/store/chatsSlice';
+import { Message } from '@/types';
+import { copyToClipboard } from '@/utils/chats';
 
-import Markdown from "./Markdown";
+import Markdown from './Markdown';
 
 interface Props {
     message: Message;
@@ -40,17 +40,17 @@ export default function ChatMessage({ message, generateReply }: Props) {
         // then regenerate reply
         generateReply(editedContent);
         setIsEditing(false);
-        setEditedContent("");
+        setEditedContent('');
     };
 
     const handleCancel = () => {
         setIsEditing(false);
     };
     const messageBackdropClasses = clsx(
-        "group dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50",
+        'group dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50',
         {
-            "bg-gray-200 dark:bg-gray-700": message.role === "user",
-            "bg-gray-100 dark:bg-gray-800": message.role !== "user",
+            'bg-gray-200 dark:bg-neutral-700': message.role === 'user',
+            'bg-gray-100 dark:bg-neutral-800': message.role !== 'user',
         }
     );
     return (
@@ -61,7 +61,7 @@ export default function ChatMessage({ message, generateReply }: Props) {
             "
             >
                 <div className="flex w-8 flex-shrink-0 flex-col items-end text-base">
-                    {message.role === "user" ? "You" : "AI"}
+                    {message.role === 'user' ? 'You' : 'AI'}
                 </div>
                 <div className="prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:w-[calc(100%-115px)] md:gap-3">
                     {!isEditing ? (
@@ -106,7 +106,7 @@ export default function ChatMessage({ message, generateReply }: Props) {
                                     />
                                     // <TbClipboardCheck className="h-5 w-5 text-base text-green-500" />
                                 )}
-                                {message.role === "user" && (
+                                {message.role === 'user' && (
                                     <Button
                                         Icon={HiPencilSquare}
                                         onClick={handleEdit}

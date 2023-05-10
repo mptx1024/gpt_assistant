@@ -1,7 +1,7 @@
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 
-import { store } from "@/store";
-import { setOne } from "@/store/chatsSlice";
+import { store } from '@/store';
+import { setOne } from '@/store/chatsSlice';
 import {
     Chat,
     Role,
@@ -9,7 +9,7 @@ import {
     defaultModelParams,
     OpenAIModelID,
     OpenAIModels,
-} from "@/types";
+} from '@/types';
 
 export const copyToClipboard = async (
     text: string,
@@ -22,19 +22,19 @@ export const copyToClipboard = async (
             setIsCopied(false);
         }, 1500);
     } catch (err) {
-        console.error("Failed to copy text: ", err);
+        console.error('Failed to copy text: ', err);
     }
 };
 
 export const createNewChat = (
     systemRole: Role = defaultSystemRole,
     modelID: OpenAIModelID = OpenAIModelID.GPT_3_5,
-    title = ""
+    title = ''
 ): string => {
     const newChat: Chat = {
         id: uuid(),
         messages: [],
-        title: systemRole.roleName === "default" ? "New Chat" : systemRole.roleName,
+        title: systemRole.roleName === 'default' ? 'New Chat' : systemRole.roleName,
         created: Date.now(),
         role: systemRole,
         model: OpenAIModels[modelID],

@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction, createEntityAdapter } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
 
-import { Chat, Message } from "@/types";
+import { Chat, Message } from '@/types';
 
-import type { RootState } from ".";
+import type { RootState } from '.';
 
 const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
@@ -13,7 +13,7 @@ const chatsAdapter = createEntityAdapter<Chat>({
 const initialState = chatsAdapter.getInitialState();
 
 export const chatsSlice = createSlice({
-    name: "chats",
+    name: 'chats',
     initialState,
     reducers: {
         setOne: chatsAdapter.setOne,

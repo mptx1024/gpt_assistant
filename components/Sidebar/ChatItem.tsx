@@ -1,20 +1,20 @@
-import { FC, useState, useRef, useEffect } from "react";
+import { FC, useState, useRef, useEffect } from 'react';
 
-import Link from "next/link";
+import Link from 'next/link';
 import {
     HiPencilSquare,
     HiTrash,
     HiCheck,
     HiOutlineXMark,
     HiChatBubbleLeftEllipsis,
-} from "react-icons/hi2";
-import { useDispatch } from "react-redux";
+} from 'react-icons/hi2';
+import { useDispatch } from 'react-redux';
 
-import { updateTitle, removeOne } from "@/store/chatsSlice";
-import { Chat } from "@/types";
+import { updateTitle, removeOne } from '@/store/chatsSlice';
+import { Chat } from '@/types';
 
-import SidebarCard from "./SidebarCard";
-import Button from "../Button";
+import SidebarCard from './SidebarCard';
+import Button from '../Button';
 
 interface ChatItemProps {
     chat: Chat;
@@ -25,7 +25,7 @@ interface ChatItemProps {
 const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
     const [edit, setEdit] = useState(false);
     const [remove, setRemove] = useState(false);
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState('');
     const dispatch = useDispatch();
     const chatRef = useRef<HTMLDivElement>(null);
     const onClickEdit = () => {
@@ -58,16 +58,13 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
-            if (
-                chatRef.current &&
-                !chatRef.current.contains(event.target as Node)
-            ) {
+            if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
                 onClickCancel();
             }
         }
-        document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener('mousedown', handleClickOutside);
         return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [chatRef]);
 
@@ -80,9 +77,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                         {edit ? (
                             <input
                                 type="text"
-                                placeholder={
-                                    chat.title || chat.id.substring(0, 20)
-                                }
+                                placeholder={chat.title || chat.id.substring(0, 20)}
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 className="w-36 truncate border-none text-gray-500 focus:border-transparent"
@@ -90,7 +85,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                         ) : (
                             <p
                                 className={`w-36 overflow-hidden truncate whitespace-nowrap text-base ${
-                                    chat.title ? "animate-typing" : ""
+                                    chat.title ? 'animate-typing' : ''
                                 }`}
                             >
                                 {chat.title || chat.id.substring(0, 20)}

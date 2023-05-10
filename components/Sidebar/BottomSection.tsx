@@ -1,9 +1,10 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
-import { HiOutlineCog8Tooth } from "react-icons/hi2";
+import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 
-import SettingModal from "./settings/SettingModal";
-import Button from "../Button";
+import AppSetting from './settings/AppSetting';
+import SettingModal from './settings/SettingModal';
+import Button from '../Button';
 
 const BottomSection = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -16,11 +17,17 @@ const BottomSection = () => {
                 onClick={toggleSettingModal}
                 Icon={HiOutlineCog8Tooth}
                 size="lg"
-                text={"Settings"}
+                text={'Settings'}
                 border={true}
                 shadow={true}
             />
-            <SettingModal isOpen={isSettingsOpen} toggleModal={toggleSettingModal} />
+            <SettingModal
+                isOpen={isSettingsOpen}
+                toggleModal={toggleSettingModal}
+                title="App Setting"
+            >
+                <AppSetting toggleModal={toggleSettingModal} />
+            </SettingModal>
         </div>
     );
 };

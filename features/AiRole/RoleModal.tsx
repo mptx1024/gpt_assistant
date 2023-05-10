@@ -1,8 +1,8 @@
-import { HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineXMark } from 'react-icons/hi2';
 
-import Button from "@/components/Button";
-import ModalWrapper from "@/components/Modal";
-import { Role } from "@/types";
+import Button from '@/components/Button';
+import ModalWrapper from '@/components/Modal';
+import { Role } from '@/types';
 
 interface Props {
     isOpen: boolean;
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const RoleModal = (props: Props) => {
-    console.log(`RoleModal rendered`);
+    console.log('RoleModal rendered');
 
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
@@ -42,7 +42,7 @@ const RoleModal = (props: Props) => {
                 <div id="btn-group" className="flex gap-2">
                     <Button
                         size="lg"
-                        text={"Use"}
+                        text={'Use'}
                         onClick={props.handleClickUse}
                         shadow={true}
                         border={true}
@@ -50,7 +50,7 @@ const RoleModal = (props: Props) => {
                     {!props.isTemplate && (
                         <Button
                             size="lg"
-                            text={"Edit"}
+                            text={'Edit'}
                             onClick={props.handleClickEdit}
                             shadow={true}
                             border={true}
@@ -59,7 +59,7 @@ const RoleModal = (props: Props) => {
                     {!props.isTemplate && (
                         <Button
                             size="lg"
-                            text={"Delete"}
+                            text={'Delete'}
                             onClick={props.handleClickDelete}
                             shadow={true}
                             border={true}

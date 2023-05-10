@@ -1,14 +1,14 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 
-import { Transition } from "@headlessui/react";
-import { createPortal } from "react-dom";
+import { Transition } from '@headlessui/react';
+import { createPortal } from 'react-dom';
 
 const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal: () => void }) => {
     return createPortal(
         // Use the `Transition` component at the root level
         <Transition
             show={props.isOpen}
-            as={"div"}
+            as={'div'}
             appear={true}
             onClick={props.toggleModal}
             className="fixed inset-0 bg-black/30"

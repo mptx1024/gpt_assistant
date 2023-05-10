@@ -1,15 +1,15 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
     HiTrash,
     HiCalculator,
     HiCheck,
     HiOutlineXMark,
     HiOutlineCog6Tooth,
-} from "react-icons/hi2";
+} from 'react-icons/hi2';
 
-import { removeAll } from "@/store/chatsSlice";
-import { useAppDispatch } from "@/store/hooks";
+import { removeAll } from '@/store/chatsSlice';
+import { useAppDispatch } from '@/store/hooks';
 
 const BottomSection = () => {
     const dispatch = useAppDispatch();
@@ -47,7 +47,7 @@ const BottomSection = () => {
                     className="dropdown-content text-primary-content flex w-48 items-center gap-3 rounded-lg p-3 shadow"
                 >
                     Are you sure?
-                    <Link href={"/chat"}>
+                    <Link href={'/chat'}>
                         <HiCheck
                             className="h-5 w-5 cursor-pointer hover:bg-gray-700"
                             onClick={onConfirmClearChats}

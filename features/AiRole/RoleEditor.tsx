@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineXMark } from 'react-icons/hi2';
 
-import Button from "@/components/Button";
-import { Input, Textarea } from "@/components/InputField";
-import ModalWrapper from "@/components/Modal";
-import { Role } from "@/types";
-import { addOrEditRole } from "@/utils/roles";
+import Button from '@/components/Button';
+import { Input, Textarea } from '@/components/InputField';
+import ModalWrapper from '@/components/Modal';
+import { Role } from '@/types';
+import { addOrEditRole } from '@/utils/roles';
 
 interface Props {
     isOpen: boolean;
@@ -14,8 +14,8 @@ interface Props {
     role?: Role;
 }
 const RoleEditor = (props: Props) => {
-    const [title, setTitle] = useState<string>(props.role ? props.role.roleName : "");
-    const [prompt, setPrompt] = useState<string>(props.role ? props.role.prompt : "");
+    const [title, setTitle] = useState<string>(props.role ? props.role.roleName : '');
+    const [prompt, setPrompt] = useState<string>(props.role ? props.role.prompt : '');
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
     };
@@ -26,13 +26,13 @@ const RoleEditor = (props: Props) => {
     const handleClickSave = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         addOrEditRole(prompt, title, props.role);
-        setTitle("");
-        setPrompt("");
+        setTitle('');
+        setPrompt('');
         props.toggleModal();
     };
     const handleClickClose = () => {
-        setTitle("");
-        setPrompt("");
+        setTitle('');
+        setPrompt('');
         props.toggleModal();
     };
     return (
@@ -76,7 +76,7 @@ const RoleEditor = (props: Props) => {
                             rows={10}
                         />
                     </div>
-                    <Button size="lg" type={"submit"} shadow={true} border={true} text="Save" />
+                    <Button size="lg" type={'submit'} shadow={true} border={true} text="Save" />
                 </form>
             </div>
         </ModalWrapper>

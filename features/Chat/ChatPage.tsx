@@ -1,15 +1,15 @@
-import { useEffect, useRef, memo } from "react";
+import { useEffect, useRef, memo } from 'react';
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
-import { RootState, store } from "@/store";
-import { selectChatById } from "@/store/chatsSlice";
-import { Message, Chat } from "@/types";
+import { RootState, store } from '@/store';
+import { selectChatById } from '@/store/chatsSlice';
+import { Message, Chat } from '@/types';
 
-import ChatMessage from "./ChatMessage";
-import { ChatSettingCard } from "./ChatSetting";
-import useChat from "./hooks/useChat";
-import Input from "./Input";
+import ChatMessage from './ChatMessage';
+import { ChatParamsCard } from './ChatSetting';
+import useChat from './hooks/useChat';
+import Input from './Input';
 
 interface Props {
     chat: Chat;
@@ -31,9 +31,9 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
     }, [messages]);
 
     return (
-        <div className="debug-1 flex h-full w-full flex-col items-center overflow-y-auto">
-            <div className="debug-1 my-3 bg-light-bg dark:bg-dark-bg">
-                <ChatSettingCard chat={chat} />
+        <div className=" flex h-full w-full flex-col items-center overflow-y-auto">
+            <div className="my-3 bg-light-bg dark:bg-dark-bg">
+                <ChatParamsCard chat={chat} />
             </div>
 
             {messages && (
