@@ -15,7 +15,7 @@ export function ChatParamsCard({ chat }: Props) {
             onClick={toggleModal}
             className="flex cursor-pointer flex-col items-start rounded-md border border-gray-500  p-3 text-light-text hover:bg-neutral-200 dark:text-dark-text dark:hover:bg-neutral-700"
         >
-            <span>{chat.model.name}</span>
+            <span>{chat.modelParams.model.name}</span>
             <span>Temperature: {chat.modelParams.temperature}</span>
             <span>Assistant: {chat.role.roleName}</span>
             <SettingModal isOpen={isOpen} toggleModal={toggleModal} title="Chat Setting">
@@ -31,7 +31,6 @@ interface ChatParamsModalProps {
 export function ChatParamsModal(props: ChatParamsModalProps) {
     return (
         <div className="mt-5 flex flex-col">
-            <div id="setting-assistant"></div>
             <ModelParams chat={props.chat} />
         </div>
     );

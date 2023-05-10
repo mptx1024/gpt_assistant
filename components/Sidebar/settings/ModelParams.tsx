@@ -4,7 +4,7 @@ import { Listbox } from '@headlessui/react';
 import { HiChevronUpDown } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
-import { Input } from '@/components/InputField';
+import { Input, Textarea } from '@/components/InputField';
 import { OpenAIModels, OpenAIModel, OpenAIModelID } from '@/types';
 import { Chat } from '@/types';
 interface Props {
@@ -15,10 +15,21 @@ const ModelParams = ({ chat }: Props) => {
     const [temp, setTemp] = useState(chat.modelParams.temperature);
     const [selectedModel, setSelectedModel] = useState(models[0]);
     const [maxTokens, setMaxTokens] = useState(chat.modelParams.max_tokens);
+    const [prompt, setPrompt] = useState(chat.role.prompt);
     return (
-        <div className="flex flex-col">
-            <div id="setting-assistant"></div>
-            <div id="model-params" className="flex flex-col gap-7 px-10">
+        <div className="flex flex-col px-10">
+            <div id="assistant-setting" className="mb-10">
+                <div id="setting-role-name">
+                    <span>Assistant Prompt</span>
+                    {/* <Textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} /> */}
+                    <textarea
+                        className="max-h-[60rem] w-full resize-none"
+                        value={prompt}
+                        onChange={(e) => setPrompt(e.target.value)}
+                    />
+                </div>
+            </div>
+            <div id="model-params" className="flex flex-col gap-7">
                 <div id="setting-model" className="flex items-center justify-between">
                     <span className="">Model</span>
                     <ModelListBox
