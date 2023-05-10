@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 
-import { FiSend } from "react-icons/fi";
-import { HiArrowPath, HiOutlineKey, HiShare, HiOutlineStopCircle } from "react-icons/hi2";
+import { FiSend } from 'react-icons/fi';
+import { HiArrowPath, HiOutlineKey, HiShare, HiOutlineStopCircle } from 'react-icons/hi2';
 
-import Button from "@/components/Button";
-import { useAppSelector } from "@/store/hooks";
+import Button from '@/components/Button';
+import { useAppSelector } from '@/store/hooks';
 
 type Props = {
     generateReply: (content: string) => void;
@@ -19,7 +19,7 @@ export default React.memo(function Input({
     isLoading,
     setStopGenerating,
 }: Props) {
-    const [userInput, setUserInput] = useState("");
+    const [userInput, setUserInput] = useState('');
     const apiKey = useAppSelector((state) => state.setting.apiKey);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -28,7 +28,7 @@ export default React.memo(function Input({
 
     const handleSubmit = async () => {
         generateReply(userInput);
-        setUserInput("");
+        setUserInput('');
     };
     const handleRegenerate = () => {
         regenerate();
@@ -39,14 +39,14 @@ export default React.memo(function Input({
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter" && !e.shiftKey) {
+        if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSubmit();
         }
     };
     useEffect(() => {
         if (textareaRef.current) {
-            textareaRef.current.style.height = "inherit";
+            textareaRef.current.style.height = 'inherit';
             // const scrollHeight = textareaRef.current.scrollHeight;
             // textareaRef.current.style.height = scrollHeight + "px";
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
@@ -70,7 +70,7 @@ export default React.memo(function Input({
                         onClick={handleStopGenerating}
                         Icon={HiOutlineStopCircle}
                         size="sm"
-                        text={"Stop Generating"}
+                        text={'Stop Generating'}
                         shadow={true}
                         border={true}
                         btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
@@ -80,7 +80,7 @@ export default React.memo(function Input({
                         onClick={handleRegenerate}
                         Icon={HiArrowPath}
                         size="sm"
-                        text={"Regenerate"}
+                        text={'Regenerate'}
                         shadow={true}
                         border={true}
                         btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
@@ -90,7 +90,7 @@ export default React.memo(function Input({
                     // onClick=
                     Icon={HiShare}
                     size="sm"
-                    text={"Share"}
+                    text={'Share'}
                     shadow={true}
                     border={true}
                     btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"

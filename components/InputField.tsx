@@ -1,15 +1,15 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
 interface InputProps {
     required?: boolean;
     type?: string;
     placeholder?: string;
-    value: string;
+    value: string | number;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     styles?: string;
 }
 const inputBaseClasses =
-    "my-3 p-2 w-full overflow-hidden rounded-lg text-light-text dark:text-dark-text  outline-none focus:ring-1 focus:ring-inset focus:ring-indigo-700";
+    'my-3 p-2 w-full overflow-hidden rounded-lg text-light-text dark:text-dark-text  outline-none focus:ring-1 focus:ring-inset focus:ring-indigo-700';
 
 export function Input(props: InputProps) {
     const inputClasses = clsx(props.styles, inputBaseClasses);
@@ -37,7 +37,7 @@ interface TexareaProps {
 }
 
 const textAreaBaseClasses =
-    "resize-none outline-none px-3 py-2 w-full rounded-lg focus:ring-1 focus:ring-inset focus:ring-indigo-700";
+    'resize-none outline-none px-3 py-2 w-full rounded-lg focus:ring-1 focus:ring-inset focus:ring-indigo-700';
 export function Textarea(props: TexareaProps) {
     const textAreaClasses = clsx(textAreaBaseClasses, props.styles);
 

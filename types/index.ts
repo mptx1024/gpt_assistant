@@ -21,7 +21,7 @@ export interface Chat {
     title?: string | null;
     created: number;
     role: Role;
-    model: OpenAIModel;
+    // model: OpenAIModel;
     modelParams: ModelParams;
 }
 export interface Role {
@@ -32,6 +32,7 @@ export interface Role {
 }
 
 export interface ModelParams {
+    model: OpenAIModel;
     temperature: number;
     top_p?: number;
     frequency_penalty?: number;
@@ -90,7 +91,6 @@ export interface OpenAIStreamPayload {
 export interface Setting {
     apiKey: string | null;
     theme?: string;
-    defaultModel: OpenAIModel;
     defaulModelParams: ModelParams;
     defaultChatSetting: {
         auto_name: boolean;
@@ -107,10 +107,10 @@ export const defaultModelParams: ModelParams = {
     temperature: 0.7,
     max_tokens: 1000,
     stream: true,
+    model: OpenAIModels[OpenAIModelID.GPT_3_5],
 };
 export const defaultSetting: Setting = {
     apiKey: null,
-    defaultModel: OpenAIModels[OpenAIModelID.GPT_3_5],
     defaulModelParams: defaultModelParams,
     defaultChatSetting: {
         auto_name: true,
