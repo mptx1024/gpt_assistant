@@ -8,7 +8,6 @@ import { Input } from '@/components/InputField';
 import ModalWrapper from '@/components/Modal';
 import { useAppSelector } from '@/store/hooks';
 import { useAppDispatch } from '@/store/hooks';
-import { setSetting, selectSetting } from '@/store/settingSlice';
 interface Props {
     isOpen: boolean;
     toggleModal: () => void;

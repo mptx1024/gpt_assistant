@@ -44,6 +44,7 @@ export default React.memo(function Input({
             handleSubmit();
         }
     };
+    
     useEffect(() => {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'inherit';

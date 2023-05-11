@@ -12,6 +12,8 @@ import chatsReducer, {
     updateTitle,
     deleteMessageUpTo,
     setOne,
+    updateModelParams,
+    updateRole,
 } from './chatsSlice';
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
 import rolesReducer, {
@@ -35,7 +37,9 @@ startAppListening({
         addSingleMessage,
         updateSingleMessage,
         updateTitle,
-        deleteMessageUpTo
+        deleteMessageUpTo,
+        updateModelParams,
+        updateRole
     ),
 
     effect: async (action, listenerApi) => {
@@ -47,13 +51,14 @@ startAppListening({
         // }
         else {
             const chats: Chat[] = selectAllChats(store.getState());
-            const chatsToSave: Chat[] = [];
-            for (const chatID in chats) {
-                if (chats[chatID].messages.length > 0) {
-                    chatsToSave.push(chats[chatID]);
-                }
-                await idb.set('chats', chatsToSave);
-            }
+            // const chatsToSave: Chat[] = [];
+            // for (const chatID in chats) {
+            //     if (chats[chatID].messages.length > 0) {
+            //         chatsToSave.push(chats[chatID]);
+            //     }
+            //     await idb.set('chats', chatsToSave);
+            // }
+            await idb.set('chats', chats);
         }
     },
 });

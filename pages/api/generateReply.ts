@@ -30,7 +30,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
         messages,
         systemPrompt: currentChat.role.prompt,
-        tokenLimit: currentChat.model.tokenLimit,
+        tokenLimit: currentChat.modelParams.model.tokenLimit,
     });
 
     if (!isTrimSuccess) {
@@ -39,9 +39,11 @@ const handler = async (req: Request): Promise<Response> => {
     // console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
     const payload: OpenAIStreamPayload = {
-        model: currentChat.model.id,
+        model: currentChat.modelParams.model.id,
         messages: messagesToSend,
-        ...currentChat.modelParams,
+        temperature: currentChat.modelParams.temperature,
+        max_tokens: currentChat.modelParams.max_tokens,
+        stream: true,
     };
 
     try {

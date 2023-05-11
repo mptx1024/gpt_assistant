@@ -2,14 +2,8 @@ import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
 import { setOne } from '@/store/chatsSlice';
-import {
-    Chat,
-    Role,
-    defaultSystemRole,
-    defaultModelParams,
-    OpenAIModelID,
-    OpenAIModels,
-} from '@/types';
+import { getAppSetting } from '@/store/settingSlice';
+import { Chat, Role } from '@/types';
 
 export const copyToClipboard = async (
     text: string,
@@ -26,19 +20,15 @@ export const copyToClipboard = async (
     }
 };
 
-export const createNewChat = (
-    systemRole: Role = defaultSystemRole,
-    modelID: OpenAIModelID = OpenAIModelID.GPT_3_5,
-    title = ''
-): string => {
+export const createNewChat = (selectedRole?: Role): string => {
+    const appSetting = getAppSetting(store.getState());
     const newChat: Chat = {
         id: uuid(),
         messages: [],
-        title: systemRole.roleName === 'default' ? 'New Chat' : systemRole.roleName,
+        title: selectedRole ? selectedRole.roleName : 'New Chat',
         created: Date.now(),
-        role: systemRole,
-        model: OpenAIModels[modelID],
-        modelParams: defaultModelParams,
+        role: selectedRole ? selectedRole : appSetting.defaultRole,
+        modelParams: appSetting.defaultModelParams,
     };
     store.dispatch(setOne(newChat));
     return newChat.id;

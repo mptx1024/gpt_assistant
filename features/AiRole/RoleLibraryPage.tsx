@@ -1,33 +1,33 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from 'react';
 
-import MiniSearch from "minisearch";
-import { useRouter } from "next/router";
-import { HiPlus } from "react-icons/hi2";
+import MiniSearch from 'minisearch';
+import { useRouter } from 'next/router';
+import { HiPlus } from 'react-icons/hi2';
 
-import Button from "@/components/Button";
-import { Input } from "@/components/InputField";
-import { Role } from "@/types";
-import { createNewChat } from "@/utils/chats";
+import Button from '@/components/Button';
+import { Input } from '@/components/InputField';
+import { Role } from '@/types';
+import { createNewChat } from '@/utils/chats';
 
-import RoleCard from "./RoleCard";
-import RoleEditor from "./RoleEditor";
-import RoleModal from "./RoleModal";
-import { getRandomColor } from "./utils/colors";
-import rolesList from "./utils/roleLibarary.json";
+import RoleCard from './RoleCard';
+import RoleEditor from './RoleEditor';
+import RoleModal from './RoleModal';
+import { getRandomColor } from './utils/colors';
+import rolesList from './utils/roleLibarary.json';
 const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
     const [isRoleCardModalOpen, setIsRoleCardModalOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<Role>();
     const router = useRouter();
 
-    const [searchInput, setSearchInput] = useState("");
+    const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState(rolesList);
 
     // minisearch
     const miniSearch = useMemo(() => {
         const search = new MiniSearch({
-            fields: ["roleName"],
-            storeFields: ["roleName", "prompt"],
+            fields: ['roleName'],
+            storeFields: ['roleName', 'prompt'],
         });
         search.addAll(rolesList);
         return search;
@@ -83,7 +83,7 @@ const RoleLibraryPage = () => {
                     styles="max-w-[15rem]"
                 />
                 <Button
-                    text={"Add Role"}
+                    text={'Add Role'}
                     Icon={HiPlus}
                     onClick={toggleEditor}
                     shadow={true}

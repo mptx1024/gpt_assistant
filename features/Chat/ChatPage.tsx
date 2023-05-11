@@ -7,7 +7,7 @@ import { selectChatById } from '@/store/chatsSlice';
 import { Message, Chat } from '@/types';
 
 import ChatMessage from './ChatMessage';
-import { ChatParamsCard } from '../../components/Sidebar/settings/ChatSetting';
+import { ChatParamsCard } from '../../components/settings/ChatSetting';
 import useChat from './hooks/useChat';
 import Input from './Input';
 

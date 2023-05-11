@@ -4,14 +4,14 @@ import Button from '@/components/Button';
 import { Input } from '@/components/InputField';
 import { useAppSelector } from '@/store/hooks';
 import { useAppDispatch } from '@/store/hooks';
-import { setSetting, selectSetting } from '@/store/settingSlice';
+import { setSetting, getAppSetting } from '@/store/settingSlice';
 
 interface Props {
     toggleModal: () => void;
 }
 function AppSetting({ toggleModal }: Props) {
     const dispatch = useAppDispatch();
-    const setting = useAppSelector(selectSetting);
+    const setting = useAppSelector(getAppSetting);
     const [key, setKey] = useState(setting.apiKey || '');
     const handleSetKey = () => {
         dispatch(setSetting({ type: 'apiKey', value: key }));

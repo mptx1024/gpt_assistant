@@ -91,18 +91,19 @@ export interface OpenAIStreamPayload {
 export interface Setting {
     apiKey: string | null;
     theme?: string;
-    defaulModelParams: ModelParams;
+    defaultModelParams: ModelParams;
+    defaultRole: Role;
     defaultChatSetting: {
-        auto_name: boolean;
-        attached_message_count: number;
+        autoNameChat: boolean;
+        attachedMessageCount: number;
     };
 }
 
-export const defaultSystemRole: Role = {
-    prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
-    roleName: 'default',
-    id: '001',
-};
+// export const defaultSystemRole: Role = {
+//     prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+//     roleName: 'default',
+//     id: '001',
+// };
 export const defaultModelParams: ModelParams = {
     temperature: 0.7,
     max_tokens: 1000,
@@ -110,10 +111,15 @@ export const defaultModelParams: ModelParams = {
     model: OpenAIModels[OpenAIModelID.GPT_3_5],
 };
 export const defaultSetting: Setting = {
-    apiKey: null,
-    defaulModelParams: defaultModelParams,
+    apiKey: '',
+    defaultModelParams: defaultModelParams,
+    defaultRole: {
+        prompt: `You are ChatGPT, a helpful assitant. Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+        roleName: 'default',
+        id: '001',
+    },
     defaultChatSetting: {
-        auto_name: true,
-        attached_message_count: 10,
+        autoNameChat: true,
+        attachedMessageCount: 10,
     },
 };

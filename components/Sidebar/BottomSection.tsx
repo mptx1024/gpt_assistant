@@ -2,8 +2,8 @@ import { useState, useCallback } from 'react';
 
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 
-import AppSetting from './settings/AppSetting';
-import SettingModal from './settings/SettingModal';
+import AppSetting from '../settings/AppSetting';
+import SettingModal from '../settings/SettingModal';
 import Button from '../Button';
 
 const BottomSection = () => {

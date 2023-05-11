@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import clsx from 'clsx';
 
 interface InputProps {
@@ -7,16 +9,22 @@ interface InputProps {
     value: string | number;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     styles?: string;
+    border?: boolean;
 }
 const inputBaseClasses =
-    'my-3 p-2 w-full overflow-hidden rounded-lg text-light-text dark:text-dark-text  outline-none focus:ring-1 focus:ring-inset focus:ring-indigo-700';
+    'my-3 p-2 w-full overflow-hidden rounded-lg text-light-text dark:text-dark-text';
 
 export function Input(props: InputProps) {
-    const inputClasses = clsx(props.styles, inputBaseClasses);
     return (
         <input
             required={props.required}
-            className={inputClasses}
+            className={clsx(
+                props.styles,
+                inputBaseClasses,
+                props.border
+                    ? 'border border-slate-300 shadow-sm focus:outline-1 focus:outline-cyan-600'
+                    : 'outline-none'
+            )}
             type={props.type}
             placeholder={props.placeholder}
             value={props.value}
@@ -33,19 +41,39 @@ interface TexareaProps {
     styles?: string;
     rows?: number;
     [x: string]: any;
-    innerref?: any;
+    showBorder?: boolean;
 }
 
 const textAreaBaseClasses =
-    'resize-none outline-none px-3 py-2 w-full rounded-lg focus:ring-1 focus:ring-inset focus:ring-indigo-700';
+    'h-[8rem] max-h-[20rem] w-full resize-none bg-transparent px-2 py-2 rounded-md overflow-y-auto';
 export function Textarea(props: TexareaProps) {
-    const textAreaClasses = clsx(textAreaBaseClasses, props.styles);
-
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    function auto_grow(element: HTMLTextAreaElement | null) {
+        if (element) {
+            element.style.height = 'inherit';
+            element.style.height = element.scrollHeight + 'px';
+        }
+    }
+    // useEffect(() => {
+    //     if (textareaRef.current) {
+    //         textareaRef.current.style.height = 'inherit';
+    //         // const scrollHeight = textareaRef.current.scrollHeight;
+    //         // textareaRef.current.style.height = scrollHeight + "px";
+    //         textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    //     }
+    // }, [textareaRef, props.value]);
     return (
         <textarea
-            ref={props.innerref}
+            onInput={() => auto_grow(textareaRef.current)}
+            ref={textareaRef}
             required={props.required}
-            className={textAreaClasses}
+            className={clsx(
+                textAreaBaseClasses,
+                props.styles,
+                props.showBorder
+                    ? 'border border-slate-300 shadow-sm focus:outline-1 focus:outline-cyan-600'
+                    : 'outline-none'
+            )}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
 
-import { Chat, Message } from '@/types';
+import { Chat, Message, ModelParams, Role } from '@/types';
 
 import type { RootState } from '.';
 
@@ -45,13 +45,6 @@ export const chatsSlice = createSlice({
                 };
             }
         },
-        updateTitle: (state, action: PayloadAction<{ chatID: string; title: string }>) => {
-            const { chatID, title } = action.payload;
-            const existingChat = state.entities[chatID];
-            if (existingChat) {
-                existingChat.title = title;
-            }
-        },
 
         // for editing a message & regenerateing reply
         deleteMessageUpTo: (state, action: PayloadAction<{ message: Message }>) => {
@@ -68,6 +61,31 @@ export const chatsSlice = createSlice({
                 existingChat.messages = updatedMessages;
             }
         },
+
+        updateModelParams: (
+            state,
+            action: PayloadAction<{ chatID: string; modelParams: ModelParams }>
+        ) => {
+            const { chatID, modelParams } = action.payload;
+            const existingChat = state.entities[chatID];
+            if (existingChat) {
+                existingChat.modelParams = modelParams;
+            }
+        },
+        updateRole: (state, action: PayloadAction<{ chatID: string; role: Role }>) => {
+            const { chatID, role } = action.payload;
+            const existingChat = state.entities[chatID];
+            if (existingChat) {
+                existingChat.role = role;
+            }
+        },
+        updateTitle: (state, action: PayloadAction<{ chatID: string; title: string }>) => {
+            const { chatID, title } = action.payload;
+            const existingChat = state.entities[chatID];
+            if (existingChat) {
+                existingChat.title = title;
+            }
+        },
     },
 });
 
@@ -79,8 +97,10 @@ export const {
     removeAll,
     addSingleMessage,
     updateSingleMessage,
-    updateTitle,
     deleteMessageUpTo,
+    updateModelParams,
+    updateRole,
+    updateTitle,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 

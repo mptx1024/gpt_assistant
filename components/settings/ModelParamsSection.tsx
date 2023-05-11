@@ -1,68 +1,91 @@
-import { useState } from 'react';
-
 import { Listbox } from '@headlessui/react';
 import { HiChevronUpDown } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
 import { Input, Textarea } from '@/components/InputField';
 import { OpenAIModels, OpenAIModel, OpenAIModelID } from '@/types';
-import { Chat } from '@/types';
+
 interface Props {
-    chat: Chat;
+    isChatSetting: boolean;
+    temperature: number;
+    allModels: OpenAIModel[];
+    selectedModel: OpenAIModel;
+    maxTokens: number;
+    prompt: string;
+    setSelectedModel: (model: OpenAIModel) => void;
+    setMaxTokens: (maxTokens: number) => void;
+    setTemperature: (temperature: number) => void;
+    setPrompt: (prompt: string) => void;
 }
-const ModelParams = ({ chat }: Props) => {
-    const models: OpenAIModel[] = Object.values(OpenAIModels);
-    const [temp, setTemp] = useState(chat.modelParams.temperature);
-    const [selectedModel, setSelectedModel] = useState(models[0]);
-    const [maxTokens, setMaxTokens] = useState(chat.modelParams.max_tokens);
-    const [prompt, setPrompt] = useState(chat.role.prompt);
+const ModelParamsSection = ({
+    isChatSetting,
+    temperature,
+    allModels,
+    selectedModel,
+    maxTokens,
+    prompt,
+    setSelectedModel,
+    setMaxTokens,
+    setTemperature,
+    setPrompt,
+}: Props) => {
     return (
-        <div className="flex flex-col px-10">
+        <div className="flex flex-col">
             <div id="assistant-setting" className="mb-10">
-                <div id="setting-role-name">
-                    <span>Assistant Prompt</span>
-                    {/* <Textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} /> */}
-                    <textarea
-                        className="max-h-[60rem] w-full resize-none"
+                <div id="setting-role-name" className="">
+                    <div className="mb-3">
+                        <span className="block text-lg font-semibold">Prompt</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                            description
+                        </span>
+                    </div>
+                    <Textarea
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
+                        showBorder={true}
                     />
                 </div>
             </div>
-            <div id="model-params" className="flex flex-col gap-7">
-                <div id="setting-model" className="flex items-center justify-between">
-                    <span className="">Model</span>
+            <div id="model-params" className="flex flex-col rounded-md border border-gray-300">
+                <div
+                    id="setting-model"
+                    className="flex items-center justify-between border-b border-gray-300 p-3"
+                >
+                    <span className="block">Model</span>
                     <ModelListBox
-                        models={models}
+                        allModels={allModels}
                         selectedModel={selectedModel}
                         setSelectedModel={setSelectedModel}
                     />
                 </div>
                 <div
                     id="setting-temperature"
-                    className="sm:flex sm:items-center sm:justify-between"
+                    className="border-b border-gray-300 p-3 sm:flex sm:items-center sm:justify-between"
                 >
-                    <div className="mb-5 sm:mb-0">
-                        <span className="block whitespace-nowrap">Temperature: {temp}</span>
-                        <span className="block text-sm text-gray-500 dark:text-gray-400">
-                            description
+                    <div className="mb-3 sm:mb-0 sm:mr-5 sm:w-6/12">
+                        <span className="block whitespace-nowrap">Temperature: {temperature}</span>
+                        <span className="block text-[0.7rem] text-gray-500 dark:text-gray-400">
+                            Higher values like 0.8 will make the output more random, while lower
+                            values like 0.2 will make it more focused and deterministic
                         </span>
                     </div>
                     <div className="sm:w-6/12">
-                        <TemperatureRangeSlider temp={temp} setTemp={setTemp} />
+                        <TemperatureRangeSlider temp={temperature} setTemp={setTemperature} />
                     </div>
                 </div>
-                <div id="setting-maxToken" className="flex items-center justify-between">
+                <div id="setting-maxToken" className="flex items-center justify-between p-3">
                     <div>
                         <span className="block">Max Token</span>
                         <span className="text-sm text-gray-500 dark:text-gray-400">
-                            description
+                            The maximum number of tokens to generate in the reply. 1000 tokens are
+                            roughly 750 English words
                         </span>
                     </div>
                     <div className="w-28">
                         <Input
                             value={maxTokens}
                             onChange={(e) => setMaxTokens(Number(e.target.value))}
+                            border={true}
                         />
                     </div>
                 </div>
@@ -70,25 +93,14 @@ const ModelParams = ({ chat }: Props) => {
         </div>
     );
 };
-export default ModelParams;
-
-{
-    /* <div className="mx-1">
-<h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-    Jane Doe
-</h1>
-<p className="text-sm text-gray-500 dark:text-gray-400">
-    janedoe@exampl.com
-</p>
-</div> */
-}
+export default ModelParamsSection;
 
 interface ModelListBoxProps {
-    models: OpenAIModel[];
+    allModels: OpenAIModel[];
     selectedModel: OpenAIModel;
     setSelectedModel: (model: OpenAIModel) => void;
 }
-function ModelListBox({ models, selectedModel, setSelectedModel }: ModelListBoxProps) {
+function ModelListBox({ allModels, selectedModel, setSelectedModel }: ModelListBoxProps) {
     return (
         <Listbox value={selectedModel} onChange={setSelectedModel}>
             <div className="relative w-36">
@@ -97,13 +109,14 @@ function ModelListBox({ models, selectedModel, setSelectedModel }: ModelListBoxP
                         Icon={HiChevronUpDown}
                         size="md"
                         text={selectedModel.name}
-                        border={true}
+                        // border={true}
+                        shadow={true}
                         btnStyles="relative w-full justify-between"
                         textStyles="text-sm"
                     />
                 </Listbox.Button>
                 <Listbox.Options className="absolute w-full overflow-auto rounded-md border border-gray-300 bg-white py-1 text-base shadow-lg sm:text-sm">
-                    {models.map((model) => (
+                    {allModels.map((model) => (
                         <Listbox.Option
                             key={model.id}
                             value={model}
