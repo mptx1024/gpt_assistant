@@ -21,18 +21,21 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     console.log(`isSidebarOpen: ${isSidebarOpen}`);
 
     const sidebarClasses =
-        'relative  flex flex-col h-full bg-neutral-100 text-light-text dark:bg-dark-bg dark:text-text-dark transition-all duration-200 overflow-x-hidden';
+        'flex flex-col h-full bg-neutral-100 text-light-text dark:bg-dark-bg dark:text-text-dark transition-all duration-200';
     return (
         <div
             className={clsx(
                 sidebarClasses,
-                isSidebarOpen ? 'w-full flex-shrink-0 sm:w-[13rem] md:w-[18rem]' : 'w-0'
+                isSidebarOpen
+                    ? 'w-full flex-shrink-0 sm:w-[17rem] md:w-[19rem] lg:w-[22rem]'
+                    : 'invisible w-0'
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
-
-            <ChatList chats={chats} />
-            <RoleList roles={roles} />
+            <div className="relative h-full px-2 py-3">
+                <ChatList chats={chats} />
+                <RoleList roles={roles} />
+            </div>
             <BottomSection />
         </div>
     );

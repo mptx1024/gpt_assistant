@@ -12,7 +12,7 @@ const ChatList: FC<ChatListProps> = ({ chats }) => {
     const [currentChat, setCurrentChat] = useState<string>('');
 
     return (
-        <div className=" my-2 flex h-1/2 flex-col gap-2">
+        <div className="flex h-1/2 flex-col gap-2 overflow-y-auto py-1">
             {chats?.map((chat) => (
                 <ChatItem
                     key={chat.id}
