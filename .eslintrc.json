@@ -17,10 +17,19 @@
     },
     "plugins": ["react", "@typescript-eslint", "import"],
     "rules": {
+        "quotes": [2, "single"],
         "import/order": [
             "error",
             {
-                "groups": ["builtin", "external", "internal", ["parent", "sibling"], "object", "type", "index"],
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    ["parent", "sibling"],
+                    "object",
+                    "type",
+                    "index"
+                ],
                 "pathGroups": [
                     {
                         "pattern": "react",

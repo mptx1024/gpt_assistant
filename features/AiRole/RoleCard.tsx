@@ -15,12 +15,14 @@ const RoleCard = (props: Props) => {
 
     return (
         <div
-            className={`${props.bgColor} cursor-pointer rounded-lg p-2 transition-all ease-in-out  hover:scale-105 sm:p-4 lg:p-6`}
+            className={`${props.bgColor} cursor-pointer rounded-lg p-2 transition-all ease-in-out  hover:scale-[102%] sm:p-4 lg:p-6`}
             onClick={handleClickCard}
         >
-            <div className='mt-2'>
-                <h3 className='mb-1 text-lg font-bold text-white sm:text-xl'>{props.role.roleName}</h3>
-                <p className='text-sm text-gray-200 line-clamp-3'>{props.role.prompt}</p>
+            <div className="mt-2">
+                <h3 className="mb-1 text-lg font-bold text-white sm:text-xl">
+                    {props.role.roleName}
+                </h3>
+                <p className="text-sm text-gray-200 line-clamp-3">{props.role.prompt}</p>
             </div>
         </div>
     );

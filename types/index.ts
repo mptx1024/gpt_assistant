@@ -1,10 +1,3 @@
-export interface Parameters {
-    temperature: number;
-    apiKey?: string;
-    systemPrompt?: string;
-    model: string;
-}
-
 export interface Message {
     id: string;
     chatID: string;
@@ -28,18 +21,18 @@ export interface Chat {
     title?: string | null;
     created: number;
     role: Role;
-    model: OpenAIModel;
+    // model: OpenAIModel;
+    modelParams: ModelParams;
 }
-
 export interface Role {
     prompt: string;
     roleName: string;
     id: string;
+    description?: string;
 }
 
-export interface OpenAIStreamPayload {
-    model: string;
-    messages: OpenAIMessage[];
+export interface ModelParams {
+    model: OpenAIModel;
     temperature: number;
     top_p?: number;
     frequency_penalty?: number;
@@ -50,31 +43,43 @@ export interface OpenAIStreamPayload {
 }
 
 export interface OpenAIModel {
-    id: string;
-    name: string;
+    readonly id: string;
+    readonly name: string;
     maxLength: number; // maximum length of a message
     tokenLimit: number;
 }
 
 export enum OpenAIModelID {
-    GPT_3_5 = "gpt-3.5-turbo",
-    GPT_4 = "gpt-4",
+    GPT_3_5 = 'gpt-3.5-turbo',
+    GPT_4 = 'gpt-4',
 }
 
 export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
     [OpenAIModelID.GPT_3_5]: {
         id: OpenAIModelID.GPT_3_5,
-        name: "GPT-3.5",
+        name: 'gpt-3.5-turbo',
         maxLength: 12000,
         tokenLimit: 3000,
     },
     [OpenAIModelID.GPT_4]: {
         id: OpenAIModelID.GPT_4,
-        name: "GPT-4",
+        name: 'gpt-4',
         maxLength: 24000,
         tokenLimit: 6000,
     },
 };
+
+export interface OpenAIStreamPayload {
+    model: string;
+    messages: OpenAIMessage[];
+    temperature?: number;
+    top_p?: number;
+    frequency_penalty?: number;
+    presence_penalty?: number;
+    max_tokens?: number;
+    stream?: boolean;
+    n?: number;
+}
 
 // export interface ChatHistoryTrimmerOptions {
 //     maxTokens: number;
@@ -86,36 +91,35 @@ export const OpenAIModels: Record<OpenAIModelID, OpenAIModel> = {
 export interface Setting {
     apiKey: string | null;
     theme?: string;
-    modelSetting: {
-        model: OpenAIModel;
-        role: Role;
-        temperature: number;
-        frequency_penalty?: number;
-        presence_penalty?: number;
-        max_tokens: number;
-    };
-    chatSetting: {
-        auto_name: boolean;
-        attached_message_count: number;
+    defaultModelParams: ModelParams;
+    defaultRole: Role;
+    defaultChatSetting: {
+        autoNameChat: boolean;
+        attachedMessageCount: number;
     };
 }
 
-export const defaultSystemPrompt: Role = {
-    prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
-    roleName: "default",
-    id: "001",
+// export const defaultSystemRole: Role = {
+//     prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+//     roleName: 'default',
+//     id: '001',
+// };
+export const defaultModelParams: ModelParams = {
+    temperature: 0.7,
+    max_tokens: 1000,
+    stream: true,
+    model: OpenAIModels[OpenAIModelID.GPT_3_5],
 };
-
 export const defaultSetting: Setting = {
-    apiKey: null,
-    modelSetting: {
-        model: OpenAIModels[OpenAIModelID.GPT_3_5],
-        role: defaultSystemPrompt,
-        temperature: 0.5,
-        max_tokens: 1000,
+    apiKey: '',
+    defaultModelParams: defaultModelParams,
+    defaultRole: {
+        prompt: `You are ChatGPT, a helpful assistant. Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+        roleName: 'default',
+        id: '001',
     },
-    chatSetting: {
-        auto_name: true,
-        attached_message_count: 10,
+    defaultChatSetting: {
+        autoNameChat: true,
+        attachedMessageCount: 10,
     },
 };

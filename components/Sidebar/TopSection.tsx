@@ -1,6 +1,6 @@
-import { HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineXMark } from 'react-icons/hi2';
 
-import Button from "../Button";
+import Button from '../Button';
 
 interface Props {
     toggleSidebar: () => void;

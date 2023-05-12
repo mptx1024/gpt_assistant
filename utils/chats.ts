@@ -2,9 +2,13 @@ import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
 import { setOne } from '@/store/chatsSlice';
-import { Chat, Role, defaultSystemPrompt, OpenAIModelID, OpenAIModels } from '@/types';
+import { getAppSetting } from '@/store/settingSlice';
+import { Chat, Role } from '@/types';
 
-export const copyToClipboard = async (text: string, setIsCopied: (value: boolean) => void): Promise<void> => {
+export const copyToClipboard = async (
+    text: string,
+    setIsCopied: (value: boolean) => void
+): Promise<void> => {
     try {
         await navigator.clipboard.writeText(text);
         setIsCopied(true);
@@ -16,18 +20,15 @@ export const copyToClipboard = async (text: string, setIsCopied: (value: boolean
     }
 };
 
-export const createNewChat = (
-    systemPrompt: Role = defaultSystemPrompt,
-    modelID: OpenAIModelID = OpenAIModelID.GPT_3_5,
-    title = ''
-): string => {
+export const createNewChat = (selectedRole?: Role): string => {
+    const appSetting = getAppSetting(store.getState());
     const newChat: Chat = {
         id: uuid(),
         messages: [],
-        title: systemPrompt.roleName === 'default' ? 'New Chat' : systemPrompt.roleName,
+        title: selectedRole ? selectedRole.roleName : 'New Chat',
         created: Date.now(),
-        role: systemPrompt,
-        model: OpenAIModels[modelID],
+        role: selectedRole ? selectedRole : appSetting.defaultRole,
+        modelParams: appSetting.defaultModelParams,
     };
     store.dispatch(setOne(newChat));
     return newChat.id;

@@ -1,22 +1,26 @@
-import Input from './Input';
-import ChatMessage from './ChatMessage';
-import { Message, Chat } from '@/types';
-import { selectChatById } from '@/store/chatsSlice';
-import { useSelector } from 'react-redux';
-import { RootState, store } from '@/store';
 import { useEffect, useRef, memo } from 'react';
+
+import { useSelector } from 'react-redux';
+
+import { RootState, store } from '@/store';
+import { selectChatById } from '@/store/chatsSlice';
+import { Message, Chat } from '@/types';
+
+import ChatMessage from './ChatMessage';
+import { ChatParamsCard } from '../../components/settings/ChatSetting';
 import useChat from './hooks/useChat';
+import Input from './Input';
 
 interface Props {
     chat: Chat;
 }
 const ChatPage = memo(function ChatPage({ chat }: Props) {
-    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID: chat.id });
+    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({
+        chatID: chat.id,
+    });
 
-    let messages: Message[] = chat.messages;
+    const messages: Message[] = chat.messages;
     // redirect
-    if (messages.length === 0) {
-    }
 
     const lastMessageRef = useRef<HTMLDivElement>(null);
 
@@ -27,11 +31,13 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
     }, [messages]);
 
     return (
-        <div className='flex flex-col w-full h-screen duration-300 overflow-hidden overflow-y-scroll bg-slate-200'>
-            {messages.length === 0 && <div>new msg. show home page stuff</div>}
+        <div className=" flex h-full w-full flex-col items-center overflow-y-auto">
+            <div className="my-3 bg-light-bg dark:bg-dark-bg">
+                <ChatParamsCard chat={chat} />
+            </div>
 
             {messages && (
-                <div id='messages-box' className='mb-32 animate-slideIn'>
+                <div id="messages-section" className="mb-32 flex w-full animate-slideIn flex-col">
                     {messages.map((message, index) => (
                         <ChatMessage key={index} message={message} generateReply={generateReply} />
                     ))}
@@ -40,8 +46,8 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
             {/*  The left property places the left edge of the element at the center of the parent, and the -translate-x-1/2 class shifts the element back to the left by half of its width, effectively centering it. */}
             <div ref={lastMessageRef} />
             <div
-                className='absolute left-1/2 transform -translate-x-1/2 bottom-0 flex flex-col justify-center items-center w-full
-                bg-gradient-to-b from-transparent via-white to-white'
+                className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2 transform flex-col items-center justify-center
+                overflow-y-scroll bg-gradient-to-b from-transparent via-light-bg to-light-bg pt-4 dark:via-dark-bg dark:to-dark-bg"
             >
                 <Input
                     generateReply={generateReply}
