@@ -74,14 +74,14 @@ const ModelParamsSection = ({
                     </div>
                 </div>
                 <div id="setting-maxToken" className="flex items-center justify-between p-3">
-                    <div>
+                    <div className="">
                         <span className="block">Max Token</span>
                         <span className="text-sm text-gray-500 dark:text-gray-400">
                             The maximum number of tokens to generate in the reply. 1000 tokens are
                             roughly 750 English words
                         </span>
                     </div>
-                    <div className="w-28">
+                    <div className="flex-shrink-0 basis-[5rem]">
                         <Input
                             value={maxTokens}
                             onChange={(e) => setMaxTokens(Number(e.target.value))}

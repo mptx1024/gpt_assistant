@@ -21,21 +21,14 @@ export const settingSlice = createSlice({
     name: 'setting',
     initialState,
     reducers: {
-        setSetting: (state, action) => {
-            state = action.payload;
-            // const { type, value } = action.payload;
-            // if (type === 'apiKey') {
-            //     state.apiKey = value;
-            // } else if (type === 'modelSetting') {
-            //     state.modelSetting = value;
-            // } else if (type === 'chatSetting') {
-            //     state.defaultChatSetting = value;
-            // }
+        setAppSetting: (state, action) => {
+            return action.payload;
+
         },
     },
 });
 
-export const { setSetting } = settingSlice.actions;
+export const { setAppSetting } = settingSlice.actions;
 export default settingSlice.reducer;
 export const getApiKey = (state: RootState) => state.setting.apiKey;
 export const getAppSetting = (state: RootState) => state.setting;

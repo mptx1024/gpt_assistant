@@ -114,7 +114,7 @@ export const defaultSetting: Setting = {
     apiKey: '',
     defaultModelParams: defaultModelParams,
     defaultRole: {
-        prompt: `You are ChatGPT, a helpful assitant. Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+        prompt: `You are ChatGPT, a helpful assistant. Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
         roleName: 'default',
         id: '001',
     },

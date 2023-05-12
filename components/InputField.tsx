@@ -48,23 +48,22 @@ const textAreaBaseClasses =
     'h-[8rem] max-h-[20rem] w-full resize-none bg-transparent px-2 py-2 rounded-md overflow-y-auto';
 export function Textarea(props: TexareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    function auto_grow(element: HTMLTextAreaElement | null) {
-        if (element) {
-            element.style.height = 'inherit';
-            element.style.height = element.scrollHeight + 'px';
-        }
-    }
-    // useEffect(() => {
-    //     if (textareaRef.current) {
-    //         textareaRef.current.style.height = 'inherit';
-    //         // const scrollHeight = textareaRef.current.scrollHeight;
-    //         // textareaRef.current.style.height = scrollHeight + "px";
-    //         textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    // function auto_grow(element: HTMLTextAreaElement | null) {
+    //     if (element) {
+    //         element.style.height = 'inherit';
+    //         element.style.height = element.scrollHeight + 'px';
     //     }
-    // }, [textareaRef, props.value]);
+    // }
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'inherit';
+            // const scrollHeight = textareaRef.current.scrollHeight;
+            // textareaRef.current.style.height = scrollHeight + "px";
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    }, [textareaRef, props.value]);
     return (
         <textarea
-            onInput={() => auto_grow(textareaRef.current)}
             ref={textareaRef}
             required={props.required}
             className={clsx(
