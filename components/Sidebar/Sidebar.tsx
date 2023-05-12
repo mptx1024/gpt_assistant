@@ -18,17 +18,19 @@ interface Props {
 export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     const chats: Chat[] | null = useSelector(selectAllChats);
     const roles: Role[] | null = useSelector(selectAllRoles);
+    console.log(`isSidebarOpen: ${isSidebarOpen}`);
 
     const sidebarClasses =
-        'absolute top-0 flex flex-col h-screen w-full sm:w-64 bg-neutral-100 text-light-text dark:bg-dark-bg dark:text-text-dark transition-all duration-300';
+        'border relative border-black flex flex-col h-full bg-neutral-100 text-light-text dark:bg-dark-bg dark:text-text-dark transition-all duration-300 overflow-x-hidden';
     return (
         <div
-            className={clsx(sidebarClasses, {
-                'left-0': isSidebarOpen,
-                '-left-64': !isSidebarOpen,
-            })}
+            className={clsx(
+                sidebarClasses,
+                isSidebarOpen ? 'block w-[20rem] flex-shrink-0' : 'w-0'
+            )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
+
             <ChatList chats={chats} />
             <RoleList roles={roles} />
             <BottomSection />

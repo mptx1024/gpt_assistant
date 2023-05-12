@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useRouter } from "next/router";
-import { FiUser } from "react-icons/fi";
+import { useRouter } from 'next/router';
+import { FiUser } from 'react-icons/fi';
 
-import RoleEditor from "@/features/AiRole/RoleEditor";
-import RoleModal from "@/features/AiRole/RoleModal";
-import { Role } from "@/types";
-import { createNewChat } from "@/utils/chats";
-import { deleteRole } from "@/utils/roles";
+import RoleEditor from '@/features/AiRole/RoleEditor';
+import RoleModal from '@/features/AiRole/RoleModal';
+import { Role } from '@/types';
+import { createNewChat } from '@/utils/chats';
+import { deleteRole } from '@/utils/roles';
 
-import SidebarCard from "./SidebarCard";
+import SidebarCard from './SidebarCard';
 
 interface Props {
     role: Role;

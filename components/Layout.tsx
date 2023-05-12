@@ -1,9 +1,11 @@
 import { useCallback, useState, useEffect } from 'react';
 
+import clsx from 'clsx';
 import Head from 'next/head';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import useWindowDimensions from '@/hooks/useWindowDimension';
 import { setAll, setOne } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAllRoles } from '@/store/rolesSlice';
@@ -16,10 +18,10 @@ type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
-
+    const { width } = useWindowDimensions();
     const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
     const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
-
+    
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -47,16 +49,25 @@ export default function Layout({ children }: Props) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="fixed flex h-full w-full">
+            <div className="debug-3 inset-0 flex h-screen">
                 <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={onClickSidebar} />
-                <main
-                    className={`relative flex h-full w-full flex-grow flex-col items-center justify-between bg-light-bg transition-all duration-300 dark:bg-dark-bg ${
-                        isSidebarOpen ? 'ml-64' : ''
-                    }`}
+                <div
+                    className={clsx(
+                        'relative flex h-full flex-grow flex-col border-2 border-red-600 transition-all duration-300'
+                    )}
                 >
                     <Navbar toggleSidebar={onClickSidebar} isSidebarOpen={isSidebarOpen} />
                     {children}
-                </main>
+                </div>
+                {/* <div
+                    className={clsx(
+                        'absolute flex h-full w-full flex-grow-0 flex-col items-center justify-between border-2 border-red-600 bg-light-bg transition-all duration-300 dark:bg-dark-bg',
+                        { 'ml-64': isSidebarOpen }
+                    )}
+                >
+                    <Navbar toggleSidebar={onClickSidebar} isSidebarOpen={isSidebarOpen} />
+                    {children}
+                </div> */}
             </div>
         </>
     );

@@ -34,7 +34,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     return (
         <nav className={navbarClasses}>
             {isSidebarOpen ? null : <Button Icon={HiBars3} size="lg" onClick={toggleSidebar} />}
-            <p className="flex-grow text-center text-xl text-light-text dark:text-dark-text">
+            <p className=" text-center text-xl text-light-text dark:text-dark-text">
                 {chat?.title}
             </p>
             <div className={btnGroupClasses}>

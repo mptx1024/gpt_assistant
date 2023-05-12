@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { useRouter } from "next/router";
-import { HiOutlineBuildingLibrary, HiPlus } from "react-icons/hi2";
+import { useRouter } from 'next/router';
+import { HiOutlineBuildingLibrary, HiPlus } from 'react-icons/hi2';
 
-import RoleEditor from "@/features/AiRole/RoleEditor";
-import { Role } from "@/types";
+import RoleEditor from '@/features/AiRole/RoleEditor';
+import { Role } from '@/types';
 
-import RoleItem from "./RoleItem";
-import Button from "../Button";
+import RoleItem from './RoleItem';
+import Button from '../Button';
 
 const RoleList = (props: { roles: Role[] }) => {
     const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
@@ -17,12 +17,12 @@ const RoleList = (props: { roles: Role[] }) => {
     };
 
     const handleClickRoleLibrary = () => {
-        router.push("/role");
+        router.push('/role');
     };
 
     return (
         <>
-            <div className={`my-2 flex h-1/2 flex-col gap-2 overflow-y-auto`}>
+            <div className={'my-2 flex h-1/2 flex-col gap-2 overflow-y-auto'}>
                 <div className="mx-3 flex items-center justify-between">
                     <p className="text-base text-gray-500 dark:text-gray-400">Assistants</p>
                     <div className="flex gap-1">

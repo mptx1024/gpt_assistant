@@ -80,11 +80,11 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                                 placeholder={chat.title || chat.id.substring(0, 20)}
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                                className="w-36 truncate border-none text-gray-500 focus:border-transparent"
+                                className="w-8/12 truncate border-none text-gray-500 focus:border-transparent"
                             />
                         ) : (
                             <p
-                                className={`w-36 overflow-hidden truncate whitespace-nowrap text-base ${
+                                className={`w-8/12 overflow-hidden truncate whitespace-nowrap text-base ${
                                     chat.title ? 'animate-typing' : ''
                                 }`}
                             >
