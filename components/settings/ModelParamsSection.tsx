@@ -30,21 +30,18 @@ const ModelParamsSection = ({
     setPrompt,
 }: Props) => {
     return (
-        <div className="flex flex-col">
-            <div id="assistant-setting" className="mb-10">
-                <div id="setting-role-name" className="">
-                    <div className="mb-3">
-                        <span className="block text-lg font-semibold">Prompt</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                            description
-                        </span>
-                    </div>
-                    <Textarea
-                        value={prompt}
-                        onChange={(e) => setPrompt(e.target.value)}
-                        showBorder={true}
-                    />
+        <div className="flex flex-col p-1">
+            <div id="setting-role-name" className="mb-3">
+                <div className="mb-2">
+                    <span className="block text-lg font-semibold">Prompt</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">description</span>
                 </div>
+                <Textarea
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    showBorder={true}
+                    styles=""
+                />
             </div>
             <div id="model-params" className="flex flex-col rounded-md border border-gray-300">
                 <div
@@ -85,7 +82,7 @@ const ModelParamsSection = ({
                         <Input
                             value={maxTokens}
                             onChange={(e) => setMaxTokens(Number(e.target.value))}
-                            border={true}
+                            showBorder={true}
                         />
                     </div>
                 </div>

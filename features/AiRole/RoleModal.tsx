@@ -36,7 +36,7 @@ const RoleModal = (props: Props) => {
                         {props.role?.roleName}
                     </h3>
                 </div>
-                <p className="h-[50%] max-h-[70%] overflow-y-scroll text-base text-light-text dark:text-dark-text">
+                <p className="overflow-y-auto text-base text-light-text dark:text-dark-text">
                     {props.role?.prompt}
                 </p>
                 <div id="btn-group" className="flex gap-2">

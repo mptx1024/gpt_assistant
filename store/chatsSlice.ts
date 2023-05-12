@@ -61,7 +61,7 @@ export const chatsSlice = createSlice({
                 existingChat.messages = updatedMessages;
             }
         },
-
+        // TODO: combine updateModelParams and updateRole
         updateModelParams: (
             state,
             action: PayloadAction<{ chatID: string; modelParams: ModelParams }>

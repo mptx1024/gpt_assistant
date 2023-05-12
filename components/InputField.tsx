@@ -9,10 +9,10 @@ interface InputProps {
     value: string | number;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     styles?: string;
-    border?: boolean;
+    showBorder?: boolean;
 }
 const inputBaseClasses =
-    'my-3 p-2 w-full overflow-hidden rounded-lg text-light-text dark:text-dark-text';
+    'my-3 p-2 w-full overflow-hidden border-none rounded-lg text-light-text dark:text-dark-text';
 
 export function Input(props: InputProps) {
     return (
@@ -21,9 +21,7 @@ export function Input(props: InputProps) {
             className={clsx(
                 props.styles,
                 inputBaseClasses,
-                props.border
-                    ? 'border border-slate-300 shadow-sm focus:outline-1 focus:outline-cyan-600'
-                    : 'outline-none'
+                props.showBorder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
             )}
             type={props.type}
             placeholder={props.placeholder}
@@ -45,7 +43,7 @@ interface TexareaProps {
 }
 
 const textAreaBaseClasses =
-    'h-[8rem] max-h-[20rem] w-full resize-none bg-transparent px-2 py-2 rounded-md overflow-y-auto';
+    'h-[15rem] max-h-[20rem] border-none resize-none px-2 py-2 rounded-md w-full';
 export function Textarea(props: TexareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     // function auto_grow(element: HTMLTextAreaElement | null) {
@@ -56,7 +54,7 @@ export function Textarea(props: TexareaProps) {
     // }
     useEffect(() => {
         if (textareaRef.current) {
-            textareaRef.current.style.height = 'inherit';
+            textareaRef.current.style.height = '5rem';
             // const scrollHeight = textareaRef.current.scrollHeight;
             // textareaRef.current.style.height = scrollHeight + "px";
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
@@ -69,9 +67,7 @@ export function Textarea(props: TexareaProps) {
             className={clsx(
                 textAreaBaseClasses,
                 props.styles,
-                props.showBorder
-                    ? 'border border-slate-300 shadow-sm focus:outline-1 focus:outline-cyan-600'
-                    : 'outline-none'
+                props.showBorder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
             )}
             placeholder={props.placeholder}
             value={props.value}

@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import Button from '@/components/Button';
 import ModelParamsSection from '@/components/settings/ModelParamsSection';
 import SettingModal from '@/components/settings/SettingModal';
-import { updateModelParams } from '@/store/chatsSlice';
-import { OpenAIModels, OpenAIModel, OpenAIModelID, ModelParams } from '@/types';
+import { updateModelParams, updateRole } from '@/store/chatsSlice';
+import { OpenAIModels, OpenAIModel, OpenAIModelID, ModelParams, Role } from '@/types';
 import { Chat } from '@/types';
 interface Props {
     chat: Chat;
@@ -50,11 +50,16 @@ export function ChatParamsModal({ chat, toggleModal }: ChatParamsModalProps) {
             max_tokens: maxTokens,
             stream: true,
         };
+        const newRole: Role = {
+            ...chat.role,
+            prompt,
+        };
         dispatch(updateModelParams({ chatID: chat.id, modelParams: newParam }));
+        dispatch(updateRole({ chatID: chat.id, role: newRole }));
         toggleModal();
     };
     return (
-        <div className="debug-1 mt-5 flex flex-col gap-10 overflow-y-auto">
+        <div className="mt-5 flex flex-col gap-10 overflow-y-auto">
             <ModelParamsSection
                 isChatSetting={true}
                 allModels={allModels}
