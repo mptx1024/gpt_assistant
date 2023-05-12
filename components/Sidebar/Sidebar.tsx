@@ -21,12 +21,12 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     console.log(`isSidebarOpen: ${isSidebarOpen}`);
 
     const sidebarClasses =
-        'border relative border-black flex flex-col h-full bg-neutral-100 text-light-text dark:bg-dark-bg dark:text-text-dark transition-all duration-300 overflow-x-hidden';
+        'relative  flex flex-col h-full bg-neutral-100 text-light-text dark:bg-dark-bg dark:text-text-dark transition-all duration-200 overflow-x-hidden';
     return (
         <div
             className={clsx(
                 sidebarClasses,
-                isSidebarOpen ? 'block w-[20rem] flex-shrink-0' : 'w-0'
+                isSidebarOpen ? 'w-full flex-shrink-0 sm:w-[13rem] md:w-[18rem]' : 'w-0'
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />

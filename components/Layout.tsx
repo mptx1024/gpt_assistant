@@ -5,23 +5,23 @@ import Head from 'next/head';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import useWindowDimensions from '@/hooks/useWindowDimension';
 import { setAll, setOne } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAllRoles } from '@/store/rolesSlice';
 import { Chat, Role, defaultModelParams } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
-import { toggleSidebar } from '../store/uiSlice';
-
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
-    const { width } = useWindowDimensions();
-    const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
-    const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
-    
+    // const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
+    // const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -49,14 +49,14 @@ export default function Layout({ children }: Props) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="debug-3 inset-0 flex h-screen">
-                <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={onClickSidebar} />
+            <div className="inset-0 flex h-screen">
+                <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
                 <div
                     className={clsx(
-                        'relative flex h-full flex-grow flex-col border-2 border-red-600 transition-all duration-300'
+                        'relative flex h-full flex-grow flex-col '
                     )}
                 >
-                    <Navbar toggleSidebar={onClickSidebar} isSidebarOpen={isSidebarOpen} />
+                    <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
                     {children}
                 </div>
                 {/* <div
