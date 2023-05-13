@@ -12,17 +12,17 @@ module.exports = {
         extend: {
             translate: ['dark'],
             colors: {
-                'light-text': colors.gray[600],
+                'light-text': colors.gray[700],
                 'dark-text': colors.gray[200],
 
-                'light-bg': colors.neutral[100],
-                'dark-bg': colors.neutral[800],
+                'light-bg': colors.gray[100],
+                'dark-bg': colors.gray[900],
 
-                'light-bg-card': colors.slate[200],
-                'light-bg-card-hover': colors.slate[300],
+                'light-bg-card': colors.gray[300],
+                'light-bg-card-hover': colors.gray[400],
 
-                'dark-bg-card': colors.slate[900],
-                'dark-bg-card-hover': colors.slate[700],
+                'dark-bg-card': colors.gray[700],
+                'dark-bg-card-hover': colors.gray[600],
             },
 
             keyframes: {

@@ -72,7 +72,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
             <div ref={chatRef} onClick={() => onClickChat()}>
                 <SidebarCard isSelected={currentChat === chat.id}>
-                    <div className="flex w-44 items-center">
+                    <div className="flex w-44 items-center debug-1">
                         <HiChatBubbleLeftEllipsis className="mr-2 h-4 w-4" />
                         {edit ? (
                             <input
@@ -84,7 +84,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                             />
                         ) : (
                             <p
-                                className={`w-8/12 overflow-hidden truncate whitespace-nowrap text-base ${
+                                className={`w-[50%] truncate whitespace-nowrap text-base ${
                                     chat.title ? 'animate-typing' : ''
                                 }`}
                             >
@@ -104,7 +104,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                             />
                         </div>
                     ) : (
-                        <div className="chat-item-btns absolute -right-3 flex items-center opacity-0 transition-all duration-200 ease-in">
+                        <div className="absolute -right-3 flex items-center opacity-0 transition-all duration-200 ease-in group-hover:right-2 group-hover:opacity-100">
                             <Button
                                 onClick={onClickEdit}
                                 Icon={HiPencilSquare}
