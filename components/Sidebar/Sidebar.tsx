@@ -27,7 +27,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
             className={clsx(
                 sidebarClasses,
                 isSidebarOpen
-                    ? 'w-full flex-shrink-0 sm:w-[15rem] md:w-[19rem] lg:w-[22rem]'
+                    ? 'w-full flex-shrink-0 sm:w-[15rem] lg:w-[19rem] xl:w-[22rem]'
                     : 'invisible w-0'
             )}
         >

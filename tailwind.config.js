@@ -32,7 +32,7 @@ module.exports = {
                         visibility: 'hidden',
                     },
                     '100%': {
-                        width: '100%',
+                        width: '90%',
                     },
                 },
                 blink: {

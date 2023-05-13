@@ -3,10 +3,10 @@ import { FC, useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
     HiPencilSquare,
-    HiTrash,
+    HiOutlineTrash,
     HiCheck,
     HiOutlineXMark,
-    HiChatBubbleLeftEllipsis,
+    HiOutlineChatBubbleLeftEllipsis,
 } from 'react-icons/hi2';
 import { useDispatch } from 'react-redux';
 
@@ -15,6 +15,7 @@ import { Chat } from '@/types';
 
 import SidebarCard from './SidebarCard';
 import Button from '../Button';
+import { Input } from '../InputField';
 
 interface ChatItemProps {
     chat: Chat;
@@ -72,39 +73,36 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
             <div ref={chatRef} onClick={() => onClickChat()}>
                 <SidebarCard isSelected={currentChat === chat.id}>
-                    <div className="flex w-44 items-center debug-1">
-                        <HiChatBubbleLeftEllipsis className="mr-2 h-4 w-4" />
-                        {edit ? (
-                            <input
-                                type="text"
-                                placeholder={chat.title || chat.id.substring(0, 20)}
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                className="w-8/12 truncate border-none text-gray-500 focus:border-transparent"
-                            />
-                        ) : (
-                            <p
-                                className={`w-[50%] truncate whitespace-nowrap text-base ${
-                                    chat.title ? 'animate-typing' : ''
-                                }`}
-                            >
-                                {chat.title || chat.id.substring(0, 20)}
-                            </p>
-                        )}
-                    </div>
+                    {edit ? (
+                        <Input
+                            type="text"
+                            placeholder={chat.title || ''}
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                    ) : (
+                        <>
+                            <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
+                            <p className="w-7/12 animate-typing truncate text-base">{chat.title}</p>
+                        </>
+                    )}
                     {edit || remove ? (
-                        <div className="flex items-center gap-1">
-                            <HiCheck
-                                className="h-4 w-4 text-slate-400 hover:text-slate-50"
+                        <div className="flex items-center">
+                            <Button
+                                Icon={HiCheck}
                                 onClick={onClickConfirm}
+                                size="sm"
+                                iconEffect={true}
                             />
-                            <HiOutlineXMark
-                                className="h-4 w-4 text-slate-400 hover:text-slate-50"
+                            <Button
+                                Icon={HiOutlineXMark}
                                 onClick={onClickCancel}
+                                size="sm"
+                                iconEffect={true}
                             />
                         </div>
                     ) : (
-                        <div className="absolute -right-3 flex items-center opacity-0 transition-all duration-200 ease-in group-hover:right-2 group-hover:opacity-100">
+                        <div className="absolute -right-3 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-2 group-hover:opacity-100">
                             <Button
                                 onClick={onClickEdit}
                                 Icon={HiPencilSquare}
@@ -113,7 +111,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                             />
                             <Button
                                 onClick={onClickRemove}
-                                Icon={HiTrash}
+                                Icon={HiOutlineTrash}
                                 size="sm"
                                 iconEffect={true}
                             />
