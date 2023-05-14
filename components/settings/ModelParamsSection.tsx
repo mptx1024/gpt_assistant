@@ -39,7 +39,7 @@ const ModelParamsSection = ({
                 <Textarea
                     value={prompt}
                     onChange={(e) => setPrompt(e.target.value)}
-                    showBorder={true}
+                    showborder={true}
                     styles=""
                 />
             </div>
@@ -82,7 +82,7 @@ const ModelParamsSection = ({
                         <Input
                             value={maxTokens}
                             onChange={(e) => setMaxTokens(Number(e.target.value))}
-                            showBorder={true}
+                            showborder={true}
                         />
                     </div>
                 </div>

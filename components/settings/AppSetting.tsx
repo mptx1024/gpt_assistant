@@ -72,7 +72,7 @@ function AppSetting({ toggleModal }: Props) {
                     placeholder="Enter Your API Key Here"
                     value={key}
                     onChange={(e) => setKey(e.target.value)}
-                    showBorder={true}
+                    showborder={true}
                 />
             </section>
             <section id="setting-app-preference" className="p-1">
@@ -107,7 +107,7 @@ function AppSetting({ toggleModal }: Props) {
                     <div className="flex-shrink-0 basis-[5rem]">
                         <Input
                             value={attchedMsgCount}
-                            showBorder={true}
+                            showborder={true}
                             onChange={handleAttachedMsgCount}
                         />
                     </div>

@@ -18,19 +18,20 @@ interface Props {
 }
 
 const RoleModal = (props: Props) => {
+
     useKeyPress(props.toggleModal, ['Escape']);
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="flex max-h-[50vh] min-h-[30vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
+                className="flex max-h-[60vh] min-h-[30vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
             >
                 <div className="flex justify-between">
                     <span className=" text-2xl text-gray-500 dark:text-gray-400">Role Detail</span>
                     <Button
                         size="lg"
                         Icon={HiOutlineXMark}
-                        onClick={() => props.toggleModal()}
+                        onClick={props.toggleModal}
                         shadow={true}
                     />
                 </div>

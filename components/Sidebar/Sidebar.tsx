@@ -18,7 +18,6 @@ interface Props {
 export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     const chats: Chat[] | null = useSelector(selectAllChats);
     const roles: Role[] | null = useSelector(selectAllRoles);
-    console.log(`isSidebarOpen: ${isSidebarOpen}`);
 
     const sidebarClasses =
         'relative flex flex-col h-full bg-gray-200 dark:bg-gray-800 text-light-text dark:text-dark-text transition-all duration-200';

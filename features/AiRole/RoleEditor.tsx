@@ -15,7 +15,6 @@ interface Props {
     role?: Role;
 }
 const RoleEditor = (props: Props) => {
-    useKeyPress(props.toggleModal, ['Escape']);
     const [title, setTitle] = useState<string>(props.role ? props.role.roleName : '');
     const [prompt, setPrompt] = useState<string>(props.role ? props.role.prompt : '');
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +36,7 @@ const RoleEditor = (props: Props) => {
         setPrompt('');
         props.toggleModal();
     };
+    useKeyPress(handleClickClose, ['Escape']);
 
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
@@ -66,7 +66,6 @@ const RoleEditor = (props: Props) => {
                             required={true}
                             placeholder="Title"
                             type="text"
-                            showBorder={true}
                         />
 
                         <label className="text-base text-light-text dark:text-dark-text ">
@@ -78,7 +77,6 @@ const RoleEditor = (props: Props) => {
                             onChange={handlePromptChange}
                             placeholder="Prompt"
                             rows={10}
-                            showBorder={true}
                         />
                     </div>
                     <Button size="lg" type={'submit'} shadow={true} border={true} text="Save" />

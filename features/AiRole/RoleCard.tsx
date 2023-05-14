@@ -1,22 +1,34 @@
+import { useState } from 'react';
+
+import { useRouter } from 'next/router';
+
 import { Role } from '@/types';
+import { createNewChat } from '@/utils/chats';
+
+import RoleModal from './RoleModal';
 
 interface Props {
     role: Role;
     bgColor: string;
-    setSelectedRole: (role: Role) => void;
-    toggleRoleCardModal: () => void;
 }
 
 const RoleCard = (props: Props) => {
-    const handleClickCard = () => {
-        props.toggleRoleCardModal();
-        props.setSelectedRole(props.role);
+    const [isRoleCardModalOpen, setIsRoleCardModalOpen] = useState(false);
+    const router = useRouter();
+
+    const handleClickUse = () => {
+        const chatID = createNewChat(props.role);
+        router.push(`/chat/${chatID}`);
+        setIsRoleCardModalOpen(false);
+    };
+    const toggleRoleCardModal = () => {
+        setIsRoleCardModalOpen(!isRoleCardModalOpen);
     };
 
     return (
         <div
             className={`${props.bgColor} cursor-pointer rounded-lg p-2 transition-all ease-in-out  hover:scale-[102%] sm:p-4 lg:p-6`}
-            onClick={handleClickCard}
+            onClick={toggleRoleCardModal}
         >
             <div className="mt-2">
                 <h3 className="mb-1 text-lg font-bold text-white sm:text-xl">
@@ -24,6 +36,15 @@ const RoleCard = (props: Props) => {
                 </h3>
                 <p className="text-sm text-gray-200 line-clamp-3">{props.role.prompt}</p>
             </div>
+            {isRoleCardModalOpen ? (
+                <RoleModal
+                    isOpen={isRoleCardModalOpen}
+                    role={props.role}
+                    isTemplate={true}
+                    toggleModal={toggleRoleCardModal}
+                    handleClickUse={handleClickUse}
+                />
+            ) : null}
         </div>
     );
 };

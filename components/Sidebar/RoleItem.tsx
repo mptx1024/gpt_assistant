@@ -21,10 +21,10 @@ const RoleItem = (props: Props) => {
     const router = useRouter();
 
     const toggleRoleModal = () => {
-        setIsRoleModalOpen(!isRoleModalOpen);
+        setIsRoleModalOpen(false);
     };
     const toggleRoleEditor = () => {
-        setIsRoleEditorOpen(!isRoleEditorOpen);
+        setIsRoleEditorOpen(false);
     };
     const handleClickUse = () => {
         const chatID = createNewChat(props.role);
@@ -42,7 +42,7 @@ const RoleItem = (props: Props) => {
     };
 
     const handleClick = () => {
-        setIsRoleModalOpen(!isRoleModalOpen);
+        setIsRoleModalOpen(true);
     };
     return (
         <>
@@ -52,7 +52,8 @@ const RoleItem = (props: Props) => {
                     <div> {props.role.roleName}</div>
                 </SidebarCard>
             </div>
-            {isRoleModalOpen && (
+
+            {isRoleModalOpen ? (
                 <RoleModal
                     role={props.role}
                     isOpen={isRoleModalOpen}
@@ -61,14 +62,15 @@ const RoleItem = (props: Props) => {
                     handleClickEdit={handleClickEdit}
                     handleClickDelete={handleClickDelete}
                 />
-            )}
-            {isRoleEditorOpen && (
+            ) : null}
+
+            {isRoleEditorOpen ? (
                 <RoleEditor
                     isOpen={isRoleEditorOpen}
                     toggleModal={toggleRoleEditor}
                     role={props.role}
                 />
-            )}
+            ) : null}
         </>
     );
 };

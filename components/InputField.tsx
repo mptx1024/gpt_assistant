@@ -9,7 +9,7 @@ interface InputProps {
     value: string | number;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     styles?: string;
-    showBorder?: boolean;
+    showborder?: boolean;
 }
 const inputBaseClasses =
     'my-2 p-1 w-full overflow-hidden border-none rounded-lg text-light-text dark:text-dark-text';
@@ -21,7 +21,7 @@ export function Input(props: InputProps) {
             className={clsx(
                 props.styles,
                 inputBaseClasses,
-                props.showBorder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
+                props.showborder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
             )}
             type={props.type}
             placeholder={props.placeholder}
@@ -39,7 +39,7 @@ interface TexareaProps {
     styles?: string;
     rows?: number;
     [x: string]: any;
-    showBorder?: boolean;
+    showborder?: boolean;
 }
 
 const textAreaBaseClasses =
@@ -67,7 +67,7 @@ export function Textarea(props: TexareaProps) {
             className={clsx(
                 textAreaBaseClasses,
                 props.styles,
-                props.showBorder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
+                props.showborder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
             )}
             placeholder={props.placeholder}
             value={props.value}
