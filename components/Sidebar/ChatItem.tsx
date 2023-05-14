@@ -26,12 +26,14 @@ interface ChatItemProps {
 const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
     const [edit, setEdit] = useState(false);
     const [remove, setRemove] = useState(false);
-    const [title, setTitle] = useState('');
+    const [title, setTitle] = useState(chat.title);
     const dispatch = useDispatch();
     const chatRef = useRef<HTMLDivElement>(null);
-    const onClickEdit = () => {
+    const onClickEdit = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
         setEdit(true);
-        setTitle(chat.title || chat.id.substring(0, 20));
+        setTitle(title);
     };
     const onClickChat = () => {
         setCurrentChat(chat.id);
@@ -61,6 +63,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         function handleClickOutside(event: MouseEvent) {
             if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
                 onClickCancel();
+                // setCurrentChat('');
             }
         }
         document.addEventListener('mousedown', handleClickOutside);

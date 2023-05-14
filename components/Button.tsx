@@ -1,8 +1,7 @@
-////////69//https://github.com/Yidadaa/ChatGPT-Next-Web/blob/main/app/components/button.tsx
 import clsx from 'clsx';
 
 interface Props {
-    onClick?: () => void;
+    onClick?: any;
     Icon?: React.ElementType;
     iconEffect?: boolean;
     text?: string;
@@ -18,7 +17,7 @@ interface Props {
 }
 
 const btnClasses = {
-    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all text-light-text dark:text-dark-text active:scale-[0.9]',
+    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal l text-light-text dark:text-dark-text active:scale-[0.9]',
     shadow: 'hover:bg-gray-200 dark:hover:bg-gray-700',
     border: 'border-[1px] border-gray-300 hover:border-cyan-600 dark:border-gray-500 dark:hover:border-cyan-600',
     sm: 'px-1 py-1 text-sm',

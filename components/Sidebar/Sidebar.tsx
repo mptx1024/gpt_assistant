@@ -21,7 +21,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     console.log(`isSidebarOpen: ${isSidebarOpen}`);
 
     const sidebarClasses =
-        'flex flex-col h-full bg-gray-200 dark:bg-gray-800 text-light-text dark:text-dark-text transition-all duration-200';
+        'relative flex flex-col h-full bg-gray-200 dark:bg-gray-800 text-light-text dark:text-dark-text transition-all duration-200';
     return (
         <div
             className={clsx(
@@ -32,11 +32,13 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
-            <div className="relative h-full px-2 py-3">
+            <div className="relative flex h-[calc(100%-7rem)] flex-col px-2">
                 <ChatList chats={chats} />
                 <RoleList roles={roles} />
             </div>
-            <BottomSection />
+            <div className=" bottom-0 top-auto my-2 px-5">
+                <BottomSection />
+            </div>
         </div>
     );
 }

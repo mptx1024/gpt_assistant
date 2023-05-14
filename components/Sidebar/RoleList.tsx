@@ -22,9 +22,9 @@ const RoleList = (props: { roles: Role[] }) => {
 
     return (
         <>
-            <div className={'my-2 flex h-2/5 flex-col gap-2 overflow-y-auto'}>
+            <div className={'flex h-[40%] flex-col border-y border-gray-300 gap-2 py-3'}>
                 <div className="mx-3 flex items-center justify-between">
-                    <p className="text-base text-gray-500 dark:text-gray-400">Assistant List</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Role List</p>
                     <div className="flex gap-1">
                         <Button
                             size="sm"
@@ -40,9 +40,11 @@ const RoleList = (props: { roles: Role[] }) => {
                         />
                     </div>
                 </div>
-                {props.roles?.map((role) => (
-                    <RoleItem key={role.id} role={role} />
-                ))}
+                <div className="flex flex-col gap-2 overflow-y-scroll">
+                    {props.roles?.map((role) => (
+                        <RoleItem key={role.id} role={role} />
+                    ))}
+                </div>
             </div>
             {isEditorOpen && <RoleEditor isOpen={isEditorOpen} toggleModal={toggleRoleEditor} />}
         </>

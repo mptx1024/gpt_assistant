@@ -12,12 +12,12 @@ const BottomSection = () => {
         setIsSettingsOpen(!isSettingsOpen);
     }, [isSettingsOpen]);
     return (
-        <div className="mt-auto border-t p-3">
+        <div className="">
             <Button
                 onClick={toggleSettingModal}
                 Icon={HiOutlineCog8Tooth}
                 size="lg"
-                text={'Settings'}
+                // text={'Settings'}
                 border={true}
                 shadow={true}
             />

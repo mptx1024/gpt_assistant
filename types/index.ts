@@ -18,7 +18,7 @@ export interface OpenAIMessage {
 export interface Chat {
     id: string;
     messages: Message[];
-    title?: string | null;
+    title: string;
     created: number;
     role: Role;
     // model: OpenAIModel;
