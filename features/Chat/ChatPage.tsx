@@ -7,9 +7,9 @@ import { selectChatById } from '@/store/chatsSlice';
 import { Message, Chat } from '@/types';
 
 import ChatMessage from './ChatMessage';
-import { ChatParamsCard } from '../../components/settings/ChatSetting';
 import useChat from './hooks/useChat';
 import Input from './Input';
+import { ChatParamsCard } from '../../components/settings/ChatSetting';
 
 interface Props {
     chat: Chat;
@@ -32,9 +32,7 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
 
     return (
         <div className=" flex h-full w-full flex-col items-center overflow-y-auto">
-            <div className="my-3 bg-light-bg dark:bg-dark-bg">
-                <ChatParamsCard chat={chat} />
-            </div>
+            <ChatParamsCard chat={chat} />
 
             {messages && (
                 <div id="messages-section" className="mb-32 flex w-full animate-slideIn flex-col">

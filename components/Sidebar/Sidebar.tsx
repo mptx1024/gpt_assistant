@@ -20,13 +20,13 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
     const roles: Role[] | null = useSelector(selectAllRoles);
 
     const sidebarClasses =
-        'relative flex flex-col h-full bg-gray-200 dark:bg-black text-light-text dark:text-dark-text transition-all duration-200';
+        'relative flex flex-col h-full bg-gray-100 dark:bg-black text-light-text dark:text-dark-text transition-all duration-200';
     return (
         <div
             className={clsx(
                 sidebarClasses,
                 isSidebarOpen
-                    ? 'w-full flex-shrink-0 sm:w-[15rem] lg:w-[19rem] xl:w-[22rem]'
+                    ? 'w-full flex-shrink-0 sm:w-[17rem] lg:w-[19rem] xl:w-[22rem]'
                     : 'invisible w-0'
             )}
         >

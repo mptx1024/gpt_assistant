@@ -86,7 +86,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                     ) : (
                         <>
                             <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
-                            <p className="w-7/12 animate-typing truncate text-base">{chat.title}</p>
+                            <p className="w-7/12 animate-typing truncate">{chat.title}</p>
                         </>
                     )}
                     {edit || remove ? (
@@ -105,7 +105,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
                             />
                         </div>
                     ) : (
-                        <div className="absolute -right-3 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-2 group-hover:opacity-100">
+                        <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
                             <Button
                                 onClick={onClickEdit}
                                 Icon={HiPencilSquare}

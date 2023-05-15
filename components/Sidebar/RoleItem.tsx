@@ -49,7 +49,7 @@ const RoleItem = (props: Props) => {
             <div onClick={handleClick}>
                 <SidebarCard>
                     <FiUser />
-                    <div> {props.role.roleName}</div>
+                    <div className="w-7/12 truncate"> {props.role.roleName}</div>
                 </SidebarCard>
             </div>
 

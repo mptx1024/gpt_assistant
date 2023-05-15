@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 import ModelParamsSection from '@/components/settings/ModelParamsSection';
 import SettingModal from '@/components/settings/SettingModal';
 import { updateModelParams, updateRole } from '@/store/chatsSlice';
-import { OpenAIModels, OpenAIModel, OpenAIModelID, ModelParams, Role } from '@/types';
+import { OpenAIModels, OpenAIModel, ModelParams, Role } from '@/types';
 import { Chat } from '@/types';
 interface Props {
     chat: Chat;
@@ -18,11 +18,17 @@ export function ChatParamsCard({ chat }: Props) {
     return (
         <div
             onClick={toggleModal}
-            className="flex cursor-pointer flex-col items-start rounded-md border border-gray-500  p-3 text-light-text hover:bg-neutral-200 dark:text-dark-text dark:hover:bg-neutral-700"
+            className="my-3 flex w-[40%] max-w-lg cursor-pointer flex-col items-start rounded-md border border-gray-400/50 p-3 transition-all hover:brightness-[1.3]"
         >
-            <span>{chat.modelParams.model.name}</span>
-            <span>Temperature: {chat.modelParams.temperature}</span>
-            <span>Assistant: {chat.role.roleName}</span>
+            <span className="text-primary w-full truncate whitespace-nowrap">
+                {chat.modelParams.model.name}
+            </span>
+            <span className="text-secondary whitespace-nowrap">
+                Temperature: {chat.modelParams.temperature}
+            </span>
+            <span className="text-secondary max-w-full truncate whitespace-nowrap">
+                Assistant: {chat.role.roleName}
+            </span>
             <SettingModal isOpen={isOpen} toggleModal={toggleModal} title="Chat Setting">
                 <ChatParamsModal chat={chat} toggleModal={toggleModal} />
             </SettingModal>

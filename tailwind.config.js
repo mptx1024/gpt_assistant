@@ -11,18 +11,31 @@ module.exports = {
     theme: {
         extend: {
             translate: ['dark'],
+            textColor: {
+                primary: {
+                    base: colors.gray[700],
+                    dark: colors.gray[200],
+                },
+                secondary: {
+                    base: colors.gray[500],
+                    dark: colors.gray[400],
+                },
+            },
+            backgroundColor: {
+                primary: {
+                    
+                },
+                secondary: {
+                    base: colors.gray[200],
+                    dark: colors.zinc[900],
+                },
+            },
             colors: {
                 'light-text': colors.gray[700],
                 'dark-text': colors.gray[200],
 
                 'light-bg': colors.gray[100],
                 'dark-bg': '#18181B',
-
-                'light-bg-card': colors.gray[300],
-                'light-bg-card-hover': colors.gray[400],
-
-                'dark-bg-card': colors.zinc[950],
-                'dark-bg-card-hover': colors.zinc[900],
             },
 
             keyframes: {
@@ -32,7 +45,7 @@ module.exports = {
                         visibility: 'hidden',
                     },
                     '100%': {
-                        width: '90%',
+                        width: '80%',
                     },
                 },
                 blink: {
