@@ -16,13 +16,13 @@ module.exports = {
                 'dark-text': colors.gray[200],
 
                 'light-bg': colors.gray[100],
-                'dark-bg': colors.gray[900],
+                'dark-bg': '#18181B',
 
                 'light-bg-card': colors.gray[300],
                 'light-bg-card-hover': colors.gray[400],
 
-                'dark-bg-card': colors.gray[700],
-                'dark-bg-card-hover': colors.gray[600],
+                'dark-bg-card': colors.zinc[950],
+                'dark-bg-card-hover': colors.zinc[900],
             },
 
             keyframes: {
