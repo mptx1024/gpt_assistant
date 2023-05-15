@@ -18,16 +18,15 @@ interface Props {
 }
 
 const RoleModal = (props: Props) => {
-
     useKeyPress(props.toggleModal, ['Escape']);
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="flex max-h-[60vh] min-h-[30vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
+                className="flex max-h-[60vh] min-h-[40vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
             >
-                <div className="flex justify-between">
-                    <span className=" text-2xl text-gray-500 dark:text-gray-400">Role Detail</span>
+                <div className="flex items-center justify-between">
+                    <span className="text-1xl text-gray-500 dark:text-gray-400">Detail</span>
                     <Button
                         size="lg"
                         Icon={HiOutlineXMark}
@@ -35,12 +34,17 @@ const RoleModal = (props: Props) => {
                         shadow={true}
                     />
                 </div>
-                <h3 className="text-lg font-semibold text-light-text dark:text-dark-text sm:text-xl">
+                <span className="text-lg font-semibold text-light-text dark:text-dark-text sm:text-xl">
                     {props.role?.roleName}
-                </h3>
-                <p className="flex-grow overflow-y-auto text-base text-light-text dark:text-dark-text">
-                    {props.role?.prompt}
-                </p>
+                </span>
+                <div className="flex flex-grow flex-col overflow-y-clip">
+                    <span className="mb-1 text-[0.8rem] text-gray-500 dark:text-gray-400">
+                        Prompt
+                    </span>
+                    <div className="overflow-y-auto text-base text-light-text dark:text-dark-text">
+                        {props.role?.prompt}
+                    </div>
+                </div>
                 <div id="btn-group" className="flex gap-2">
                     <Button
                         size="lg"

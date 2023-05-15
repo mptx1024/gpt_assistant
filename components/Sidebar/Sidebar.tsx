@@ -31,11 +31,11 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
-            <div className="relative flex h-[calc(100%-7rem)] flex-col px-2">
+            <div className="relative flex h-[calc(100%-9rem)] flex-col px-2">
                 <ChatList chats={chats} />
                 <RoleList roles={roles} />
             </div>
-            <div className=" bottom-0 top-auto my-2 px-5">
+            <div className="bottom-4 top-auto my-2 px-5">
                 <BottomSection />
             </div>
         </div>

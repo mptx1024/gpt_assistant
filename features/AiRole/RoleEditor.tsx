@@ -44,8 +44,8 @@ const RoleEditor = (props: Props) => {
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
                 className="absolute flex h-[60vh] w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
             >
-                <div className="flex justify-between">
-                    <span className=" text-2xl text-gray-500 dark:text-gray-400">
+                <div className="mb-5 flex items-center justify-between">
+                    <span className="text-2xl text-gray-500 dark:text-gray-400">
                         {props.role ? 'Edit Role' : 'Add Role'}
                     </span>
                     <Button
@@ -56,28 +56,32 @@ const RoleEditor = (props: Props) => {
                     />
                 </div>
                 <form onSubmit={(e) => handleClickSave(e)}>
-                    <div>
-                        <label className="text-base text-light-text dark:text-dark-text">
-                            Title
-                        </label>
-                        <Input
-                            value={title}
-                            onChange={handleTitleChange}
-                            required={true}
-                            placeholder="Title"
-                            type="text"
-                        />
-
-                        <label className="text-base text-light-text dark:text-dark-text ">
-                            Prompt Insturction
-                        </label>
-                        <Textarea
-                            required={true}
-                            value={prompt}
-                            onChange={handlePromptChange}
-                            placeholder="Prompt"
-                            rows={10}
-                        />
+                    <div className="mb-8 flex flex-col">
+                        <div className="mb-5">
+                            <label className="text-md text-gray-500 dark:text-gray-400">
+                                Role Name
+                            </label>
+                            <Input
+                                value={title}
+                                onChange={handleTitleChange}
+                                required={true}
+                                placeholder="Title"
+                                type="text"
+                                showborder={true}
+                            />
+                        </div>
+                        <div>
+                            <label className="text-md text-gray-500 dark:text-gray-400">
+                                Prompt Insturction
+                            </label>
+                            <Textarea
+                                required={true}
+                                value={prompt}
+                                onChange={handlePromptChange}
+                                placeholder="Prompt"
+                                showborder={true}
+                            />
+                        </div>
                     </div>
                     <Button size="lg" type={'submit'} shadow={true} border={true} text="Save" />
                 </form>
