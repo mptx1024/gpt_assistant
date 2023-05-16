@@ -3,7 +3,7 @@ import { HiChevronUpDown } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
 import { Input, Textarea } from '@/components/InputField';
-import { OpenAIModels, OpenAIModel, OpenAIModelID } from '@/types';
+import { OpenAIModel } from '@/types';
 
 interface Props {
     isChatSetting: boolean;
@@ -30,11 +30,16 @@ const ModelParamsSection = ({
     setPrompt,
 }: Props) => {
     return (
-        <div className="flex flex-col p-1">
-            <div id="setting-role-name" className="mb-3">
-                <div className="mb-2">
-                    <span className="block text-lg font-semibold">Prompt</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">description</span>
+        <div className="flex flex-col gap-2 p-1 sm:gap-5">
+            <div id="setting-role-name" className="">
+                <div className="mb-3">
+                    <span className="text-primary mb-2 block !text-base font-semibold">
+                        {isChatSetting ? 'Prompt' : 'App Default Prompt'}
+                    </span>
+                    <p className="text-secondary leading-4 !text-opacity-70">
+                        Instructions that defines the AI assistant role. It is used by the model to
+                        understand the context and produce relevant output
+                    </p>
                 </div>
                 <Textarea
                     value={prompt}

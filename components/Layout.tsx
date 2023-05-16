@@ -49,9 +49,9 @@ export default function Layout({ children }: Props) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="fixed inset-0 flex h-screen overflow-x-clip">
+            <div className="fixed inset-0 flex h-screen">
                 <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-                <div className={clsx('relative flex w-full flex-col')}>
+                <div className={clsx('relative flex w-full basis-full flex-col overflow-hidden')}>
                     <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
                     {children}
                 </div>

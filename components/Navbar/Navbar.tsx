@@ -14,8 +14,7 @@ type Props = {
 };
 
 const navbarClasses =
-    'flex h-16 w-full items-center justify-between bg-light-bg px-4 py-3 dark:bg-dark-bg transition-all duration-300 border-b border-black/10 dark:border-gray-900/50';
-const btnGroupClasses = 'flex items-center gap-2';
+    'debug-3 flex h-16 w-full justify-between items-center bg-light-bg px-4 py-3 dark:bg-dark-bg transition-all duration-300 border-b border-black/10 dark:border-gray-900/50';
 
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
@@ -32,12 +31,13 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     };
 
     return (
-        <nav className={navbarClasses}>
+        <div className={navbarClasses}>
             {isSidebarOpen ? null : <Button Icon={HiBars3} size="lg" onClick={toggleSidebar} />}
-            <p className="max-w-[30%] flex-shrink truncate text-left text-xl text-light-text dark:text-dark-text">
+            <span className="max-w-[50%] truncate">
                 {chat?.title}
-            </p>
-            <div className={btnGroupClasses}>
+                {/* <h1 className="debug-1 text-primary truncate">{chat?.title}</h1> */}
+            </span>
+            <div className="flex items-center justify-end gap-2">
                 <Button Icon={HiPlus} size="md" border={true} onClick={handleClickNewChat} />
 
                 <Button
@@ -47,6 +47,6 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
                     size="md"
                 />
             </div>
-        </nav>
+        </div>
     );
 }

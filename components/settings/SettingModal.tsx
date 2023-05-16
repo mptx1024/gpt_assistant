@@ -20,12 +20,10 @@ const SettingModal = memo(function SettingModal(props: Props) {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="inset-0 flex h-full w-full flex-col gap-3 overflow-hidden bg-light-bg p-6 text-left dark:bg-dark-bg sm:h-[90vh] sm:max-w-xl sm:rounded-xl"
+                className="inset-0 flex h-full w-full flex-col gap-0 overflow-hidden bg-light-bg px-5 py-3 text-left dark:bg-dark-bg sm:h-[90vh] sm:max-w-xl sm:rounded-xl sm:gap-3 sm:py-6"
             >
                 <div className="flex justify-between">
-                    <span className=" text-3xl font-bold">
-                        {props.title}
-                    </span>
+                    <span className="text-3xl font-bold">{props.title}</span>
                     <Button
                         size="lg"
                         Icon={HiOutlineXMark}

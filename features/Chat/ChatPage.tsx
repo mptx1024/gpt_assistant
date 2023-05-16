@@ -1,9 +1,5 @@
 import { useEffect, useRef, memo } from 'react';
 
-import { useSelector } from 'react-redux';
-
-import { RootState, store } from '@/store';
-import { selectChatById } from '@/store/chatsSlice';
 import { Message, Chat } from '@/types';
 
 import ChatMessage from './ChatMessage';
