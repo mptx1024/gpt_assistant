@@ -10,13 +10,13 @@ import {
 } from 'react-icons/hi2';
 import { useDispatch } from 'react-redux';
 
+import { setAlert } from '@/store/alertSlice';
 import { updateTitle, removeOne } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
 import SidebarCard from './SidebarCard';
 import Button from '../Button';
 import { Input } from '../InputField';
-
 interface ChatItemProps {
     chat: Chat;
     currentChat: string;
@@ -49,6 +49,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         } else if (remove) {
             // TODO: remove chat
             dispatch(removeOne(chat.id));
+            dispatch(setAlert('Chat Deleted'));
+
             // router.push('/chat');
         }
         onClickCancel();

@@ -14,7 +14,7 @@ type Props = {
 };
 
 const navbarClasses =
-    'debug-3 flex h-16 w-full justify-between items-center bg-light-bg px-4 py-3 dark:bg-dark-bg transition-all duration-300 border-b border-black/10 dark:border-gray-900/50';
+    'flex h-16 w-full justify-between items-center bg-light-bg px-4 py-3 dark:bg-dark-bg transition-all duration-300 border-b border-black/10 dark:border-gray-900/50';
 
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();

@@ -23,7 +23,7 @@ const RoleModal = (props: Props) => {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="flex max-h-[60vh] min-h-[40vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
+                className="mx-5 flex max-h-[60vh] min-h-[40vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
             >
                 <div className="flex items-center justify-between">
                     <span className="text-2xl text-gray-500 dark:text-gray-400">Detail</span>

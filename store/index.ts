@@ -3,6 +3,7 @@ import { configureStore, isAnyOf } from '@reduxjs/toolkit';
 import { Chat, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
+import alertSlice from './alertSlice';
 import chatsReducer, {
     selectAllChats,
     removeOne,
@@ -84,6 +85,7 @@ export const store = configureStore({
         setting: settingReducer,
         chats: chatsReducer,
         roles: rolesReducer,
+        alert: alertSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().prepend(listenerMiddleware.middleware),

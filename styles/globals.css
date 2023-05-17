@@ -25,7 +25,7 @@
         background: #111827;
     }
     .text-primary {
-        @apply text-[0.95rem] text-primary-base dark:text-primary-dark;
+        @apply text-[0.9rem] text-primary-base dark:text-primary-dark;
     }
     .text-secondary {
         @apply text-[0.8rem] text-secondary-base dark:text-secondary-dark;

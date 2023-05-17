@@ -11,6 +11,8 @@ import { setAllRoles } from '@/store/rolesSlice';
 import { Chat, Role, defaultModelParams } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
+import Alert from './Alert';
+
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
@@ -55,16 +57,8 @@ export default function Layout({ children }: Props) {
                     <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
                     {children}
                 </div>
-                {/* <div
-                    className={clsx(
-                        'absolute flex h-full w-full flex-grow-0 flex-col items-center justify-between border-2 border-red-600 bg-light-bg transition-all duration-300 dark:bg-dark-bg',
-                        { 'ml-64': isSidebarOpen }
-                    )}
-                >
-                    <Navbar toggleSidebar={onClickSidebar} isSidebarOpen={isSidebarOpen} />
-                    {children}
-                </div> */}
             </div>
+            <Alert />
         </>
     );
 }

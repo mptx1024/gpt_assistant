@@ -38,6 +38,7 @@ const RoleItem = (props: Props) => {
     const handleClickDelete = () => {
         if (props.role) {
             deleteRole(props.role.id);
+            
         }
     };
 

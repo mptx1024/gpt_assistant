@@ -28,7 +28,7 @@ const RoleList = (props: { roles: Role[] }) => {
                 }
             >
                 <div className="mx-3 flex items-center justify-between">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Role List</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">AI Roles</p>
                     <div className="flex gap-1">
                         <Button
                             size="sm"

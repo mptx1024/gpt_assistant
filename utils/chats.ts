@@ -1,10 +1,10 @@
 import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
+import { setAlert } from '@/store/alertSlice';
 import { setOne } from '@/store/chatsSlice';
 import { getAppSetting } from '@/store/settingSlice';
 import { Chat, Role } from '@/types';
-
 export const copyToClipboard = async (
     text: string,
     setIsCopied: (value: boolean) => void
@@ -31,6 +31,7 @@ export const createNewChat = (selectedRole?: Role): string => {
         modelParams: appSetting.defaultModelParams,
     };
     store.dispatch(setOne(newChat));
+    store.dispatch(setAlert('New Chat Created'));
     return newChat.id;
 };
 

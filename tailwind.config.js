@@ -22,9 +22,7 @@ module.exports = {
                 },
             },
             backgroundColor: {
-                primary: {
-                    
-                },
+                primary: {},
                 secondary: {
                     base: colors.gray[200],
                     dark: colors.zinc[900],
@@ -59,17 +57,40 @@ module.exports = {
                 slideIn: {
                     '0%': {
                         opacity: '0%',
-                        transform: 'translateY(20px)',
+                        transform: 'translateY(-50%)',
                     },
                     '100%': {
                         opacity: '100%',
-                        transform: 'translateY(0px)',
+                        transform: 'translateY(0)',
                     },
                 },
+                slideInFromTop: {
+                    '0%': {
+                        opacity: '0%',
+                        transform: 'translateY(-20px)',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                        // transform: 'translateY(0px)',
+                    },
+                },
+
+                // alertOut: {
+                //     '0%': {
+                //         opacity: '100%',
+                //         // transform: 'translateY(-20px)',
+                //     },
+                //     '100%': {
+                //         opacity: '0%',
+                //         transform: 'translateY(-20px)',
+                //     },
+                // },
             },
             animation: {
                 typing: 'typing 0.9s alternate',
                 slideIn: 'slideIn 0.4s ease',
+                slideInFromTop: 'slideInFromTop 0.3s ease',
+                // alertOut: 'alertOut 0.6s ease',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },
         },

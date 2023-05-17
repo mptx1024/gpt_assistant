@@ -88,9 +88,9 @@ export default function ChatMessage({ message, generateReply }: Props) {
                             </div>
                         </div>
                     )}
-                    <div className=" mt-2 flex justify-center self-end md:absolute md:right-0 md:top-0 md:mt-0 md:translate-x-full md:gap-3 md:self-center md:pl-2">
+                    <div className="mt-2 flex justify-center self-end md:absolute md:right-0 md:top-0 md:mt-0 md:translate-x-full md:gap-3 md:self-center md:pl-2">
                         {!isEditing && (
-                            <div className="flex transition-all duration-200 md:translate-x-full md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
+                            <div className="flex transition-all duration-200 md:translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
                                 {!isCopied ? (
                                     <Button
                                         Icon={HiOutlineClipboard}
