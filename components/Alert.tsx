@@ -35,7 +35,7 @@ const Alert = () => {
                 //     : 'opacity-0 transition-all  duration-300 ease-in-out'
             )}
         >
-            <div className="flex max-w-[80vh] items-start gap-4 rounded-2xl border border-gray-300 bg-white p-3 dark:bg-secondary-dark">
+            <div className="border-primary dark:bg-secondary-dark flex max-w-[80vh] items-start gap-4 rounded-2xl bg-gray-base p-3 dark:bg-gray-inverted">
                 {/* <span className="text-green-600">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

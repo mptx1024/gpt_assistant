@@ -21,7 +21,7 @@ const RoleModal = (props: Props) => {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="mx-5 flex max-h-[60vh] min-h-[40vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl bg-card-light p-6 text-left shadow-xl dark:bg-card-dark"
+                className="border-color bg-card-light dark:bg-card-dark mx-5 flex max-h-[60vh] min-h-[40vh] w-full max-w-lg flex-col justify-between space-y-5 overflow-hidden rounded-xl border bg-white p-6 text-left shadow-xl dark:bg-white-inverted"
             >
                 <div className="flex items-center justify-between">
                     <span className="text-2xl text-gray-500 dark:text-gray-400">Detail</span>
@@ -32,14 +32,14 @@ const RoleModal = (props: Props) => {
                         shadow={true}
                     />
                 </div>
-                <span className="text-lg font-semibold text-light-text dark:text-dark-text sm:text-xl">
+                <span className="text-light-text dark:text-dark-text text-lg font-semibold sm:text-xl">
                     {props.role?.roleName}
                 </span>
                 <div className="flex flex-grow flex-col overflow-y-clip">
                     <span className="mb-1 text-[0.8rem] text-gray-500 dark:text-gray-400">
                         Prompt
                     </span>
-                    <div className="overflow-y-auto text-base text-light-text dark:text-dark-text">
+                    <div className="text-light-text dark:text-dark-text overflow-y-auto text-base">
                         {props.role?.prompt}
                     </div>
                 </div>

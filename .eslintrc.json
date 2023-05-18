@@ -3,16 +3,23 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:react/recommended"],
+    "extends": [
+        "next/core-web-vitals",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
     "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["react", "import"],
+    "plugins": ["react", "import", "@typescript-eslint"],
+    "root": true,
     "rules": {
-        "quotes": [2, "single"],
+        "quotes": ["error", "single", { "avoidEscape": true }],
+        "@typescript-eslint/no-var-requires": 0,
         "import/order": [
             "error",
             {
@@ -41,6 +48,8 @@
             }
         ],
         "react/react-in-jsx-scope": "off",
-        "no-empty-function": "off"
+        "no-empty-function": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error"
     }
 }

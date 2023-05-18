@@ -18,15 +18,15 @@ export function ChatParamsCard({ chat }: Props) {
     return (
         <div
             onClick={toggleModal}
-            className="border-major my-3 flex w-[90%] max-w-lg cursor-pointer flex-col items-start rounded-md p-3 transition-all hover:brightness-[1.3] sm:w-[40%]"
+            className="border-color my-3 flex w-[90%] max-w-lg cursor-pointer flex-col items-start rounded-md border p-3 transition-all hover:border-colorPrimary sm:w-[40%]"
         >
-            <span className="text-primary w-full truncate whitespace-nowrap">
+            <span className="w-full truncate whitespace-nowrap text-colorPrimary">
                 {chat.modelParams.model.name}
             </span>
-            <span className="text-secondary whitespace-nowrap">
+            <span className="text-subtitle whitespace-nowrap">
                 Temperature: {chat.modelParams.temperature}
             </span>
-            <span className="text-secondary max-w-full truncate whitespace-nowrap">
+            <span className="text-subtitle max-w-full truncate whitespace-nowrap">
                 Assistant: {chat.role.roleName}
             </span>
             <SettingModal isOpen={isOpen} toggleModal={toggleModal} title="Chat Setting">

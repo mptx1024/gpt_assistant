@@ -33,10 +33,10 @@ const ModelParamsSection = ({
         <div className="flex flex-col gap-2 p-1 sm:gap-5">
             <div id="setting-role-name" className="">
                 <div className="mb-3">
-                    <span className="text-primary mb-2 block !text-base font-semibold">
+                    <span className="mb-2 block !text-base font-semibold">
                         {isChatSetting ? 'Prompt' : 'App Default Prompt'}
                     </span>
-                    <p className="text-secondary leading-4 !text-opacity-70">
+                    <p className="text-subtitle">
                         Instructions that defines the AI assistant role. It is used by the model to
                         understand the context and produce relevant output
                     </p>
@@ -48,10 +48,10 @@ const ModelParamsSection = ({
                     styles=""
                 />
             </div>
-            <div id="model-params" className="flex flex-col rounded-md border border-gray-300">
+            <div id="model-params" className="flex flex-col rounded-md ">
                 <div
                     id="setting-model"
-                    className="flex items-center justify-between border-b border-gray-300 p-3"
+                    className="border-color flex items-center justify-between border-b p-3"
                 >
                     <span className="block">Model</span>
                     <ModelListBox
@@ -66,7 +66,7 @@ const ModelParamsSection = ({
                 >
                     <div className="mb-3 sm:mb-0 sm:mr-5 sm:w-6/12">
                         <span className="block whitespace-nowrap">Temperature: {temperature}</span>
-                        <span className="block text-[0.7rem] text-gray-500 dark:text-gray-400">
+                        <span className="text-subtitle block">
                             Higher values like 0.8 will make the output more random, while lower
                             values like 0.2 will make it more focused and deterministic
                         </span>
@@ -78,7 +78,7 @@ const ModelParamsSection = ({
                 <div id="setting-maxToken" className="flex items-center justify-between p-3">
                     <div className="">
                         <span className="block">Max Token</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="text-subtitle">
                             The maximum number of tokens to generate in the reply. 1000 tokens are
                             roughly 750 English words
                         </span>

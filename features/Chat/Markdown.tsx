@@ -1,11 +1,11 @@
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import rehypeKatex from "rehype-katex";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import rehypeKatex from 'rehype-katex';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 
-import { Message } from "@/types";
+import { Message } from '@/types';
 
 interface Props {
     message: Message;
@@ -20,9 +20,9 @@ const Markdown = ({ message }: Props) => {
             remarkPlugins={[remarkGfm, remarkMath]}
             rehypePlugins={[rehypeKatex]}
             components={{
-                p: "span",
+                p: 'span',
                 code({ node, inline, className, children, style, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
+                    const match = /language-(\w+)/.exec(className || '');
 
                     // if code is not inline and has a language, use CodeBlock
                     return !inline ? (
@@ -31,7 +31,7 @@ const Markdown = ({ message }: Props) => {
                                 id="code-header"
                                 className="flex h-10 items-center justify-between pr-5 text-sm text-slate-300"
                             >
-                                <span>{(match && match[1]) || "text"}</span>
+                                <span>{(match && match[1]) || 'text'}</span>
                                 <button className="btn btn-ghost btn-sm border-none hover:bg-slate-700">
                                     {/* icon */}
                                     <span>Copy</span>
@@ -40,11 +40,11 @@ const Markdown = ({ message }: Props) => {
                             <SyntaxHighlighter
                                 style={oneDark}
                                 customStyle={{ margin: 0 }}
-                                language={(match && match[1]) || "text"}
+                                language={(match && match[1]) || 'text'}
                                 // PreTag='div'
                                 {...props}
                                 // eslint-disable-next-line react/no-children-prop
-                                children={String(children).replace(/\n$/, "")}
+                                children={String(children).replace(/\n$/, '')}
                             />
                             {/* {String(children).replace(/\n$/, "")}
                             </SyntaxHighlighter> */}

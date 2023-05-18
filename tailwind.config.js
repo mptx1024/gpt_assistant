@@ -1,5 +1,4 @@
 const colors = require('tailwindcss/colors');
-/** @type {import('tailwindcss').Config} */
 module.exports = {
     darkMode: ['class'],
     content: [
@@ -9,42 +8,30 @@ module.exports = {
         './features/**/*.{js,ts,jsx,tsx}',
     ],
     theme: {
-        fontSize: {
-            sm: '0.8rem',
-            base: '0.9rem',
-        },
         extend: {
             translate: ['dark'],
-            textColor: {
-                primary: {
-                    base: colors.gray[700],
-                    dark: colors.gray[200],
-                },
-                secondary: {
-                    base: colors.gray[500],
-                    dark: colors.gray[400],
-                },
-            },
-            backgroundColor: {
-                primary: {},
-                secondary: {
-                    base: colors.gray[200],
-                    dark: colors.zinc[900],
-                },
-            },
+
             colors: {
-                primary: colors.cyan[700],
-                card: {
-                    light: colors.neutral[50],
-                    dark: '#1E1E1E',
+                colorPrimary: colors.cyan[700],
+                black: {
+                    base: '#333333',
+                    DEFAULT: colors.black,
+                    inverted: colors.neutral[300],
                 },
-                'light-text': colors.gray[700],
-                'dark-text': colors.gray[200],
-
-                'light-bg': colors.gray[100],
-                'dark-bg': '#18181B',
+                white: {
+                    DEFAULT: colors.white,
+                    inverted: colors.neutral[900],
+                },
+                gray: {
+                    base: colors.neutral[50],
+                    inverted: colors.neutral[800],
+                },
             },
 
+            fontSize: {
+                sm: '0.8rem',
+                base: '0.9rem',
+            },
             keyframes: {
                 typing: {
                     '0%': {
