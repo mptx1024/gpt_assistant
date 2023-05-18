@@ -25,9 +25,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
         <div
             className={clsx(
                 sidebarClasses,
-                isSidebarOpen
-                    ? 'w-full sm:w-[17rem] lg:w-[19rem] xl:w-[22rem]'
-                    : 'invisible w-0'
+                isSidebarOpen ? 'w-full sm:w-[17rem] lg:w-[19rem] xl:w-[22rem]' : 'w-0 opacity-0'
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />

@@ -1,7 +1,7 @@
 const colors = require('tailwindcss/colors');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: 'class',
+    darkMode: ['class'],
     content: [
         './app/**/*.{js,ts,jsx,tsx}',
         './pages/**/*.{js,ts,jsx,tsx}',
@@ -9,6 +9,10 @@ module.exports = {
         './features/**/*.{js,ts,jsx,tsx}',
     ],
     theme: {
+        fontSize: {
+            sm: '0.8rem',
+            base: '0.9rem',
+        },
         extend: {
             translate: ['dark'],
             textColor: {
@@ -29,6 +33,11 @@ module.exports = {
                 },
             },
             colors: {
+                primary: colors.cyan[700],
+                card: {
+                    light: colors.neutral[50],
+                    dark: '#1E1E1E',
+                },
                 'light-text': colors.gray[700],
                 'dark-text': colors.gray[200],
 
@@ -106,5 +115,6 @@ module.exports = {
         require('@tailwindcss/typography'),
         require('@tailwindcss/line-clamp'),
         require('@headlessui/tailwindcss'),
+        require('autoprefixer'),
     ],
 };

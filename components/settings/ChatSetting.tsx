@@ -18,7 +18,7 @@ export function ChatParamsCard({ chat }: Props) {
     return (
         <div
             onClick={toggleModal}
-            className="my-3 flex w-[90%] max-w-lg cursor-pointer flex-col items-start rounded-md border border-gray-400/50 p-3 transition-all hover:brightness-[1.3] sm:w-[40%]"
+            className="border-major my-3 flex w-[90%] max-w-lg cursor-pointer flex-col items-start rounded-md p-3 transition-all hover:brightness-[1.3] sm:w-[40%]"
         >
             <span className="text-primary w-full truncate whitespace-nowrap">
                 {chat.modelParams.model.name}

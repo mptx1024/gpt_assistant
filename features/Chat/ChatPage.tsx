@@ -27,7 +27,7 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
     }, [messages]);
 
     return (
-        <div className=" flex h-full w-full flex-col items-center overflow-y-auto">
+        <div className="flex h-full w-full flex-col items-center overflow-y-auto">
             <ChatParamsCard chat={chat} />
 
             {messages && (

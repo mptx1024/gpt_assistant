@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    body {
+        @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-400;
+    }
+}
+
 @layer utilities {
     .debug-1 {
         @apply border-[1px] border-red-900;
@@ -15,7 +21,6 @@
     .scrollbar::-webkit-scrollbar {
         width: 3px;
     }
-
     .scrollbar::-webkit-scrollbar-thumb {
         border-radius: 100vh;
         background: #d1d5db;
@@ -29,5 +34,8 @@
     }
     .text-secondary {
         @apply text-[0.8rem] text-secondary-base dark:text-secondary-dark;
+    }
+    .border-major {
+        @apply border border-[#DEDEDE] dark:border-white/25;
     }
 }
