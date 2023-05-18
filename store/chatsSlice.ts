@@ -6,11 +6,12 @@ import type { RootState } from '.';
 
 const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
+    sortComparer: (a, b) => b.created - a.created,
 });
 
 //TODO: fetch chats from indexedDB here
 //https:redux-toolkit.js.org/api/createEntityAdapter#getinitialstate
-const initialState = chatsAdapter.getInitialState();
+const initialState = chatsAdapter.getInitialState({ currentChat: '' });
 
 export const chatsSlice = createSlice({
     name: 'chats',
@@ -21,6 +22,10 @@ export const chatsSlice = createSlice({
         updateOne: chatsAdapter.updateOne,
         removeOne: chatsAdapter.removeOne,
         removeAll: chatsAdapter.removeAll,
+
+        setCurrentChat: (state, action: PayloadAction<{ id: string }>) => {
+            state.currentChat = action.payload.id;
+        },
 
         addSingleMessage: (state, action: PayloadAction<{ chatID: string; message: Message }>) => {
             const { chatID, message } = action.payload;
@@ -35,13 +40,18 @@ export const chatsSlice = createSlice({
             action: PayloadAction<{ chatID: string; chunkValue: string }>
         ) => {
             const { chatID, chunkValue } = action.payload;
-            const existingChat = state.entities[chatID];
-            if (existingChat) {
-                existingChat.messages[existingChat.messages.length - 1] = {
-                    ...existingChat.messages[existingChat.messages.length - 1],
-                    content:
-                        existingChat.messages[existingChat.messages.length - 1].content +
-                        chunkValue,
+            const chat = state.entities[chatID];
+            if (chat) {
+                const updatedMessages = [...chat.messages];
+                const lastMessage = updatedMessages[updatedMessages.length - 1];
+                updatedMessages[updatedMessages.length - 1] = {
+                    ...lastMessage,
+                    content: lastMessage.content + chunkValue,
+                };
+
+                state.entities[chatID] = {
+                    ...chat,
+                    messages: updatedMessages,
                 };
             }
         },
@@ -101,6 +111,7 @@ export const {
     updateModelParams,
     updateRole,
     updateTitle,
+    setCurrentChat,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 

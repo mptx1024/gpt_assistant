@@ -18,7 +18,8 @@ const navbarClasses =
 
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
-    const { id } = router.query;
+    // const { id } = router.query;
+    const id = useSelector((state: RootState) => state.chats.currentChat);
     const chat = useSelector((state: RootState) => selectChatById(state, id as string));
 
     const { theme, setTheme } = useTheme();

@@ -9,7 +9,7 @@ interface ChatListProps {
 }
 
 const ChatList: FC<ChatListProps> = ({ chats }) => {
-    const [currentChat, setCurrentChat] = useState<string>('');
+    // const [currentChat, setCurrentChat] = useState<string>('');
 
     return (
         <div className="scrollbar dark:scrollbarDark mb-3 flex h-[60%] flex-col gap-2 overflow-y-auto overflow-x-clip py-2">
@@ -17,8 +17,8 @@ const ChatList: FC<ChatListProps> = ({ chats }) => {
                 <ChatItem
                     key={chat.id}
                     chat={chat}
-                    currentChat={currentChat}
-                    setCurrentChat={setCurrentChat}
+                    // currentChat={currentChat}
+                    // setCurrentChat={setCurrentChat}
                 />
             ))}
         </div>

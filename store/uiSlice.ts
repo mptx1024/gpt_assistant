@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    sidebar: true,
+    isSideBarOpen: true,
 };
 
 export const uiSlice = createSlice({
@@ -9,7 +9,7 @@ export const uiSlice = createSlice({
     initialState,
     reducers: {
         toggleSidebar: (state) => {
-            state.sidebar = !state.sidebar;
+            state.isSideBarOpen = !state.isSideBarOpen;
         },
     },
 });

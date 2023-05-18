@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
-import { setOne } from '@/store/chatsSlice';
+import { setOne, setCurrentChat } from '@/store/chatsSlice';
 import { getAppSetting } from '@/store/settingSlice';
 import { Chat, Role } from '@/types';
 export const copyToClipboard = async (
@@ -30,6 +30,7 @@ export const createNewChat = (selectedRole?: Role): string => {
         modelParams: appSetting.defaultModelParams,
     };
     store.dispatch(setOne(newChat));
+    store.dispatch(setCurrentChat({ id: newChat.id }));
     return newChat.id;
 };
 

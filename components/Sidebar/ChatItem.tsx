@@ -8,10 +8,11 @@ import {
     HiOutlineXMark,
     HiOutlineChatBubbleLeftEllipsis,
 } from 'react-icons/hi2';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '@/store';
 import { setAlert } from '@/store/alertSlice';
-import { updateTitle, removeOne } from '@/store/chatsSlice';
+import { updateTitle, removeOne, setCurrentChat } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
 import SidebarCard from './SidebarCard';
@@ -19,11 +20,15 @@ import Button from '../Button';
 import { Input } from '../InputField';
 interface ChatItemProps {
     chat: Chat;
-    currentChat: string;
-    setCurrentChat: (id: string) => void;
+    // currentChat: string;
+    // setCurrentChat: (id: string) => void;
 }
 
-const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
+const ChatItem: FC<ChatItemProps> = ({
+    chat,
+    // currentChat,
+    // setCurrentChat
+}) => {
     const [edit, setEdit] = useState(false);
     const [remove, setRemove] = useState(false);
     const [title, setTitle] = useState(chat.title);
@@ -35,8 +40,10 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         setEdit(true);
         setTitle(title);
     };
+    const currentChat = useSelector((state: RootState) => state.chats.currentChat);
     const onClickChat = () => {
-        setCurrentChat(chat.id);
+        // setCurrentChat(chat.id);
+        dispatch(setCurrentChat({ id: chat.id }));
     };
     const onClickRemove = () => {
         setRemove(true);
@@ -61,18 +68,18 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChat, setCurrentChat }) => {
         setRemove(false);
     };
 
-    useEffect(() => {
-        function handleClickOutside(event: MouseEvent) {
-            if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
-                onClickCancel();
-                // setCurrentChat('');
-            }
-        }
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [chatRef]);
+    // useEffect(() => {
+    //     function handleClickOutside(event: MouseEvent) {
+    //         if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
+    //             onClickCancel();
+    //             // setCurrentChat('');
+    //         }
+    //     }
+    //     document.addEventListener('mousedown', handleClickOutside);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, [chatRef]);
 
     return (
         <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
