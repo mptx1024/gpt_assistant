@@ -44,7 +44,7 @@ export default React.memo(function Input({
             handleSubmit();
         }
     };
-    
+
     useEffect(() => {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'inherit';
@@ -64,8 +64,8 @@ export default React.memo(function Input({
     }
 
     return (
-        <div className="debug-1 mb-4 flex w-10/12  max-w-3xl flex-grow flex-col lg:w-9/12">
-            <div className="flex justify-center gap-2 py-1">
+        <div className="mb-4 flex w-10/12  max-w-3xl flex-grow flex-col lg:w-9/12">
+            <div className="debug-1 mb-1 flex justify-center gap-2">
                 {isLoading ? (
                     <Button
                         onClick={handleStopGenerating}
@@ -74,7 +74,7 @@ export default React.memo(function Input({
                         text={'Stop Generating'}
                         shadow={true}
                         border={true}
-                        btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                        btnStyles="w-fit h-fit !py-[0.5rem] "
                     />
                 ) : (
                     <Button
@@ -84,7 +84,7 @@ export default React.memo(function Input({
                         text={'Regenerate'}
                         shadow={true}
                         border={true}
-                        btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                        btnStyles="w-fit h-fit !py-[0.5rem]"
                     />
                 )}
                 <Button
@@ -97,7 +97,7 @@ export default React.memo(function Input({
                     btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
                 />
             </div>
-            <div className="focus-within:border-1 flex min-h-[5rem] w-full items-center rounded-md border border-slate-300 bg-light-bg shadow-sm focus-within:border-cyan-600 dark:bg-dark-bg">
+            <div className="focus-within:border-1 bg-light-bg dark:bg-dark-bg flex min-h-[5rem] w-full items-center rounded-md border border-slate-300 shadow-sm focus-within:border-cyan-600">
                 <textarea
                     ref={textareaRef}
                     value={userInput}

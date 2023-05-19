@@ -46,13 +46,10 @@ export default function ChatMessage({ message, generateReply }: Props) {
     const handleCancel = () => {
         setIsEditing(false);
     };
-    const messageBackdropClasses = clsx(
-        'group dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50',
-        {
-            'bg-gray-200 dark:bg-neutral-700': message.role === 'user',
-            'bg-gray-100 dark:bg-neutral-800': message.role !== 'user',
-        }
-    );
+    const messageBackdropClasses = clsx('group', {
+        'bg-gray-base brightness-[0.97] dark:bg-gray-inverted dark:brightness-[1.15]':
+            message.role === 'user',
+    });
     return (
         <div className={messageBackdropClasses}>
             <div

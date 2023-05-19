@@ -8,12 +8,10 @@ import Input from './Input';
 import { ChatParamsCard } from '../../components/settings/ChatSetting';
 
 interface Props {
-    chat: Chat;
+    chatID: string;
 }
-const ChatPage = memo(function ChatPage({ chat }: Props) {
-    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({
-        chatID: chat.id,
-    });
+const ChatPage = memo(function ChatPage({ chatID }: Props) {
+    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
 
     const messages: Message[] = chat.messages;
     // redirect
