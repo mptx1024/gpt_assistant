@@ -67,10 +67,17 @@ module.exports = {
                     },
                     '100%': {
                         opacity: '100%',
-                        // transform: 'translateY(0px)',
                     },
                 },
-
+                slideInFromBottom: {
+                    '0%': {
+                        opacity: '0%',
+                        transform: 'translateY(20px)',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                    },
+                },
                 // alertOut: {
                 //     '0%': {
                 //         opacity: '100%',
@@ -86,6 +93,7 @@ module.exports = {
                 typing: 'typing 0.9s alternate',
                 slideIn: 'slideIn 0.4s ease',
                 slideInFromTop: 'slideInFromTop 0.3s ease',
+                slideInFromBottom: 'slideInFromBottom 0.3s ease',
                 // alertOut: 'alertOut 0.6s ease',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },

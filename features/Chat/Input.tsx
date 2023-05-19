@@ -65,7 +65,7 @@ export default React.memo(function Input({
 
     return (
         <div className="mb-4 flex w-10/12 max-w-3xl flex-grow flex-col lg:w-9/12">
-            <div className="mb-1 flex justify-center gap-2">
+            <div className="my-2 flex justify-center gap-2">
                 {isLoading ? (
                     <Button
                         onClick={handleStopGenerating}

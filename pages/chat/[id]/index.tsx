@@ -14,10 +14,14 @@ import { Message, Chat } from '@/types';
 
 export default function DynamicChatPage() {
     const router = useRouter();
-    const chatID = useSelector((store: RootState) => store.chats.currentChatID);
-    const chat = useSelector((state: RootState) => selectChatById(state, chatID as string));
+    // const chatID = useSelector((store: RootState) => store.chats.currentChatID);
+    const { id } = router.query;
+    const chatID = typeof id === 'string' ? id : '';
+
+    const chat = useSelector((state: RootState) => selectChatById(state, id as string));
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const messageBlockRef = useRef<HTMLDivElement>(null);
+
     const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
 
     const messages: Message[] | undefined = chat?.messages;
@@ -35,20 +39,23 @@ export default function DynamicChatPage() {
             lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [messages]);
+
     if (!chat) {
-        // router.push('/role');
         return null;
     }
 
     return (
         <div
+            id="chat-container"
             ref={messageBlockRef}
             className="flex h-full w-full flex-col items-center overflow-y-auto"
         >
-            <ChatParamsCard chat={chat} />
-
             {messages && (
-                <div id="messages-section" className="mb-32 flex w-full animate-slideIn flex-col">
+                <div
+                    id="messages-container"
+                    className="mb-[9rem] flex w-full flex-col overflow-y-auto"
+                >
+                    <ChatParamsCard chat={chat} key={Math.random()} />
                     {messages.map((message, index) => (
                         <ChatMessage key={index} message={message} generateReply={generateReply} />
                     ))}
@@ -56,10 +63,9 @@ export default function DynamicChatPage() {
             )}
 
             <div ref={lastMessageRef} />
-            {/*  The left property places the left edge of the element at the center of the parent, and the -translate-x-1/2 class shifts the element back to the left by half of its width, effectively centering it. */}
             <div
                 className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2
-            flex-col items-center justify-center overflow-y-scroll bg-gray-base from-transparent pt-4 dark:bg-gray-inverted"
+            flex-col items-center justify-center  bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
             >
                 <Input
                     generateReply={generateReply}

@@ -46,12 +46,12 @@ export default function ChatMessage({ message, generateReply }: Props) {
     const handleCancel = () => {
         setIsEditing(false);
     };
-    const messageBackdropClasses = clsx('group', {
+    const messageContainerClasses = clsx('group animate-slideInFromBottom', {
         'bg-gray-base brightness-[0.97] dark:bg-gray-inverted dark:brightness-[1.15]':
             message.role === 'user',
     });
     return (
-        <div className={messageBackdropClasses}>
+        <div className={messageContainerClasses}>
             <div
                 className="m-auto flex gap-3 p-4 text-base
             md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl
