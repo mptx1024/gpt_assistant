@@ -27,10 +27,9 @@ const RoleItem = (props: Props) => {
         setIsRoleEditorOpen(false);
     };
     const handleClickUse = () => {
-        const chatID = createNewChat(props.role);
+        createNewChat(props.role);
         setIsRoleModalOpen(false);
         setIsRoleEditorOpen(false);
-        router.push(`/chat/${chatID}`);
     };
     const handleClickEdit = () => {
         setIsRoleEditorOpen(true);

@@ -32,10 +32,10 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
 
     const onClickEdit = () => {
         setEdit(true);
-        // setTitle(title);
     };
     const onClickChat = () => {
         dispatch(setCurrentChat(chat.id));
+        router.push(`/chat/${chat.id}`);
     };
     const onClickRemove = (e: React.MouseEvent) => {
         e.stopPropagation();

@@ -17,8 +17,7 @@ const RoleCard = (props: Props) => {
     const router = useRouter();
 
     const handleClickUse = () => {
-        const chatID = createNewChat(props.role);
-        router.push(`/chat/${chatID}`);
+        createNewChat(props.role);
         setIsRoleCardModalOpen(false);
     };
     const toggleRoleCardModal = () => {

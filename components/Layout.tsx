@@ -3,14 +3,17 @@ import { useCallback, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useWindowDimensions from '@/hooks/useWindowDimension';
-import { setAll,  } from '@/store/chatsSlice';
-import { useAppDispatch,  } from '@/store/hooks';
+import { RootState } from '@/store';
+import { setAll } from '@/store/chatsSlice';
+import { useAppDispatch } from '@/store/hooks';
 import { setAllRoles } from '@/store/rolesSlice';
-import { Chat, Role,  } from '@/types';
+import { toggleSidebar } from '@/store/uiSlice';
+import { Chat, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
 import Alert from './Alert';
@@ -21,15 +24,16 @@ export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
     const { query } = useRouter();
     const { width } = useWindowDimensions();
-    const [sidebarOpen, setSidebarOpen] = useState(true);
-    const toggleSidebar = () => {
-        setSidebarOpen(!sidebarOpen);
-    };
+    const sidebarOpen = useSelector((state: RootState) => state.ui.sidebarOpen);
+
+    const handleClickSidebar = useCallback(() => {
+        dispatch(toggleSidebar());
+    }, []);
 
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
         if (width && width <= 640 && sidebarOpen) {
-            toggleSidebar();
+            handleClickSidebar();
         }
     }, [query.id]);
 
@@ -59,9 +63,9 @@ export default function Layout({ children }: Props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="fixed inset-0 flex h-screen">
-                <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+                <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                 <div className={clsx('relative flex w-full basis-full flex-col overflow-hidden')}>
-                    <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={sidebarOpen} />
+                    <Navbar isSidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                     {children}
                 </div>
             </div>

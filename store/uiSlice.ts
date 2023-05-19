@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    isSideBarOpen: true,
+    sidebarOpen: typeof window !== 'undefined' && window.innerWidth <= 640 ? false : true,
 };
 
 export const uiSlice = createSlice({
@@ -9,7 +9,7 @@ export const uiSlice = createSlice({
     initialState,
     reducers: {
         toggleSidebar: (state) => {
-            state.isSideBarOpen = !state.isSideBarOpen;
+            state.sidebarOpen = !state.sidebarOpen;
         },
     },
 });
