@@ -10,7 +10,7 @@ const chatsAdapter = createEntityAdapter<Chat>({
 
 //TODO: fetch chats from indexedDB here
 //https:redux-toolkit.js.org/api/createEntityAdapter#getinitialstate
-const initialState = chatsAdapter.getInitialState({ currentChat: '' });
+const initialState = chatsAdapter.getInitialState({ currentChatID: '' });
 
 export const chatsSlice = createSlice({
     name: 'chats',
@@ -22,15 +22,14 @@ export const chatsSlice = createSlice({
         // removeOne: chatsAdapter.removeOne,
         removeAll: chatsAdapter.removeAll,
 
-        setCurrentChat: (state, action: PayloadAction<{ id: string }>) => {
-            state.currentChat = action.payload.id;
+        setCurrentChat: (state, action: PayloadAction<string>) => {
+            state.currentChatID = action.payload;
         },
         removeOne: (state, action: PayloadAction<string>) => {
             const chatIdToRemove = action.payload;
             state.ids = state.ids.filter((id) => id !== chatIdToRemove);
             delete state.entities[chatIdToRemove];
-            state.currentChat = state.ids.length > 0 ? state.ids[0].toString() : '';
-
+            state.currentChatID = state.ids.length > 0 ? state.ids[0].toString() : '';
         },
         addSingleMessage: (state, action: PayloadAction<{ chatID: string; message: Message }>) => {
             const { chatID, message } = action.payload;

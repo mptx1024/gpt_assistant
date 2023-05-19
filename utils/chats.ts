@@ -1,3 +1,4 @@
+import Router from 'next/router';
 import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
@@ -30,7 +31,8 @@ export const createNewChat = (selectedRole?: Role): string => {
         modelParams: appSetting.defaultModelParams,
     };
     store.dispatch(setOne(newChat));
-    store.dispatch(setCurrentChat({ id: newChat.id }));
+    store.dispatch(setCurrentChat(newChat.id));
+    Router.push(`/chat/${newChat.id}`, undefined, { shallow: true });
     return newChat.id;
 };
 

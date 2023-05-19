@@ -38,7 +38,6 @@ const RoleItem = (props: Props) => {
     const handleClickDelete = () => {
         if (props.role) {
             deleteRole(props.role.id);
-            
         }
     };
 
@@ -49,8 +48,10 @@ const RoleItem = (props: Props) => {
         <>
             <div onClick={handleClick}>
                 <SidebarCard>
-                    <FiUser />
-                    <div className="w-7/12 truncate"> {props.role.roleName}</div>
+                    <div className="flex w-[80%] items-center gap-2">
+                        <FiUser />
+                        <div className="w-full truncate"> {props.role.roleName}</div>
+                    </div>
                 </SidebarCard>
             </div>
 

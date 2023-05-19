@@ -20,24 +20,22 @@ import Button from '../Button';
 import { Input } from '../InputField';
 interface ChatItemProps {
     chat: Chat;
+    currentChatID: string;
 }
 
-const ChatItem: FC<ChatItemProps> = ({ chat }) => {
+const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     const router = useRouter();
     const [edit, setEdit] = useState(false);
     const [remove, setRemove] = useState(false);
     const [title, setTitle] = useState(chat.title);
     const dispatch = useDispatch();
-    const currentChat = useSelector((state: RootState) => state.chats.currentChat);
 
-    const onClickEdit = (e: React.MouseEvent) => {
-        e.stopPropagation();
+    const onClickEdit = () => {
         setEdit(true);
         // setTitle(title);
     };
     const onClickChat = () => {
-        dispatch(setCurrentChat({ id: chat.id }));
-        router.push(`/chat/${chat.id}`);
+        dispatch(setCurrentChat(chat.id));
     };
     const onClickRemove = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -50,7 +48,6 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
             dispatch(updateTitle({ chatID: chat.id, title }));
         } else if (remove) {
             dispatch(removeOne(chat.id));
-            //
         }
         setEdit(false);
         setRemove(false);
@@ -64,8 +61,10 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
 
     return (
         // <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
-        <div onClick={onClickChat}>
-            <SidebarCard isSelected={currentChat === chat.id}>
+        // <div>
+        <SidebarCard isSelected={currentChatID === chat.id} onClick={onClickChat}>
+            <div className="flex w-[80%] items-center gap-2">
+                <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
                 {edit ? (
                     <Input
                         type="text"
@@ -74,44 +73,37 @@ const ChatItem: FC<ChatItemProps> = ({ chat }) => {
                         onChange={(e) => setTitle(e.target.value)}
                     />
                 ) : (
-                    <>
-                        <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
-                        <p className="w-7/12 animate-typing truncate">{chat.title}</p>
-                    </>
+                    <p className="w-full animate-typing truncate">{chat.title}</p>
                 )}
-                {edit || remove ? (
-                    <div className="flex items-center">
-                        <Button
-                            Icon={HiCheck}
-                            onClick={onClickConfirm}
-                            size="sm"
-                            iconEffect={true}
-                        />
-                        <Button
-                            Icon={HiOutlineXMark}
-                            onClick={onClickCancel}
-                            size="sm"
-                            iconEffect={true}
-                        />
-                    </div>
-                ) : (
-                    <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
-                        <Button
-                            onClick={onClickEdit}
-                            Icon={HiPencilSquare}
-                            size="sm"
-                            iconEffect={true}
-                        />
-                        <Button
-                            onClick={onClickRemove}
-                            Icon={HiOutlineTrash}
-                            size="sm"
-                            iconEffect={true}
-                        />
-                    </div>
-                )}
-            </SidebarCard>
-        </div>
+            </div>
+            {edit || remove ? (
+                <div className=" right-1 flex items-center">
+                    <Button Icon={HiCheck} onClick={onClickConfirm} size="sm" iconEffect={true} />
+                    <Button
+                        Icon={HiOutlineXMark}
+                        onClick={onClickCancel}
+                        size="sm"
+                        iconEffect={true}
+                    />
+                </div>
+            ) : (
+                <div className="-right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
+                    <Button
+                        onClick={onClickEdit}
+                        Icon={HiPencilSquare}
+                        size="sm"
+                        iconEffect={true}
+                    />
+                    <Button
+                        onClick={onClickRemove}
+                        Icon={HiOutlineTrash}
+                        size="sm"
+                        iconEffect={true}
+                    />
+                </div>
+            )}
+        </SidebarCard>
+        // </div>
         // </Link>
     );
 };

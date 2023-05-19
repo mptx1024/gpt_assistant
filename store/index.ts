@@ -90,7 +90,6 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
-console.log(store.getState().chats);
 
 // Update setting to localStorage
 store.subscribe(() => {

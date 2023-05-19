@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
 import { HiMoon, HiOutlineSun, HiBars3, HiPlus } from 'react-icons/hi2';
@@ -19,13 +21,15 @@ const navbarClasses =
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
     // const { id } = router.query;
-    const id = useSelector((state: RootState) => state.chats.currentChat);
-    const chat = useSelector((state: RootState) => selectChatById(state, id as string));
-
+    const chatID = useSelector((state: RootState) => state.chats.currentChatID);
+    const chat = useSelector((state: RootState) => selectChatById(state, chatID as string));
+    // useEffect(() => {
+    //     router.push(`/chat/${chatID}`);
+    //     console.log('🚀 ~ file: Navbar.tsx:29 ~ useEffect ~ chatID:', chatID);
+    // }, [chatID]);
     const { theme, setTheme } = useTheme();
     const handleClickNewChat = () => {
-        const chatID = createNewChat();
-        router.push(`/chat/${chatID}`);
+        createNewChat();
     };
     const toggleTheme = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
@@ -40,7 +44,6 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
             </span>
             <div className="flex items-center justify-end gap-2">
                 <Button Icon={HiPlus} size="md" border={true} onClick={handleClickNewChat} />
-
                 <Button
                     Icon={theme === 'dark' ? HiOutlineSun : HiMoon}
                     onClick={toggleTheme}
