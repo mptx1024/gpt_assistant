@@ -2,13 +2,15 @@ import { useCallback, useState, useEffect } from 'react';
 
 import clsx from 'clsx';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { setAll, setOne } from '@/store/chatsSlice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import useWindowDimensions from '@/hooks/useWindowDimension';
+import { setAll,  } from '@/store/chatsSlice';
+import { useAppDispatch,  } from '@/store/hooks';
 import { setAllRoles } from '@/store/rolesSlice';
-import { Chat, Role, defaultModelParams } from '@/types';
+import { Chat, Role,  } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
 import Alert from './Alert';
@@ -17,14 +19,19 @@ type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
-    // const isSidebarOpen = useAppSelector((state) => state.ui.sidebar);
-    // const onClickSidebar = useCallback(() => dispatch(toggleSidebar()), [dispatch]);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const { query } = useRouter();
+    const { width } = useWindowDimensions();
+    const [sidebarOpen, setSidebarOpen] = useState(true);
     const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
+        setSidebarOpen(!sidebarOpen);
     };
 
     const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+        if (width && width <= 640 && sidebarOpen) {
+            toggleSidebar();
+        }
+    }, [query.id]);
 
     useEffect(() => {
         const loadRecords = async () => {
@@ -52,9 +59,9 @@ export default function Layout({ children }: Props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className="fixed inset-0 flex h-screen">
-                <Sidebar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+                <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
                 <div className={clsx('relative flex w-full basis-full flex-col overflow-hidden')}>
-                    <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+                    <Navbar toggleSidebar={toggleSidebar} isSidebarOpen={sidebarOpen} />
                     {children}
                 </div>
             </div>

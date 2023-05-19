@@ -12,10 +12,10 @@ import TopSection from './TopSection';
 
 interface Props {
     toggleSidebar: () => void;
-    isSidebarOpen: boolean;
+    sidebarOpen: boolean;
 }
 
-export default function Sidebar({ isSidebarOpen, toggleSidebar }: Props) {
+export default function Sidebar({ sidebarOpen: isSidebarOpen, toggleSidebar }: Props) {
     const chats: Chat[] | null = useSelector(selectAllChats);
     const roles: Role[] | null = useSelector(selectAllRoles);
 
