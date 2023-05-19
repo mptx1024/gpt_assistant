@@ -64,15 +64,15 @@ export default React.memo(function Input({
     }
 
     return (
-        <div className="mb-4 flex w-10/12  max-w-3xl flex-grow flex-col lg:w-9/12">
-            <div className="debug-1 mb-1 flex justify-center gap-2">
+        <div className="mb-4 flex w-10/12 max-w-3xl flex-grow flex-col lg:w-9/12">
+            <div className="mb-1 flex justify-center gap-2">
                 {isLoading ? (
                     <Button
                         onClick={handleStopGenerating}
                         Icon={HiOutlineStopCircle}
                         size="sm"
                         text={'Stop Generating'}
-                        shadow={true}
+                        // shadow={true}
                         border={true}
                         btnStyles="w-fit h-fit !py-[0.5rem] "
                     />
@@ -82,7 +82,7 @@ export default React.memo(function Input({
                         Icon={HiArrowPath}
                         size="sm"
                         text={'Regenerate'}
-                        shadow={true}
+                        // shadow={true}
                         border={true}
                         btnStyles="w-fit h-fit !py-[0.5rem]"
                     />

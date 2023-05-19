@@ -84,7 +84,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                     />
                 </div>
             ) : (
-                <div className="-right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
+                <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
                     <Button
                         onClick={onClickEdit}
                         Icon={HiPencilSquare}
