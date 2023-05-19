@@ -40,8 +40,8 @@ const ChatPage = memo(function ChatPage({ chat }: Props) {
             {/*  The left property places the left edge of the element at the center of the parent, and the -translate-x-1/2 class shifts the element back to the left by half of its width, effectively centering it. */}
             <div ref={lastMessageRef} />
             <div
-                className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2 transform flex-col items-center justify-center
-                overflow-y-scroll bg-gradient-to-b from-transparent via-light-bg to-light-bg pt-4 dark:via-dark-bg dark:to-dark-bg"
+                className="via-light-bg to-light-bg dark:via-dark-bg dark:to-dark-bg absolute bottom-0 left-1/2 flex w-full -translate-x-1/2
+                transform flex-col items-center justify-center overflow-y-scroll bg-gradient-to-b from-transparent pt-4"
             >
                 <Input
                     generateReply={generateReply}

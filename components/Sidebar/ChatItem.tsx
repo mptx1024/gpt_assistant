@@ -9,9 +9,8 @@ import {
     HiOutlineXMark,
     HiOutlineChatBubbleLeftEllipsis,
 } from 'react-icons/hi2';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { RootState } from '@/store';
 import { updateTitle, removeOne, setCurrentChat } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
@@ -60,8 +59,6 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     };
 
     return (
-        // <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
-        // <div>
         <SidebarCard isSelected={currentChatID === chat.id} onClick={onClickChat}>
             <div className="flex w-[80%] items-center gap-2">
                 <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
@@ -103,8 +100,6 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                 </div>
             )}
         </SidebarCard>
-        // </div>
-        // </Link>
     );
 };
 
