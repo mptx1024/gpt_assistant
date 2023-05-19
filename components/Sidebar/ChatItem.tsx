@@ -1,6 +1,7 @@
-import { FC, useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef } from 'react';
 
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import {
     HiPencilSquare,
     HiOutlineTrash,
@@ -11,7 +12,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
-import { setAlert } from '@/store/alertSlice';
 import { updateTitle, removeOne, setCurrentChat } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
@@ -20,118 +20,99 @@ import Button from '../Button';
 import { Input } from '../InputField';
 interface ChatItemProps {
     chat: Chat;
-    // currentChat: string;
-    // setCurrentChat: (id: string) => void;
 }
 
-const ChatItem: FC<ChatItemProps> = ({
-    chat,
-    // currentChat,
-    // setCurrentChat
-}) => {
+const ChatItem: FC<ChatItemProps> = ({ chat }) => {
+    const router = useRouter();
     const [edit, setEdit] = useState(false);
     const [remove, setRemove] = useState(false);
     const [title, setTitle] = useState(chat.title);
     const dispatch = useDispatch();
-    const chatRef = useRef<HTMLDivElement>(null);
+    const currentChat = useSelector((state: RootState) => state.chats.currentChat);
+
     const onClickEdit = (e: React.MouseEvent) => {
-        e.preventDefault();
         e.stopPropagation();
         setEdit(true);
-        setTitle(title);
+        // setTitle(title);
     };
-    const currentChat = useSelector((state: RootState) => state.chats.currentChat);
     const onClickChat = () => {
-        // setCurrentChat(chat.id);
         dispatch(setCurrentChat({ id: chat.id }));
+        router.push(`/chat/${chat.id}`);
     };
-    const onClickRemove = () => {
+    const onClickRemove = (e: React.MouseEvent) => {
+        e.stopPropagation();
         setRemove(true);
     };
 
-    const onClickConfirm = () => {
+    const onClickConfirm = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation();
         if (edit) {
-            // TODO: edit chat
             dispatch(updateTitle({ chatID: chat.id, title }));
         } else if (remove) {
-            // TODO: remove chat
             dispatch(removeOne(chat.id));
-            dispatch(setAlert('Chat Deleted'));
-
-            // router.push('/chat');
+            //
         }
-        onClickCancel();
-    };
-
-    const onClickCancel = () => {
         setEdit(false);
         setRemove(false);
     };
 
-    // useEffect(() => {
-    //     function handleClickOutside(event: MouseEvent) {
-    //         if (chatRef.current && !chatRef.current.contains(event.target as Node)) {
-    //             onClickCancel();
-    //             // setCurrentChat('');
-    //         }
-    //     }
-    //     document.addEventListener('mousedown', handleClickOutside);
-    //     return () => {
-    //         document.removeEventListener('mousedown', handleClickOutside);
-    //     };
-    // }, [chatRef]);
+    const onClickCancel = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setEdit(false);
+        setRemove(false);
+    };
 
     return (
-        <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
-            <div ref={chatRef} onClick={() => onClickChat()}>
-                <SidebarCard isSelected={currentChat === chat.id}>
-                    {edit ? (
-                        <Input
-                            type="text"
-                            placeholder={chat.title || ''}
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
+        // <Link href={`/chat/${encodeURIComponent(chat.id)}`}>
+        <div onClick={onClickChat}>
+            <SidebarCard isSelected={currentChat === chat.id}>
+                {edit ? (
+                    <Input
+                        type="text"
+                        placeholder={chat.title || ''}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                    />
+                ) : (
+                    <>
+                        <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
+                        <p className="w-7/12 animate-typing truncate">{chat.title}</p>
+                    </>
+                )}
+                {edit || remove ? (
+                    <div className="flex items-center">
+                        <Button
+                            Icon={HiCheck}
+                            onClick={onClickConfirm}
+                            size="sm"
+                            iconEffect={true}
                         />
-                    ) : (
-                        <>
-                            <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
-                            <p className="w-7/12 animate-typing truncate">{chat.title}</p>
-                        </>
-                    )}
-                    {edit || remove ? (
-                        <div className="flex items-center">
-                            <Button
-                                Icon={HiCheck}
-                                onClick={onClickConfirm}
-                                size="sm"
-                                iconEffect={true}
-                            />
-                            <Button
-                                Icon={HiOutlineXMark}
-                                onClick={onClickCancel}
-                                size="sm"
-                                iconEffect={true}
-                            />
-                        </div>
-                    ) : (
-                        <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
-                            <Button
-                                onClick={onClickEdit}
-                                Icon={HiPencilSquare}
-                                size="sm"
-                                iconEffect={true}
-                            />
-                            <Button
-                                onClick={onClickRemove}
-                                Icon={HiOutlineTrash}
-                                size="sm"
-                                iconEffect={true}
-                            />
-                        </div>
-                    )}
-                </SidebarCard>
-            </div>
-        </Link>
+                        <Button
+                            Icon={HiOutlineXMark}
+                            onClick={onClickCancel}
+                            size="sm"
+                            iconEffect={true}
+                        />
+                    </div>
+                ) : (
+                    <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
+                        <Button
+                            onClick={onClickEdit}
+                            Icon={HiPencilSquare}
+                            size="sm"
+                            iconEffect={true}
+                        />
+                        <Button
+                            onClick={onClickRemove}
+                            Icon={HiOutlineTrash}
+                            size="sm"
+                            iconEffect={true}
+                        />
+                    </div>
+                )}
+            </SidebarCard>
+        </div>
+        // </Link>
     );
 };
 

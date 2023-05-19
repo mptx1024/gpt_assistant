@@ -3,7 +3,6 @@ import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolki
 import { Chat, Message, ModelParams, Role } from '@/types';
 
 import type { RootState } from '.';
-
 const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
     sortComparer: (a, b) => b.created - a.created,
@@ -20,13 +19,19 @@ export const chatsSlice = createSlice({
         setOne: chatsAdapter.setOne,
         setAll: chatsAdapter.setAll,
         updateOne: chatsAdapter.updateOne,
-        removeOne: chatsAdapter.removeOne,
+        // removeOne: chatsAdapter.removeOne,
         removeAll: chatsAdapter.removeAll,
 
         setCurrentChat: (state, action: PayloadAction<{ id: string }>) => {
             state.currentChat = action.payload.id;
         },
+        removeOne: (state, action: PayloadAction<string>) => {
+            const chatIdToRemove = action.payload;
+            state.ids = state.ids.filter((id) => id !== chatIdToRemove);
+            delete state.entities[chatIdToRemove];
+            state.currentChat = state.ids.length > 0 ? state.ids[0].toString() : '';
 
+        },
         addSingleMessage: (state, action: PayloadAction<{ chatID: string; message: Message }>) => {
             const { chatID, message } = action.payload;
             const existingChat = state.entities[chatID];
