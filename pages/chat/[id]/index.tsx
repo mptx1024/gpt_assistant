@@ -17,13 +17,22 @@ export default function DynamicChatPage() {
     const chatID = useSelector((store: RootState) => store.chats.currentChatID);
     const chat = useSelector((state: RootState) => selectChatById(state, chatID as string));
     const lastMessageRef = useRef<HTMLDivElement>(null);
+    const messageBlockRef = useRef<HTMLDivElement>(null);
     const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
 
     const messages: Message[] | undefined = chat?.messages;
 
     useEffect(() => {
-        if (lastMessageRef.current) {
-            lastMessageRef.current.scrollIntoView(true);
+        if (
+            messageBlockRef.current &&
+            lastMessageRef.current &&
+            Math.abs(
+                messageBlockRef.current.scrollHeight -
+                    messageBlockRef.current.clientHeight -
+                    messageBlockRef.current.scrollTop
+            ) < 10
+        ) {
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
         }
     }, [messages]);
     if (!chat) {
@@ -31,10 +40,11 @@ export default function DynamicChatPage() {
         return null;
     }
 
-    // return <ChatPage chatID={chat} />;
-
     return (
-        <div className="flex h-full w-full flex-col items-center overflow-y-auto">
+        <div
+            ref={messageBlockRef}
+            className="flex h-full w-full flex-col items-center overflow-y-auto"
+        >
             <ChatParamsCard chat={chat} />
 
             {messages && (
@@ -44,8 +54,9 @@ export default function DynamicChatPage() {
                     ))}
                 </div>
             )}
-            {/*  The left property places the left edge of the element at the center of the parent, and the -translate-x-1/2 class shifts the element back to the left by half of its width, effectively centering it. */}
+
             <div ref={lastMessageRef} />
+            {/*  The left property places the left edge of the element at the center of the parent, and the -translate-x-1/2 class shifts the element back to the left by half of its width, effectively centering it. */}
             <div
                 className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2
             flex-col items-center justify-center overflow-y-scroll bg-gray-base from-transparent pt-4 dark:bg-gray-inverted"
