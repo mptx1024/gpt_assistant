@@ -11,7 +11,7 @@ import { RootState } from '@/store';
 import { selectChatById } from '@/store/chatsSlice';
 import { Message } from '@/types';
 
-export default memo(function DynamicChatPage() {
+export default function DynamicChatPage() {
     const router = useRouter();
     const { id } = router.query;
     const chatID = typeof id === 'string' ? id : '';
@@ -32,7 +32,7 @@ export default memo(function DynamicChatPage() {
                 messageBlockRef.current.scrollHeight -
                     messageBlockRef.current.clientHeight -
                     messageBlockRef.current.scrollTop
-            ) < 100
+            ) < 50
         ) {
             lastMessageRef.current.scrollIntoView(true);
         }
@@ -43,14 +43,11 @@ export default memo(function DynamicChatPage() {
     }
 
     return (
-        <div
-            id="chat-container"
-            className="flex h-full w-full flex-col items-center overflow-y-auto"
-        >
+        <div id="chat-container" className="flex h-full w-full flex-col items-center overflow-auto">
             <div
                 id="messages-container"
                 ref={messageBlockRef}
-                className="mb-[9rem] flex w-full flex-col overflow-y-auto overflow-x-hidden"
+                className="mb-[9rem] flex w-full flex-col overflow-auto"
             >
                 <MemoizedChatParamsCard chatID={chat.id} />
                 {messages?.map((message, index) => (
@@ -72,4 +69,4 @@ export default memo(function DynamicChatPage() {
             </div>
         </div>
     );
-});
+}

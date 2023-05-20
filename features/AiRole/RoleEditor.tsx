@@ -42,7 +42,7 @@ const RoleEditor = (props: Props) => {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="mx-5 flex h-[70vh] w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
+                className="border-color mx-5 flex h-[70vh] w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl border bg-gray-base p-6 text-left shadow-xl dark:bg-gray-inverted"
             >
                 <div className="mb-5 flex items-center justify-between">
                     <span className="text-2xl text-gray-500 dark:text-gray-400">
@@ -56,11 +56,9 @@ const RoleEditor = (props: Props) => {
                     />
                 </div>
                 <form onSubmit={(e) => handleClickSave(e)}>
-                    <div className="mb-8 flex flex-col">
+                    <div className="mb-5 flex flex-col">
                         <div className="mb-5">
-                            <label className="text-md text-gray-500 dark:text-gray-400">
-                                Role Name
-                            </label>
+                            <label className="text-md">Role Name</label>
                             <Input
                                 value={title}
                                 onChange={handleTitleChange}
@@ -71,15 +69,14 @@ const RoleEditor = (props: Props) => {
                             />
                         </div>
                         <div>
-                            <label className="text-md text-gray-500 dark:text-gray-400">
-                                Prompt Insturction
-                            </label>
+                            <label className="text-md ">Prompt</label>
                             <Textarea
                                 required={true}
                                 value={prompt}
                                 onChange={handlePromptChange}
                                 placeholder="Prompt"
                                 showborder={true}
+                                rows={8}
                             />
                         </div>
                     </div>

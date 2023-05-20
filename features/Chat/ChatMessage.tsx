@@ -21,7 +21,7 @@ interface Props {
 export default function ChatMessage({ message, generateReply }: Props) {
     const [isCopied, setIsCopied] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [editedContent, setEditedContent] = useState(message.content);
+    const [editedContent, setEditedContent] = useState('');
     const dispatch = useDispatch();
 
     const handleCopyToClipboard = async () => {
@@ -31,6 +31,7 @@ export default function ChatMessage({ message, generateReply }: Props) {
         setEditedContent(e.target.value);
     };
     const handleEdit = () => {
+        setEditedContent(message.content)
         setIsEditing(true);
     };
 

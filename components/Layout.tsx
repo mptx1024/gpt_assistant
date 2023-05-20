@@ -64,7 +64,7 @@ export default function Layout({ children }: Props) {
             </Head>
             <div className="fixed inset-0 flex h-full ">
                 <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
-                <div className="relative flex h-full w-full flex-col overflow-x-hidden">
+                <div className="relative flex h-full w-full flex-col overflow-hidden">
                     <Navbar isSidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                     {children}
                 </div>

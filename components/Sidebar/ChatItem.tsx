@@ -1,5 +1,6 @@
 import { FC, useState, useRef } from 'react';
 
+import { set } from 'idb-keyval';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
@@ -29,19 +30,28 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     const [title, setTitle] = useState(chat.title);
     const dispatch = useDispatch();
 
-    const onClickEdit = () => {
-        setEdit(true);
-    };
-    const onClickChat = () => {
+    const handleClickChat = () => {
         dispatch(setCurrentChat(chat.id));
         router.push(`/chat/${chat.id}`);
     };
-    const onClickRemove = (e: React.MouseEvent) => {
+    const handleClickEdit = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setEdit(true);
+    };
+
+    const handleClickRemove = (e: React.MouseEvent) => {
         e.stopPropagation();
         setRemove(true);
     };
-
-    const onClickConfirm = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleClickCancel = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setEdit(false);
+        setRemove(false);
+    };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
+    };
+    const handleClickConfirm = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
         if (edit) {
             dispatch(updateTitle({ chatID: chat.id, title }));
@@ -52,14 +62,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
         setRemove(false);
     };
 
-    const onClickCancel = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        setEdit(false);
-        setRemove(false);
-    };
-
     return (
-        <SidebarCard isSelected={currentChatID === chat.id} onClick={onClickChat}>
+        <SidebarCard isSelected={currentChatID === chat.id} onClick={handleClickChat}>
             <div className="flex w-[75%] items-center gap-2">
                 <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
                 {edit ? (
@@ -67,7 +71,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         type="text"
                         placeholder={chat.title || ''}
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={handleInputChange}
+                        onClick={(e) => e.stopPropagation()}
                     />
                 ) : (
                     <p className="w-full animate-typing truncate">{chat.title}</p>
@@ -75,10 +80,15 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
             </div>
             {edit || remove ? (
                 <div className="right-1 flex items-center">
-                    <Button Icon={HiCheck} onClick={onClickConfirm} size="sm" iconEffect={true} />
+                    <Button
+                        Icon={HiCheck}
+                        onClick={handleClickConfirm}
+                        size="sm"
+                        iconEffect={true}
+                    />
                     <Button
                         Icon={HiOutlineXMark}
-                        onClick={onClickCancel}
+                        onClick={handleClickCancel}
                         size="sm"
                         iconEffect={true}
                     />
@@ -86,13 +96,13 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
             ) : (
                 <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
                     <Button
-                        onClick={onClickEdit}
+                        onClick={handleClickEdit}
                         Icon={HiPencilSquare}
                         size="sm"
                         iconEffect={true}
                     />
                     <Button
-                        onClick={onClickRemove}
+                        onClick={handleClickRemove}
                         Icon={HiOutlineTrash}
                         size="sm"
                         iconEffect={true}

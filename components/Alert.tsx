@@ -29,13 +29,13 @@ const Alert = () => {
         <div
             role="alert"
             className={clsx(
-                'fixed left-0 top-[5vh] flex w-full animate-slideInFromTop justify-center'
+                'fixed left-0 top-[3vh] flex w-full animate-slideInFromTop justify-start'
                 // message
                 //     ? 'opacity-100 transition-all duration-300 ease-in-out'
                 //     : 'opacity-0 transition-all  duration-300 ease-in-out'
             )}
         >
-            <div className="border-primary dark:bg-secondary-dark flex max-w-[80vh] items-start gap-4 rounded-2xl bg-gray-base p-3 dark:bg-gray-inverted">
+            <div className="border-color ml-60 flex max-w-[50vw] items-start gap-4 rounded-2xl border bg-gray-base p-3 dark:bg-gray-inverted">
                 {/* <span className="text-green-600">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
