@@ -1,22 +1,26 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '@/components/Button';
 import ModelParamsSection from '@/components/settings/ModelParamsSection';
 import SettingModal from '@/components/settings/SettingModal';
+import { RootState } from '@/store';
+import { selectChatById } from '@/store/chatsSlice';
 import { updateModelParams, updateRole } from '@/store/chatsSlice';
 import { OpenAIModels, OpenAIModel, ModelParams, Role } from '@/types';
 import { Chat } from '@/types';
 interface Props {
-    chat: Chat;
+    chatID: string;
 }
-export function ChatParamsCard({ chat }: Props) {
+function ChatParamsCard({ chatID }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
-
+    const chat = useSelector((state: RootState) => selectChatById(state, chatID));
+    if (!chat) return null;
     return (
         <div
+            key={Math.random()}
             onClick={toggleModal}
             className="border-color my-3 flex w-[90%] max-w-lg animate-slideInFromTop cursor-pointer flex-col items-start self-center rounded-md border p-3 transition-all  hover:border-colorPrimary sm:w-[40%]"
         >
@@ -35,6 +39,8 @@ export function ChatParamsCard({ chat }: Props) {
         </div>
     );
 }
+
+export const MemoizedChatParamsCard = memo(ChatParamsCard);
 
 interface ChatParamsModalProps {
     chat: Chat;
