@@ -50,7 +50,7 @@ export default function DynamicChatPage() {
                 className="mb-[9rem] flex w-full flex-col overflow-auto"
             >
                 <MemoizedChatParamsCard chatID={chat.id} />
-                {messages?.map((message, index) => (
+                {messages && messages.map((message, index) => (
                     <ChatMessage key={index} message={message} generateReply={generateReply} />
                 ))}
                 <div ref={lastMessageRef} />
