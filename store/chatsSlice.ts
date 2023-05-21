@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
+import { PayloadAction, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
 import { Chat, Message, ModelParams, Role } from '@/types';
+
+import { addMessage } from './messagesSlice';
 
 import type { RootState } from '.';
 const chatsAdapter = createEntityAdapter<Chat>({
@@ -16,28 +18,30 @@ export const chatsSlice = createSlice({
     name: 'chats',
     initialState,
     reducers: {
+        addChat: chatsAdapter.addOne,
         setOne: chatsAdapter.setOne,
         setAll: chatsAdapter.setAll,
         updateOne: chatsAdapter.updateOne,
-        // removeOne: chatsAdapter.removeOne,
         removeAll: chatsAdapter.removeAll,
 
         setCurrentChat: (state, action: PayloadAction<string>) => {
             state.currentChatID = action.payload;
         },
-        removeOne: (state, action: PayloadAction<string>) => {
+        removeChat: (state, action: PayloadAction<string>) => {
             const chatIdToRemove = action.payload;
             state.ids = state.ids.filter((id) => id !== chatIdToRemove);
             delete state.entities[chatIdToRemove];
             state.currentChatID = state.ids.length > 0 ? state.ids[0].toString() : '';
         },
-        addSingleMessage: (state, action: PayloadAction<{ chatID: string; message: Message }>) => {
-            const { chatID, message } = action.payload;
-            const existingChat = state.entities[chatID];
-            if (existingChat) {
-                existingChat.messages = [...existingChat.messages, message];
-            }
-        },
+
+        // addSingleMessage: (state, action: PayloadAction<{ chatID: string; message: Message }>) => {
+        //     const { chatID, message } = action.payload;
+        //     const existingChat = state.entities[chatID];
+        //     if (existingChat) {
+        //         existingChat.messages = [...existingChat.messages, message];
+        //     }
+        // },
+
         // for streaming updates
         updateSingleMessage: (
             state,
@@ -61,8 +65,8 @@ export const chatsSlice = createSlice({
         },
 
         // for editing a message & regenerateing reply
-        deleteMessageUpTo: (state, action: PayloadAction<{ message: Message }>) => {
-            const { chatID, id: messageID } = action.payload.message;
+        removeMessageUpTo: (state, action: PayloadAction<{ message: Message }>) => {
+            const { chatId: chatID, id: messageID } = action.payload.message;
             const existingChat = state.entities[chatID];
             if (existingChat) {
                 const updatedMessages: Message[] = [];
@@ -101,17 +105,24 @@ export const chatsSlice = createSlice({
             }
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase(addMessage, (state, action) => {
+            const msgId = action.payload.id;
+            const chatId = action.payload.chatId;
+            state.entities[chatId]?.messages.push(msgId);
+        });
+    },
 });
 
 export const {
     setOne,
     setAll,
     updateOne,
-    removeOne,
+    removeChat,
     removeAll,
-    addSingleMessage,
+    // addSingleMessage,
     updateSingleMessage,
-    deleteMessageUpTo,
+    removeMessageUpTo,
     updateModelParams,
     updateRole,
     updateTitle,

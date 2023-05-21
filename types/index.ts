@@ -1,7 +1,7 @@
 export interface Message {
     id: string;
-    chatID: string;
-    timestamp: number; // epoch time
+    chatId: string;
+    created: number; // epoch time
     role: string;
     content: string;
 }
@@ -17,7 +17,7 @@ export interface OpenAIMessage {
 
 export interface Chat {
     id: string;
-    messages: Message[];
+    messages: string[];
     title: string;
     created: number;
     role: Role;

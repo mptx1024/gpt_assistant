@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { setOne, removeOne } from './chatsSlice';
+import { setOne, removeChat } from './chatsSlice';
 import { removeOneRole } from './rolesSlice';
 type AlertState = {
     message: string | null;
@@ -27,8 +27,7 @@ const alertSlice = createSlice({
         builder.addCase(setOne, (state) => {
             state.message = 'New Chat Created';
         });
-        builder.addCase(removeOne, (state) => {
-
+        builder.addCase(removeChat, (state) => {
             state.message = 'Chat Deleted';
         });
     },

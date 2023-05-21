@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 import Button from '@/components/Button';
 import { Textarea } from '@/components/InputField';
-import { deleteMessageUpTo } from '@/store/chatsSlice';
+import { removeMessageUpTo } from '@/store/chatsSlice';
 import { Message } from '@/types';
 import { copyToClipboard } from '@/utils/chats';
 
@@ -31,13 +31,13 @@ export default function ChatMessage({ message, generateReply }: Props) {
         setEditedContent(e.target.value);
     };
     const handleEdit = () => {
-        setEditedContent(message.content)
+        setEditedContent(message.content);
         setIsEditing(true);
     };
 
     const handleSaveChanges = () => {
         // change chat history in store
-        dispatch(deleteMessageUpTo({ message }));
+        dispatch(removeMessageUpTo({ message }));
         // then regenerate reply
         generateReply(editedContent);
         setIsEditing(false);

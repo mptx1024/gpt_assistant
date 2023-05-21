@@ -6,17 +6,18 @@ import * as idb from '@/utils/indexedDB';
 import alertSlice from './alertSlice';
 import chatsReducer, {
     selectAllChats,
-    removeOne,
+    removeChat,
     removeAll,
     addSingleMessage,
     updateSingleMessage,
     updateTitle,
-    deleteMessageUpTo,
+    removeMessageUpTo,
     setOne,
     updateModelParams,
     updateRole,
 } from './chatsSlice';
 import { listenerMiddleware, startAppListening } from './listenerMiddleware';
+import messagesReducer, { addMessage, updateMessage } from './messagesSlice';
 import rolesReducer, {
     setOneRole,
     updateOneRole,
@@ -33,12 +34,12 @@ The effect function checks if the action type is "chats/removeAll", and if it is
 startAppListening({
     matcher: isAnyOf(
         setOne,
-        removeOne,
+        removeChat,
         removeAll,
         addSingleMessage,
         updateSingleMessage,
         updateTitle,
-        deleteMessageUpTo,
+        removeMessageUpTo,
         updateModelParams,
         updateRole
     ),
@@ -84,6 +85,7 @@ export const store = configureStore({
         ui: uiReducer,
         setting: settingReducer,
         chats: chatsReducer,
+        messages: messagesReducer,
         roles: rolesReducer,
         alert: alertSlice,
     },

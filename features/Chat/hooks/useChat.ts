@@ -7,7 +7,7 @@ import {
     selectChatById,
     addSingleMessage,
     updateSingleMessage,
-    deleteMessageUpTo,
+    removeMessageUpTo,
 } from '@/store/chatsSlice';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { getApiKey } from '@/store/settingSlice';
@@ -37,7 +37,7 @@ export default function useChat({ chatID }: Props): UseChatResult {
         const currentChat = selectChatById(store.getState(), chatID);
         const lastUserInput = currentChat?.messages[currentChat.messages.length - 2];
         if (lastUserInput && lastUserInput.role === 'user') {
-            dispatch(deleteMessageUpTo({ message: lastUserInput }));
+            dispatch(removeMessageUpTo({ message: lastUserInput }));
             generateReply(lastUserInput.content);
         }
     };
@@ -47,8 +47,8 @@ export default function useChat({ chatID }: Props): UseChatResult {
 
         const userMessage: Message = {
             id: uuid(),
-            chatID,
-            timestamp: Date.now(),
+            chatId: chatID,
+            created: Date.now(),
             role: 'user',
             content: userInput,
         };
@@ -67,8 +67,8 @@ export default function useChat({ chatID }: Props): UseChatResult {
 
         const reply: Message = {
             id: uuid(),
-            chatID: chatID,
-            timestamp: Date.now(),
+            chatId: chatID,
+            created: Date.now(),
             role: 'assistant',
             content: '',
         };

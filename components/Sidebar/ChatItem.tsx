@@ -12,7 +12,7 @@ import {
 } from 'react-icons/hi2';
 import { useDispatch } from 'react-redux';
 
-import { updateTitle, removeOne, setCurrentChat } from '@/store/chatsSlice';
+import { updateTitle, removeChat, setCurrentChat } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
 import SidebarCard from './SidebarCard';
@@ -56,7 +56,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
         if (edit) {
             dispatch(updateTitle({ chatID: chat.id, title }));
         } else if (remove) {
-            dispatch(removeOne(chat.id));
+            dispatch(removeChat(chat.id));
         }
         setEdit(false);
         setRemove(false);
