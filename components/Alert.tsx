@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import clsx from 'clsx';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { RootState } from '@/store';
 import { clearAlert } from '@/store/alertSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 
 const Alert = () => {
-    const dispatch = useDispatch();
-    const message = useSelector((state: RootState) => state.alert.message);
+    const dispatch = useAppDispatch();
+    const message = useAppSelector((state) => state.alert.message);
 
     const handleClose = () => {
         dispatch(clearAlert());

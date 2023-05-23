@@ -12,7 +12,7 @@ interface InputProps {
     styles?: string;
     showborder?: boolean;
 }
-const inputBaseClasses = ' my-2 p-1 w-full overflow-hidden rounded-lg';
+const inputBaseClasses = 'my-2 p-1 w-full overflow-hidden rounded-lg outline-none';
 
 export function Input(props: InputProps) {
     return (
@@ -21,7 +21,9 @@ export function Input(props: InputProps) {
             className={clsx(
                 props.styles,
                 inputBaseClasses,
-                props.showborder ? 'border-color border focus:outline-colorPrimary' : 'outline-none'
+                props.showborder
+                    ? 'border-color border-[1.5px] focus:border-colorPrimary'
+                    : 'border-none'
             )}
             type={props.type}
             placeholder={props.placeholder}
@@ -44,7 +46,7 @@ interface TexareaProps {
 }
 
 const textAreaBaseClasses =
-    'focus:outline-colorPrimary border border-color max-h-[20rem] resize-none p-1 rounded-md w-full';
+    'focus:border-colorPrimary border-[1.5px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none';
 
 export function Textarea(props: TexareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);

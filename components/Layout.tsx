@@ -2,14 +2,12 @@ import { useCallback, useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useWindowDimensions from '@/hooks/useWindowDimension';
-import { RootState } from '@/store';
 import { setAllChats } from '@/store/chatsSlice';
-import { useAppDispatch } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAllMessages } from '@/store/messagesSlice';
 import { setAllRoles } from '@/store/rolesSlice';
 import { toggleSidebar } from '@/store/uiSlice';
@@ -24,7 +22,7 @@ export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
     const { query } = useRouter();
     const { width } = useWindowDimensions();
-    const sidebarOpen = useSelector((state: RootState) => state.ui.sidebarOpen);
+    const sidebarOpen = useAppSelector((state) => state.ui.sidebarOpen);
 
     const handleClickSidebar = useCallback(() => {
         dispatch(toggleSidebar());

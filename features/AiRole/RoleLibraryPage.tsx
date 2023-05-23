@@ -1,12 +1,10 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import MiniSearch from 'minisearch';
-import { useRouter } from 'next/router';
 import { HiPlus } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
 import { Input } from '@/components/InputField';
-import { Role } from '@/types';
 
 import RoleCard from './RoleCard';
 import RoleEditor from './RoleEditor';
@@ -52,13 +50,14 @@ const RoleLibraryPage = () => {
         return <RoleCard key={index} role={role} bgColor={color} />;
     });
     return (
-        <div className="h-full w-full overflow-y-scroll">
-            <div className="my-4 flex items-center justify-center gap-5">
+        <div className="flex h-full w-full flex-col overflow-y-scroll">
+            <div className="flex w-full items-center justify-between gap-5 px-7">
                 <Input
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     placeholder="Search AI Role Library"
-                    // styles="max-w-[15rem]"
+                    showborder
+                    
                 />
                 <Button
                     text={'Add Role'}
@@ -66,7 +65,7 @@ const RoleLibraryPage = () => {
                     onClick={toggleEditor}
                     shadow={true}
                     border={true}
-                    size="lg"
+                    size="md"
                 />
             </div>
             <div

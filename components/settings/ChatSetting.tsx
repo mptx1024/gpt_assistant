@@ -1,12 +1,10 @@
 import { memo, useState } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-
 import Button from '@/components/Button';
 import ModelParamsSection from '@/components/settings/ModelParamsSection';
 import SettingModal from '@/components/settings/SettingModal';
-import { RootState } from '@/store';
 import { selectChatById, updateModelParams, updateRole } from '@/store/chatsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { Chat, ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
 interface Props {
     chatId: string;
@@ -14,7 +12,7 @@ interface Props {
 function ChatParamsCard({ chatId: chatID }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
-    const chat = useSelector((state: RootState) => selectChatById(state, chatID));
+    const chat = useAppSelector((state) => selectChatById(state, chatID));
     if (!chat) return null;
     return (
         <div
@@ -51,7 +49,7 @@ export function ChatParamsModal({ chat, toggleModal }: ChatParamsModalProps) {
     const [selectedModel, setSelectedModel] = useState(chat.modelParams.model);
     const [maxTokens, setMaxTokens] = useState(chat.modelParams.max_tokens);
     const [prompt, setPrompt] = useState(chat.role.prompt);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleClickSave = () => {
         const newParam: ModelParams = {

@@ -1,21 +1,20 @@
 import { useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 
 import { MemoizedChatParamsCard } from '@/components/settings/ChatSetting';
 import ChatMessage from '@/features/Chat/ChatMessage';
 import useChat from '@/features/Chat/hooks/useChat';
 import Input from '@/features/Chat/Input';
-import { RootState } from '@/store';
 import { selectChatById } from '@/store/chatsSlice';
+import { useAppSelector } from '@/store/hooks';
 
 export default function DynamicChatPage() {
     const router = useRouter();
     const { id } = router.query;
     const chatId = typeof id === 'string' ? id : '';
 
-    const chat = useSelector((state: RootState) => selectChatById(state, id as string));
+    const chat = useAppSelector((state) => selectChatById(state, id as string));
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const messageBlockRef = useRef<HTMLDivElement>(null);
 
