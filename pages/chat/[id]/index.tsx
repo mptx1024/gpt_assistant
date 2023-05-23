@@ -1,4 +1,4 @@
-import { useEffect, useRef, memo } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -9,20 +9,19 @@ import useChat from '@/features/Chat/hooks/useChat';
 import Input from '@/features/Chat/Input';
 import { RootState } from '@/store';
 import { selectChatById } from '@/store/chatsSlice';
-import { Message } from '@/types';
 
 export default function DynamicChatPage() {
     const router = useRouter();
     const { id } = router.query;
-    const chatID = typeof id === 'string' ? id : '';
+    const chatId = typeof id === 'string' ? id : '';
 
     const chat = useSelector((state: RootState) => selectChatById(state, id as string));
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const messageBlockRef = useRef<HTMLDivElement>(null);
 
-    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatID });
+    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatId: chatId });
 
-    const messages: Message[] | undefined = chat?.messages;
+    // const messages: Message[] | undefined = chat?.messages;
 
     useEffect(() => {
         if (
@@ -36,7 +35,7 @@ export default function DynamicChatPage() {
         ) {
             lastMessageRef.current.scrollIntoView(true);
         }
-    }, [messages]);
+    }, [isLoading]);
 
     if (!chat) {
         return null;
@@ -49,9 +48,9 @@ export default function DynamicChatPage() {
                 ref={messageBlockRef}
                 className="mb-[9rem] flex w-full flex-col overflow-auto"
             >
-                <MemoizedChatParamsCard chatID={chat.id} />
-                {messages && messages.map((message, index) => (
-                    <ChatMessage key={index} message={message} generateReply={generateReply} />
+                <MemoizedChatParamsCard chatId={chat.id} />
+                {chat.messages.map((messageId, index) => (
+                    <ChatMessage key={index} messageId={messageId} generateReply={generateReply} />
                 ))}
                 <div ref={lastMessageRef} />
             </div>

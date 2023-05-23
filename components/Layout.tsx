@@ -1,6 +1,5 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import clsx from 'clsx';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -9,11 +8,12 @@ import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useWindowDimensions from '@/hooks/useWindowDimension';
 import { RootState } from '@/store';
-import { setAll } from '@/store/chatsSlice';
+import { setAllChats } from '@/store/chatsSlice';
 import { useAppDispatch } from '@/store/hooks';
+import { setAllMessages } from '@/store/messagesSlice';
 import { setAllRoles } from '@/store/rolesSlice';
 import { toggleSidebar } from '@/store/uiSlice';
-import { Chat, Role } from '@/types';
+import { Chat, Message, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
 
 import Alert from './Alert';
@@ -45,9 +45,13 @@ export default function Layout({ children }: Props) {
             }
             const chats: Chat[] = await idb.get('chats');
             if (chats) {
-                dispatch(setAll(chats));
+                dispatch(setAllChats(chats));
             }
             setIsLoading(false);
+            const messages: Message[] = await idb.get('messages');
+            if (messages) {
+                dispatch(setAllMessages(messages));
+            }
         };
         loadRecords();
     }, []);

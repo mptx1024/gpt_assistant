@@ -1,10 +1,11 @@
 import { PayloadAction, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import { Chat, Message, ModelParams, Role } from '@/types';
+import { Chat, ModelParams, Role } from '@/types';
 
 import { addMessage } from './messagesSlice';
 
 import type { RootState } from '.';
+
 const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
     sortComparer: (a, b) => b.created - a.created,
@@ -12,93 +13,56 @@ const chatsAdapter = createEntityAdapter<Chat>({
 
 //TODO: fetch chats from indexedDB here
 //https:redux-toolkit.js.org/api/createEntityAdapter#getinitialstate
-const initialState = chatsAdapter.getInitialState({ currentChatID: '' });
+const initialState = chatsAdapter.getInitialState({ currentChatId: '' });
 
 export const chatsSlice = createSlice({
     name: 'chats',
     initialState,
     reducers: {
         addChat: chatsAdapter.addOne,
-        setOne: chatsAdapter.setOne,
-        setAll: chatsAdapter.setAll,
-        updateOne: chatsAdapter.updateOne,
-        removeAll: chatsAdapter.removeAll,
+        setAllChats: chatsAdapter.setAll,
+        updateChat: chatsAdapter.updateOne,
+        removeAllChats: chatsAdapter.removeAll,
 
         setCurrentChat: (state, action: PayloadAction<string>) => {
-            state.currentChatID = action.payload;
+            state.currentChatId = action.payload;
         },
         removeChat: (state, action: PayloadAction<string>) => {
             const chatIdToRemove = action.payload;
             state.ids = state.ids.filter((id) => id !== chatIdToRemove);
             delete state.entities[chatIdToRemove];
-            state.currentChatID = state.ids.length > 0 ? state.ids[0].toString() : '';
+            state.currentChatId = state.ids.length > 0 ? state.ids[0].toString() : '';
         },
 
-        // addSingleMessage: (state, action: PayloadAction<{ chatID: string; message: Message }>) => {
-        //     const { chatID, message } = action.payload;
-        //     const existingChat = state.entities[chatID];
-        //     if (existingChat) {
-        //         existingChat.messages = [...existingChat.messages, message];
-        //     }
-        // },
-
-        // for streaming updates
-        updateSingleMessage: (
-            state,
-            action: PayloadAction<{ chatID: string; chunkValue: string }>
-        ) => {
-            const { chatID, chunkValue } = action.payload;
-            const chat = state.entities[chatID];
-            if (chat) {
-                const updatedMessages = [...chat.messages];
-                const lastMessage = updatedMessages[updatedMessages.length - 1];
-                updatedMessages[updatedMessages.length - 1] = {
-                    ...lastMessage,
-                    content: lastMessage.content + chunkValue,
-                };
-
-                state.entities[chatID] = {
-                    ...chat,
-                    messages: updatedMessages,
-                };
-            }
-        },
-
-        // for editing a message & regenerateing reply
-        removeMessageUpTo: (state, action: PayloadAction<{ message: Message }>) => {
-            const { chatId: chatID, id: messageID } = action.payload.message;
-            const existingChat = state.entities[chatID];
-            if (existingChat) {
-                const updatedMessages: Message[] = [];
-                for (let i = 0; i < existingChat.messages.length; i++) {
-                    if (existingChat.messages[i].id === messageID) {
-                        break;
-                    }
-                    updatedMessages.push(existingChat.messages[i]);
+        removeMessageUpTo: (state, action: PayloadAction<{ messageId: string }>) => {
+            const currentChat = state.entities[state.currentChatId];
+            if (currentChat) {
+                const idx = currentChat.messages.indexOf(action.payload.messageId);
+                if (idx !== -1) {
+                    currentChat.messages.splice(idx);
                 }
-                existingChat.messages = updatedMessages;
             }
         },
         // TODO: combine updateModelParams and updateRole
         updateModelParams: (
             state,
-            action: PayloadAction<{ chatID: string; modelParams: ModelParams }>
+            action: PayloadAction<{ chatId: string; modelParams: ModelParams }>
         ) => {
-            const { chatID, modelParams } = action.payload;
+            const { chatId: chatID, modelParams } = action.payload;
             const existingChat = state.entities[chatID];
             if (existingChat) {
                 existingChat.modelParams = modelParams;
             }
         },
-        updateRole: (state, action: PayloadAction<{ chatID: string; role: Role }>) => {
-            const { chatID, role } = action.payload;
+        updateRole: (state, action: PayloadAction<{ chatId: string; role: Role }>) => {
+            const { chatId: chatID, role } = action.payload;
             const existingChat = state.entities[chatID];
             if (existingChat) {
                 existingChat.role = role;
             }
         },
-        updateTitle: (state, action: PayloadAction<{ chatID: string; title: string }>) => {
-            const { chatID, title } = action.payload;
+        updateTitle: (state, action: PayloadAction<{ chatId: string; title: string }>) => {
+            const { chatId: chatID, title } = action.payload;
             const existingChat = state.entities[chatID];
             if (existingChat) {
                 existingChat.title = title;
@@ -109,19 +73,25 @@ export const chatsSlice = createSlice({
         builder.addCase(addMessage, (state, action) => {
             const msgId = action.payload.id;
             const chatId = action.payload.chatId;
+
             state.entities[chatId]?.messages.push(msgId);
+            console.log(
+                `msgId: ${msgId}; chatId: ${chatId}; state.entitis[chatId]: ${JSON.stringify(
+                    state.entities[chatId]
+                )}`
+            );
         });
     },
 });
 
 export const {
-    setOne,
-    setAll,
-    updateOne,
+    addChat,
+    updateChat,
     removeChat,
-    removeAll,
+    removeAllChats,
+    setAllChats,
     // addSingleMessage,
-    updateSingleMessage,
+    // updateSingleMessage,
     removeMessageUpTo,
     updateModelParams,
     updateRole,
@@ -131,6 +101,8 @@ export const {
 export default chatsSlice.reducer;
 
 // Selectors
-export const { selectById: selectChatById, selectAll: selectAllChats } = chatsAdapter.getSelectors(
-    (state: RootState) => state.chats
-);
+export const {
+    selectIds: selectChatIds,
+    selectById: selectChatById,
+    selectAll: selectAllChats,
+} = chatsAdapter.getSelectors((state: RootState) => state.chats);

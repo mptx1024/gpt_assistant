@@ -15,7 +15,7 @@ interface ChatListProps {
 const ChatList: FC<ChatListProps> = ({ chats }) => {
     const router = useRouter();
 
-    const currentChatID = useSelector((state: RootState) => state.chats.currentChatID);
+    const currentChatID = useSelector((state: RootState) => state.chats.currentChatId);
     // useEffect(() => {
     //     console.log(`currentChatID: ${currentChatID}`);
 

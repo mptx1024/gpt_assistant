@@ -1,29 +1,37 @@
 import { useState } from 'react';
 
 import clsx from 'clsx';
-import { HiPencilSquare, HiOutlineClipboard } from 'react-icons/hi2';
+import { HiOutlineClipboard, HiPencilSquare } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '@/components/Button';
 import { Textarea } from '@/components/InputField';
+import { RootState } from '@/store';
 import { removeMessageUpTo } from '@/store/chatsSlice';
+import { selectMessageById } from '@/store/messagesSlice';
 import { Message } from '@/types';
 import { copyToClipboard } from '@/utils/chats';
 
 import Markdown from './Markdown';
 
 interface Props {
-    message: Message;
+    messageId: string;
     generateReply: (content: string) => void;
 }
 
-export default function ChatMessage({ message, generateReply }: Props) {
+export default function ChatMessage({ messageId, generateReply }: Props) {
     const [isCopied, setIsCopied] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState('');
     const dispatch = useDispatch();
 
+    const message: Message | undefined = useSelector((state: RootState) =>
+        selectMessageById(state, messageId)
+    );
+    if (!message) {
+        return null;
+    }
     const handleCopyToClipboard = async () => {
         await copyToClipboard(message.content, setIsCopied);
     };
@@ -37,7 +45,7 @@ export default function ChatMessage({ message, generateReply }: Props) {
 
     const handleSaveChanges = () => {
         // change chat history in store
-        dispatch(removeMessageUpTo({ message }));
+        dispatch(removeMessageUpTo({ messageId }));
         // then regenerate reply
         generateReply(editedContent);
         setIsEditing(false);

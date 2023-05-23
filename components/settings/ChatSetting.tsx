@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { memo, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,14 +6,12 @@ import Button from '@/components/Button';
 import ModelParamsSection from '@/components/settings/ModelParamsSection';
 import SettingModal from '@/components/settings/SettingModal';
 import { RootState } from '@/store';
-import { selectChatById } from '@/store/chatsSlice';
-import { updateModelParams, updateRole } from '@/store/chatsSlice';
-import { OpenAIModels, OpenAIModel, ModelParams, Role } from '@/types';
-import { Chat } from '@/types';
+import { selectChatById, updateModelParams, updateRole } from '@/store/chatsSlice';
+import { Chat, ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
 interface Props {
-    chatID: string;
+    chatId: string;
 }
-function ChatParamsCard({ chatID }: Props) {
+function ChatParamsCard({ chatId: chatID }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
     const chat = useSelector((state: RootState) => selectChatById(state, chatID));
@@ -66,8 +64,8 @@ export function ChatParamsModal({ chat, toggleModal }: ChatParamsModalProps) {
             ...chat.role,
             prompt,
         };
-        dispatch(updateModelParams({ chatID: chat.id, modelParams: newParam }));
-        dispatch(updateRole({ chatID: chat.id, role: newRole }));
+        dispatch(updateModelParams({ chatId: chat.id, modelParams: newParam }));
+        dispatch(updateRole({ chatId: chat.id, role: newRole }));
         toggleModal();
     };
     return (

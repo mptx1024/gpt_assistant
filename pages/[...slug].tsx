@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 
 import { useRouter } from 'next/router';
-type Props = {};
-export default function CatchAll({}: Props) {
+
+export default function CatchAll() {
     const router = useRouter();
 
     return (

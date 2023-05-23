@@ -54,7 +54,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     const handleClickConfirm = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
         if (edit) {
-            dispatch(updateTitle({ chatID: chat.id, title }));
+            dispatch(updateTitle({ chatId: chat.id, title }));
         } else if (remove) {
             dispatch(removeChat(chat.id));
         }

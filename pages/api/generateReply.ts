@@ -1,4 +1,4 @@
-import { Message, OpenAIMessage, Chat, defaultModelParams, OpenAIStreamPayload } from '@/types';
+import { Chat, OpenAIMessage, OpenAIStreamPayload, defaultModelParams } from '@/types';
 import { chatHistoryTrimer } from '@/utils/tokenizer';
 
 import { OpenAIStream } from '../../utils/OpenAIStream';
@@ -10,27 +10,31 @@ export const config = {
 const handler = async (req: Request): Promise<Response> => {
     console.log(`incoming request: ${req.method} ${req.url}`);
 
-    const { currentChat, apiKey } = (await req.json()) as { currentChat: Chat; apiKey: string };
+    const { chat, OpenAIMessages, apiKey } = (await req.json()) as {
+        chat: Chat;
+        OpenAIMessages: OpenAIMessage[];
+        apiKey: string;
+    };
 
-    if (!currentChat.modelParams) {
-        currentChat.modelParams = defaultModelParams;
+    if (!chat.modelParams) {
+        chat.modelParams = defaultModelParams;
     }
-    if (!currentChat.messages) {
+    if (!OpenAIMessages) {
         console.log('No messages provided');
         return new Response('No messages in the request', { status: 400 });
     }
 
-    const messages: OpenAIMessage[] = currentChat.messages.map((message: Message) => {
-        return {
-            role: message.role,
-            content: message.content,
-        };
-    });
+    // messages = messages.map((message: Message) => {
+    //     return {
+    //         role: message.role,
+    //         content: message.content,
+    //     };
+    // });
 
     const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
-        messages,
-        systemPrompt: currentChat.role.prompt,
-        tokenLimit: currentChat.modelParams.model.tokenLimit,
+        messages: OpenAIMessages,
+        systemPrompt: chat.role.prompt,
+        tokenLimit: chat.modelParams.model.tokenLimit,
     });
 
     if (!isTrimSuccess) {
@@ -39,10 +43,10 @@ const handler = async (req: Request): Promise<Response> => {
     // console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
     const payload: OpenAIStreamPayload = {
-        model: currentChat.modelParams.model.id,
+        model: chat.modelParams.model.id,
         messages: messagesToSend,
-        temperature: currentChat.modelParams.temperature,
-        max_tokens: currentChat.modelParams.max_tokens,
+        temperature: chat.modelParams.temperature,
+        max_tokens: chat.modelParams.max_tokens,
         stream: true,
     };
 

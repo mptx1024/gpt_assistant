@@ -8,7 +8,7 @@ import {
     HiOutlineCog6Tooth,
 } from 'react-icons/hi2';
 
-import { removeAll } from '@/store/chatsSlice';
+import { removeAllChat } from '@/store/chatsSlice';
 import { useAppDispatch } from '@/store/hooks';
 
 const BottomSection = () => {
@@ -28,7 +28,7 @@ const BottomSection = () => {
         if (document.activeElement instanceof HTMLElement) {
             document.activeElement.blur();
         }
-        dispatch(removeAll());
+        dispatch(removeAllChat());
         // router.push('/chat');
     };
 

@@ -21,7 +21,7 @@ const navbarClasses =
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
     // const { id } = router.query;
-    const chatID = useSelector((state: RootState) => state.chats.currentChatID);
+    const chatID = useSelector((state: RootState) => state.chats.currentChatId);
     const chat = useSelector((state: RootState) => selectChatById(state, chatID as string));
     // useEffect(() => {
     //     router.push(`/chat/${chatID}`);
