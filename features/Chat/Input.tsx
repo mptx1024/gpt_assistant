@@ -13,7 +13,7 @@ type Props = {
 
 export default React.memo(function Input({ chatId }: Props) {
     const { generateReply, regenerate, setStopGenerating } = useChat({ chatId: chatId });
-    const isLoading = useAppSelector((state) => state.messages.loading);
+    const isLoading = useAppSelector((state) => state.messages.loading.status);
     const [userInput, setUserInput] = useState('');
     const apiKey = useAppSelector((state) => state.setting.apiKey);
 

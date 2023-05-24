@@ -15,10 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         messages: [
             {
                 role: 'user',
-                content: 'Generate a title from content without any punctuation: ' + content,
+                content: 'summary this content in less than 7 words: ' + content,
             },
         ],
-        max_tokens: 7,
+        max_tokens: 10,
         temperature: 0.1,
     };
 

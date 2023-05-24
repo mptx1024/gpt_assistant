@@ -3,12 +3,11 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { HiOutlineClipboard, HiPencilSquare } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '@/components/Button';
 import { Textarea } from '@/components/InputField';
-import { RootState } from '@/store';
 import { removeMessageUpTo } from '@/store/chatsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectMessageById } from '@/store/messagesSlice';
 import { Message } from '@/types';
 import { copyToClipboard } from '@/utils/chats';
@@ -24,9 +23,9 @@ export default function ChatMessage({ messageId, generateReply }: Props) {
     const [isCopied, setIsCopied] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState('');
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const message: Message | undefined = useSelector((state: RootState) =>
+    const message: Message | undefined = useAppSelector((state) =>
         selectMessageById(state, messageId)
     );
     if (!message) {

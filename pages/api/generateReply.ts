@@ -19,10 +19,10 @@ const handler = async (req: Request): Promise<Response> => {
     if (!chat.modelParams) {
         chat.modelParams = defaultModelParams;
     }
-    if (!OpenAIMessages) {
-        console.log('No messages provided');
-        return new Response('No messages in the request', { status: 400 });
-    }
+    // if (!OpenAIMessages) {
+    //     console.log('No messages provided');
+    //     return new Response('No messages in the request', { status: 400 });
+    // }
 
     const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
         messages: OpenAIMessages,
@@ -30,9 +30,9 @@ const handler = async (req: Request): Promise<Response> => {
         tokenLimit: chat.modelParams.model.tokenLimit,
     });
 
-    if (!isTrimSuccess) {
-        return new Response('Trimming failed', { status: 400 });
-    }
+    // if (!isTrimSuccess) {
+    //     return new Response('Trimming failed', { status: 400 });
+    // }
     // console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
     const payload: OpenAIStreamPayload = {

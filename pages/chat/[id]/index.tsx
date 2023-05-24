@@ -49,8 +49,12 @@ export default function DynamicChatPage() {
                 className="mb-[9rem] flex w-full flex-col overflow-auto"
             >
                 <MemoizedChatParamsCard chatId={chat.id} />
-                {chat.messages.map((messageId, index) => (
-                    <ChatMessage key={index} messageId={messageId} generateReply={generateReply} />
+                {chat.messages.map((messageId) => (
+                    <ChatMessage
+                        key={Math.random()}
+                        messageId={messageId}
+                        generateReply={generateReply}
+                    />
                 ))}
                 <div ref={lastMessageRef} />
             </div>

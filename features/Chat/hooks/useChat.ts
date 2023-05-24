@@ -30,12 +30,15 @@ export default function useChat({ chatId }: Props): UseChatResult {
     const stopGeneratingRef = useRef<boolean>(false);
     const apiKey = useAppSelector(getApiKey);
     const dispatch = useAppDispatch();
+    // const chat = useAppSelector((state) => selectChatById(state, chatId));
+    // const OpenAIMessages = useAppSelector((state) => selectChatMessages(state, chatId));
+
     const setStopGenerating = () => {
         stopGeneratingRef.current = true;
     };
     const regenerate = async () => {
-        const currentChat = selectChatById(store.getState(), chatId);
-        const lastUserMessageId = currentChat?.messages[currentChat.messages.length - 2];
+        const chat = selectChatById(store.getState(), chatId);
+        const lastUserMessageId = chat?.messages[chat.messages.length - 2];
         if (lastUserMessageId) {
             const lastUserMessage = selectMessageById(store.getState(), lastUserMessageId);
             dispatch(removeMessageUpTo({ messageId: lastUserMessageId }));
@@ -61,8 +64,8 @@ export default function useChat({ chatId }: Props): UseChatResult {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ chat, OpenAIMessages, apiKey }),
+
         });
-        console.log(`in useChat: ${JSON.stringify(chat?.messages)}`);
 
         const reply: Message = {
             id: uuid(),

@@ -81,7 +81,6 @@ startAppListening({
             listenerApi.getState().messages.entities[action.payload.messageId];
         if (mostRecentReplyMessage && mostRecentReplyMessage.isFirst) {
             console.log(`in middleware. ${JSON.stringify(mostRecentReplyMessage)}`);
-            // TODO: call createTitle -> get title -> dispatch updateTitle
             const title: string = await createTitle(mostRecentReplyMessage.content);
             console.log('🚀 ~ file: listenerMiddleware.ts:71 ~ effect: ~ title:', title);
             listenerApi.dispatch(updateChatTitle({ chatId: mostRecentReplyMessage.chatId, title }));
