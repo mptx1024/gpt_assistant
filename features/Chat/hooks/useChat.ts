@@ -17,7 +17,7 @@ import { Message } from '@/types';
 import { errorMessage } from '@/utils/config';
 interface UseChatResult {
     // generatedMessage: string;
-    isLoading: boolean;
+    // isLoading: boolean;
     generateReply: (userInput: string) => void;
     regenerate: () => void;
     setStopGenerating: () => void;
@@ -29,7 +29,6 @@ interface Props {
 export default function useChat({ chatId }: Props): UseChatResult {
     const stopGeneratingRef = useRef<boolean>(false);
     const apiKey = useAppSelector(getApiKey);
-    const isLoading = useAppSelector((state) => state.messages.loading);
     const dispatch = useAppDispatch();
     const setStopGenerating = () => {
         stopGeneratingRef.current = true;
@@ -53,7 +52,7 @@ export default function useChat({ chatId }: Props): UseChatResult {
             content: userInput,
         };
         dispatch(addMessage(userMessage));
-        dispatch(setIsLoading(true));
+
         const chat = selectChatById(store.getState(), chatId);
         const OpenAIMessages = selectChatMessages(store.getState(), chatId);
         const response = await fetch('/api/generateReply', {
@@ -63,6 +62,7 @@ export default function useChat({ chatId }: Props): UseChatResult {
             },
             body: JSON.stringify({ chat, OpenAIMessages, apiKey }),
         });
+        console.log(`in useChat: ${JSON.stringify(chat?.messages)}`);
 
         const reply: Message = {
             id: uuid(),
@@ -70,9 +70,10 @@ export default function useChat({ chatId }: Props): UseChatResult {
             created: Date.now(),
             role: 'assistant',
             content: '',
+            isFirst: chat?.messages.length === 1 ? true : false, // first api reply (for generating title)
         };
         dispatch(addMessage(reply));
-        dispatch(setIsLoading(true));
+        dispatch(setIsLoading({ status: true, messageId: reply.id }));
 
         if (!response.ok) {
             if (response.status === 401) {
@@ -109,13 +110,13 @@ export default function useChat({ chatId }: Props): UseChatResult {
             const chunkValue = decoder.decode(value);
             dispatch(updateMessage({ messageId: reply.id, chunkValue }));
         }
-        dispatch(setIsLoading(false));
+        dispatch(setIsLoading({ status: false, messageId: reply.id }));
         stopGeneratingRef.current = false;
     };
 
     return {
         // generatedMessage,
-        isLoading,
+        // isLoading,
         generateReply,
         regenerate,
         setStopGenerating,

@@ -36,6 +36,20 @@ export const createNewChat = (selectedRole?: Role): string => {
     return newChat.id;
 };
 
-export const generateTitle = (title: string) => {
-    // TODO
+export const createTitle = async (content: string) => {
+    const apiKey = store.getState().setting.apiKey;
+    const response = await fetch('/api/generateTitle', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content, apiKey }),
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText, { cause: response.status });
+    }
+    const data = await response.json();
+    // console.log('🚀 ~ file: chats.ts:52 ~ createTitle ~ data:', data);
+    //stringify?
+    return data.choices[0].message.content;
 };

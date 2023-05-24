@@ -4,6 +4,7 @@ export interface Message {
     created: number; // epoch time
     role: string;
     content: string;
+    isFirst?: boolean;
 }
 
 export interface UserSubmitMessage {
@@ -89,7 +90,7 @@ export interface OpenAIStreamPayload {
 // }
 
 export interface Setting {
-    apiKey: string | null;
+    apiKey: string;
     theme?: string;
     defaultModelParams: ModelParams;
     defaultRole: Role;

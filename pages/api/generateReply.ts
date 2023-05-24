@@ -24,13 +24,6 @@ const handler = async (req: Request): Promise<Response> => {
         return new Response('No messages in the request', { status: 400 });
     }
 
-    // messages = messages.map((message: Message) => {
-    //     return {
-    //         role: message.role,
-    //         content: message.content,
-    //     };
-    // });
-
     const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
         messages: OpenAIMessages,
         systemPrompt: chat.role.prompt,
@@ -55,14 +48,9 @@ const handler = async (req: Request): Promise<Response> => {
         return new Response(stream);
     } catch (error: any) {
         console.log(`error.message: ${error.message}; error.cause: ${error.cause};`);
-        if (error.cause === 401) {
-            return new Response(null, {
-                status: 401,
-                statusText: error.message,
-            });
-        }
+        const status = error.cause === 401 ? 401 : 500;
         return new Response(null, {
-            status: 500,
+            status,
             statusText: error.message,
         });
     }

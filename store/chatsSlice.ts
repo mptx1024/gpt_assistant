@@ -61,7 +61,7 @@ export const chatsSlice = createSlice({
                 existingChat.role = role;
             }
         },
-        updateTitle: (state, action: PayloadAction<{ chatId: string; title: string }>) => {
+        updateChatTitle: (state, action: PayloadAction<{ chatId: string; title: string }>) => {
             const { chatId: chatID, title } = action.payload;
             const existingChat = state.entities[chatID];
             if (existingChat) {
@@ -75,11 +75,6 @@ export const chatsSlice = createSlice({
             const chatId = action.payload.chatId;
 
             state.entities[chatId]?.messages.push(msgId);
-            console.log(
-                `msgId: ${msgId}; chatId: ${chatId}; state.entitis[chatId]: ${JSON.stringify(
-                    state.entities[chatId]
-                )}`
-            );
         });
     },
 });
@@ -90,12 +85,10 @@ export const {
     removeChat,
     removeAllChats,
     setAllChats,
-    // addSingleMessage,
-    // updateSingleMessage,
     removeMessageUpTo,
     updateModelParams,
     updateRole,
-    updateTitle,
+    updateChatTitle,
     setCurrentChat,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;

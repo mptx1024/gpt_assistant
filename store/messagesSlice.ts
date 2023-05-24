@@ -12,7 +12,7 @@ const messageAdapter = createEntityAdapter<Message>({
 
 export const messagesSlice = createSlice({
     name: 'messages',
-    initialState: messageAdapter.getInitialState({ loading: false }),
+    initialState: messageAdapter.getInitialState({ loading: { status: false, messageId: '' } }),
     reducers: {
         addMessage: messageAdapter.addOne,
         setAllMessages: messageAdapter.setAll,
@@ -27,7 +27,7 @@ export const messagesSlice = createSlice({
                 existingMessage.content += chunkValue;
             }
         },
-        setIsLoading: (state, action: PayloadAction<boolean>) => {
+        setIsLoading: (state, action: PayloadAction<{ status: boolean; messageId: string }>) => {
             state.loading = action.payload;
         },
     },

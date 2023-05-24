@@ -23,8 +23,8 @@ export const settingSlice = createSlice({
     reducers: {
         setAppSetting: (state, action) => {
             return action.payload;
-
         },
+        
     },
 });
 

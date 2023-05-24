@@ -15,10 +15,11 @@ export default function DynamicChatPage() {
     const chatId = typeof id === 'string' ? id : '';
 
     const chat = useAppSelector((state) => selectChatById(state, id as string));
+    const isLoading = useAppSelector((state) => state.messages.loading.status);
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const messageBlockRef = useRef<HTMLDivElement>(null);
 
-    const { generateReply, regenerate, setStopGenerating, isLoading } = useChat({ chatId: chatId });
+    const { generateReply } = useChat({ chatId: chatId });
 
     // const messages: Message[] | undefined = chat?.messages;
 
@@ -58,12 +59,7 @@ export default function DynamicChatPage() {
                 className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2
             flex-col items-center justify-center bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
             >
-                <Input
-                    generateReply={generateReply}
-                    regenerate={regenerate}
-                    isLoading={isLoading}
-                    setStopGenerating={setStopGenerating}
-                />
+                <Input chatId={chat.id} />
             </div>
         </div>
     );

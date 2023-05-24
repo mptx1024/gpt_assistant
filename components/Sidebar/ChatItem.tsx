@@ -1,23 +1,21 @@
-import { FC, useState, useRef } from 'react';
+import { FC, useState } from 'react';
 
-import { set } from 'idb-keyval';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import {
-    HiPencilSquare,
-    HiOutlineTrash,
     HiCheck,
-    HiOutlineXMark,
     HiOutlineChatBubbleLeftEllipsis,
+    HiOutlineTrash,
+    HiOutlineXMark,
+    HiPencilSquare,
 } from 'react-icons/hi2';
 import { useDispatch } from 'react-redux';
 
-import { updateTitle, removeChat, setCurrentChat } from '@/store/chatsSlice';
+import { removeChat, setCurrentChat, updateChatTitle } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
-import SidebarCard from './SidebarCard';
 import Button from '../Button';
 import { Input } from '../InputField';
+import SidebarCard from './SidebarCard';
 interface ChatItemProps {
     chat: Chat;
     currentChatID: string;
@@ -54,7 +52,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     const handleClickConfirm = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.stopPropagation();
         if (edit) {
-            dispatch(updateTitle({ chatId: chat.id, title }));
+            dispatch(updateChatTitle({ chatId: chat.id, title }));
         } else if (remove) {
             dispatch(removeChat(chat.id));
         }

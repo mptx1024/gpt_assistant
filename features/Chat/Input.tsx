@@ -1,24 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { FiSend } from 'react-icons/fi';
-import { HiArrowPath, HiOutlineKey, HiShare, HiOutlineStopCircle } from 'react-icons/hi2';
+import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
 import { useAppSelector } from '@/store/hooks';
 
+import useChat from './hooks/useChat';
 type Props = {
-    generateReply: (content: string) => void;
-    regenerate: () => void;
-    isLoading: boolean;
-    setStopGenerating: () => void;
+    chatId: string;
 };
 
-export default React.memo(function Input({
-    generateReply,
-    regenerate,
-    isLoading,
-    setStopGenerating,
-}: Props) {
+export default React.memo(function Input({ chatId }: Props) {
+    const { generateReply, regenerate, setStopGenerating } = useChat({ chatId: chatId });
+    const isLoading = useAppSelector((state) => state.messages.loading);
     const [userInput, setUserInput] = useState('');
     const apiKey = useAppSelector((state) => state.setting.apiKey);
 
