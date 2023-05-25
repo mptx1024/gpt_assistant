@@ -106,7 +106,7 @@ export default function useChat({ chatId }: Props) {
     //     [chatId]
     // );
 
-    const regenerate = useCallback(
+    const memorizedRegenerate = useCallback(
         async (chatId: string) => {
             const chat = selectChatById(store.getState(), chatId);
             const lastUserMessageId = chat?.messages[chat.messages.length - 2];
@@ -135,7 +135,7 @@ export default function useChat({ chatId }: Props) {
     };
     const handleClickRegenerate = (e: React.MouseEvent) => {
         e.preventDefault();
-        regenerate(chatId);
+        memorizedRegenerate(chatId);
     };
 
     return {
@@ -143,7 +143,6 @@ export default function useChat({ chatId }: Props) {
         // isLoading,
         loading,
         generateReply,
-        regenerate,
         setStopGenerating,
         userInput,
         setUserInput,
