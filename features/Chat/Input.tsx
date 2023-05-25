@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { FiSend } from 'react-icons/fi';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
-import { useAppSelector } from '@/store/hooks';
 
 import useChat from './hooks/useChat';
 type Props = {
@@ -12,22 +11,28 @@ type Props = {
 };
 
 export default React.memo(function Input({ chatId }: Props) {
-    const { generateReply, regenerate, setStopGenerating } = useChat({ chatId: chatId });
-    const isLoading = useAppSelector((state) => state.messages.loading.status);
-    const [userInput, setUserInput] = useState('');
-    const apiKey = useAppSelector((state) => state.setting.apiKey);
+    const {
+        handleClickSubmit,
+        handleClickRegenerate,
+        setStopGenerating,
+        userInput,
+        setUserInput,
+        apiKey,
+        loading,
+    } = useChat({
+        chatId: chatId,
+    });
+    // const isLoading = useAppSelector((state) => state.messages.loading.status);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserInput(event.target.value);
     };
 
-    const handleSubmit = async () => {
-        generateReply(userInput);
-        setUserInput('');
-    };
-    const handleRegenerate = () => {
-        regenerate();
-    };
+    // const handleSubmit = async () => {
+    //     generateReply(userInput);
+    //     setUserInput('');
+    // };
+
     const handleStopGenerating = () => {
         setStopGenerating();
     };
@@ -36,7 +41,7 @@ export default React.memo(function Input({ chatId }: Props) {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            handleSubmit();
+            handleClickSubmit(e);
         }
     };
 
@@ -61,7 +66,7 @@ export default React.memo(function Input({ chatId }: Props) {
     return (
         <div className="mb-4 flex w-10/12 max-w-3xl flex-grow flex-col lg:w-9/12">
             <div className="my-2 flex justify-center gap-2">
-                {isLoading ? (
+                {loading ? (
                     <Button
                         onClick={handleStopGenerating}
                         Icon={HiOutlineStopCircle}
@@ -73,7 +78,7 @@ export default React.memo(function Input({ chatId }: Props) {
                     />
                 ) : (
                     <Button
-                        onClick={handleRegenerate}
+                        onClick={handleClickRegenerate}
                         Icon={HiArrowPath}
                         size="sm"
                         text={'Regenerate'}
@@ -101,7 +106,7 @@ export default React.memo(function Input({ chatId }: Props) {
                     className="m-0 max-h-[20rem] w-full resize-none self-stretch bg-transparent px-2 py-2 outline-none"
                 />
                 <Button
-                    onClick={handleSubmit}
+                    onClick={handleClickSubmit}
                     disabled={!userInput}
                     Icon={FiSend}
                     size="md"

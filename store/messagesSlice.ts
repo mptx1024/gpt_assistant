@@ -71,7 +71,10 @@ export const {
 } = messageAdapter.getSelectors((state: RootState) => state.messages);
 
 export const selectChatMessages = createSelector(
-    [(state) => Object.values(state.messages.entities) as Message[], (state, chatId) => chatId],
+    [
+        selectAllMessages,
+        (state, chatId) => chatId,
+    ],
     (allMessages, chatId) =>
         allMessages
             .filter((message) => message.chatId === chatId)

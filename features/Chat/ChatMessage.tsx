@@ -42,7 +42,7 @@ export default function ChatMessage({ messageId, generateReply }: Props) {
         setIsEditing(true);
     };
 
-    const handleSaveChanges = () => {
+    const handleClickSave = () => {
         // change chat history in store
         dispatch(removeMessageUpTo({ messageId }));
         // then regenerate reply
@@ -76,7 +76,7 @@ export default function ChatMessage({ messageId, generateReply }: Props) {
                             <Textarea value={editedContent} onChange={handleEditContent} />
                             <div className="mt-1 flex h-8 justify-end gap-2">
                                 <Button
-                                    onClick={handleSaveChanges}
+                                    onClick={handleClickSave}
                                     size="sm"
                                     text="Save & Submit"
                                     shadow={true}

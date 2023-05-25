@@ -28,6 +28,7 @@ export const chatsSlice = createSlice({
             state.currentChatId = action.payload;
         },
         removeChat: (state, action: PayloadAction<string>) => {
+            // TODO: use chatsAdapter.removeOne()
             const chatIdToRemove = action.payload;
             state.ids = state.ids.filter((id) => id !== chatIdToRemove);
             delete state.entities[chatIdToRemove];
