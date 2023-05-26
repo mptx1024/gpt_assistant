@@ -14,28 +14,25 @@ export default React.memo(function Input({ chatId }: Props) {
     const {
         handleClickSubmit,
         handleClickRegenerate,
-        setStopGenerating,
-        userInput,
-        setUserInput,
+        handleInputChange,
+        stopGenerating,
         apiKey,
-        loading,
+        userInput,
+        loading
     } = useChat({
         chatId: chatId,
     });
-    // const isLoading = useAppSelector((state) => state.messages.loading.status);
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUserInput(event.target.value);
-    };
+    // const isLoading = useAppSelector((state) => state.messages.loading.status);
 
     // const handleSubmit = async () => {
     //     generateReply(userInput);
     //     setUserInput('');
     // };
 
-    const handleStopGenerating = () => {
-        setStopGenerating();
-    };
+    // const handleStopGenerating = () => {
+    //     // setStopGenerating();
+    // };
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -68,7 +65,7 @@ export default React.memo(function Input({ chatId }: Props) {
             <div className="my-2 flex justify-center gap-2">
                 {loading ? (
                     <Button
-                        onClick={handleStopGenerating}
+                        onClick={stopGenerating}
                         Icon={HiOutlineStopCircle}
                         size="sm"
                         text={'Stop Generating'}

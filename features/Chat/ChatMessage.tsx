@@ -12,19 +12,23 @@ import { selectMessageById } from '@/store/messagesSlice';
 import { Message } from '@/types';
 import { copyToClipboard } from '@/utils/chats';
 
+import useChat from './hooks/useChat';
 import Markdown from './Markdown';
 
 interface Props {
     messageId: string;
-    generateReply: (content: string) => void;
+    chatId: string;
+    // generateReply: (content: string) => void;
 }
 
-export default function ChatMessage({ messageId, generateReply }: Props) {
+export default function ChatMessage({ messageId, chatId }: Props) {
     const [isCopied, setIsCopied] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [editedContent, setEditedContent] = useState('');
+    // const [editedContent, setEditedContent] = useState('');
     const dispatch = useAppDispatch();
-
+    const { handleClickSubmit, userInput, setUserInput, handleInputChange } = useChat({
+        chatId,
+    });
     const message: Message | undefined = useAppSelector((state) =>
         selectMessageById(state, messageId)
     );
@@ -34,21 +38,22 @@ export default function ChatMessage({ messageId, generateReply }: Props) {
     const handleCopyToClipboard = async () => {
         await copyToClipboard(message.content, setIsCopied);
     };
-    const handleEditContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setEditedContent(e.target.value);
-    };
+    // const handleEditContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    //     setEditedContent(e.target.value);
+    // };
     const handleEdit = () => {
-        setEditedContent(message.content);
+        setUserInput(message.content);
         setIsEditing(true);
     };
 
-    const handleClickSave = () => {
+    const handleClickSave = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         // change chat history in store
         dispatch(removeMessageUpTo({ messageId }));
         // then regenerate reply
-        generateReply(editedContent);
+        handleClickSubmit(e);
         setIsEditing(false);
-        setEditedContent('');
+        // setUserInput('');
     };
 
     const handleCancel = () => {
@@ -73,7 +78,7 @@ export default function ChatMessage({ messageId, generateReply }: Props) {
                         <Markdown message={message} />
                     ) : (
                         <div className="">
-                            <Textarea value={editedContent} onChange={handleEditContent} />
+                            <Textarea value={userInput} onChange={handleInputChange} />
                             <div className="mt-1 flex h-8 justify-end gap-2">
                                 <Button
                                     onClick={handleClickSave}

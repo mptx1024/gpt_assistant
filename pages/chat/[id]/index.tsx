@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import { MemoizedChatParamsCard } from '@/components/settings/ChatSetting';
 import ChatMessage from '@/features/Chat/ChatMessage';
-import useChat from '@/features/Chat/hooks/useChat';
 import Input from '@/features/Chat/Input';
 import { selectChatById } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
@@ -13,13 +12,13 @@ export default function DynamicChatPage() {
     const router = useRouter();
     const { id } = router.query;
     const chatId = typeof id === 'string' ? id : '';
-
-    const chat = useAppSelector((state) => selectChatById(state, id as string));
+    //TODO: only fetch chat Params, not entire chat
+    const chat = useAppSelector((state) => selectChatById(state, chatId as string));
     const isLoading = useAppSelector((state) => state.messages.loading.status);
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const messageBlockRef = useRef<HTMLDivElement>(null);
 
-    const { generateReply } = useChat({ chatId: chatId });
+    // const { generateReply } = useChat({ chatId: chatId });
 
     // const messages: Message[] | undefined = chat?.messages;
 
@@ -53,7 +52,8 @@ export default function DynamicChatPage() {
                     <ChatMessage
                         key={Math.random()}
                         messageId={messageId}
-                        generateReply={generateReply}
+                        chatId={chatId}
+                        // generateReply={generateReply}
                     />
                 ))}
                 <div ref={lastMessageRef} />
