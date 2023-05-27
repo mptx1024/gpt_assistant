@@ -23,7 +23,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload, apiKey?: string
             // callback
             function onParse(event: ParsedEvent | ReconnectInterval) {
                 if (event.type === 'event') {
-                    console.log(`event: ${JSON.stringify(event, null, 2)}`);
+                    // console.log(`event: ${JSON.stringify(event, null, 2)}`);
 
                     const data = event.data;
                     // https://beta.openai.com/docs/api-reference/completions/create#completions/create-stream
@@ -33,7 +33,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload, apiKey?: string
                     }
                     try {
                         const json = JSON.parse(data);
-                        console.log(`json: ${JSON.stringify(json, null, 2)}`);
+                        // console.log(`json: ${JSON.stringify(json, null, 2)}`);
 
                         const text = json.choices[0].delta?.content || '';
                         if (counter < 2 && (text.match(/\n/) || []).length) {
@@ -63,4 +63,3 @@ export async function OpenAIStream(payload: OpenAIStreamPayload, apiKey?: string
 
     return stream;
 }
-

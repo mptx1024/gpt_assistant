@@ -2,8 +2,19 @@ import Router from 'next/router';
 import { v4 as uuid } from 'uuid';
 
 import { store } from '@/store';
-import { addChat, selectCurrentChat, setCurrentChat, setIsLoading } from '@/store/chatsSlice';
-import { addMessage, selectChatMessages, updateMessage } from '@/store/messagesSlice';
+import {
+    addChat,
+    removeMessageUpTo,
+    selectCurrentChat,
+    setCurrentChat,
+    setIsLoading,
+} from '@/store/chatsSlice';
+import {
+    addMessage,
+    selectChatMessages,
+    selectMessageById,
+    updateMessage,
+} from '@/store/messagesSlice';
 import { getApiKey, getAppSetting } from '@/store/settingSlice';
 import { Chat, Message, Role } from '@/types';
 import { errorMessage } from './constant';
@@ -75,9 +86,9 @@ export const abortController = {
 
 export interface generateReplyProp {
     userInput: string;
-    onController?: (controller: AbortController) => void;
+    addController?: (controller: AbortController) => void;
 }
-export const generateReply = async ({ userInput, onController }: generateReplyProp) => {
+export const generateReply = async ({ userInput, addController }: generateReplyProp) => {
     const chat = selectCurrentChat(store.getState());
     const apiKey = getApiKey(store.getState());
     const chatId = chat!.id;
@@ -94,7 +105,7 @@ export const generateReply = async ({ userInput, onController }: generateReplyPr
 
     const OpenAIMessages = selectChatMessages(store.getState(), chat?.id);
     const controller = new AbortController();
-    onController?.(controller);
+    addController?.(controller);
     controller.signal.onabort = () => {
         store.dispatch(setIsLoading(false));
     };
@@ -162,4 +173,21 @@ export const generateReply = async ({ userInput, onController }: generateReplyPr
     }
 
     store.dispatch(setIsLoading(false));
+};
+
+export const regenerate = async () => {
+    const chat = selectCurrentChat(store.getState());
+    const lastUserMessageId = chat?.messages[chat.messages.length - 2];
+    if (lastUserMessageId) {
+        const lastUserMessage = selectMessageById(store.getState(), lastUserMessageId);
+        store.dispatch(removeMessageUpTo({ messageId: lastUserMessageId }));
+        if (lastUserMessage) {
+            await generateReply({
+                userInput: lastUserMessage.content,
+                addController(controller) {
+                    abortController.setController(chat.id, controller);
+                },
+            });
+        }
+    }
 };

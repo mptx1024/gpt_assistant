@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { FiSend } from 'react-icons/fi';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
@@ -12,44 +12,18 @@ type Props = {
 
 export default React.memo(function Input({ chatId }: Props) {
     const {
+        apiKey,
+        userInput,
+        loading,
+        textareaRef,
         handleClickSubmit,
         handleClickRegenerate,
         handleInputChange,
-        stopGenerating,
-        apiKey,
-        userInput,
-        loading
+        handleClickStopGenerating,
+        handleKeyDown,
     } = useChat({
         chatId: chatId,
     });
-
-    // const isLoading = useAppSelector((state) => state.messages.loading.status);
-
-    // const handleSubmit = async () => {
-    //     generateReply(userInput);
-    //     setUserInput('');
-    // };
-
-    // const handleStopGenerating = () => {
-    //     // setStopGenerating();
-    // };
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleClickSubmit(e);
-        }
-    };
-
-    useEffect(() => {
-        if (textareaRef.current) {
-            textareaRef.current.style.height = 'inherit';
-            // const scrollHeight = textareaRef.current.scrollHeight;
-            // textareaRef.current.style.height = scrollHeight + "px";
-            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-        }
-    }, [userInput]);
 
     if (!apiKey) {
         return (
@@ -65,7 +39,7 @@ export default React.memo(function Input({ chatId }: Props) {
             <div className="my-2 flex justify-center gap-2">
                 {loading ? (
                     <Button
-                        onClick={stopGenerating}
+                        onClick={handleClickStopGenerating}
                         Icon={HiOutlineStopCircle}
                         size="sm"
                         text={'Stop Generating'}
