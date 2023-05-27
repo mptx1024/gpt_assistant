@@ -1,64 +1,38 @@
-import { useState } from 'react';
-
 import clsx from 'clsx';
 import { HiOutlineClipboard, HiPencilSquare } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
 
 import Button from '@/components/Button';
 import { Textarea } from '@/components/InputField';
-import { removeMessageUpTo } from '@/store/chatsSlice';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { selectMessageById } from '@/store/messagesSlice';
-import { Message } from '@/types';
-import { copyToClipboard } from '@/utils/chats';
 
-import useChat from './hooks/useChat';
 import Markdown from './Markdown';
+import { useMessage } from './hooks/useMessage';
 
 interface Props {
     messageId: string;
     chatId: string;
-    // generateReply: (content: string) => void;
 }
 
-export default function ChatMessage({ messageId, chatId }: Props) {
-    const [isCopied, setIsCopied] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    // const [editedContent, setEditedContent] = useState('');
-    const dispatch = useAppDispatch();
-    const { handleClickSubmit, userInput, setUserInput, handleInputChange } = useChat({
-        chatId,
+export default function ChatMessage({ messageId }: Props) {
+
+    const {
+        message,
+        userInput,
+        isCopied,
+        isEditing,
+        handleClickCopy,
+        handleClickEdit,
+        handleClickSaveSubmit,
+        handleKeyDown,
+        handleClickCancel,
+        handleInputChange,
+    } = useMessage({
+        messageId,
     });
-    const message: Message | undefined = useAppSelector((state) =>
-        selectMessageById(state, messageId)
-    );
+
     if (!message) {
         return null;
     }
-    const handleCopyToClipboard = async () => {
-        await copyToClipboard(message.content, setIsCopied);
-    };
-    // const handleEditContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    //     setEditedContent(e.target.value);
-    // };
-    const handleEdit = () => {
-        setUserInput(message.content);
-        setIsEditing(true);
-    };
-
-    const handleClickSave = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        // change chat history in store
-        dispatch(removeMessageUpTo({ messageId }));
-        // then regenerate reply
-        handleClickSubmit(e);
-        setIsEditing(false);
-        // setUserInput('');
-    };
-
-    const handleCancel = () => {
-        setIsEditing(false);
-    };
     const messageContainerClasses = clsx('group animate-slideInFromBottom', {
         'bg-gray-base brightness-[0.97] dark:bg-gray-inverted dark:brightness-[1.15]':
             message.role === 'user',
@@ -78,10 +52,14 @@ export default function ChatMessage({ messageId, chatId }: Props) {
                         <Markdown message={message} />
                     ) : (
                         <div className="">
-                            <Textarea value={userInput} onChange={handleInputChange} />
+                            <Textarea
+                                value={userInput}
+                                onChange={handleInputChange}
+                                onKeyDown={handleKeyDown}
+                            />
                             <div className="mt-1 flex h-8 justify-end gap-2">
                                 <Button
-                                    onClick={handleClickSave}
+                                    onClick={handleClickSaveSubmit}
                                     size="sm"
                                     text="Save & Submit"
                                     shadow={true}
@@ -89,7 +67,7 @@ export default function ChatMessage({ messageId, chatId }: Props) {
                                 />
 
                                 <Button
-                                    onClick={handleCancel}
+                                    onClick={handleClickCancel}
                                     text="Cancel"
                                     shadow={true}
                                     border={true}
@@ -104,7 +82,7 @@ export default function ChatMessage({ messageId, chatId }: Props) {
                                 {!isCopied ? (
                                     <Button
                                         Icon={HiOutlineClipboard}
-                                        onClick={handleCopyToClipboard}
+                                        onClick={handleClickCopy}
                                         size="md"
                                         iconEffect={true}
                                     />
@@ -119,7 +97,7 @@ export default function ChatMessage({ messageId, chatId }: Props) {
                                 {message.role === 'user' && (
                                     <Button
                                         Icon={HiPencilSquare}
-                                        onClick={handleEdit}
+                                        onClick={handleClickEdit}
                                         size="md"
                                         iconEffect={true}
                                     />

@@ -69,6 +69,7 @@ startAppListening({
     },
 });
 
+// TODO: name chat title
 // startAppListening({
 //     predicate: (action, currentState, previousState) => {
 //         return (
@@ -105,6 +106,7 @@ startAppListening({
     },
 });
 
+// Update msgs 
 startAppListening({
     matcher: isAnyOf(
         addMessage,
@@ -114,7 +116,7 @@ startAppListening({
         setIsLoading
     ),
     effect: async (action, listenerApi) => {
-        console.log(`in middleware. ${JSON.stringify(action)}`);
+        // console.log(`in middleware. ${JSON.stringify(action)}`);
 
         const messages: Message[] = selectAllMessages(listenerApi.getState());
         // if (action.type === 'messages/setIsLoading' && action.playload === false) {
@@ -123,3 +125,5 @@ startAppListening({
         await idb.set('messages', messages);
     },
 });
+
+//

@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-
 import { selectIsLoading } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 import { getApiKey } from '@/store/settingSlice';
 import { abortController, generateReply, regenerate } from '@/utils/chats';
+import { useEffect, useRef, useState } from 'react';
 
 interface Props {
     chatId: string;
@@ -18,13 +17,13 @@ export default function useChat({ chatId }: Props) {
 
     const handleClickSubmit = async (e: React.MouseEvent | React.KeyboardEvent) => {
         e.preventDefault();
+        setUserInput('');
         await generateReply({
             userInput,
             addController(controller) {
                 abortController.setController(chatId, controller);
             },
         });
-        setUserInput('');
     };
     const handleClickRegenerate = (e: React.MouseEvent) => {
         e.preventDefault();

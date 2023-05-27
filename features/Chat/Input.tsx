@@ -10,7 +10,7 @@ type Props = {
     chatId: string;
 };
 
-export default React.memo(function Input({ chatId }: Props) {
+export default function Input({ chatId }: Props) {
     const {
         apiKey,
         userInput,
@@ -24,6 +24,7 @@ export default React.memo(function Input({ chatId }: Props) {
     } = useChat({
         chatId: chatId,
     });
+    console.log(`in Input: current chat ID: ${chatId}`);
 
     if (!apiKey) {
         return (
@@ -87,4 +88,4 @@ export default React.memo(function Input({ chatId }: Props) {
             </div>
         </div>
     );
-});
+};

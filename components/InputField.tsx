@@ -39,6 +39,7 @@ interface TexareaProps {
     placeholder?: string;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
     styles?: string;
     rows?: number;
     // [x: string]: any;
@@ -66,6 +67,7 @@ export function Textarea(props: TexareaProps) {
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
+            onKeyDown={props.onKeyDown}
             rows={props.rows}
         />
     );

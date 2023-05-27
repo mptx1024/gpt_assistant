@@ -92,6 +92,8 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
     const chat = selectCurrentChat(store.getState());
     const apiKey = getApiKey(store.getState());
     const chatId = chat!.id;
+    console.log(`in generateReply. chatID: ${chatId}`);
+
     store.dispatch(setIsLoading(true));
 
     const userMessage: Message = {
