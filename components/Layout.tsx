@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Navbar from '@/components/Navbar/Navbar';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import useWindowDimensions from '@/hooks/useWindowDimension';
-import { setAllChats } from '@/store/chatsSlice';
+import { setAllChats, setCurrentChat } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setAllMessages } from '@/store/messagesSlice';
 import { setAllRoles } from '@/store/rolesSlice';
@@ -44,6 +44,7 @@ export default function Layout({ children }: Props) {
             const chats: Chat[] = await idb.get('chats');
             if (chats) {
                 dispatch(setAllChats(chats));
+                dispatch(setCurrentChat(chats[0]?.id));
             }
             setIsLoading(false);
             const messages: Message[] = await idb.get('messages');

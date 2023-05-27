@@ -1,4 +1,4 @@
-import { PayloadAction, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createEntityAdapter, createSelector, createSlice } from '@reduxjs/toolkit';
 
 import { Chat, ModelParams, Role } from '@/types';
 
@@ -10,10 +10,9 @@ const chatsAdapter = createEntityAdapter<Chat>({
     selectId: (chat: Chat) => chat.id,
     sortComparer: (a, b) => b.created - a.created,
 });
-
 //TODO: fetch chats from indexedDB here
 //https:redux-toolkit.js.org/api/createEntityAdapter#getinitialstate
-const initialState = chatsAdapter.getInitialState({ currentChatId: '' });
+const initialState = chatsAdapter.getInitialState({ currentChat: { id: '', isLoading: false } });
 
 export const chatsSlice = createSlice({
     name: 'chats',
@@ -25,18 +24,21 @@ export const chatsSlice = createSlice({
         removeAllChats: chatsAdapter.removeAll,
 
         setCurrentChat: (state, action: PayloadAction<string>) => {
-            state.currentChatId = action.payload;
+            console.log(`in setCurrentChat: ${action.payload}`);
+            state.currentChat.id = action.payload;
+        },
+
+        setIsLoading: (state, action: PayloadAction<boolean>) => {
+            state.currentChat.isLoading = action.payload;
         },
         removeChat: (state, action: PayloadAction<string>) => {
-            // TODO: use chatsAdapter.removeOne()
-            const chatIdToRemove = action.payload;
-            state.ids = state.ids.filter((id) => id !== chatIdToRemove);
-            delete state.entities[chatIdToRemove];
-            state.currentChatId = state.ids.length > 0 ? state.ids[0].toString() : '';
+            chatsAdapter.removeOne(state, action.payload);
+            state.currentChat.id = state.ids.length > 0 ? state.ids[0].toString() : '';
+            console.log(`in removeChat -> ${state.currentChat.id}; `);
         },
 
         removeMessageUpTo: (state, action: PayloadAction<{ messageId: string }>) => {
-            const currentChat = state.entities[state.currentChatId];
+            const currentChat = state.entities[state.currentChat.id];
             if (currentChat) {
                 const idx = currentChat.messages.indexOf(action.payload.messageId);
                 if (idx !== -1) {
@@ -91,6 +93,7 @@ export const {
     updateRole,
     updateChatTitle,
     setCurrentChat,
+    setIsLoading,
 } = chatsSlice.actions;
 export default chatsSlice.reducer;
 
@@ -100,3 +103,13 @@ export const {
     selectById: selectChatById,
     selectAll: selectAllChats,
 } = chatsAdapter.getSelectors((state: RootState) => state.chats);
+
+export const selectIsLoading = createSelector(
+    (state: RootState) => state,
+    (state: RootState) => state.chats.currentChat.isLoading
+);
+export const selectCurrentChat = createSelector(
+    (state: RootState) => state,
+    (state: RootState) => state.chats.currentChat.id,
+    (state, chatId) => selectChatById(state, chatId)
+);

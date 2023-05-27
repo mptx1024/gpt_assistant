@@ -12,11 +12,14 @@ const messageAdapter = createEntityAdapter<Message>({
 
 export const messagesSlice = createSlice({
     name: 'messages',
-    initialState: messageAdapter.getInitialState({ loading: { status: false, messageId: '' } }),
+    initialState: messageAdapter.getInitialState(),
     reducers: {
         addMessage: messageAdapter.addOne,
         setAllMessages: messageAdapter.setAll,
         removeMessage: messageAdapter.removeOne,
+        removeMessages: (state, action: PayloadAction<string[]>) => {
+            messageAdapter.removeMany(state, action.payload);
+        },
         updateMessage: (
             state,
             action: PayloadAction<{ messageId: string; chunkValue: string }>
@@ -27,9 +30,6 @@ export const messagesSlice = createSlice({
                 existingMessage.content += chunkValue;
             }
         },
-        setIsLoading: (state, action: PayloadAction<{ status: boolean; messageId: string }>) => {
-            state.loading = action.payload;
-        },
     },
     extraReducers: (builder) => {
         builder.addCase(removeChat, (state, action) => {
@@ -37,6 +37,7 @@ export const messagesSlice = createSlice({
             const msgIdsToRemove = Object.values(state.entities)
                 .filter((message) => message && message.chatId === chatId)
                 .map((message) => message!.id);
+
             messageAdapter.removeMany(state, msgIdsToRemove);
         });
         builder.addCase(
@@ -60,7 +61,7 @@ export const messagesSlice = createSlice({
     },
 });
 
-export const { addMessage, updateMessage, setAllMessages, removeMessage, setIsLoading } =
+export const { addMessage, updateMessage, setAllMessages, removeMessage, removeMessages } =
     messagesSlice.actions;
 export default messagesSlice.reducer;
 
@@ -71,10 +72,7 @@ export const {
 } = messageAdapter.getSelectors((state: RootState) => state.messages);
 
 export const selectChatMessages = createSelector(
-    [
-        selectAllMessages,
-        (state, chatId) => chatId,
-    ],
+    [selectAllMessages, (state, chatId) => chatId],
     (allMessages, chatId) =>
         allMessages
             .filter((message) => message.chatId === chatId)

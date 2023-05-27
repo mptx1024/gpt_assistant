@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { MemoizedChatParamsCard } from '@/components/settings/ChatSetting';
 import ChatMessage from '@/features/Chat/ChatMessage';
 import Input from '@/features/Chat/Input';
-import { selectChatById } from '@/store/chatsSlice';
+import { selectChatById, selectIsLoading } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 
 export default function DynamicChatPage() {
@@ -14,7 +14,7 @@ export default function DynamicChatPage() {
     const chatId = typeof id === 'string' ? id : '';
     //TODO: only fetch chat Params, not entire chat
     const chat = useAppSelector((state) => selectChatById(state, chatId as string));
-    const isLoading = useAppSelector((state) => state.messages.loading.status);
+    const isLoading = useAppSelector(selectIsLoading);
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const messageBlockRef = useRef<HTMLDivElement>(null);
 
