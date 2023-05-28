@@ -19,6 +19,7 @@ export const store = configureStore({
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+    devTools: process.env.NODE_ENV !== 'production',
 });
 
 // Update setting to localStorage

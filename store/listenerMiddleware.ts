@@ -74,29 +74,7 @@ startAppListening({
     },
 });
 
-// TODO: name chat title
-// startAppListening({
-//     predicate: (action, currentState, previousState) => {
-//         return (
-//             currentState.setting.defaultChatSetting.autoNameChat &&
-//             action.type === 'messages/setIsLoading' &&
-//             // currentState.messages.loading.status !== previousState.messages.loading.status &&
-//             // !currentState.messages.loading.status
-//         );
-//     },
-//     effect: async (action, listenerApi) => {
-//         // TODO: build selectMostRecentReplyMessage -> get most recent reply from current chat
-//         // const mostRecentReplyMessage =
-//         //     listenerApi.getState().messages.entities[action.payload.messageId];
-//         // if (mostRecentReplyMessage && mostRecentReplyMessage.isFirst) {
-//         //     // console.log(`in middleware. ${JSON.stringify(mostRecentReplyMessage)}`);
-//         //     const title: string = await createTitle(mostRecentReplyMessage.content);
-//         //     // console.log('🚀 ~ file: listenerMiddleware.ts:71 ~ effect: ~ title:', title);
-//         //     listenerApi.dispatch(updateChatTitle({ chatId: mostRecentReplyMessage.chatId, title }));
-//         // }
-//     },
-// });
-
+// Update chat title 
 startAppListening({
     predicate: (action, currentState, previousState) => {
         return (
@@ -161,3 +139,4 @@ startAppListening({
         }
     },
 });
+

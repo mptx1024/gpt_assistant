@@ -18,7 +18,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!chat.modelParams) {
         chat.modelParams = defaultModelParams;
-    }
+    }x
     // if (!OpenAIMessages) {
     //     console.log('No messages provided');
     //     return new Response('No messages in the request', { status: 400 });
