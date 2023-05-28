@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from '@/components/Button';
 import { Input } from '@/components/InputField';
-import { useAppSelector } from '@/store/hooks';
-import { useAppDispatch } from '@/store/hooks';
-import { setAppSetting, getAppSetting } from '@/store/settingSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectAppSetting, setAppSetting } from '@/store/settingSlice';
 import { OpenAIModels } from '@/types';
 
 import ModelParamsSection from './ModelParamsSection';
@@ -15,7 +13,7 @@ interface Props {
 }
 function AppSetting({ toggleModal }: Props) {
     const dispatch = useAppDispatch();
-    let currentSetting = useAppSelector(getAppSetting);
+    let currentSetting = useAppSelector(selectAppSetting);
     const [key, setKey] = useState(currentSetting.apiKey || '');
 
     // Chat Setting

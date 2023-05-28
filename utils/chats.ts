@@ -15,7 +15,7 @@ import {
     selectMessageById,
     updateMessage,
 } from '@/store/messagesSlice';
-import { getApiKey, getAppSetting } from '@/store/settingSlice';
+import { selectApiKey, selectAppSetting } from '@/store/settingSlice';
 import { Chat, Message, Role } from '@/types';
 import { errorMessage } from './constant';
 
@@ -35,7 +35,7 @@ export const copyToClipboard = async (
 };
 
 export const createNewChat = (selectedRole?: Role): string => {
-    const appSetting = getAppSetting(store.getState());
+    const appSetting = selectAppSetting(store.getState());
     const newChat: Chat = {
         id: uuid(),
         messages: [],
@@ -90,7 +90,7 @@ export interface generateReplyProp {
 }
 export const generateReply = async ({ userInput, addController }: generateReplyProp) => {
     const chat = selectCurrentChat(store.getState());
-    const apiKey = getApiKey(store.getState());
+    const apiKey = selectApiKey(store.getState());
     const chatId = chat!.id;
     console.log(`in generateReply. chatID: ${chatId}`);
 
@@ -103,7 +103,16 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
         role: 'user',
         content: userInput,
     };
+    const reply: Message = {
+        id: uuid(),
+        chatId,
+        created: Date.now(),
+        role: 'assistant',
+        content: '',
+        isFirst: chat?.messages.length === 0 ? true : false, // first reply
+    };
     store.dispatch(addMessage(userMessage));
+    store.dispatch(addMessage(reply));
 
     const OpenAIMessages = selectChatMessages(store.getState(), chat?.id);
     const controller = new AbortController();
@@ -120,15 +129,7 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
             body: JSON.stringify({ chat, OpenAIMessages, apiKey }),
             signal: controller.signal,
         });
-        const reply: Message = {
-            id: uuid(),
-            chatId,
-            created: Date.now(),
-            role: 'assistant',
-            content: '',
-            isFirst: chat?.messages.length === 1 ? true : false, // first reply (for generating title)
-        };
-        store.dispatch(addMessage(reply));
+
 
         if (!response.ok) {
             let errorMsg;

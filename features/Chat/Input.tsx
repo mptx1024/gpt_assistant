@@ -24,7 +24,7 @@ export default function Input({ chatId }: Props) {
     } = useChat({
         chatId: chatId,
     });
-    console.log(`in Input: current chat ID: ${chatId}`);
+    // console.log(`in Input: current chat ID: ${chatId}`);
 
     if (!apiKey) {
         return (

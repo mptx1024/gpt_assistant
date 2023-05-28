@@ -75,6 +75,12 @@ export const selectChatMessages = createSelector(
     [selectAllMessages, (state, chatId) => chatId],
     (allMessages, chatId) =>
         allMessages
-            .filter((message) => message.chatId === chatId)
+            .filter((message) => message.chatId === chatId && message.content.length > 0)
             .map((message) => ({ role: message.role, content: message.content } as OpenAIMessage))
+);
+
+export const selectMostRecentReplyMessage = createSelector(
+    (state: RootState) => state.messages.ids[state.messages.ids.length - 1],
+    (state: RootState) => state.messages.entities,
+    (lastMessageId, messages) => messages[lastMessageId]
 );

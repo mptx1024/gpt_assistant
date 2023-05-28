@@ -13,7 +13,12 @@ import {
     updateModelParams,
     updateRole,
 } from './chatsSlice';
-import { addMessage, removeMessage, selectAllMessages } from './messagesSlice';
+import {
+    addMessage,
+    removeMessage,
+    selectAllMessages,
+    selectMostRecentReplyMessage,
+} from './messagesSlice';
 import {
     removeAllRoles,
     removeOneRole,
@@ -24,6 +29,7 @@ import {
 
 import type { TypedAddListener, TypedStartListening } from '@reduxjs/toolkit';
 
+import { createTitle } from '@/utils/chats';
 import { AppDispatch, RootState, store } from './';
 export const listenerMiddleware = createListenerMiddleware();
 
@@ -38,7 +44,7 @@ startAppListening({
     matcher: isAnyOf(
         addChat,
         addMessage,
-        // removeChat,
+        removeChat,
         removeAllChats,
         updateChatTitle,
         removeMessageUpTo,
@@ -47,9 +53,9 @@ startAppListening({
     ),
 
     effect: async (action, listenerApi) => {
-        // if (action.type === 'chats/removeAllChats') {
-        //     await idb.del('chats');
-        // }
+        if (removeAllChats.match(action)) {
+            await idb.del('chats');
+        }
 
         // if (action.type === 'messages/setIsLoading' && action.payload.status === false) {
         //     const mostRecentReplyMessage =
@@ -61,10 +67,10 @@ startAppListening({
         //         console.log('🚀 ~ file: listenerMiddleware.ts:71 ~ effect: ~ title:', title);
         //     }
         // }
-        // else {
-        const chats: Chat[] = selectAllChats(store.getState());
-        await idb.set('chats', chats);
-        // }
+        else {
+            const chats: Chat[] = selectAllChats(store.getState());
+            await idb.set('chats', chats);
+        }
     },
 });
 
@@ -91,6 +97,27 @@ startAppListening({
 //     },
 // });
 
+startAppListening({
+    predicate: (action, currentState, previousState) => {
+        return (
+            setIsLoading.match(action) &&
+            currentState.setting.defaultChatSetting.autoNameChat &&
+            !currentState.chats.currentChat.isLoading
+        );
+    },
+    effect: async (action, listenerApi) => {
+        const mostRecentReplyMessage = selectMostRecentReplyMessage(listenerApi.getState());
+        if (mostRecentReplyMessage && mostRecentReplyMessage.isFirst) {
+            // console.log(
+            //     `in middleware->naming. lastReplyMessage: ${JSON.stringify(mostRecentReplyMessage)}`
+            // );
+            const title: string = await createTitle(mostRecentReplyMessage.content);
+            // console.log('🚀 ~ file: listenerMiddleware.ts:71 ~ effect: ~ title:', title);
+            listenerApi.dispatch(updateChatTitle({ chatId: mostRecentReplyMessage.chatId, title }));
+        }
+    },
+});
+
 // Update roles in IndexedDB
 startAppListening({
     matcher: isAnyOf(setOneRole, updateOneRole, removeOneRole, removeAllRoles),
@@ -107,15 +134,9 @@ startAppListening({
 
 // Update msgs
 startAppListening({
-    matcher: isAnyOf(
-        addMessage,
-        removeMessage,
-        removeMessageUpTo,
-        // removeChat,
-        setIsLoading
-    ),
+    matcher: isAnyOf(addMessage, removeMessage, removeMessageUpTo, removeChat, setIsLoading),
     effect: async (action, listenerApi) => {
-        // console.log(`in middleware. ${JSON.stringify(action)}`);
+        console.log(`in middleware->updateMsg ${JSON.stringify(action)}`);
 
         const messages: Message[] = selectAllMessages(listenerApi.getState());
         // if (action.type === 'messages/setIsLoading' && action.playload === false) {

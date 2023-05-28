@@ -1,6 +1,6 @@
 import { selectIsLoading } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
-import { getApiKey } from '@/store/settingSlice';
+import { selectApiKey } from '@/store/settingSlice';
 import { abortController, generateReply, regenerate } from '@/utils/chats';
 import { useEffect, useRef, useState } from 'react';
 
@@ -11,7 +11,7 @@ interface Props {
 export default function useChat({ chatId }: Props) {
     // console.log(`in useChat. chatId: ${chatId}`);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const apiKey = useAppSelector(getApiKey);
+    const apiKey = useAppSelector(selectApiKey);
     const [userInput, setUserInput] = useState<string>('');
     const loading = useAppSelector(selectIsLoading);
 

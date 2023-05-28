@@ -15,7 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         messages: [
             {
                 role: 'user',
-                content: 'summary this content in less than 7 words: ' + content,
+                content:
+                    'Craft A Topic Title Without Any Punctuation For Following Content Using Less Than 6 Words. Content: ' +
+                    content,
             },
         ],
         max_tokens: 10,
