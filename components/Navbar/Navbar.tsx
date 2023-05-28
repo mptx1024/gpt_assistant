@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
-
-import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
-import { HiMoon, HiOutlineSun, HiBars3, HiPlus } from 'react-icons/hi2';
+import { useRouter } from 'next/router';
+import { HiBars3, HiMoon, HiOutlineSun, HiPlus } from 'react-icons/hi2';
 import { useSelector } from 'react-redux';
 
-import { RootState } from '@/store';
-import { selectChatById } from '@/store/chatsSlice';
+import { selectCurrentChat } from '@/store/chatsSlice';
 import { createNewChat } from '@/utils/chats';
 
 import Button from '../Button';
@@ -21,8 +18,9 @@ const navbarClasses =
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
     // const { id } = router.query;
-    const chatID = useSelector((state: RootState) => state.chats.currentChatId);
-    const chat = useSelector((state: RootState) => selectChatById(state, chatID as string));
+
+    // const chatID = useSelector((state: RootState) => state.chats.currentChat.id);
+    const chat = useSelector(selectCurrentChat);
     // useEffect(() => {
     //     router.push(`/chat/${chatID}`);
     //     console.log('🚀 ~ file: Navbar.tsx:29 ~ useEffect ~ chatID:', chatID);

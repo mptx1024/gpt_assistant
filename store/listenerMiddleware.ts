@@ -1,12 +1,11 @@
-import { addListener, createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
-
 import { Chat, Message, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
-
+import { addListener, createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
+import Router from 'next/router';
 import {
     addChat,
     removeAllChats,
-    // removeChat,
+    removeChat,
     removeMessageUpTo,
     selectAllChats,
     setIsLoading,
@@ -48,9 +47,9 @@ startAppListening({
     ),
 
     effect: async (action, listenerApi) => {
-        if (action.type === 'chats/removeAllChats') {
-            await idb.del('chats');
-        }
+        // if (action.type === 'chats/removeAllChats') {
+        //     await idb.del('chats');
+        // }
 
         // if (action.type === 'messages/setIsLoading' && action.payload.status === false) {
         //     const mostRecentReplyMessage =
@@ -62,10 +61,10 @@ startAppListening({
         //         console.log('🚀 ~ file: listenerMiddleware.ts:71 ~ effect: ~ title:', title);
         //     }
         // }
-        else {
-            const chats: Chat[] = selectAllChats(store.getState());
-            await idb.set('chats', chats);
-        }
+        // else {
+        const chats: Chat[] = selectAllChats(store.getState());
+        await idb.set('chats', chats);
+        // }
     },
 });
 
@@ -106,7 +105,7 @@ startAppListening({
     },
 });
 
-// Update msgs 
+// Update msgs
 startAppListening({
     matcher: isAnyOf(
         addMessage,
@@ -126,4 +125,18 @@ startAppListening({
     },
 });
 
-//
+// Routing after delete
+startAppListening({
+    matcher: isAnyOf(removeChat, removeAllChats),
+    effect: (action, listenerApi) => {
+        const chatId =
+            listenerApi.getState().chats.ids.length > 0
+                ? listenerApi.getState().chats.ids[0]
+                : null;
+        if (chatId) {
+            Router.push(`/chat/${chatId}`);
+        } else {
+            Router.push(`/chat`);
+        }
+    },
+});
