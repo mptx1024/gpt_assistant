@@ -1,7 +1,6 @@
 import { Chat, Message, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
 import { addListener, createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
-import Router from 'next/router';
 import {
     addChat,
     removeAllChats,
@@ -19,6 +18,12 @@ import {
     selectAllMessages,
     selectMostRecentReplyMessage,
 } from './messagesSlice';
+
+import type { TypedAddListener, TypedStartListening } from '@reduxjs/toolkit';
+
+import { createTitle } from '@/utils/chats';
+import Router from 'next/router';
+import { AppDispatch, RootState, store } from './';
 import {
     removeAllRoles,
     removeOneRole,
@@ -26,11 +31,6 @@ import {
     setOneRole,
     updateOneRole,
 } from './rolesSlice';
-
-import type { TypedAddListener, TypedStartListening } from '@reduxjs/toolkit';
-
-import { createTitle } from '@/utils/chats';
-import { AppDispatch, RootState, store } from './';
 export const listenerMiddleware = createListenerMiddleware();
 
 type AppStartListening = TypedStartListening<RootState, AppDispatch>;
@@ -74,16 +74,22 @@ startAppListening({
     },
 });
 
-// Update chat title 
+// Autonaming chat
 startAppListening({
     predicate: (action, currentState, previousState) => {
         return (
             setIsLoading.match(action) &&
-            currentState.setting.defaultChatSetting.autoNameChat &&
-            !currentState.chats.currentChat.isLoading
+            action.payload === false &&
+            currentState.setting.defaultChatSetting.autoNameChat
+            // && !currentState.chats.currentChat.isLoading
         );
     },
     effect: async (action, listenerApi) => {
+        // console.log(
+        //     `inautonaming: currentState.setting.defaultChatSetting.autoNameChat: ${
+        //         listenerApi.getState().setting.defaultChatSetting.autoNameChat
+        //     }`
+        // );
         const mostRecentReplyMessage = selectMostRecentReplyMessage(listenerApi.getState());
         if (mostRecentReplyMessage && mostRecentReplyMessage.isFirst) {
             // console.log(
@@ -114,7 +120,7 @@ startAppListening({
 startAppListening({
     matcher: isAnyOf(addMessage, removeMessage, removeMessageUpTo, removeChat, setIsLoading),
     effect: async (action, listenerApi) => {
-        console.log(`in middleware->updateMsg ${JSON.stringify(action)}`);
+        // console.log(`in middleware->updateMsg ${JSON.stringify(action)}`);
 
         const messages: Message[] = selectAllMessages(listenerApi.getState());
         // if (action.type === 'messages/setIsLoading' && action.playload === false) {
@@ -139,4 +145,3 @@ startAppListening({
         }
     },
 });
-

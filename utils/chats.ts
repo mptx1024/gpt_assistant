@@ -15,8 +15,8 @@ import {
     selectMessageById,
     updateMessage,
 } from '@/store/messagesSlice';
-import { selectApiKey, selectAppSetting } from '@/store/settingSlice';
-import { Chat, Message, Role } from '@/types';
+import { selectApiKey, selectAppSetting,selectattchedMsgCount } from '@/store/settingSlice';
+import { Chat, Message, OpenAIStreamPayload, Role } from '@/types';
 import { errorMessage } from './constant';
 
 export const copyToClipboard = async (
@@ -84,17 +84,22 @@ export const abortController = {
     },
 };
 
+export const preparePayload = (payload: OpenAIStreamPayload) => {
+    // trim msg count
+};
+
 export interface generateReplyProp {
     userInput: string;
     addController?: (controller: AbortController) => void;
 }
+
 export const generateReply = async ({ userInput, addController }: generateReplyProp) => {
     const chat = selectCurrentChat(store.getState());
+    const attchedMsgCount = selectattchedMsgCount(store.getState());
+    if (!chat) return;
     const apiKey = selectApiKey(store.getState());
     const chatId = chat!.id;
     console.log(`in generateReply. chatID: ${chatId}`);
-
-    store.dispatch(setIsLoading(true));
 
     const userMessage: Message = {
         id: uuid(),
@@ -114,22 +119,38 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
     store.dispatch(addMessage(userMessage));
     store.dispatch(addMessage(reply));
 
-    const OpenAIMessages = selectChatMessages(store.getState(), chat?.id);
+    const OpenAIMessages = [
+        { role: 'system', content: chat.role.prompt },
+        ...selectChatMessages(store.getState(), chat?.id),
+    ];
+
+    //trim msg count
+    if (OpenAIMessages.length > attchedMsgCount) {
+        OpenAIMessages.splice(1, OpenAIMessages.length - attchedMsgCount);
+    }
+    const payload: OpenAIStreamPayload = {
+        ...chat.modelParams,
+        model: chat.modelParams.model.id,
+        messages: OpenAIMessages,
+    };
+    console.log(`payload: ${JSON.stringify(payload)}`);
+
     const controller = new AbortController();
     addController?.(controller);
     controller.signal.onabort = () => {
         store.dispatch(setIsLoading(false));
     };
+    store.dispatch(setIsLoading(true));
     try {
         const response = await fetch('/api/generateReply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${apiKey.trim()}`,
             },
-            body: JSON.stringify({ chat, OpenAIMessages, apiKey }),
+            body: JSON.stringify(payload),
             signal: controller.signal,
         });
-
 
         if (!response.ok) {
             let errorMsg;

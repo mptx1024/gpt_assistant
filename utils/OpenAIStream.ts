@@ -1,21 +1,25 @@
 import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser';
+import { NextRequest } from 'next/server';
 
-import { OpenAIStreamPayload } from '@/types';
+export async function OpenAIStream(req: NextRequest) {
+    const test = await req.json();
+    console.log(`in OpenAIStream: ${JSON.stringify(test, null, 2)}`);
 
-export async function OpenAIStream(payload: OpenAIStreamPayload, apiKey?: string) {
+    const authValue = req.headers.get('Authorization') ?? '';
+
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
     let counter = 0;
-    console.log(`payload: ${JSON.stringify(payload)}`);
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey ?? ''}`,
+            Authorization: authValue,
         },
         method: 'POST',
-        body: JSON.stringify(payload),
+        body: JSON.stringify(test),
     });
     if (!res.ok) {
+        console.log(`In OpenAIStream: Error: ${res.status}`);
         throw new Error(res.statusText, { cause: res.status });
     }
     const stream = new ReadableStream({
