@@ -181,7 +181,7 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
             store.dispatch(updateMessage({ messageId: reply.id, chunkValue }));
         }
 
-        console.log(`done: ${done}; controller signal: ${controller.signal.aborted}`);
+        // console.log(`done: ${done}; controller signal: ${controller.signal.aborted}`);
     } catch (err: any) {
         if (err.name === 'TimeoutError') {
             console.error('Timeout');

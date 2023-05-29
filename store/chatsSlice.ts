@@ -29,7 +29,7 @@ export const chatsSlice = createSlice({
         },
 
         setIsLoading: (state, action: PayloadAction<boolean>) => {
-            console.log(`in setIsLoading: ${action.payload}`);
+            // console.log(`in setIsLoading: ${action.payload}`);
             state.currentChat.isLoading = action.payload;
         },
         removeChat: (state, action: PayloadAction<string>) => {
@@ -113,4 +113,8 @@ export const selectCurrentChat = createSelector(
     (state: RootState) => state,
     (state: RootState) => state.chats.currentChat.id,
     (state, chatId) => selectChatById(state, chatId)
+);
+export const selectMessageIdsByChat = createSelector(
+    [(state: RootState) => state.chats.entities, (state, chatId) => chatId],
+    (entities, chatId) => entities[chatId]?.messages
 );
