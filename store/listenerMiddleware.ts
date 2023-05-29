@@ -8,9 +8,9 @@ import {
     removeMessageUpTo,
     selectAllChats,
     setIsLoading,
+    updateChatModelParams,
+    updateChatRole,
     updateChatTitle,
-    updateModelParams,
-    updateRole,
 } from './chatsSlice';
 import {
     addMessage,
@@ -48,8 +48,8 @@ startAppListening({
         removeAllChats,
         updateChatTitle,
         removeMessageUpTo,
-        updateModelParams,
-        updateRole
+        updateChatModelParams,
+        updateChatRole
     ),
 
     effect: async (action, listenerApi) => {

@@ -48,7 +48,7 @@ export const chatsSlice = createSlice({
             }
         },
         // TODO: combine updateModelParams and updateRole
-        updateModelParams: (
+        updateChatModelParams: (
             state,
             action: PayloadAction<{ chatId: string; modelParams: ModelParams }>
         ) => {
@@ -58,7 +58,7 @@ export const chatsSlice = createSlice({
                 existingChat.modelParams = modelParams;
             }
         },
-        updateRole: (state, action: PayloadAction<{ chatId: string; role: Role }>) => {
+        updateChatRole: (state, action: PayloadAction<{ chatId: string; role: Role }>) => {
             const { chatId: chatID, role } = action.payload;
             const existingChat = state.entities[chatID];
             if (existingChat) {
@@ -90,8 +90,8 @@ export const {
     removeAllChats,
     setAllChats,
     removeMessageUpTo,
-    updateModelParams,
-    updateRole,
+    updateChatModelParams,
+    updateChatRole,
     updateChatTitle,
     setCurrentChat,
     setIsLoading,

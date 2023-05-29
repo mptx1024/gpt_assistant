@@ -2,9 +2,6 @@ import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser
 import { NextRequest } from 'next/server';
 
 export async function OpenAIStream(req: NextRequest) {
-    const test = await req.json();
-    console.log(`in OpenAIStream: ${JSON.stringify(test, null, 2)}`);
-
     const authValue = req.headers.get('Authorization') ?? '';
 
     const encoder = new TextEncoder();
@@ -16,7 +13,7 @@ export async function OpenAIStream(req: NextRequest) {
             Authorization: authValue,
         },
         method: 'POST',
-        body: JSON.stringify(test),
+        body: req.body,
     });
     if (!res.ok) {
         console.log(`In OpenAIStream: Error: ${res.status}`);

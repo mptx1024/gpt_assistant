@@ -4,6 +4,7 @@ import { HiChevronUpDown } from 'react-icons/hi2';
 import Button from '@/components/Button';
 import { Input, Textarea } from '@/components/InputField';
 import { OpenAIModel } from '@/types';
+import { useState } from 'react';
 
 interface Props {
     isChatSetting: boolean;
@@ -103,32 +104,41 @@ interface ModelListBoxProps {
     setSelectedModel: (model: OpenAIModel) => void;
 }
 function ModelListBox({ allModels, selectedModel, setSelectedModel }: ModelListBoxProps) {
+    const [show, setShow] = useState(false);
+
     return (
         <Listbox value={selectedModel} onChange={setSelectedModel}>
-            <div className="relative w-36">
-                <Listbox.Button className="relative w-full">
-                    <Button
-                        Icon={HiChevronUpDown}
-                        size="md"
-                        text={selectedModel.name}
-                        // border={true}
-                        shadow={true}
-                        btnStyles="relative w-full justify-between"
-                        textStyles="text-sm"
-                    />
-                </Listbox.Button>
-                <Listbox.Options className="absolute w-full overflow-auto rounded-md border border-gray-300 bg-white py-1 text-base shadow-lg sm:text-sm">
-                    {allModels.map((model) => (
-                        <Listbox.Option
-                            key={model.id}
-                            value={model}
-                            className="text-light-text ui-active:bg-blue-500 ui-active:text-white"
+            {({ open }) => (
+                <div className="relative w-36">
+                    <Listbox.Button as="div">
+                        <Button
+                            Icon={HiChevronUpDown}
+                            size="md"
+                            text={selectedModel.name}
+                            border={true}
+                            btnStyles=" w-full justify-between active:scale-100"
+                            textStyles="text-sm"
+                        />
+                    </Listbox.Button>
+                    {open && (
+                        <Listbox.Options
+                            static
+                            className="absolute w-full overflow-auto rounded-md border border-gray-300  py-1 text-base shadow-lg sm:text-sm"
                         >
-                            {model.name}
-                        </Listbox.Option>
-                    ))}
-                </Listbox.Options>
-            </div>
+                            {allModels.map((model) => (
+                                <Listbox.Option
+                                    key={model.id}
+                                    value={model}
+                                    className="text-light-text cursor-pointer ui-active:bg-blue-500 ui-active:text-white"
+                                    onClick={() => setShow(false)}
+                                >
+                                    {model.name}
+                                </Listbox.Option>
+                            ))}
+                        </Listbox.Options>
+                    )}
+                </div>
+            )}
         </Listbox>
     );
 }

@@ -15,7 +15,7 @@ import {
     selectMessageById,
     updateMessage,
 } from '@/store/messagesSlice';
-import { selectApiKey, selectAppSetting,selectattchedMsgCount } from '@/store/settingSlice';
+import { selectApiKey, selectAppSetting, selectattchedMsgCount } from '@/store/settingSlice';
 import { Chat, Message, OpenAIStreamPayload, Role } from '@/types';
 import { errorMessage } from './constant';
 
@@ -84,10 +84,6 @@ export const abortController = {
     },
 };
 
-export const preparePayload = (payload: OpenAIStreamPayload) => {
-    // trim msg count
-};
-
 export interface generateReplyProp {
     userInput: string;
     addController?: (controller: AbortController) => void;
@@ -133,7 +129,7 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
         model: chat.modelParams.model.id,
         messages: OpenAIMessages,
     };
-    console.log(`payload: ${JSON.stringify(payload)}`);
+    // console.log(`payload: ${JSON.stringify(payload)}`);
 
     const controller = new AbortController();
     addController?.(controller);

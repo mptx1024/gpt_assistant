@@ -3,7 +3,7 @@ import { memo, useState } from 'react';
 import Button from '@/components/Button';
 import ModelParamsSection from '@/components/settings/ModelParamsSection';
 import SettingModal from '@/components/settings/SettingModal';
-import { selectChatById, updateModelParams, updateRole } from '@/store/chatsSlice';
+import { selectChatById, updateChatModelParams, updateChatRole } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { Chat, ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
 interface Props {
@@ -62,8 +62,8 @@ export function ChatParamsModal({ chat, toggleModal }: ChatParamsModalProps) {
             ...chat.role,
             prompt,
         };
-        dispatch(updateModelParams({ chatId: chat.id, modelParams: newParam }));
-        dispatch(updateRole({ chatId: chat.id, role: newRole }));
+        dispatch(updateChatModelParams({ chatId: chat.id, modelParams: newParam }));
+        dispatch(updateChatRole({ chatId: chat.id, role: newRole }));
         toggleModal();
     };
     return (
