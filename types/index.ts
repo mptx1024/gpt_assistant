@@ -22,7 +22,6 @@ export interface Chat {
     title: string;
     created: number;
     role: Role;
-    // model: OpenAIModel;
     modelParams: ModelParams;
 }
 export interface Role {

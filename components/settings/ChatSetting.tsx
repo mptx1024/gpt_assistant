@@ -3,17 +3,22 @@ import { memo, useState } from 'react';
 import Button from '@/components/Button';
 import ModelParamsSection from '@/components/settings/ModelParamsSection';
 import SettingModal from '@/components/settings/SettingModal';
-import { selectChatById, updateChatModelParams, updateChatRole } from '@/store/chatsSlice';
+import {
+    selectChatModelParams,
+    selectChatRole,
+    updateChatModelParams,
+    updateChatRole,
+} from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { Chat, ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
+import { ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
 interface Props {
     chatId: string;
 }
-function ChatParamsCard({ chatId: chatID }: Props) {
+function ChatParamsCard({ chatId }: Props) {
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
-    const chat = useAppSelector((state) => selectChatById(state, chatID));
-    if (!chat) return null;
+    const chatModalParams = useAppSelector((state) => selectChatModelParams(state, chatId));
+    const chatRole = useAppSelector((state) => selectChatRole(state, chatId));
     return (
         <div
             key={Math.random()}
@@ -21,17 +26,24 @@ function ChatParamsCard({ chatId: chatID }: Props) {
             className="border-color my-3 flex w-[90%] max-w-lg animate-slideInFromTop cursor-pointer flex-col items-start self-center rounded-md border p-3 transition-all  hover:border-colorPrimary sm:w-[40%]"
         >
             <span className="w-full truncate whitespace-nowrap text-colorPrimary">
-                {chat.modelParams.model.name}
+                {chatModalParams?.model.name}
             </span>
             <span className="text-subtitle whitespace-nowrap">
-                Temperature: {chat.modelParams.temperature}
+                Temperature: {chatModalParams?.temperature}
             </span>
             <span className="text-subtitle max-w-full truncate whitespace-nowrap">
-                Assistant: {chat.role.roleName}
+                Assistant: {chatRole?.roleName}
             </span>
-            <SettingModal isOpen={isOpen} toggleModal={toggleModal} title="Chat Setting">
-                <ChatParamsModal chat={chat} toggleModal={toggleModal} />
-            </SettingModal>
+            {chatModalParams && chatRole && (
+                <SettingModal isOpen={isOpen} toggleModal={toggleModal} title="Chat Setting">
+                    <ChatParamsModal
+                        chatId={chatId}
+                        chatModalParams={chatModalParams}
+                        chatRole={chatRole}
+                        toggleModal={toggleModal}
+                    />
+                </SettingModal>
+            )}
         </div>
     );
 }
@@ -39,16 +51,23 @@ function ChatParamsCard({ chatId: chatID }: Props) {
 export const MemoizedChatParamsCard = memo(ChatParamsCard);
 
 interface ChatParamsModalProps {
-    chat: Chat;
+    // chat: Chat;
+    chatId: string;
+    chatModalParams: ModelParams;
+    chatRole: Role;
     toggleModal: () => void;
 }
-export function ChatParamsModal({ chat, toggleModal }: ChatParamsModalProps) {
+export function ChatParamsModal({
+    chatId,
+    chatModalParams,
+    chatRole,
+    toggleModal,
+}: ChatParamsModalProps) {
     const allModels: OpenAIModel[] = Object.values(OpenAIModels);
-    const [temperature, setTemperature] = useState(chat.modelParams.temperature);
-    // TODO: get selected model from Chat
-    const [selectedModel, setSelectedModel] = useState(chat.modelParams.model);
-    const [maxTokens, setMaxTokens] = useState(chat.modelParams.max_tokens);
-    const [prompt, setPrompt] = useState(chat.role.prompt);
+    const [temperature, setTemperature] = useState(chatModalParams.temperature);
+    const [selectedModel, setSelectedModel] = useState(chatModalParams.model);
+    const [maxTokens, setMaxTokens] = useState(chatModalParams.max_tokens);
+    const [prompt, setPrompt] = useState(chatRole.prompt);
     const dispatch = useAppDispatch();
 
     const handleClickSave = () => {
@@ -59,15 +78,15 @@ export function ChatParamsModal({ chat, toggleModal }: ChatParamsModalProps) {
             stream: true,
         };
         const newRole: Role = {
-            ...chat.role,
+            ...chatRole,
             prompt,
         };
-        dispatch(updateChatModelParams({ chatId: chat.id, modelParams: newParam }));
-        dispatch(updateChatRole({ chatId: chat.id, role: newRole }));
+        dispatch(updateChatModelParams({ chatId, modelParams: newParam }));
+        dispatch(updateChatRole({ chatId, role: newRole }));
         toggleModal();
     };
     return (
-        <div className="mt-1 flex flex-col gap-5 overflow-y-auto sm:mt-5">
+        <div className="mt-1 flex flex-col gap-5 overflow-y-auto px-5 py-3 sm:p-10">
             <ModelParamsSection
                 isChatSetting={true}
                 allModels={allModels}

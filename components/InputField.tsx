@@ -45,15 +45,16 @@ interface TexareaProps {
     // [x: string]: any;
     showborder?: boolean;
 }
+// focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300
 
 const textAreaBaseClasses =
-    'focus:border-colorPrimary border-[1.5px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none';
+    'focus:border-colorPrimary border-[1.5px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none debug-1';
 
 export function Textarea(props: TexareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     useEffect(() => {
         if (textareaRef.current) {
-            // textareaRef.current.style.height = '10rem';
+            textareaRef.current.style.height = '7rem';
             // const scrollHeight = textareaRef.current.scrollHeight;
             // textareaRef.current.style.height = scrollHeight + "px";
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;

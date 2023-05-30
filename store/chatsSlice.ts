@@ -118,3 +118,13 @@ export const selectMessageIdsByChat = createSelector(
     [(state: RootState) => state.chats.entities, (state, chatId) => chatId],
     (entities, chatId) => entities[chatId]?.messages
 );
+
+export const selectChatModelParams = createSelector(
+    [(state: RootState) => state.chats.entities, (state, chatId) => chatId],
+    (entities, chatId) => entities[chatId]?.modelParams
+);
+
+export const selectChatRole = createSelector(
+    [(state: RootState) => state.chats.entities, (state, chatId) => chatId],
+    (entities, chatId) => entities[chatId]?.role
+);

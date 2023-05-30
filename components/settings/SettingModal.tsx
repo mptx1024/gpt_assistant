@@ -1,5 +1,4 @@
-import { memo } from 'react';
-import React from 'react';
+import React, { memo } from 'react';
 
 import { HiOutlineXMark } from 'react-icons/hi2';
 
@@ -21,9 +20,9 @@ const SettingModal = memo(function SettingModal(props: Props) {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="border-color inset-0 flex h-full w-full flex-col gap-0 overflow-hidden border bg-white px-5 py-3 text-left dark:bg-white-inverted sm:h-[90vh] sm:max-w-xl sm:gap-3 sm:rounded-xl sm:py-6"
+                className="border-color flex max-h-full w-full flex-col  gap-0 border bg-white text-left dark:bg-white-inverted sm:max-h-fit sm:max-w-xl sm:gap-3 sm:rounded-xl"
             >
-                <div className="flex justify-between">
+                <div className="flex justify-between px-5 py-3 sm:px-10 sm:pt-10">
                     <span className="text-3xl font-bold">{props.title}</span>
                     <Button
                         size="lg"

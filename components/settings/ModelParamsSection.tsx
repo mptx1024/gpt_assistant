@@ -4,7 +4,6 @@ import { HiChevronUpDown } from 'react-icons/hi2';
 import Button from '@/components/Button';
 import { Input, Textarea } from '@/components/InputField';
 import { OpenAIModel } from '@/types';
-import { useState } from 'react';
 
 interface Props {
     isChatSetting: boolean;
@@ -32,7 +31,7 @@ const ModelParamsSection = ({
 }: Props) => {
     return (
         <div className="flex flex-col gap-2 p-1 sm:gap-5">
-            <div id="setting-role-name" className="">
+            <div id="setting-prompt" className="">
                 <div className="mb-3">
                     <span className="mb-2 block !text-base font-semibold">
                         {isChatSetting ? 'Prompt' : 'App Default Prompt'}
@@ -52,7 +51,7 @@ const ModelParamsSection = ({
             <div id="model-params" className="flex flex-col rounded-md ">
                 <div
                     id="setting-model"
-                    className="border-color flex items-center justify-between border-b p-3"
+                    className="flex items-center justify-between py-3"
                 >
                     <span className="block">Model</span>
                     <ModelListBox
@@ -63,7 +62,7 @@ const ModelParamsSection = ({
                 </div>
                 <div
                     id="setting-temperature"
-                    className="border-b border-gray-300 p-3 sm:flex sm:items-center sm:justify-between"
+                    className=" py-3 sm:flex sm:items-center sm:justify-between"
                 >
                     <div className="mb-3 sm:mb-0 sm:mr-5 sm:w-6/12">
                         <span className="block whitespace-nowrap">Temperature: {temperature}</span>
@@ -76,7 +75,7 @@ const ModelParamsSection = ({
                         <TemperatureRangeSlider temp={temperature} setTemp={setTemperature} />
                     </div>
                 </div>
-                <div id="setting-maxToken" className="flex items-center justify-between p-3">
+                <div id="setting-maxToken" className="flex items-center justify-between py-3">
                     <div className="">
                         <span className="block">Max Token</span>
                         <span className="text-subtitle">
@@ -104,8 +103,6 @@ interface ModelListBoxProps {
     setSelectedModel: (model: OpenAIModel) => void;
 }
 function ModelListBox({ allModels, selectedModel, setSelectedModel }: ModelListBoxProps) {
-    const [show, setShow] = useState(false);
-
     return (
         <Listbox value={selectedModel} onChange={setSelectedModel}>
             {({ open }) => (
@@ -123,14 +120,13 @@ function ModelListBox({ allModels, selectedModel, setSelectedModel }: ModelListB
                     {open && (
                         <Listbox.Options
                             static
-                            className="absolute w-full overflow-auto rounded-md border border-gray-300  py-1 text-base shadow-lg sm:text-sm"
+                            className="border-color absolute w-full overflow-auto rounded-md border bg-gray-base py-1 text-base shadow-lg dark:bg-gray-inverted sm:text-base"
                         >
                             {allModels.map((model) => (
                                 <Listbox.Option
                                     key={model.id}
                                     value={model}
-                                    className="text-light-text cursor-pointer ui-active:bg-blue-500 ui-active:text-white"
-                                    onClick={() => setShow(false)}
+                                    className="cursor-pointer ui-active:bg-blue-500 ui-active:text-white"
                                 >
                                     {model.name}
                                 </Listbox.Option>

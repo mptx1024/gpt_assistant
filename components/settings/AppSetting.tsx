@@ -60,11 +60,21 @@ function AppSetting({ toggleModal }: Props) {
         toggleModal();
     };
     return (
-        <div className="mt-5 flex flex-col gap-3 overflow-auto">
+        <div className="flex flex-col overflow-auto px-5 py-3  sm:gap-5 sm:p-10">
             <section id="setting-apikey" className="p-1">
-                <h3 className="font-semibold">API Key</h3>
+                <h3 className="font-semibold">OpenAI API Key</h3>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                    a link to openAI site
+                    Apply & retrieve your OpenAI API key&nbsp;
+                    <a
+                        href="https://platform.openai.com/account/api-keys"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold underline"
+                    >
+                        here.
+                    </a>
+                    <br/>
+                    Your API Key is safely stored on your browser locally.
                 </span>
                 <Input
                     type="text"
@@ -74,45 +84,41 @@ function AppSetting({ toggleModal }: Props) {
                     showborder={true}
                 />
             </section>
-            <section id="setting-app-preference" className="p-1">
-                <div className="flex items-center justify-between gap-2">
-                    <div id="" className="">
-                        <span className="block">Auto-generate Chat Title</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                            description
-                        </span>
-                    </div>
-                    <label htmlFor="AcceptConditions" className="relative h-7 w-14 cursor-pointer">
-                        <input
-                            type="checkbox"
-                            id="AcceptConditions"
-                            className="peer sr-only"
-                            checked={autoNameChat}
-                            onChange={handleClickAutoNameChat}
-                        />
-
-                        <span className="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-cyan-600"></span>
-
-                        <span className="absolute inset-y-0 start-0 m-1 h-5 w-5 rounded-full bg-white transition-all peer-checked:start-7"></span>
-                    </label>
+            <div className="flex items-center justify-between gap-2">
+                <div id="" className="w-[80%]">
+                    <span className="block">Auto-generate Chat Title</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                        Summurize chat title based on the first reply message. This will consume
+                        more tokens used in the first message
+                    </span>
                 </div>
-                <div className="flex items-center justify-between">
-                    <div id="" className="">
-                        <span className="block">Include last N messages</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                            description
-                        </span>
-                    </div>
-                    <div className="flex-shrink-0 basis-[5rem]">
-                        <Input
-                            value={attchedMsgCount}
-                            showborder={true}
-                            onChange={handleAttachedMsgCount}
-                        />
-                    </div>
-                </div>
-            </section>
+                <label htmlFor="AcceptConditions" className="relative h-7 w-14 cursor-pointer">
+                    <input
+                        type="checkbox"
+                        id="AcceptConditions"
+                        className="peer sr-only"
+                        checked={autoNameChat}
+                        onChange={handleClickAutoNameChat}
+                    />
 
+                    <span className="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-cyan-600"></span>
+
+                    <span className="absolute inset-y-0 start-0 m-1 h-5 w-5 rounded-full bg-white transition-all peer-checked:start-7"></span>
+                </label>
+            </div>
+            <div className="flex items-center justify-between">
+                <div id="" className="w-[80%]">
+                    <span className="block">Include last N messages</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">Number of messages included per each request</span>
+                </div>
+                <div className="flex-shrink-0 basis-[4rem]">
+                    <Input
+                        value={attchedMsgCount}
+                        showborder={true}
+                        onChange={handleAttachedMsgCount}
+                    />
+                </div>
+            </div>
             <section id="setting-model-params" className="">
                 <h3 className="font-semibold"></h3>
                 <ModelParamsSection
@@ -132,10 +138,10 @@ function AppSetting({ toggleModal }: Props) {
                 <Button
                     size={'lg'}
                     text="Save"
-                    // border={true}
-                    shadow={true}
+                    border={true}
+                    // shadow={true}
                     onClick={handleClickSave}
-                    btnStyles="bg-cyan-400 dark:bg-cyan-800 text-gray-100 hover:bg-cyan-500 dark:hover:bg-cyan-700"
+                    btnStyles=""
                 />
             </div>
         </div>
