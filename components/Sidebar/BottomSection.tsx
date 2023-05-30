@@ -1,10 +1,10 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 
+import AppSetting from '../../features/settings/AppSetting';
+import SettingModal from '../../features/settings/SettingModal';
 import Button from '../Button';
-import AppSetting from '../settings/AppSetting';
-import SettingModal from '../settings/SettingModal';
 
 const BottomSection = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);

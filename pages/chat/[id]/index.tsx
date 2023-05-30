@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { MemoizedChatParamsCard } from '@/components/settings/ChatSetting';
 import ChatMessage from '@/features/Chat/ChatMessage';
 import Input from '@/features/Chat/Input';
+import { MemoizedChatParamsCard } from '@/features/settings/ChatSetting';
 import { selectIsLoading, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 
@@ -17,8 +17,14 @@ export default function DynamicChatPage() {
     const messageIds = useAppSelector((state) => selectMessageIdsByChat(state, chatId as string));
 
     const isLoading = useAppSelector(selectIsLoading);
+
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const messageBlockRef = useRef<HTMLDivElement>(null);
+    console.log(
+        `in ChatPage isLoading: ${isLoading}; lastMessageRef.current: ${Boolean(
+            lastMessageRef.current
+        )}`
+    );
 
     useEffect(() => {
         if (
@@ -28,7 +34,7 @@ export default function DynamicChatPage() {
                 messageBlockRef.current.scrollHeight -
                     messageBlockRef.current.clientHeight -
                     messageBlockRef.current.scrollTop
-            ) < 50
+            ) < 1000
         ) {
             lastMessageRef.current.scrollIntoView(true);
         }
@@ -43,22 +49,17 @@ export default function DynamicChatPage() {
             <div
                 id="messages-container"
                 ref={messageBlockRef}
-                className="mb-[9rem] flex w-full flex-col overflow-auto"
+                className="debug-1 mb-[10rem] flex w-full flex-col"
             >
                 <MemoizedChatParamsCard chatId={chatId} />
                 {messageIds.map((messageId) => (
-                    <ChatMessage
-                        key={Math.random()}
-                        messageId={messageId}
-                        chatId={chatId}
-                        // generateReply={generateReply}
-                    />
+                    <ChatMessage key={Math.random()} messageId={messageId} chatId={chatId} />
                 ))}
-                <div ref={lastMessageRef} />
             </div>
+            <div ref={lastMessageRef} className="debug-2" />
 
             <div
-                className="absolute bottom-0 left-1/2 flex w-full -translate-x-1/2
+                className="debug-3 absolute bottom-0 left-1/2 flex h-[10rem] w-full -translate-x-1/2
             flex-col items-center justify-center bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
             >
                 <Input chatId={chatId} />

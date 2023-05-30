@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { FiSend } from 'react-icons/fi';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
 
@@ -21,9 +19,7 @@ export default function Input({ chatId }: Props) {
         handleInputChange,
         handleClickStopGenerating,
         handleKeyDown,
-    } = useChat({
-        chatId: chatId,
-    });
+    } = useChat({ chatId });
     // console.log(`in Input: current chat ID: ${chatId}`);
 
     if (!apiKey) {
@@ -88,4 +84,4 @@ export default function Input({ chatId }: Props) {
             </div>
         </div>
     );
-};
+}

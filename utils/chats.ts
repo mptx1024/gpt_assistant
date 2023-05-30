@@ -78,6 +78,7 @@ export const abortController = {
     stop(id: string) {
         console.log(`In stop: ${id}`);
         this.controllers.get(id)?.abort();
+        this.remove(id);
     },
     remove(id: string) {
         this.controllers.delete(id);
@@ -145,7 +146,7 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
                 Authorization: `Bearer ${apiKey.trim()}`,
             },
             body: JSON.stringify(payload),
-            signal: controller.signal,
+            signal: AbortSignal.timeout(3000),
         });
 
         if (!response.ok) {

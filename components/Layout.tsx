@@ -20,7 +20,7 @@ type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
-    const { query } = useRouter();
+    const router = useRouter();
     const { width } = useWindowDimensions();
     const sidebarOpen = useAppSelector((state) => state.ui.sidebarOpen);
 
@@ -33,9 +33,12 @@ export default function Layout({ children }: Props) {
         if (width && width <= 640 && sidebarOpen) {
             handleClickSidebar();
         }
-    }, [query.id]);
+    }, [router.query.id]);
 
     useEffect(() => {
+        if (!router.isReady) return;
+        console.log(`in useEffeect; router.isReady: ${router.isReady}`);
+
         const loadRecords = async () => {
             const roles: Role[] = await idb.get('roles');
             if (roles) {
@@ -44,8 +47,8 @@ export default function Layout({ children }: Props) {
             const chats: Chat[] = await idb.get('chats');
             if (chats) {
                 dispatch(setAllChats(chats));
-                dispatch(setCurrentChat(chats[0]?.id));
             }
+            dispatch(setCurrentChat(typeof router.query.id === 'string' ? router.query.id : chats[0]?.id));
             setIsLoading(false);
             const messages: Message[] = await idb.get('messages');
             if (messages) {
@@ -53,7 +56,7 @@ export default function Layout({ children }: Props) {
             }
         };
         loadRecords();
-    }, []);
+    }, [router.isReady]);
 
     return isLoading ? (
         <div className="">loading...</div>
