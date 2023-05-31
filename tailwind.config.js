@@ -12,7 +12,9 @@ module.exports = {
             translate: ['dark'],
 
             colors: {
-                colorPrimary: colors.cyan[700],
+                // colorPrimary: colors.cyan[700],
+                colorPrimary: colors.teal[600],
+                colorSecondary: colors.amber[300],
                 black: {
                     base: '#333333',
                     DEFAULT: colors.black,

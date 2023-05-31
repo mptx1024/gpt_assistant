@@ -63,7 +63,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     return (
         <SidebarCard isSelected={currentChatID === chat.id} onClick={handleClickChat}>
             <div className="flex w-[75%] items-center gap-2">
-                <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4" />
+                <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4 shrink-0" />
                 {edit ? (
                     <Input
                         type="text"

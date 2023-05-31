@@ -14,7 +14,7 @@ const SidebarCard = (props: {
         <div
             onClick={props.onClick}
             className={clsx(cardClasses, {
-                'ring-[2px] ring-colorPrimary': props.isSelected,
+                'ring-[1.5px] ring-colorPrimary': props.isSelected,
             })}
         >
             {props.children}

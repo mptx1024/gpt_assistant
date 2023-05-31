@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ interface ChatListProps {
 const ChatList: FC<ChatListProps> = ({ chats }) => {
     const router = useRouter();
 
-    const currentChatID = useSelector((state: RootState) => state.chats.currentChatId);
+    const currentChatID = useSelector((state: RootState) => state.chats.currentChat.id);
     // useEffect(() => {
     //     console.log(`currentChatID: ${currentChatID}`);
 

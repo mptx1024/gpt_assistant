@@ -57,7 +57,7 @@ export default function DynamicChatPage() {
                 Scroll to bottom
             </button> */}
             <div
-                className="absolute bottom-0 left-1/2 flex h-[10rem] w-full -translate-x-1/2
+                className="absolute bottom-0 left-1/2 flex min-h-[10rem] w-full -translate-x-1/2
             flex-col items-center justify-center bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
             >
                 <Input chatId={chatId} />

@@ -19,7 +19,7 @@ interface Props {
 const btnClasses = {
     base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all ease-in-out active:scale-[0.9]',
     shadow: 'hover:bg-gray-200 dark:hover:bg-gray-700',
-    border: 'border-[1px] border-gray-300 hover:border-cyan-600 dark:border-gray-500 dark:hover:border-cyan-600',
+    border: 'border-[1px] border-gray-300 hover:border-colorPrimary dark:border-gray-500 dark:hover:border-colorPrimary',
     sm: 'px-1 py-1 text-sm',
     md: 'px-2 py-2 text-base',
     lg: 'px-2 py-2 text-lg',
@@ -27,7 +27,7 @@ const btnClasses = {
 };
 
 const iconClasses = {
-    base: 'text-neutral-500 dark:text-neutral-400',
+    base: 'text-colorPrimary dark:text-colorPrimary',
     sm: 'h-4 w-4',
     md: 'h-5 w-5',
     lg: 'h-6 w-6',
