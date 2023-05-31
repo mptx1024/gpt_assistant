@@ -1,65 +1,63 @@
-import { useEffect, useRef } from 'react';
-
-import { useRouter } from 'next/router';
-
 import ChatMessage from '@/features/Chat/ChatMessage';
 import Input from '@/features/Chat/Input';
 import { MemoizedChatParamsCard } from '@/features/settings/ChatSetting';
-import { selectIsLoading, selectMessageIdsByChat } from '@/store/chatsSlice';
+import { selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
-
+import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
 export default function DynamicChatPage() {
     const router = useRouter();
     const { id } = router.query;
     const chatId = typeof id === 'string' ? id : '';
-    //TODO: only fetch chat Params, not entire chat
-    // const chat = useAppSelector((state) => selectChatById(state, chatId as string));
     const messageIds = useAppSelector((state) => selectMessageIdsByChat(state, chatId as string));
-
-    const isLoading = useAppSelector(selectIsLoading);
-
     const lastMessageRef = useRef<HTMLDivElement>(null);
-    const messageBlockRef = useRef<HTMLDivElement>(null);
-    console.log(
-        `in ChatPage isLoading: ${isLoading}; lastMessageRef.current: ${Boolean(
-            lastMessageRef.current
-        )}`
-    );
+    const containerRef = useRef<HTMLDivElement>(null);
+    const msgContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (
-            messageBlockRef.current &&
-            lastMessageRef.current &&
-            Math.abs(
-                messageBlockRef.current.scrollHeight -
-                    messageBlockRef.current.clientHeight -
-                    messageBlockRef.current.scrollTop
-            ) < 1000
-        ) {
-            lastMessageRef.current.scrollIntoView(true);
-        }
-    }, [isLoading]);
+        console.log(`in useEffect`);
+
+        if (!msgContainerRef.current) return;
+        const resizeObserver = new ResizeObserver(() => {
+            // console.log(
+            //     `scrollHeight: ${containerRef.current?.scrollHeight}; offsetHeight: ${containerRef.current?.offsetHeight}; clientHeight: ${containerRef.current?.clientHeight}; scrollTop: ${containerRef.current?.scrollTop}`
+            // );
+            if (containerRef.current) {
+                const isScrolledToBottom =
+                    containerRef.current.scrollHeight -
+                        containerRef.current.offsetHeight -
+                        containerRef.current.scrollTop <
+                    100;
+                // console.log(`isScrolledToBottom: ${isScrolledToBottom}`);
+                isScrolledToBottom && lastMessageRef.current?.scrollIntoView({behavior: "smooth"});
+            }
+        });
+        resizeObserver.observe(msgContainerRef.current);
+        return () => resizeObserver.disconnect(); 
+    }, []);
 
     if (typeof messageIds === 'undefined') {
         return null;
     }
 
     return (
-        <div id="chat-container" className="flex h-full w-full flex-col items-center overflow-auto">
-            <div
-                id="messages-container"
-                ref={messageBlockRef}
-                className="debug-1 mb-[10rem] flex w-full flex-col"
-            >
+        <div
+            id="chat-container"
+            className="mb-[10rem] flex h-full w-full flex-col items-center overflow-auto"
+            ref={containerRef}
+        >
+            <div id="messages-container" className="flex w-full  flex-col" ref={msgContainerRef}>
                 <MemoizedChatParamsCard chatId={chatId} />
                 {messageIds.map((messageId) => (
                     <ChatMessage key={Math.random()} messageId={messageId} chatId={chatId} />
                 ))}
             </div>
-            <div ref={lastMessageRef} className="debug-2" />
-
+            <div ref={lastMessageRef} />
+            {/* <button className="absolute bottom-[10rem] bg-red-600" onClick={onClick}>
+                Scroll to bottom
+            </button> */}
             <div
-                className="debug-3 absolute bottom-0 left-1/2 flex h-[10rem] w-full -translate-x-1/2
+                className="absolute bottom-0 left-1/2 flex h-[10rem] w-full -translate-x-1/2
             flex-col items-center justify-center bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
             >
                 <Input chatId={chatId} />

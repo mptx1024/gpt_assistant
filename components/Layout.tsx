@@ -37,7 +37,6 @@ export default function Layout({ children }: Props) {
 
     useEffect(() => {
         if (!router.isReady) return;
-        console.log(`in useEffeect; router.isReady: ${router.isReady}`);
 
         const loadRecords = async () => {
             const roles: Role[] = await idb.get('roles');
@@ -68,9 +67,9 @@ export default function Layout({ children }: Props) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="fixed inset-0 flex h-full ">
+            <div className="fixed inset-0 flex h-full">
                 <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
-                <div className="relative flex h-full w-full flex-col overflow-hidden">
+                <div className="relative flex h-full w-full flex-col">
                     <Navbar isSidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                     {children}
                 </div>

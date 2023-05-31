@@ -87,10 +87,15 @@ export const abortController = {
 
 export interface generateReplyProp {
     userInput: string;
+    isRegenerate?: boolean;
     addController?: (controller: AbortController) => void;
 }
 
-export const generateReply = async ({ userInput, addController }: generateReplyProp) => {
+export const generateReply = async ({
+    userInput,
+    isRegenerate,
+    addController,
+}: generateReplyProp) => {
     const chat = selectCurrentChat(store.getState());
     const attchedMsgCount = selectattchedMsgCount(store.getState());
     if (!chat) return;
@@ -111,7 +116,7 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
         created: Date.now(),
         role: 'assistant',
         content: '',
-        isFirst: chat?.messages.length === 0 ? true : false, // first reply
+        isFirst: chat?.messages.length === 0 && !isRegenerate ? true : false, // first reply
     };
     store.dispatch(addMessage(userMessage));
     store.dispatch(addMessage(reply));
@@ -130,8 +135,6 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
         model: chat.modelParams.model.id,
         messages: OpenAIMessages,
     };
-    // console.log(`payload: ${JSON.stringify(payload)}`);
-
     const controller = new AbortController();
     addController?.(controller);
     controller.signal.onabort = () => {
@@ -146,7 +149,8 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
                 Authorization: `Bearer ${apiKey.trim()}`,
             },
             body: JSON.stringify(payload),
-            signal: AbortSignal.timeout(3000),
+            // signal: AbortSignal.timeout(3 * 60 * 1000),
+            signal: controller.signal,
         });
 
         if (!response.ok) {
@@ -172,6 +176,9 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
         const decoder = new TextDecoder();
         let done = false;
         while (!done) {
+            if (controller.signal.aborted) {
+                reader.cancel();
+            }
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
@@ -183,7 +190,7 @@ export const generateReply = async ({ userInput, addController }: generateReplyP
         if (err.name === 'TimeoutError') {
             console.error('Timeout');
         } else if (err.name === 'AbortError') {
-            console.error('Fetch aborted by user');
+            console.error('Fetch aborted by user or timeout');
             // store.dispatch(setIsLoading({ status: false, messageId: reply.id }));
         } else if (err.name === 'TypeError') {
             console.error('AbortSignal.timeout() method is not supported');
@@ -205,6 +212,7 @@ export const regenerate = async () => {
         if (lastUserMessage) {
             await generateReply({
                 userInput: lastUserMessage.content,
+                isRegenerate: true,
                 addController(controller) {
                     abortController.setController(chat.id, controller);
                 },

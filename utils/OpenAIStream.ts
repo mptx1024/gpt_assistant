@@ -15,13 +15,14 @@ export async function OpenAIStream(req: NextRequest) {
             },
             method: 'POST',
             body: req.body,
-            signal: AbortSignal.timeout(30 * 1000),
+            signal: AbortSignal.timeout(3 * 60 * 1000),
         });
         if (!res.ok) {
             console.log(`In OpenAIStream: Error: ${res.status}`);
             throw new Error(res.statusText, { cause: res.status });
         }
         const stream = new ReadableStream({
+            
             async start(controller) {
                 // callback
                 function onParse(event: ParsedEvent | ReconnectInterval) {
@@ -63,9 +64,18 @@ export async function OpenAIStream(req: NextRequest) {
                 }
             },
         });
+        
         return stream;
-    } catch (e) {
-        console.error(e);
-        abortController.abort();
+    } catch (err: any) {
+        console.error(err);
+        if (err.name === 'TimeoutError') {
+            console.error('Timeout');
+        } else if (err.name === 'AbortError') {
+            console.error('Fetch aborted by user or timeout');
+        } else {
+            // A network error, or some other problem.
+            console.error(`Error: type: ${err.name}, message: ${err.message}`);
+        }
+        // abortController.abort();
     }
 }
