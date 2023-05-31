@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import Navbar from '@/components/Navbar/Navbar';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import Navbar from '@/components/navbar/Navbar';
+import Sidebar from '@/components/sidebar/Sidebar';
 import useWindowDimensions from '@/hooks/useWindowDimension';
 import { setAllChats, setCurrentChat } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';

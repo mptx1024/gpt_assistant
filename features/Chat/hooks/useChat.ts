@@ -1,7 +1,7 @@
 import { selectIsLoading } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 import { selectApiKey } from '@/store/settingSlice';
-import { abortController, generateReply, regenerate } from '@/utils/chats';
+import { abortController, generateReply, regenerate } from '@/utils/chat';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {

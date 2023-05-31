@@ -1,9 +1,9 @@
+import { Avatar } from '@/components/Avatar';
+import Button from '@/components/Button';
+import { Textarea } from '@/components/InputField';
 import clsx from 'clsx';
 import { HiOutlineClipboard, HiPencilSquare } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
-
-import Button from '@/components/Button';
-import { Textarea } from '@/components/InputField';
 
 import Markdown from './Markdown';
 import { useMessage } from './hooks/useMessage';
@@ -14,12 +14,12 @@ interface Props {
 }
 
 export default function ChatMessage({ messageId }: Props) {
-
     const {
         message,
         userInput,
         isCopied,
         isEditing,
+        chatModelParam,
         handleClickCopy,
         handleClickEdit,
         handleClickSaveSubmit,
@@ -33,19 +33,19 @@ export default function ChatMessage({ messageId }: Props) {
     if (!message) {
         return null;
     }
-    const messageContainerClasses = clsx('group animate-slideInFromBottom', {
+    const messageContainerClasses = clsx('debug-1 group animate-slideInFromBottom', {
         'bg-gray-base brightness-[0.97] dark:bg-gray-inverted dark:brightness-[1.15]':
             message.role === 'user',
     });
     return (
         <div className={messageContainerClasses}>
             <div
-                className="m-auto flex gap-3 p-4 text-base
+                className="debug-2 m-auto flex gap-3 p-4 text-base
             md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl
             "
             >
-                <div className="flex w-8 flex-shrink-0 flex-col items-end text-base">
-                    {message.role === 'user' ? 'You' : 'AI'}
+                <div className="debug-1 flex w-8 flex-shrink-0 flex-col items-end  text-base">
+                    {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
                 </div>
                 <div className="prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:w-[calc(100%-115px)] md:gap-3">
                     {!isEditing ? (

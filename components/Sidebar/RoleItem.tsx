@@ -6,7 +6,7 @@ import { FiUser } from 'react-icons/fi';
 import RoleEditor from '@/features/AiRole/RoleEditor';
 import RoleModal from '@/features/AiRole/RoleModal';
 import { Role } from '@/types';
-import { createNewChat } from '@/utils/chats';
+import { createNewChat } from '@/utils/chat';
 import { deleteRole } from '@/utils/roles';
 
 import SidebarCard from './SidebarCard';

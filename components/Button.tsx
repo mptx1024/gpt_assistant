@@ -27,7 +27,7 @@ const btnClasses = {
 };
 
 const iconClasses = {
-    base: 'text-light-text dark:text-dark-text',
+    base: 'text-neutral-500 dark:text-neutral-400',
     sm: 'h-4 w-4',
     md: 'h-5 w-5',
     lg: 'h-6 w-6',

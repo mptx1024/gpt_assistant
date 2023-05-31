@@ -1,9 +1,9 @@
 import { store } from '@/store';
-import { removeMessageUpTo } from '@/store/chatsSlice';
+import { removeMessageUpTo, selectChatModelParams } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 import { selectMessageById } from '@/store/messagesSlice';
 import { Message } from '@/types';
-import { abortController, copyToClipboard, generateReply } from '@/utils/chats';
+import { abortController, copyToClipboard, generateReply } from '@/utils/chat';
 import { useState } from 'react';
 
 interface Props {
@@ -17,6 +17,7 @@ export const useMessage = ({ messageId }: Props) => {
     const message: Message | undefined = useAppSelector((state) =>
         selectMessageById(state, messageId)
     );
+    const chatModelParam = useAppSelector((state) => selectChatModelParams(state, message?.chatId));
 
     const handleClickCopy = async (content: string) => {
         await copyToClipboard(content, setIsCopied);
@@ -57,6 +58,7 @@ export const useMessage = ({ messageId }: Props) => {
         userInput,
         isCopied,
         isEditing,
+        chatModelParam,
         handleClickCopy,
         handleClickEdit,
         handleClickSaveSubmit,

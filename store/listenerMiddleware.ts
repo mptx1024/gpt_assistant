@@ -21,7 +21,7 @@ import {
 
 import type { TypedAddListener, TypedStartListening } from '@reduxjs/toolkit';
 
-import { createTitle } from '@/utils/chats';
+import { createTitle } from '@/utils/chat';
 import Router from 'next/router';
 import { AppDispatch, RootState, store } from './';
 import {

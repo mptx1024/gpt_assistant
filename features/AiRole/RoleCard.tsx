@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Role } from '@/types';
-import { createNewChat } from '@/utils/chats';
+import { createNewChat } from '@/utils/chat';
 
 import RoleModal from './RoleModal';
 

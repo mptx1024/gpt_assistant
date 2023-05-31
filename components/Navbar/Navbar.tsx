@@ -4,7 +4,7 @@ import { HiBars3, HiMoon, HiOutlineSun, HiPlus } from 'react-icons/hi2';
 import { useSelector } from 'react-redux';
 
 import { selectCurrentChat } from '@/store/chatsSlice';
-import { createNewChat } from '@/utils/chats';
+import { createNewChat } from '@/utils/chat';
 
 import Button from '../Button';
 type Props = {
