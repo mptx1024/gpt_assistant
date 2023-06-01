@@ -1,22 +1,20 @@
 import ChatMessage from '@/features/Chat/ChatMessage';
 import Input from '@/features/Chat/Input';
 import { MemoizedChatParamsCard } from '@/features/settings/ChatSetting';
-import { selectMessageIdsByChat } from '@/store/chatsSlice';
+import { selectCurrentChat, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
-import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 export default function DynamicChatPage() {
-    const router = useRouter();
-    const { id } = router.query;
-    const chatId = typeof id === 'string' ? id : '';
+    // const router = useRouter();
+    // const { id } = router.query;
+    const currentChat = useAppSelector(selectCurrentChat);
+    const chatId = typeof currentChat?.id === 'string' ? currentChat?.id : '';
     const messageIds = useAppSelector((state) => selectMessageIdsByChat(state, chatId as string));
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const msgContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        console.log(`in useEffect`);
-
         if (!msgContainerRef.current) return;
         const resizeObserver = new ResizeObserver(() => {
             // console.log(
@@ -29,15 +27,17 @@ export default function DynamicChatPage() {
                         containerRef.current.scrollTop <
                     100;
                 // console.log(`isScrolledToBottom: ${isScrolledToBottom}`);
-                isScrolledToBottom && lastMessageRef.current?.scrollIntoView({behavior: "smooth"});
+                isScrolledToBottom &&
+                    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
             }
         });
         resizeObserver.observe(msgContainerRef.current);
-        return () => resizeObserver.disconnect(); 
+        return () => resizeObserver.disconnect();
     }, []);
 
-    if (typeof messageIds === 'undefined') {
-        return null;
+    if (!currentChat) {
+        //redirect to landing
+        return <p>123</p>;
     }
 
     return (

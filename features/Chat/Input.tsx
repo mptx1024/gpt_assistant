@@ -1,6 +1,6 @@
 import { FiSend } from 'react-icons/fi';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
-
+import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
 import Button from '@/components/Button';
 
 import useChat from './hooks/useChat';
@@ -14,6 +14,7 @@ export default function Input({ chatId }: Props) {
         userInput,
         loading,
         textareaRef,
+        hasMessages,
         handleClickSubmit,
         handleClickRegenerate,
         handleInputChange,
@@ -45,8 +46,9 @@ export default function Input({ chatId }: Props) {
                         btnStyles="w-fit h-fit !py-[0.5rem] "
                     />
                 ) : (
-                    <Button
+                     <Button
                         onClick={handleClickRegenerate}
+                        disabled={!hasMessages}
                         Icon={HiArrowPath}
                         size="sm"
                         text={'Regenerate'}
@@ -60,27 +62,30 @@ export default function Input({ chatId }: Props) {
                     Icon={HiShare}
                     size="sm"
                     text={'Share'}
-                    shadow={true}
                     border={true}
                     btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
                 />
             </div>
-            <div className="bg-light-bg dark:bg-dark-bg flex min-h-[5rem] w-full items-center rounded-md ring-1 ring-colorPrimary shadow-sm focus-within:ring-[2px] focus-within:ring-colorPrimary">
+            <div className="debug-1 px-2 flex min-h-[5rem] w-full items-center rounded-md shadow-sm ring-1 ring-colorPrimary focus-within:ring-[2px] focus-within:ring-colorPrimary">
                 <textarea
                     ref={textareaRef}
                     value={userInput}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    className=" max-h-[20rem] w-full resize-none self-stretch bg-transparent px-2 py-2 outline-none"
+                    className="max-h-[20rem] w-full resize-none self-stretch bg-transparent px-2 py-2 outline-none"
                 />
-                <Button
-                    onClick={handleClickSubmit}
-                    disabled={!userInput}
-                    Icon={FiSend}
-                    size="md"
-                    shadow={true}
-                    btnStyles="mx-3"
-                />
+                {loading ? (
+                    <ThreeDotsLoader className="dark:fill-gray-base" />
+                ) : (
+                    <Button
+                        onClick={handleClickSubmit}
+                        disabled={!userInput}
+                        Icon={FiSend}
+                        size="md"
+                        shadow={true}
+                        btnStyles="mx-3"
+                    />
+                )}
             </div>
         </div>
     );

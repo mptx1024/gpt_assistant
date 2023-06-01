@@ -11,6 +11,7 @@ interface Props {
     disabled?: boolean;
     size: 'sm' | 'md' | 'lg';
     type?: 'submit' | 'reset' | 'button' | undefined;
+    iconThemeColor?: boolean;
     iconStyles?: string;
     btnStyles?: string;
     textStyles?: string;
@@ -23,15 +24,16 @@ const btnClasses = {
     sm: 'px-1 py-1 text-sm',
     md: 'px-2 py-2 text-base',
     lg: 'px-2 py-2 text-lg',
-    disabled: 'cursor-not-allowed',
+    disabled: 'cursor-not-allowed text-gray-500',
 };
 
 const iconClasses = {
-    base: 'text-colorPrimary dark:text-colorPrimary',
+    themeColor: 'text-colorPrimary dark:text-colorPrimary',
     sm: 'h-4 w-4',
     md: 'h-5 w-5',
     lg: 'h-6 w-6',
     iconEffect: 'hover:scale-[1.1]',
+    disabled: 'cursor-not-allowed !text-gray-500',
 };
 const Button = ({
     onClick,
@@ -46,6 +48,7 @@ const Button = ({
     iconStyles,
     btnStyles,
     textStyles,
+    iconThemeColor = true,
 }: Props) => {
     return (
         <button
@@ -64,10 +67,11 @@ const Button = ({
             {Icon && (
                 <Icon
                     className={clsx(
-                        iconClasses.base,
                         iconClasses[size],
                         iconStyles,
-                        iconEffect && iconClasses.iconEffect
+                        iconThemeColor && iconClasses.themeColor,
+                        iconEffect && iconClasses.iconEffect,
+                        disabled && iconClasses.disabled
                     )}
                 />
             )}

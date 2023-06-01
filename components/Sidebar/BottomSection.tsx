@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import Spinner from '@/components/icons/spinner1.svg';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
-
 import AppSetting from '../../features/settings/AppSetting';
 import SettingModal from '../../features/settings/SettingModal';
 import Button from '../Button';
@@ -12,15 +12,18 @@ const BottomSection = () => {
         setIsSettingsOpen(!isSettingsOpen);
     }, [isSettingsOpen]);
     return (
-        <div className="">
+        <div className="flex w-full items-center justify-start gap-3">
             <Button
                 onClick={toggleSettingModal}
                 Icon={HiOutlineCog8Tooth}
                 size="lg"
+                btnStyles=""
                 // text={'Settings'}
-                border={true}
-                shadow={true}
+                // border={true}
             />
+            {/* <div className="debug-1"> */}
+            <Spinner className=" debug-2" />
+            {/* </div> */}
             <SettingModal
                 isOpen={isSettingsOpen}
                 toggleModal={toggleSettingModal}

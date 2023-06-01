@@ -83,12 +83,14 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         onClick={handleClickConfirm}
                         size="sm"
                         iconEffect={true}
+                        iconThemeColor={false}
                     />
                     <Button
                         Icon={HiOutlineXMark}
                         onClick={handleClickCancel}
                         size="sm"
                         iconEffect={true}
+                        iconThemeColor={false}
                     />
                 </div>
             ) : (
@@ -98,12 +100,14 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         Icon={HiPencilSquare}
                         size="sm"
                         iconEffect={true}
+                        iconThemeColor={false}
                     />
                     <Button
                         onClick={handleClickRemove}
                         Icon={HiOutlineTrash}
                         size="sm"
                         iconEffect={true}
+                        iconThemeColor={false}
                     />
                 </div>
             )}

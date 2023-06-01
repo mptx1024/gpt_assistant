@@ -14,7 +14,14 @@ const TopSection = (props: Props) => {
                 </h1>
                 <span className=" text-[0.7rem]">&nbsp;&nbsp; v1.1 </span>
             </div>
-            <Button size="sm" Icon={HiOutlineXMark} iconEffect onClick={props.toggleSidebar} />
+            <Button
+                size="md"
+                Icon={HiOutlineXMark}
+                iconEffect
+                onClick={props.toggleSidebar}
+                iconThemeColor={false}
+                btnStyles="sm:hidden z-10"
+            />
         </div>
     );
 };

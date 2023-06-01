@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -13,8 +13,8 @@ import { setAllRoles } from '@/store/rolesSlice';
 import { toggleSidebar } from '@/store/uiSlice';
 import { Chat, Message, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
-
 import Alert from './Alert';
+import Loading from './Loading';
 
 type Props = { children: React.ReactNode };
 
@@ -47,7 +47,9 @@ export default function Layout({ children }: Props) {
             if (chats) {
                 dispatch(setAllChats(chats));
             }
-            dispatch(setCurrentChat(typeof router.query.id === 'string' ? router.query.id : chats[0]?.id));
+            dispatch(
+                setCurrentChat(typeof router.query.id === 'string' ? router.query.id : chats[0]?.id)
+            );
             setIsLoading(false);
             const messages: Message[] = await idb.get('messages');
             if (messages) {
@@ -58,7 +60,7 @@ export default function Layout({ children }: Props) {
     }, [router.isReady]);
 
     return isLoading ? (
-        <div className="">loading...</div>
+        <Loading />
     ) : (
         <>
             <Head>
@@ -71,7 +73,7 @@ export default function Layout({ children }: Props) {
                 <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                 <div className="relative flex h-full w-full flex-col">
                     <Navbar isSidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
-                    {children}
+                    <Suspense fallback={<Loading />}>{children}</Suspense>
                 </div>
             </div>
             <Alert />

@@ -16,7 +16,7 @@ module.exports = {
                 colorPrimary: colors.teal[600],
                 colorSecondary: colors.amber[300],
                 black: {
-                    base: '#333333',
+                    base: '#4d4c4c',
                     DEFAULT: colors.black,
                     inverted: colors.neutral[300],
                 },

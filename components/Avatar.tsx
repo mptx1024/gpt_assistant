@@ -4,7 +4,7 @@ import Gpt3Icon from './icons/gpt3.svg';
 import Gpt4Icon from './icons/gpt4.svg';
 import Userlogo from './icons/user.svg';
 
-const avatarClasses = ' h-8 w-8 rounded';
+const avatarClasses = ' h-7 w-7 rounded';
 
 export const Avatar = (props: { modelPrams?: ModelParams }) => {
     if (props.modelPrams) {
@@ -20,10 +20,6 @@ export const Avatar = (props: { modelPrams?: ModelParams }) => {
     }
 
     return (
-        // <div className="debug-2">
-        //     <Image src={Userlogo} width={100} height={50} alt="" />
-        // </div>
-        // <img src={Userlogo} alt='' width={50} height={50} color="white"/>
         <Userlogo className={clsx(avatarClasses, 'fill-colorPrimary')} />
     );
 };

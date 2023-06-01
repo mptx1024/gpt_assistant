@@ -1,4 +1,4 @@
-import { selectIsLoading } from '@/store/chatsSlice';
+import { selectIsLoading, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 import { selectApiKey } from '@/store/settingSlice';
 import { abortController, generateReply, regenerate } from '@/utils/chat';
@@ -14,7 +14,7 @@ export default function useChat({ chatId }: Props) {
     const apiKey = useAppSelector(selectApiKey);
     const [userInput, setUserInput] = useState<string>('');
     const loading = useAppSelector(selectIsLoading);
-
+    const hasMessages = useAppSelector((state) => selectMessageIdsByChat(state, chatId)).length > 0;
     const handleClickSubmit = async (e: React.MouseEvent | React.KeyboardEvent) => {
         e.preventDefault();
         setUserInput('');
@@ -58,6 +58,7 @@ export default function useChat({ chatId }: Props) {
         apiKey,
         loading,
         textareaRef,
+        hasMessages,
         generateReply,
         handleClickSubmit,
         handleClickRegenerate,
