@@ -44,6 +44,8 @@ export const createNewChat = (selectedRole?: Role): string => {
         role: selectedRole ? selectedRole : appSetting.defaultRole,
         modelParams: appSetting.defaultModelParams,
     };
+    console.log(`in createNewChat`);
+    
     store.dispatch(addChat(newChat));
     store.dispatch(setCurrentChat(newChat.id));
     Router.push(`/chat/${newChat.id}`, undefined, { shallow: true });

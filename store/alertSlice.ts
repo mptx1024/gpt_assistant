@@ -16,7 +16,7 @@ const alertSlice = createSlice({
         setAlert(state, action) {
             state.message = action.payload;
         },
-        clearAlert(state) {
+        clearAlert(state) {            
             state.message = null;
         },
     },
@@ -28,6 +28,7 @@ const alertSlice = createSlice({
             state.message = 'New Chat Created';
         });
         builder.addCase(removeChat, (state) => {
+
             state.message = 'Chat Deleted';
         });
     },

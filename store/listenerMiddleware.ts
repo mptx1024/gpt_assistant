@@ -116,7 +116,7 @@ startAppListening({
     },
 });
 
-// Update msgs
+// Update msgs in IndexedDB
 startAppListening({
     matcher: isAnyOf(addMessage, removeMessage, removeMessageUpTo, removeChat, setIsLoading),
     effect: async (action, listenerApi) => {

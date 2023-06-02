@@ -52,23 +52,43 @@ module.exports = {
                         borderColor: 'white',
                     },
                 },
-                slideIn: {
+                sideSlide: {
                     '0%': {
                         opacity: '0%',
-                        transform: 'translateY(-30%)',
+                        transform: 'translateX(50%)',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                        transform: 'translateX(0)',
+                    },
+                },
+                slideInFromTop: {
+                    '0%': {
+                        opacity: '0%',
+                        transform: 'translateY(-10%)',
                     },
                     '100%': {
                         opacity: '100%',
                         transform: 'translateY(0)',
                     },
                 },
-                slideInFromTop: {
+                alertSlideIn: {
                     '0%': {
-                        opacity: '0%',
+                        opacity: '0',
                         transform: 'translateY(-20px)',
                     },
                     '100%': {
                         opacity: '100%',
+                    },
+                },
+                alertSlideOut: {
+                    '0%': {
+                        opacity: '100%',
+                        
+                    },
+                    '100%': {
+                        opacity: '0',
+                        transform: 'translateY(-20px)',
                     },
                 },
                 slideInFromBottom: {
@@ -93,8 +113,11 @@ module.exports = {
             },
             animation: {
                 typing: 'typing 0.5s alternate',
-                slideIn: 'slideIn 0.5s ease-out',
-                slideInFromTop: 'slideInFromTop 0.3s ease',
+                sideSlide: 'sideSlide 0.6s ease-out',
+                alertSlideIn: 'alertSlideIn 0.3s ease-out',
+                alertSlideOut: 'alertSlideOut 0.3s ease-in',
+                slideInFromTop: 'slideInFromTop 0.4s ease-out',
+                alertSlide: 'alertSlide 3s ease-in-out',
                 slideInFromBottom: 'slideInFromBottom 0.3s ease ',
                 // alertOut: 'alertOut 0.6s ease',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',

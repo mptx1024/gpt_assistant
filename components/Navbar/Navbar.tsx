@@ -21,7 +21,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
 
     // const chatID = useSelector((state: RootState) => state.chats.currentChat.id);
     const chat = useSelector(selectCurrentChat);
-    console.log(`in navbar; chat.id: ${chat?.id}; router.query.id: ${router.pathname}`);
+    // console.log(`in navbar; chat.id: ${chat?.id}; router.query.id: ${router.pathname}`);
     const title = () => {
         if (router.pathname === '/role') {
             return 'Assistant Library';
