@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
-
+import {AiOutlineGithub} from 'react-icons/ai';
 import Spinner from '@/components/icons/spinner1.svg';
+import GithubSvg from '@/components/icons/github.svg';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import AppSetting from '../../features/settings/AppSetting';
 import SettingModal from '../../features/settings/SettingModal';
@@ -12,7 +13,7 @@ const BottomSection = () => {
         setIsSettingsOpen(!isSettingsOpen);
     }, [isSettingsOpen]);
     return (
-        <div className="flex w-full items-center justify-start gap-3">
+        <div className="flex w-full items-center justify-start">
             <Button
                 onClick={toggleSettingModal}
                 Icon={HiOutlineCog8Tooth}
@@ -21,8 +22,8 @@ const BottomSection = () => {
                 // text={'Settings'}
                 // border={true}
             />
-            {/* <div className="debug-1"> */}
-            <Spinner className=" debug-2" />
+            <Button Icon={AiOutlineGithub} size='lg'/>
+            {/* <GithubSvg className=" dark:fill-gray-base fill-gray-inverted " /> */}
             {/* </div> */}
             <SettingModal
                 isOpen={isSettingsOpen}

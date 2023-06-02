@@ -50,26 +50,36 @@ const RoleLibraryPage = () => {
         return <RoleCard key={index} role={role} bgColor={color} />;
     });
     return (
-        <div className="flex h-full w-full flex-col overflow-y-scroll">
-            <div className="flex w-full items-center justify-between gap-5 px-7">
+        <div className="flex h-full w-full flex-col overflow-y-scroll py-4">
+            <div className="flex w-full items-center justify-center gap-5 px-10">
                 <Input
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder="Search AI Role Library"
+                    placeholder="Search Library"
                     showborder
-                    
+                    styles="max-w-md h-full"
                 />
                 <Button
                     text={'Add Role'}
                     Icon={HiPlus}
                     onClick={toggleEditor}
-                    shadow={true}
                     border={true}
                     size="md"
                 />
             </div>
+            <p className="my-5 self-center">
+                From &nbsp;
+                <a
+                    style={{ textDecoration: 'underline' }}
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://github.com/f/awesome-chatgpt-prompts#-awesome-chatgpt-prompts"
+                >
+                    🧠 Awesome ChatGPT Prompts
+                </a>
+            </p>
             <div
-                className="grid animate-slideIn auto-cols-auto grid-cols-1 gap-2 
+                className="grid auto-cols-auto grid-cols-1 gap-2 
                 p-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-3 lg:p-8 xl:grid-cols-4 xl:gap-5 xl:p-10"
             >
                 {cards}

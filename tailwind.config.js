@@ -55,7 +55,7 @@ module.exports = {
                 slideIn: {
                     '0%': {
                         opacity: '0%',
-                        transform: 'translateY(-50%)',
+                        transform: 'translateY(-30%)',
                     },
                     '100%': {
                         opacity: '100%',
@@ -92,8 +92,8 @@ module.exports = {
                 // },
             },
             animation: {
-                typing: 'typing 0.9s alternate',
-                slideIn: 'slideIn 0.4s ease',
+                typing: 'typing 0.5s alternate',
+                slideIn: 'slideIn 0.3s ease',
                 slideInFromTop: 'slideInFromTop 0.3s ease',
                 slideInFromBottom: 'slideInFromBottom 0.3s ease',
                 // alertOut: 'alertOut 0.6s ease',

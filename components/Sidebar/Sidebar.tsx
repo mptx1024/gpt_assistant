@@ -29,11 +29,11 @@ export default function Sidebar({ sidebarOpen: isSidebarOpen, toggleSidebar }: P
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
-            <div className="relative flex h-[calc(100%-7.5rem)] flex-col px-1">
+            <div className="relative flex h-[91%] flex-col overflow-clip px-1">
                 <ChatList chats={chats} />
                 <RoleList roles={roles} />
             </div>
-            <div className="absolute bottom-1 px-3 w-full border-t border-color">
+            <div className="border-color absolute bottom-1 w-full border-t px-3">
                 <BottomSection />
             </div>
         </div>

@@ -12,7 +12,7 @@ interface InputProps {
     styles?: string;
     showborder?: boolean;
 }
-const inputBaseClasses = 'my-2 p-1 w-full overflow-hidden rounded-lg outline-none';
+const inputBaseClasses = ' p-1 w-full overflow-hidden rounded-lg outline-none';
 
 export function Input(props: InputProps) {
     return (

@@ -48,7 +48,6 @@ const RoleModal = (props: Props) => {
                         size="lg"
                         text={'Use'}
                         onClick={props.handleClickUse}
-                        shadow={true}
                         border={true}
                     />
                     {!props.isTemplate && (
@@ -56,7 +55,6 @@ const RoleModal = (props: Props) => {
                             size="lg"
                             text={'Edit'}
                             onClick={props.handleClickEdit}
-                            shadow={true}
                             border={true}
                         />
                     )}
@@ -65,7 +63,6 @@ const RoleModal = (props: Props) => {
                             size="lg"
                             text={'Delete'}
                             onClick={props.handleClickDelete}
-                            shadow={true}
                             border={true}
                         />
                     )}

@@ -66,7 +66,7 @@ export default function Input({ chatId }: Props) {
                     btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
                 />
             </div>
-            <div className="debug-1 px-2 flex min-h-[5rem] w-full items-center rounded-md shadow-sm ring-1 ring-colorPrimary focus-within:ring-[2px] focus-within:ring-colorPrimary">
+            <div className=" px-2 flex min-h-[5rem] w-full items-center rounded-md shadow-sm ring-1 ring-colorPrimary focus-within:ring-[2px] focus-within:ring-colorPrimary">
                 <textarea
                     ref={textareaRef}
                     value={userInput}

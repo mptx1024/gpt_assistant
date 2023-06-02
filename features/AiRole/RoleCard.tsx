@@ -26,7 +26,7 @@ const RoleCard = (props: Props) => {
 
     return (
         <div
-            className={`${props.bgColor} cursor-pointer rounded-lg p-2 transition-all ease-in-out  hover:scale-[102%] sm:p-4 lg:p-6`}
+            className={`${props.bgColor} cursor-pointer rounded-lg p-2 transition-all ease-in-out  hover:scale-[102%] sm:p-4 lg:p-6 animate-slideIn`}
             onClick={toggleRoleCardModal}
         >
             <div className="mt-2">
