@@ -25,6 +25,7 @@ const RoleItem = (props: Props) => {
     };
     const toggleRoleEditor = () => {
         setIsRoleEditorOpen(false);
+        setIsRoleModalOpen(true);
     };
     const handleClickUse = () => {
         createNewChat(props.role);
@@ -32,6 +33,8 @@ const RoleItem = (props: Props) => {
         setIsRoleEditorOpen(false);
     };
     const handleClickEdit = () => {
+        setIsRoleModalOpen(false);
+
         setIsRoleEditorOpen(true);
     };
     const handleClickDelete = () => {

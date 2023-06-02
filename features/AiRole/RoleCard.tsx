@@ -1,6 +1,5 @@
+import { addOrEditRole } from '@/utils/roles';
 import { useState } from 'react';
-
-import { useRouter } from 'next/router';
 
 import { Role } from '@/types';
 import { createNewChat } from '@/utils/chat';
@@ -14,7 +13,6 @@ interface Props {
 
 const RoleCard = (props: Props) => {
     const [isRoleCardModalOpen, setIsRoleCardModalOpen] = useState(false);
-    const router = useRouter();
 
     const handleClickUse = () => {
         createNewChat(props.role);
@@ -23,10 +21,14 @@ const RoleCard = (props: Props) => {
     const toggleRoleCardModal = () => {
         setIsRoleCardModalOpen(!isRoleCardModalOpen);
     };
+    const handleClickAdd = () => {
+        addOrEditRole(props.role.prompt, props.role.roleName);
+        setIsRoleCardModalOpen(false);
+    };
 
     return (
         <div
-            className={`${props.bgColor} cursor-pointer rounded-lg p-2 transition-all ease-in-out  hover:scale-[102%] sm:p-4 lg:p-6 animate-slideIn`}
+            className={`${props.bgColor} animate-slideIn cursor-pointer rounded-lg p-2 transition-all  ease-in-out hover:scale-[102%] sm:p-4 lg:p-6`}
             onClick={toggleRoleCardModal}
         >
             <div className="mt-2">
@@ -42,6 +44,7 @@ const RoleCard = (props: Props) => {
                     isTemplate={true}
                     toggleModal={toggleRoleCardModal}
                     handleClickUse={handleClickUse}
+                    handleClickAdd={handleClickAdd}
                 />
             ) : null}
         </div>

@@ -50,7 +50,7 @@ const RoleLibraryPage = () => {
         return <RoleCard key={index} role={role} bgColor={color} />;
     });
     return (
-        <div className="flex h-full w-full flex-col overflow-y-scroll py-4">
+        <div className="flex h-full w-full flex-col py-4">
             <div className="flex w-full items-center justify-center gap-5 px-10">
                 <Input
                     value={searchInput}
@@ -79,7 +79,7 @@ const RoleLibraryPage = () => {
                 </a>
             </p>
             <div
-                className="grid auto-cols-auto grid-cols-1 gap-2 
+                className="grid auto-cols-auto grid-cols-1 gap-2 overflow-y-scroll 
                 p-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-3 lg:p-8 xl:grid-cols-4 xl:gap-5 xl:p-10"
             >
                 {cards}

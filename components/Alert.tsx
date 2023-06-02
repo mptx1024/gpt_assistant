@@ -28,7 +28,7 @@ const Alert = () => {
         <div
             role="alert"
             className={clsx(
-                'fixed left-0 top-[3vh] flex w-full animate-slideInFromTop justify-start'
+                'fixed left-0 top-[3vh] flex w-full animate-slideInFromTop justify-start z-50'
                 // message
                 //     ? 'opacity-100 transition-all duration-300 ease-in-out'
                 //     : 'opacity-0 transition-all  duration-300 ease-in-out'

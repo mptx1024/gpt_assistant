@@ -18,7 +18,7 @@ interface Props {
 }
 
 const btnClasses = {
-    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all ease-in-out active:scale-[0.9]',
+    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all ease-in-out active:scale-[0.9] disabled:cursor-not-allowed disabled:text-gray-500',
     shadow: 'hover:bg-gray-200 dark:hover:bg-gray-700',
     border: 'border-[1px] border-gray-300 hover:border-colorPrimary dark:border-gray-500 dark:hover:border-colorPrimary',
     sm: 'px-1 py-1 text-sm',
@@ -33,7 +33,7 @@ const iconClasses = {
     md: 'h-5 w-5',
     lg: 'h-6 w-6',
     iconEffect: 'hover:scale-[1.1]',
-    disabled: 'cursor-not-allowed !text-gray-500',
+    disabled: '!text-gray-500',
 };
 const Button = ({
     onClick,
@@ -60,7 +60,7 @@ const Button = ({
                 btnClasses[size],
                 shadow && btnClasses.shadow,
                 border && btnClasses.border,
-                disabled && btnClasses.disabled,
+                // disabled && btnClasses.disabled,
                 btnStyles
             )}
         >
@@ -69,6 +69,7 @@ const Button = ({
                     className={clsx(
                         iconClasses[size],
                         iconStyles,
+
                         iconThemeColor && iconClasses.themeColor,
                         iconEffect && iconClasses.iconEffect,
                         disabled && iconClasses.disabled

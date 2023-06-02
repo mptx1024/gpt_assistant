@@ -93,9 +93,9 @@ module.exports = {
             },
             animation: {
                 typing: 'typing 0.5s alternate',
-                slideIn: 'slideIn 0.3s ease',
+                slideIn: 'slideIn 0.5s ease-out',
                 slideInFromTop: 'slideInFromTop 0.3s ease',
-                slideInFromBottom: 'slideInFromBottom 0.3s ease',
+                slideInFromBottom: 'slideInFromBottom 0.3s ease ',
                 // alertOut: 'alertOut 0.6s ease',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },
