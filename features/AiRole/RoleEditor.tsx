@@ -26,7 +26,7 @@ const RoleEditor = (props: Props) => {
 
     const handleClickSave = () => {
         addOrEditRole(prompt, title, props.role);
-        setTitle('');
+    setTitle('');
         setPrompt('');
         props.toggleModal();
     };
@@ -62,7 +62,6 @@ const RoleEditor = (props: Props) => {
                                 value={title}
                                 onChange={handleTitleChange}
                                 required={true}
-                                placeholder="Title"
                                 type="text"
                                 showborder={true}
                                 styles="mt-2"
@@ -74,14 +73,13 @@ const RoleEditor = (props: Props) => {
                                 required={true}
                                 value={prompt}
                                 onChange={handlePromptChange}
-                                placeholder="Prompt"
                                 showborder={true}
                                 rows={8}
                                 styles="mt-2"
                             />
                         </div>
                     </div>
-                    <Button btnSize="lg" type={'submit'} shadow={true} border={true} text="Save" />
+                    <Button btnSize="lg" type={'submit'} border={true} text="Save" />
                 </form>
             </div>
         </ModalWrapper>

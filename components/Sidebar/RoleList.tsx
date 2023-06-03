@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 import { HiOutlineBuildingLibrary, HiPlus } from 'react-icons/hi2';
-
+import Tooltip from '@/components/Tooltip';
 import RoleEditor from '@/features/AiRole/RoleEditor';
 import { Role } from '@/types';
-import { Tooltip } from 'react-tooltip';
+// import { Tooltip } from 'react-tooltip';
 
 import Button from '../Button';
 import RoleItem from './RoleItem';
@@ -31,7 +31,7 @@ const RoleList = (props: { roles: Role[] }) => {
                         Icon={HiPlus}
                         onClick={toggleRoleEditor}
                         iconEffect={true}
-                        tooltipSelector="create-role"
+                        tooltipSelector="create-role-sidebar"
                     />
                     <Button
                         btnSize="sm"
@@ -41,22 +41,12 @@ const RoleList = (props: { roles: Role[] }) => {
                         tooltipSelector="visit-role-library"
                     />
                     <Tooltip
-                        anchorSelect=".create-role"
+                        anchorSelect=".create-role-sidebar"
                         content="Create a Role"
-                        style={{
-                            backgroundColor: 'rgb(107 114 128)',
-                            color: 'rgb(255 255 255)',
-                            padding: '0.4rem 0.6rem',
-                        }}
                     />
                     <Tooltip
                         anchorSelect=".visit-role-library"
                         content="Visit Role Library"
-                        style={{
-                            backgroundColor: 'rgb(107 114 128)',
-                            color: 'rgb(255 255 255)',
-                            padding: '0.4rem 0.6rem',
-                        }}
                     />
                 </div>
             </div>

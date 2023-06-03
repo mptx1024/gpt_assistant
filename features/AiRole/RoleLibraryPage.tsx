@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
-
+import Tooltip from '@/components/Tooltip';
 import MiniSearch from 'minisearch';
+import { useEffect, useMemo, useState } from 'react';
 import { HiPlus } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
@@ -8,7 +8,6 @@ import { Input } from '@/components/InputField';
 
 import RoleCard from './RoleCard';
 import RoleEditor from './RoleEditor';
-// import { getRandomColor } from './utils/colors';
 import rolesList from './utils/roleLibarary.json';
 const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -40,11 +39,6 @@ const RoleLibraryPage = () => {
         setIsEditorOpen(!isEditorOpen);
     };
 
-    // // prevent re-generating card colors on every render
-    // const cardColors = useMemo(() => {
-    //     return rolesList.map(() => getRandomColor());
-    // }, []);
-
     const cards = searchResults.map((role, index) => {
         return <RoleCard key={index} role={role} bgColor={`bg-gray-500 dark:bg-gray-700`} />;
     });
@@ -59,11 +53,17 @@ const RoleLibraryPage = () => {
                     styles="max-w-md h-full"
                 />
                 <Button
-                    text={'Add Role'}
+                    text={'Create Role'}
                     Icon={HiPlus}
                     onClick={toggleEditor}
                     border={true}
                     btnSize="md"
+                    tooltipSelector="create-role-library"
+                />
+                <Tooltip
+                    anchorSelect=".create-role-library"
+                    content="Create a new role & add to your role list"
+                    place="bottom"
                 />
             </div>
             <p className="my-5 self-center">
@@ -78,7 +78,7 @@ const RoleLibraryPage = () => {
                 </a>
             </p>
             <div
-                className="grid auto-cols-auto grid-cols-1 gap-2 overflow-y-scroll 
+                className="grid auto-cols-auto grid-cols-2 gap-2 overflow-y-scroll 
                 p-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-3 lg:p-8 xl:grid-cols-4 xl:gap-5 xl:p-10"
             >
                 {cards}

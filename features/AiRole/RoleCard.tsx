@@ -23,24 +23,32 @@ const RoleCard = (props: Props) => {
         setIsRoleCardModalOpen(!isRoleCardModalOpen);
     };
     const handleClickAdd = (e: React.MouseEvent) => {
-        e.preventDefault()
-        e.stopPropagation()
+        e.preventDefault();
+        e.stopPropagation();
         addOrEditRole(props.role.prompt, props.role.roleName);
         setIsRoleCardModalOpen(false);
     };
 
     return (
         <div
-            className={`${props.bgColor} flex animate-slideInFromTop cursor-pointer flex-col rounded-lg p-2 transition-all ease-in-out hover:scale-[102%] sm:p-4 lg:p-5 gap-3`}
+            className={`${props.bgColor} flex animate-slideInFromTop cursor-pointer flex-col gap-3 rounded-lg p-5 transition-all ease-in-out hover:scale-[102%] sm:p-4 lg:p-5`}
             onClick={toggleRoleCardModal}
         >
-                        <Button btnSize="sm" Icon={HiPlus} btnStyles="self-end" border onClick={handleClickAdd}/>
+            <Button
+                btnSize="sm"
+                Icon={HiPlus}
+                btnStyles="self-end"
+                border
+                onClick={handleClickAdd}
+            />
 
-            <div className="h-[7rem] overflow-hidden">
-                <h3 className="mb-1 text-lg font-semibold text-white sm:text-xl">
+            <div className="h-[7rem] flex flex-col overflow-hidden">
+                <h3 className="mb-1 text-base font-semibold text-white sm:text-xl">
                     {props.role.roleName}
                 </h3>
-                <p className="text-sm text-gray-200 line-clamp-4">{props.role.prompt}</p>
+                <p className="line-clamp-3 md:line-clamp-4 text-sm text-neutral-300 dark:text-neutral-400">
+                    {props.role.prompt}
+                </p>
             </div>
             {isRoleCardModalOpen ? (
                 <RoleModal
