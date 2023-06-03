@@ -64,14 +64,12 @@ export default function ChatMessage({ messageId }: Props) {
                                         onClick={handleClickSaveSubmit}
                                         btnSize="sm"
                                         text="Save & Submit"
-                                        shadow={true}
                                         border={true}
                                     />
 
                                     <Button
                                         onClick={handleClickCancel}
                                         text="Cancel"
-                                        shadow={true}
                                         border={true}
                                         btnSize="sm"
                                     />
@@ -87,6 +85,7 @@ export default function ChatMessage({ messageId }: Props) {
                                             onClick={handleClickCopy}
                                             btnSize="md"
                                             iconEffect={true}
+                                            iconStyles="!text-neutral-500"
                                         />
                                     ) : (
                                         <Button
@@ -102,6 +101,7 @@ export default function ChatMessage({ messageId }: Props) {
                                             onClick={handleClickEdit}
                                             btnSize="md"
                                             iconEffect={true}
+                                            iconStyles="!text-neutral-500"
                                         />
                                     )}
                                 </div>

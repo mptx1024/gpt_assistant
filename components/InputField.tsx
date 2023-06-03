@@ -2,11 +2,7 @@ import { useEffect, useRef } from 'react';
 
 import clsx from 'clsx';
 
-interface InputProps {
-    required?: boolean;
-    type?: string;
-    placeholder?: string;
-    value: string | number;
+interface InputProps extends React.HTMLProps<HTMLInputElement> {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onClick?: (e: React.MouseEvent) => void;
     styles?: string;
@@ -14,22 +10,21 @@ interface InputProps {
 }
 const inputBaseClasses = ' p-1 w-full overflow-hidden rounded-lg outline-none';
 
-export function Input(props: InputProps) {
+export function Input({ showborder, styles, onChange, onClick, ...props }: InputProps) {
     return (
         <input
+            {...props}
             required={props.required}
             className={clsx(
-                props.styles,
+                styles,
                 inputBaseClasses,
-                props.showborder
-                    ? 'border-color border-[1.5px] focus:border-colorPrimary'
-                    : 'border-none'
+                showborder ? 'border-color border-[1.5px] focus:border-colorPrimary' : 'border-none'
             )}
-            type={props.type}
-            placeholder={props.placeholder}
-            value={props.value}
-            onChange={props.onChange}
-            onClick={props.onClick}
+            // type={props.type}
+            // placeholder={props.placeholder}
+            // value={props.value}
+            onChange={onChange}
+            onClick={onClick}
         />
     );
 }

@@ -71,6 +71,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         value={title}
                         onChange={handleInputChange}
                         onClick={(e) => e.stopPropagation()}
+                        autoFocus={true}
+                        styles="bg-gray-base"
                     />
                 ) : (
                     <p className="w-full animate-typing truncate">{chat.title}</p>

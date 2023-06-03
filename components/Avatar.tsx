@@ -9,17 +9,15 @@ const avatarClasses = ' h-7 w-7 rounded';
 export const Avatar = (props: { modelPrams?: ModelParams }) => {
     if (props.modelPrams) {
         return (
-            <div className=''>
+            <div className="">
                 {props.modelPrams.model.id.startsWith('gpt-4') ? (
-                    <Gpt4Icon className={clsx(avatarClasses, ' fill-white p-1 bg-purple-600 ')} />
+                    <Gpt4Icon className={clsx(avatarClasses, ' bg-purple-600 fill-white p-1 ')} />
                 ) : (
-                    <Gpt3Icon className={clsx(avatarClasses, 'fill-white p-1 bg-green-700')} />
+                    <Gpt3Icon className={clsx(avatarClasses, 'bg-green-700 fill-white p-1')} />
                 )}
             </div>
         );
     }
 
-    return (
-        <Userlogo className={clsx(avatarClasses, 'fill-colorPrimary')} />
-    );
+    return <Userlogo className={clsx(avatarClasses, 'fill-neutral-500 dark:fill-neutral-500')} />;
 };

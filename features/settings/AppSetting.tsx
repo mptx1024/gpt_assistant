@@ -60,10 +60,13 @@ function AppSetting({ toggleModal }: Props) {
         toggleModal();
     };
     return (
-        <div className="flex flex-col overflow-auto px-5 py-1 sm:gap-5 sm:py-5">
-            <section id="setting-apikey" className="p-1">
-                <h3 className="font-semibold">OpenAI API Key</h3>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+        <div
+            id="setting"
+            className="flex flex-col gap-4 overflow-auto px-5 py-1 sm:gap-5 sm:py-5"
+        >
+            <section id="setting-apikey" className="flex flex-col p-1">
+                <span className="text-title block">OpenAI API Key</span>
+                <span className="text-subtitle mb-3">
                     Apply & retrieve your OpenAI API key&nbsp;
                     <a
                         href="https://platform.openai.com/account/api-keys"
@@ -71,23 +74,23 @@ function AppSetting({ toggleModal }: Props) {
                         rel="noopener noreferrer"
                         className="font-semibold underline"
                     >
-                        here.
+                        here
                     </a>
-                    <br />
-                    Your API Key is safely stored on your browser locally.
+                    {/* <br /> */}
+                    .&nbsp;Your API Key is safely stored on your browser locally.
                 </span>
                 <Input
                     type="text"
                     placeholder="Enter Your API Key Here"
                     value={key}
                     onChange={(e) => setKey(e.target.value)}
-                    showborder={true}
+                    showborder
                 />
             </section>
-            <div className="flex items-center justify-between gap-2">
-                <div id="" className="w-[80%]">
-                    <span className="block">Auto-generate Chat Title</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+            <section id="setting-auto-generate" className="flex items-center justify-between gap-2">
+                <div id="" className="flex w-[80%] flex-col">
+                    <span className="text-title block">Auto-generate Chat Title</span>
+                    <span className="text-subtitle">
                         Summurize chat title based on the first reply message. This will consume
                         more tokens used in the first message
                     </span>
@@ -105,11 +108,11 @@ function AppSetting({ toggleModal }: Props) {
 
                     <span className="absolute inset-y-0 start-0 m-1 h-5 w-5 rounded-full bg-white transition-all peer-checked:start-7"></span>
                 </label>
-            </div>
-            <div className="flex items-center justify-between">
+            </section>
+            <section id="setting-msg-count" className="flex items-center justify-between">
                 <div id="" className="w-[80%]">
-                    <span className="block">Include last N messages</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className="text-title block">Include last N messages</span>
+                    <span className="text-subtitle">
                         Number of messages included per each request
                     </span>
                 </div>
@@ -120,7 +123,7 @@ function AppSetting({ toggleModal }: Props) {
                         onChange={handleAttachedMsgCount}
                     />
                 </div>
-            </div>
+            </section>
             <section id="setting-model-params" className="">
                 <h3 className="font-semibold"></h3>
                 <ModelParamsSection

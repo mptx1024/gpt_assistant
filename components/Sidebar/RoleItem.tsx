@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/router';
-import { FiUser } from 'react-icons/fi';
-
+// import { FiUser } from 'react-icons/fi';
+import {FaRobot} from 'react-icons/fa'
+import {BsRobot} from 'react-icons/bs';
 import RoleEditor from '@/features/AiRole/RoleEditor';
 import RoleModal from '@/features/AiRole/RoleModal';
 import { Role } from '@/types';
@@ -51,7 +52,7 @@ const RoleItem = (props: Props) => {
             <div onClick={handleClick}>
                 <SidebarCard>
                     <div className="flex w-[80%] items-center gap-2">
-                        <FiUser />
+                        <BsRobot />
                         <div className="w-full truncate"> {props.role.roleName}</div>
                     </div>
                 </SidebarCard>

@@ -103,7 +103,6 @@ export function ChatParamsModal({
                 text="save"
                 btnSize="lg"
                 border={true}
-                shadow={true}
                 onClick={handleClickSave}
                 btnStyles="w-[5rem] self-start ml-1"
             />

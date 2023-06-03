@@ -15,10 +15,11 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     iconStyles?: string;
     btnStyles?: string;
     textStyles?: string;
+    tooltipSelector?: string;
 }
 
 const btnClasses = {
-    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all ease-in-out active:scale-[0.9] [&>*]:disabled:!text-gray-500 disabled:cursor-not-allowed',
+    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all ease-in-out active:scale-[0.9] disabled:cursor-not-allowed',
     shadow: 'hover:bg-gray-200 dark:hover:bg-gray-700',
     border: 'border-[1px] border-gray-300 hover:border-colorPrimary dark:border-gray-500 dark:hover:border-colorPrimary',
     sm: 'px-1 py-1 text-sm',
@@ -46,19 +47,20 @@ const Button = ({
     btnStyles,
     textStyles,
     iconThemeColor = true,
+    tooltipSelector,
     ...otherProps
 }: Props) => {
     return (
         <button
             type={type}
             onClick={onClick}
-            // disabled={otherProps?.disabled}
             className={clsx(
                 btnClasses.base,
                 btnClasses[size],
                 shadow && btnClasses.shadow,
                 border && btnClasses.border,
-                btnStyles
+                btnStyles,
+                tooltipSelector
             )}
             {...otherProps}
         >
