@@ -55,7 +55,7 @@ module.exports = {
                 sideSlide: {
                     '0%': {
                         opacity: '0%',
-                        transform: 'translateX(50%)',
+                        transform: 'translateX(20%)',
                     },
                     '100%': {
                         opacity: '100%',
@@ -84,7 +84,6 @@ module.exports = {
                 alertSlideOut: {
                     '0%': {
                         opacity: '100%',
-                        
                     },
                     '100%': {
                         opacity: '0',
@@ -113,9 +112,9 @@ module.exports = {
             },
             animation: {
                 typing: 'typing 0.5s alternate',
-                sideSlide: 'sideSlide 0.6s ease-out',
+                sideSlide: 'sideSlide 0.8s ease-out',
                 alertSlideIn: 'alertSlideIn 0.3s ease-out',
-                alertSlideOut: 'alertSlideOut 0.3s ease-in',
+                alertSlideOut: 'alertSlideOut 0.3s ease-out',
                 slideInFromTop: 'slideInFromTop 0.4s ease-out',
                 alertSlide: 'alertSlide 3s ease-in-out',
                 slideInFromBottom: 'slideInFromBottom 0.3s ease ',

@@ -59,7 +59,7 @@ function AppSetting({ toggleModal }: Props) {
         dispatch(setAppSetting(currentSetting));
         toggleModal();
     };
-return (
+    return (
         <div className="flex flex-col overflow-auto px-5 py-1 sm:gap-5 sm:py-5">
             <section id="setting-apikey" className="p-1">
                 <h3 className="font-semibold">OpenAI API Key</h3>
@@ -73,7 +73,7 @@ return (
                     >
                         here.
                     </a>
-                    <br/>
+                    <br />
                     Your API Key is safely stored on your browser locally.
                 </span>
                 <Input
@@ -109,7 +109,9 @@ return (
             <div className="flex items-center justify-between">
                 <div id="" className="w-[80%]">
                     <span className="block">Include last N messages</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">Number of messages included per each request</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                        Number of messages included per each request
+                    </span>
                 </div>
                 <div className="flex-shrink-0 basis-[4rem]">
                     <Input
@@ -136,7 +138,7 @@ return (
             </section>
             <div className="">
                 <Button
-                    size={'lg'}
+                    btnSize={'lg'}
                     text="Save"
                     border={true}
                     // shadow={true}

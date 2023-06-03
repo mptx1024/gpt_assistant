@@ -25,7 +25,7 @@ const SettingModal = memo(function SettingModal(props: Props) {
                 <div className="flex justify-between px-5 py-3 sm:px-10 sm:pt-10">
                     <span className="text-3xl font-bold">{props.title}</span>
                     <Button
-                        size="lg"
+                        btnSize="lg"
                         Icon={HiOutlineXMark}
                         onClick={handleClickClose}
                         shadow={true}

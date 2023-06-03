@@ -7,7 +7,6 @@ import { HiOutlineClipboard, HiPencilSquare } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
 import Markdown from './Markdown';
 import { useMessage } from './hooks/useMessage';
-import Loading from '@/components/Loading';
 interface Props {
     messageId: string;
     chatId: string;
@@ -47,11 +46,10 @@ export default function ChatMessage({ messageId }: Props) {
             >
                 <div className="flex w-8 flex-shrink-0 flex-col items-end text-base">
                     {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
-                </div> 
+                </div>
 
-                {
-                    message.content ? (
-                        <div className="prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:w-[calc(100%-115px)] md:gap-3">
+                {message.content ? (
+                    <div className="prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:w-[calc(100%-115px)] md:gap-3">
                         {!isEditing ? (
                             <Markdown message={message} />
                         ) : (
@@ -64,18 +62,18 @@ export default function ChatMessage({ messageId }: Props) {
                                 <div className="mt-1 flex h-8 justify-end gap-2">
                                     <Button
                                         onClick={handleClickSaveSubmit}
-                                        size="sm"
+                                        btnSize="sm"
                                         text="Save & Submit"
                                         shadow={true}
                                         border={true}
                                     />
-    
+
                                     <Button
                                         onClick={handleClickCancel}
                                         text="Cancel"
                                         shadow={true}
                                         border={true}
-                                        size="sm"
+                                        btnSize="sm"
                                     />
                                 </div>
                             </div>
@@ -87,13 +85,13 @@ export default function ChatMessage({ messageId }: Props) {
                                         <Button
                                             Icon={HiOutlineClipboard}
                                             onClick={handleClickCopy}
-                                            size="md"
+                                            btnSize="md"
                                             iconEffect={true}
                                         />
                                     ) : (
                                         <Button
                                             Icon={TbClipboardCheck}
-                                            size="md"
+                                            btnSize="md"
                                             iconStyles="!text-green-700"
                                         />
                                         // <TbClipboardCheck className="h-5 w-5 text-base text-green-500" />
@@ -102,19 +100,17 @@ export default function ChatMessage({ messageId }: Props) {
                                         <Button
                                             Icon={HiPencilSquare}
                                             onClick={handleClickEdit}
-                                            size="md"
+                                            btnSize="md"
                                             iconEffect={true}
                                         />
                                     )}
                                 </div>
                             )}
                         </div>
-                    </div> 
-                    ): (   
-                        <ThreeDotsLoader className='dark:fill-gray-base fill-gray-inverted' />
-                    )
-                }
-
+                    </div>
+                ) : (
+                    <ThreeDotsLoader className="fill-gray-inverted dark:fill-gray-base" />
+                )}
             </div>
         </div>
     );

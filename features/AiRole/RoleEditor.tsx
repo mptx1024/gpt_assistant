@@ -48,7 +48,7 @@ const RoleEditor = (props: Props) => {
                         {props.role ? 'Edit Role' : 'Add Role'}
                     </span>
                     <Button
-                        size="lg"
+                        btnSize="lg"
                         Icon={HiOutlineXMark}
                         onClick={handleClickClose}
                         shadow={true}
@@ -65,7 +65,7 @@ const RoleEditor = (props: Props) => {
                                 placeholder="Title"
                                 type="text"
                                 showborder={true}
-                                styles='mt-2'
+                                styles="mt-2"
                             />
                         </div>
                         <div>
@@ -77,11 +77,11 @@ const RoleEditor = (props: Props) => {
                                 placeholder="Prompt"
                                 showborder={true}
                                 rows={8}
-                                styles='mt-2'
+                                styles="mt-2"
                             />
                         </div>
                     </div>
-                    <Button size="lg" type={'submit'} shadow={true} border={true} text="Save" />
+                    <Button btnSize="lg" type={'submit'} shadow={true} border={true} text="Save" />
                 </form>
             </div>
         </ModalWrapper>

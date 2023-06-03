@@ -101,7 +101,7 @@ export function ChatParamsModal({
             />
             <Button
                 text="save"
-                size="lg"
+                btnSize="lg"
                 border={true}
                 shadow={true}
                 onClick={handleClickSave}

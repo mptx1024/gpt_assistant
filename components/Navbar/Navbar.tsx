@@ -13,7 +13,7 @@ type Props = {
 };
 
 const navbarClasses =
-    'flex-shrink-0 flex h-16 w-full justify-between items-center  px-3 py-3  transition-all duration-300';
+    'nav flex-shrink-0 flex h-16 w-full justify-between items-center pr-3 py-3  transition-all duration-300';
 
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
@@ -45,18 +45,20 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     return (
         <div className={navbarClasses}>
             {/* {isSidebarOpen ? null : <Button Icon={HiBars3} size="lg" onClick={toggleSidebar} />} */}
-            <Button Icon={HiBars3} size="lg" onClick={toggleSidebar} />
-            <span className="ml-10 max-w-[50%] truncate">
+            {/* <div className="btn-sidebar debug-2 !blur-none !filter-none"> */}
+            <Button Icon={HiBars3} btnSize="lg" onClick={toggleSidebar} />
+            {/* </div> */}
+            <span className=" mr-auto max-w-[80%] truncate pl-2 text-xl">
                 {title()}
                 {/* <h1 className="debug-1 text-primary truncate">{chat?.title}</h1> */}
             </span>
             <div className="flex items-center justify-end gap-2">
-                <Button Icon={HiPlus} size="md" border={true} onClick={handleClickNewChat} />
+                <Button Icon={HiPlus} btnSize="md" border={true} onClick={handleClickNewChat} />
                 <Button
                     Icon={theme === 'dark' ? HiOutlineSun : HiMoon}
                     onClick={toggleTheme}
                     border={true}
-                    size="md"
+                    btnSize="md"
                 />
             </div>
         </div>

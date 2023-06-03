@@ -1,7 +1,7 @@
+import Button from '@/components/Button';
+import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
 import { FiSend } from 'react-icons/fi';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
-import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
-import Button from '@/components/Button';
 
 import useChat from './hooks/useChat';
 type Props = {
@@ -39,18 +39,18 @@ export default function Input({ chatId }: Props) {
                     <Button
                         onClick={handleClickStopGenerating}
                         Icon={HiOutlineStopCircle}
-                        size="sm"
+                        btnSize="sm"
                         text={'Stop Generating'}
                         // shadow={true}
                         border={true}
                         btnStyles="w-fit h-fit !py-[0.5rem] "
                     />
                 ) : (
-                     <Button
+                    <Button
                         onClick={handleClickRegenerate}
                         disabled={!hasMessages}
                         Icon={HiArrowPath}
-                        size="sm"
+                        btnSize="sm"
                         text={'Regenerate'}
                         // shadow={true}
                         border={true}
@@ -60,13 +60,13 @@ export default function Input({ chatId }: Props) {
                 <Button
                     // onClick=
                     Icon={HiShare}
-                    size="sm"
+                    btnSize="sm"
                     text={'Share'}
                     border={true}
                     btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
                 />
             </div>
-            <div className=" px-2 flex min-h-[5rem] w-full items-center rounded-md shadow-sm ring-1 ring-colorPrimary focus-within:ring-[2px] focus-within:ring-colorPrimary">
+            <div className=" flex min-h-[5rem] w-full items-center rounded-md px-2 shadow-sm ring-1 ring-colorPrimary focus-within:ring-[2px] focus-within:ring-colorPrimary">
                 <textarea
                     ref={textareaRef}
                     value={userInput}
@@ -81,7 +81,7 @@ export default function Input({ chatId }: Props) {
                         onClick={handleClickSubmit}
                         disabled={!userInput}
                         Icon={FiSend}
-                        size="md"
+                        btnSize="md"
                         shadow={true}
                         btnStyles="mx-3"
                     />

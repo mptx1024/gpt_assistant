@@ -13,9 +13,9 @@ import { setAllRoles } from '@/store/rolesSlice';
 import { toggleSidebar } from '@/store/uiSlice';
 import { Chat, Message, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
+import clsx from 'clsx';
 import Alert from './Alert';
 import Loading from './Loading';
-
 type Props = { children: React.ReactNode };
 
 export default function Layout({ children }: Props) {
@@ -71,7 +71,13 @@ export default function Layout({ children }: Props) {
             </Head>
             <div className="fixed inset-0 flex h-full">
                 <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
-                <div className="relative flex h-full w-full flex-col overflow-x-hidden">
+                <div
+                    className={clsx(
+                        'relative flex h-full w-full flex-col overflow-x-hidden',  
+                        {'blur-3xl': width && width <= 640 && sidebarOpen}
+                    )}
+                    // 
+                >
                     <Navbar isSidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                     <Suspense fallback={<Loading />}>{children}</Suspense>
                 </div>

@@ -19,7 +19,7 @@ export const addOrEditRole = (prompt: string, roleName: string, role?: Role): vo
         id: role ? role.id : uuid(),
     };
     store.dispatch(setOneRole(newRole));
-    store.dispatch(setAlert(role ? 'Role Updated' : 'Role Added'));
+    // store.dispatch(setAlert(role ? 'Role Updated' : 'Role Added'));
 };
 
 export const deleteRole = (id: string): void => {

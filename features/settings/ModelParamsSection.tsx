@@ -49,10 +49,7 @@ const ModelParamsSection = ({
                 />
             </div>
             <div id="model-params" className="flex flex-col rounded-md ">
-                <div
-                    id="setting-model"
-                    className="flex items-center justify-between py-3"
-                >
+                <div id="setting-model" className="flex items-center justify-between py-3">
                     <span className="block">Model</span>
                     <ModelListBox
                         allModels={allModels}
@@ -110,7 +107,7 @@ function ModelListBox({ allModels, selectedModel, setSelectedModel }: ModelListB
                     <Listbox.Button as="div">
                         <Button
                             Icon={HiChevronUpDown}
-                            size="md"
+                            btnSize="md"
                             text={selectedModel.name}
                             border={true}
                             btnStyles=" w-full justify-between active:scale-100"

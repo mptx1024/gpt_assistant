@@ -1,8 +1,9 @@
-import { addOrEditRole } from '@/utils/roles';
-import { useState } from 'react';
-
+import Button from '@/components/Button';
 import { Role } from '@/types';
 import { createNewChat } from '@/utils/chat';
+import { addOrEditRole } from '@/utils/roles';
+import { useState } from 'react';
+import { HiPlus } from 'react-icons/hi2';
 
 import RoleModal from './RoleModal';
 
@@ -21,21 +22,25 @@ const RoleCard = (props: Props) => {
     const toggleRoleCardModal = () => {
         setIsRoleCardModalOpen(!isRoleCardModalOpen);
     };
-    const handleClickAdd = () => {
+    const handleClickAdd = (e: React.MouseEvent) => {
+        e.preventDefault()
+        e.stopPropagation()
         addOrEditRole(props.role.prompt, props.role.roleName);
         setIsRoleCardModalOpen(false);
     };
 
     return (
         <div
-            className={`${props.bgColor} animate-slideIn cursor-pointer rounded-lg p-2 transition-all  ease-in-out hover:scale-[102%] sm:p-4 lg:p-6`}
+            className={`${props.bgColor} flex animate-slideInFromTop cursor-pointer flex-col rounded-lg p-2 transition-all ease-in-out hover:scale-[102%] sm:p-4 lg:p-5 gap-3`}
             onClick={toggleRoleCardModal}
         >
-            <div className="mt-2">
-                <h3 className="mb-1 text-lg font-bold text-white sm:text-xl">
+                        <Button btnSize="sm" Icon={HiPlus} btnStyles="self-end" border onClick={handleClickAdd}/>
+
+            <div className="h-[7rem] overflow-hidden">
+                <h3 className="mb-1 text-lg font-semibold text-white sm:text-xl">
                     {props.role.roleName}
                 </h3>
-                <p className="text-sm text-gray-200 line-clamp-3">{props.role.prompt}</p>
+                <p className="text-sm text-gray-200 line-clamp-4">{props.role.prompt}</p>
             </div>
             {isRoleCardModalOpen ? (
                 <RoleModal

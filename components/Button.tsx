@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     onClick?: any;
     Icon?: React.ElementType;
     iconEffect?: boolean;
@@ -8,8 +8,8 @@ interface Props {
     border?: boolean;
     shadow?: boolean;
     title?: string;
-    disabled?: boolean;
-    size: 'sm' | 'md' | 'lg';
+    // disabled?: boolean;
+    btnSize: 'sm' | 'md' | 'lg';
     type?: 'submit' | 'reset' | 'button' | undefined;
     iconThemeColor?: boolean;
     iconStyles?: string;
@@ -18,13 +18,12 @@ interface Props {
 }
 
 const btnClasses = {
-    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all ease-in-out active:scale-[0.9] disabled:cursor-not-allowed disabled:text-gray-500',
+    base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal transition-all ease-in-out active:scale-[0.9] [&>*]:disabled:!text-gray-500 disabled:cursor-not-allowed',
     shadow: 'hover:bg-gray-200 dark:hover:bg-gray-700',
     border: 'border-[1px] border-gray-300 hover:border-colorPrimary dark:border-gray-500 dark:hover:border-colorPrimary',
     sm: 'px-1 py-1 text-sm',
     md: 'px-2 py-2 text-base',
     lg: 'px-2 py-2 text-lg',
-    disabled: 'cursor-not-allowed text-gray-500',
 };
 
 const iconClasses = {
@@ -33,7 +32,6 @@ const iconClasses = {
     md: 'h-5 w-5',
     lg: 'h-6 w-6',
     iconEffect: 'hover:scale-[1.1]',
-    disabled: '!text-gray-500',
 };
 const Button = ({
     onClick,
@@ -42,37 +40,35 @@ const Button = ({
     text,
     border = false,
     shadow = false,
-    disabled,
-    size,
+    btnSize: size,
     type,
     iconStyles,
     btnStyles,
     textStyles,
     iconThemeColor = true,
+    ...otherProps
 }: Props) => {
     return (
         <button
             type={type}
             onClick={onClick}
-            disabled={disabled}
+            // disabled={otherProps?.disabled}
             className={clsx(
                 btnClasses.base,
                 btnClasses[size],
                 shadow && btnClasses.shadow,
                 border && btnClasses.border,
-                // disabled && btnClasses.disabled,
                 btnStyles
             )}
+            {...otherProps}
         >
             {Icon && (
                 <Icon
                     className={clsx(
                         iconClasses[size],
                         iconStyles,
-
                         iconThemeColor && iconClasses.themeColor,
-                        iconEffect && iconClasses.iconEffect,
-                        disabled && iconClasses.disabled
+                        iconEffect && iconClasses.iconEffect
                     )}
                 />
             )}

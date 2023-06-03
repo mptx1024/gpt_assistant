@@ -25,9 +25,14 @@ const RoleList = (props: { roles: Role[] }) => {
             <div className="mx-3 flex items-center justify-between">
                 <p className="text-sm text-gray-500 dark:text-gray-400">AI Roles</p>
                 <div className="flex gap-1">
-                    <Button size="sm" Icon={HiPlus} onClick={toggleRoleEditor} iconEffect={true} />
                     <Button
-                        size="sm"
+                        btnSize="sm"
+                        Icon={HiPlus}
+                        onClick={toggleRoleEditor}
+                        iconEffect={true}
+                    />
+                    <Button
+                        btnSize="sm"
                         Icon={HiOutlineBuildingLibrary}
                         onClick={handleClickRoleLibrary}
                         iconEffect={true}

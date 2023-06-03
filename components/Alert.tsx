@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import clsx from 'clsx';
 
@@ -8,25 +8,24 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 const Alert = () => {
     const dispatch = useAppDispatch();
     const message = useAppSelector((state) => state.alert.message);
-    console.log(`in alert. message: ${message}`);
 
     const [exiting, setExiting] = useState(false);
     const handleClose = () => {
         dispatch(clearAlert());
     };
-    // useEffect(() => {
-    //     if (message) {
-    //         const animationTimer = setTimeout(() => {
-    //             setExiting(true);
-    //             const clearTimer = setTimeout(() => {
-    //                 dispatch(clearAlert());
-    //                 setExiting(false);
-    //             }, 200); // time for the exit animation to complete
-    //             return () => clearTimeout(clearTimer);
-    //         }, 1500);
-    //         return () => clearTimeout(timeanimationTimer);
-    //     }
-    // }, [message, dispatch]);
+    useEffect(() => {
+        if (message) {
+            const animationTimer = setTimeout(() => {
+                setExiting(true);
+                const clearTimer = setTimeout(() => {
+                    dispatch(clearAlert());
+                    setExiting(false);
+                }, 100); // time delayed before despatching clear
+                return () => clearTimeout(clearTimer);
+            }, 1500); // alert duration
+            return () => clearTimeout(animationTimer);
+        }
+    }, [message, dispatch]);
 
     if (!message) return null;
 
@@ -34,17 +33,17 @@ const Alert = () => {
         <div
             role="alert"
             className={clsx(
-                'fixed left-0 top-[3vh] z-50 flex w-full animate-alertSlideIn transition-all justify-center',
+                'fixed left-0 top-[1.5rem] z-50 flex w-full animate-alertSlideIn justify-center transition-all',
                 { 'animate-alertSlideOut': exiting }
             )}
         >
-            <div className="border-color flex max-w-[50vw] items-start gap-4 rounded-2xl border bg-gray-base p-3 dark:bg-gray-inverted">
+            <div className=" left-10 flex max-w-[90vw] items-start gap-4 rounded-2xl  bg-emerald-500 px-6 py-3 text-gray-base dark:bg-emerald-800">
                 <div className="flex-1 ">
                     <span className="text-primary">{message}</span>
                 </div>
 
                 <button
-                    className="text-gray-500 transition hover:text-gray-600"
+                    className="text-gray-base"
                     onClick={handleClose}
                 >
                     <span className="sr-only">Dismiss popup</span>

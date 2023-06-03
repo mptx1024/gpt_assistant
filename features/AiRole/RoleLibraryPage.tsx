@@ -8,7 +8,7 @@ import { Input } from '@/components/InputField';
 
 import RoleCard from './RoleCard';
 import RoleEditor from './RoleEditor';
-import { getRandomColor } from './utils/colors';
+// import { getRandomColor } from './utils/colors';
 import rolesList from './utils/roleLibarary.json';
 const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -40,14 +40,13 @@ const RoleLibraryPage = () => {
         setIsEditorOpen(!isEditorOpen);
     };
 
-    // prevent re-generating card colors on every render
-    const cardColors = useMemo(() => {
-        return rolesList.map(() => getRandomColor());
-    }, []);
+    // // prevent re-generating card colors on every render
+    // const cardColors = useMemo(() => {
+    //     return rolesList.map(() => getRandomColor());
+    // }, []);
 
     const cards = searchResults.map((role, index) => {
-        const color = cardColors[index];
-        return <RoleCard key={index} role={role} bgColor={color} />;
+        return <RoleCard key={index} role={role} bgColor={`bg-gray-500 dark:bg-gray-700`} />;
     });
     return (
         <div className="flex h-full w-full flex-col py-4">
@@ -64,7 +63,7 @@ const RoleLibraryPage = () => {
                     Icon={HiPlus}
                     onClick={toggleEditor}
                     border={true}
-                    size="md"
+                    btnSize="md"
                 />
             </div>
             <p className="my-5 self-center">
