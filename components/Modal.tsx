@@ -11,7 +11,7 @@ const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal:
             as={'div'}
             appear={true}
             onClick={props.toggleModal}
-            className="fixed inset-0  backdrop-blur"
+            className="fixed inset-0  backdrop-blur-2xl"
         >
             {/* Use one Transition.Child to apply one transition to the backdrop...*/}
             <Transition.Child

@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react';
 import clsx from 'clsx';
 import AppSetting from './AppSetting';
-
+import DataSetting from './DataSetting';
 interface Props {
     toggleModal: () => void;
 }
@@ -9,7 +9,7 @@ interface Props {
 function SettingTabWrapper(props: Props) {
     const tabs = {
         'App Setting': <AppSetting toggleModal={props.toggleModal} />,
-        'Data Management': 'def',
+        'Data Management': <DataSetting />,
     };
     return (
         <div className="w-full overflow-auto ">
@@ -18,17 +18,15 @@ function SettingTabWrapper(props: Props) {
                     console.log('Changed selected tab to:', index);
                 }}
             >
-                <Tab.List className="mx-auto flex w-[80%] debug-1 space-x-1 rounded-xl bg-blue-900/20 p-1">
+                <Tab.List className="border-color mx-auto flex w-[80%] space-x-1 rounded-xl border p-1 ">
                     {Object.keys(tabs).map((tab) => (
                         <Tab
                             key={tab}
                             className={({ selected }) =>
                                 clsx(
-                                    'w-full rounded-lg py-2 text-sm font-medium leading-5 text-blue-700',
-                                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                                    selected
-                                        ? 'bg-white shadow'
-                                        : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                                    'transition-all duration-150 w-full rounded-lg py-2 text-sm font-medium leading-5 ',
+                                    'focus-ring-2 ring-opacity-60 ring-offset-2 focus:outline-none',
+                                    selected ? 'bg-white text-neutral-600 shadow' : ''
                                 )
                             }
                         >

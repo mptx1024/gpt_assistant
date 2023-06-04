@@ -21,9 +21,9 @@ const SettingModal = memo(function SettingModal(props: Props) {
             <div
                 id="setting-modal"
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="border-color flex h-full w-full flex-col border bg-gray-base text-left dark:bg-gray-inverted absolute sm:top-10 sm:h-fit sm:max-h-[95%] sm:max-w-2xl sm:rounded-xl"
+                className="border-color absolute flex h-full w-full flex-col border bg-gray-base text-left dark:bg-gray-inverted sm:top-10 sm:h-fit sm:max-h-[95vh] sm:max-w-2xl sm:rounded-xl"
             >
-                <div className="flex items-center justify-between px-5 py-3 sm:px-5 sm:pt-3">
+                <div className="flex items-center justify-between px-5 py-3 sm:pt-5 sm:px-10">
                     <span className="text-2xl font-semibold">{props.title}</span>
                     <Button
                         btnSize="lg"
@@ -32,8 +32,7 @@ const SettingModal = memo(function SettingModal(props: Props) {
                         shadow={true}
                     />
                 </div>
-
-                {props.children}
+                <div className="overflow-y-auto px-5 py-2 sm:px-10">{props.children}</div>
             </div>
         </ModalWrapper>
     );

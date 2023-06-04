@@ -1,8 +1,8 @@
 import Button from '@/components/Button';
 import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
+import clsx from 'clsx';
 import { FiSend } from 'react-icons/fi';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
-
 import useChat from './hooks/useChat';
 type Props = {
     chatId: string;
@@ -66,7 +66,12 @@ export default function Input({ chatId }: Props) {
                     btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
                 />
             </div>
-            <div className=" flex min-h-[5rem] w-full items-center rounded-md px-2 shadow-sm ring-1 ring-colorPrimary focus-within:ring-[2px] focus-within:ring-colorPrimary">
+            <div
+                className={clsx(
+                    'flex min-h-[5rem] w-full items-center rounded-md px-2 shadow-sm',
+                    'ring-1 ring-colorPrimary focus-within:ring-2 dark:ring-white/20'
+                )}
+            >
                 <textarea
                     ref={textareaRef}
                     value={userInput}

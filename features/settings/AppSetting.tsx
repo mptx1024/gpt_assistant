@@ -62,10 +62,10 @@ function AppSetting({ toggleModal }: Props) {
     };
     return (
         <div
-            id="setting"
-            className="flex flex-col gap-4 overflow-auto px-5 py-1 sm:gap-5 sm:pb-5 sm:pt-3"
+            id="app-setting"
+            className="flex flex-col gap-5 overflow-auto sm:gap-6 sm:pb-5 sm:pt-3"
         >
-            <section id="setting-apikey" className="flex flex-col p-1">
+            <section id="setting-apikey" className="flex flex-col">
                 <span className="text-title block">OpenAI API Key</span>
                 <span className="text-subtitle mb-3">
                     Apply & retrieve your OpenAI API key&nbsp;
@@ -95,16 +95,16 @@ function AppSetting({ toggleModal }: Props) {
                         more tokens used in the first message
                     </span>
                 </div>
-                <label htmlFor="AcceptConditions" className="relative h-7 w-14 cursor-pointer">
+                <label htmlFor="auto-generate" className="relative h-7 w-14 cursor-pointer">
                     <input
                         type="checkbox"
-                        id="AcceptConditions"
+                        id="auto-generate"
                         className="peer sr-only"
                         checked={autoNameChat}
                         onChange={handleClickAutoNameChat}
                     />
 
-                    <span className="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-cyan-600"></span>
+                    <span className="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-colorPrimary"></span>
 
                     <span className="absolute inset-y-0 start-0 m-1 h-5 w-5 rounded-full bg-white transition-all peer-checked:start-7"></span>
                 </label>

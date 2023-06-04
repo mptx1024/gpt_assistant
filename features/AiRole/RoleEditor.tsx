@@ -26,7 +26,7 @@ const RoleEditor = (props: Props) => {
 
     const handleClickSave = () => {
         addOrEditRole(prompt, title, props.role);
-    setTitle('');
+        setTitle('');
         setPrompt('');
         props.toggleModal();
     };
@@ -57,7 +57,7 @@ const RoleEditor = (props: Props) => {
                 <form onSubmit={handleClickSave}>
                     <div className="mb-5 flex flex-col">
                         <div className="mb-5 h-20 w-full">
-                            <label className="text-md">Name</label>
+                            <label className="text-subtitle">Name</label>
                             <Input
                                 value={title}
                                 onChange={handleTitleChange}
@@ -68,7 +68,7 @@ const RoleEditor = (props: Props) => {
                             />
                         </div>
                         <div>
-                            <span className="text-md ">Prompt</span>
+                            <span className="text-subtitle">Prompt</span>
                             <Textarea
                                 required={true}
                                 value={prompt}

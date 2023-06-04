@@ -21,7 +21,7 @@ const BottomSection = () => {
             <SettingModal
                 isOpen={isSettingsOpen}
                 toggleModal={toggleSettingModal}
-                title="App Setting"
+                title="Setting"
             >
                 {/* <AppSetting toggleModal={toggleSettingModal} /> */}
                 <SettingTabWrapper toggleModal={toggleSettingModal} />
