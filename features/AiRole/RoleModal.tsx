@@ -1,9 +1,9 @@
-import { HiOutlineXMark } from 'react-icons/hi2';
-
 import Button from '@/components/Button';
 import ModalWrapper from '@/components/Modal';
+import Tooltip from '@/components/Tooltip';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { Role } from '@/types';
+import { HiOutlineXMark } from 'react-icons/hi2';
 
 interface Props {
     isOpen: boolean;
@@ -36,7 +36,7 @@ const RoleModal = (props: Props) => {
                 <span className="text-lg font-semibold sm:text-xl">{props.role?.roleName}</span>
                 <div className="flex flex-grow flex-col gap-2 overflow-y-clip">
                     <span className="text-subtitle !text-base">Prompt</span>
-                    <div className="overflow-y-auto text-lg">{props.role?.prompt}</div>
+                    <div className="overflow-y-auto text-base ">{props.role?.prompt}</div>
                 </div>
                 <div id="btn-group" className="flex gap-2">
                     <Button
@@ -44,6 +44,7 @@ const RoleModal = (props: Props) => {
                         text={'Use'}
                         onClick={props.handleClickUse}
                         border={true}
+                        tooltipSelector="use-role-roleModal"
                     />
                     {props.isTemplate ? (
                         <Button
@@ -51,6 +52,7 @@ const RoleModal = (props: Props) => {
                             text={'Add to My List'}
                             onClick={props.handleClickAdd}
                             border={true}
+                            tooltipSelector="add-to-list"
                         />
                     ) : (
                         <>
@@ -70,6 +72,9 @@ const RoleModal = (props: Props) => {
                     )}
                 </div>
             </div>
+            <Tooltip anchorSelect=".use-role-roleModal" content="Create a new chat" />
+            <Tooltip anchorSelect=".add-to-list" content="Add role to your Role list" />
+
         </ModalWrapper>
     );
 };

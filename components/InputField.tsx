@@ -8,7 +8,7 @@ interface InputProps extends React.HTMLProps<HTMLInputElement> {
     styles?: string;
     showborder?: boolean;
 }
-const inputBaseClasses = ' p-1 w-full overflow-hidden rounded-lg outline-none';
+const inputBaseClasses = 'p-1 w-full overflow-hidden rounded-lg outline-none';
 
 export function Input({ showborder, styles, onChange, onClick, ...props }: InputProps) {
     return (

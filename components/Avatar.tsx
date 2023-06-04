@@ -13,7 +13,7 @@ export const Avatar = (props: { modelPrams?: ModelParams }) => {
                 {props.modelPrams.model.id.startsWith('gpt-4') ? (
                     <Gpt4Icon className={clsx(avatarClasses, ' bg-purple-600 fill-white p-1 ')} />
                 ) : (
-                    <Gpt3Icon className={clsx(avatarClasses, 'bg-green-700 fill-white p-1')} />
+                    <Gpt3Icon className={clsx(avatarClasses, 'bg-green-700 fill-white p-1 text-white')} />
                 )}
             </div>
         );

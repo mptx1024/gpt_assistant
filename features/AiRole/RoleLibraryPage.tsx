@@ -62,7 +62,7 @@ const RoleLibraryPage = () => {
                 />
                 <Tooltip
                     anchorSelect=".create-role-library"
-                    content="Create a new role & add to your role list"
+                    content="Create a new role"
                     place="bottom"
                 />
             </div>

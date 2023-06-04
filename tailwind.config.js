@@ -99,19 +99,10 @@ module.exports = {
                         opacity: '100%',
                     },
                 },
-                // alertOut: {
-                //     '0%': {
-                //         opacity: '100%',
-                //         // transform: 'translateY(-20px)',
-                //     },
-                //     '100%': {
-                //         opacity: '0%',
-                //         transform: 'translateY(-20px)',
-                //     },
-                // },
+
             },
             animation: {
-                typing: 'typing 0.5s alternate',
+                typing: 'typing 0.5s',
                 sideSlide: 'sideSlide 0.8s ease-out',
                 alertSlideIn: 'alertSlideIn 0.3s ease-out',
                 alertSlideOut: 'alertSlideOut 0.3s ease-out',
