@@ -33,7 +33,7 @@ export default function Sidebar({ sidebarOpen: isSidebarOpen, toggleSidebar }: P
                 <ChatList chats={chats} />
                 <RoleList roles={roles} />
             </div>
-            <div className="border-color  absolute bottom-0 flex h-[3rem] w-full items-center bg-emerald-50/75 px-3 dark:bg-emerald-800/10">
+            <div className=" absolute bottom-0 flex h-[3rem] w-full items-center bg-emerald-50/75 px-3 dark:bg-emerald-800/10 py-8 ">
                 <BottomSection />
             </div>
         </div>

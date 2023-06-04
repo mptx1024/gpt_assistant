@@ -5,6 +5,7 @@ import { Input } from '@/components/InputField';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectAppSetting, setAppSetting } from '@/store/settingSlice';
 import { OpenAIModels } from '@/types';
+import { Tab } from '@headlessui/react'
 
 import ModelParamsSection from './ModelParamsSection';
 
@@ -62,7 +63,7 @@ function AppSetting({ toggleModal }: Props) {
     return (
         <div
             id="setting"
-            className="flex flex-col gap-4 overflow-auto px-5 py-1 sm:gap-5 sm:py-5"
+            className="flex flex-col gap-4 overflow-auto px-5 py-1 sm:gap-5 sm:pb-5 sm:pt-3"
         >
             <section id="setting-apikey" className="flex flex-col p-1">
                 <span className="text-title block">OpenAI API Key</span>
@@ -76,7 +77,6 @@ function AppSetting({ toggleModal }: Props) {
                     >
                         here
                     </a>
-                    {/* <br /> */}
                     .&nbsp;Your API Key is safely stored on your browser locally.
                 </span>
                 <Input

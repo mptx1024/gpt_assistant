@@ -1,10 +1,9 @@
+import SettingTabWrapper from '@/features/settings/SettingTabWrapper';
 import { useCallback, useState } from 'react';
 import { AiOutlineGithub } from 'react-icons/ai';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
-import AppSetting from '../../features/settings/AppSetting';
 import SettingModal from '../../features/settings/SettingModal';
 import Button from '../Button';
-
 const BottomSection = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const toggleSettingModal = useCallback(() => {
@@ -17,18 +16,15 @@ const BottomSection = () => {
                 Icon={HiOutlineCog8Tooth}
                 btnSize="lg"
                 btnStyles=""
-                // text={'Settings'}
-                // border={true}
             />
             <Button Icon={AiOutlineGithub} btnSize="lg" />
-            {/* <GithubSvg className=" dark:fill-gray-base fill-gray-inverted " /> */}
-            {/* </div> */}
             <SettingModal
                 isOpen={isSettingsOpen}
                 toggleModal={toggleSettingModal}
                 title="App Setting"
             >
-                <AppSetting toggleModal={toggleSettingModal} />
+                {/* <AppSetting toggleModal={toggleSettingModal} /> */}
+                <SettingTabWrapper toggleModal={toggleSettingModal} />
             </SettingModal>
         </div>
     );
