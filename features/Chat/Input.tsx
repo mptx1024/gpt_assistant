@@ -1,7 +1,10 @@
 import Button from '@/components/Button';
 import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
 import clsx from 'clsx';
-import { FiSend } from 'react-icons/fi';
+import { TbPdf } from 'react-icons/tb';
+import {FaImage} from 'react-icons/fa';
+import {FiSend, FiImage} from 'react-icons/fi';
+import {AiOutlineFileImage, AiOutlineFilePdf} from 'react-icons/ai';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
 import useChat from './hooks/useChat';
 type Props = {
@@ -20,7 +23,7 @@ export default function Input({ chatId }: Props) {
         handleInputChange,
         handleClickStopGenerating,
         handleKeyDown,
-        handleClickViewScreenshot
+        handleClickViewScreenshot,
     } = useChat({ chatId });
     // console.log(`in Input: current chat ID: ${chatId}`);
 
@@ -42,7 +45,6 @@ export default function Input({ chatId }: Props) {
                         Icon={HiOutlineStopCircle}
                         btnSize="sm"
                         text={'Stop Generating'}
-                        // shadow={true}
                         border={true}
                         btnStyles="w-fit h-fit !py-[0.5rem] "
                     />
@@ -52,19 +54,24 @@ export default function Input({ chatId }: Props) {
                         disabled={!hasMessages}
                         Icon={HiArrowPath}
                         btnSize="sm"
-                        text={'Regenerate'}
-                        // shadow={true}
+                        // text={'Regenerate'}
                         border={true}
-                        btnStyles="w-fit h-fit !py-[0.5rem]"
+                        btnStyles="!py-[0.5rem]"
                     />
                 )}
                 <Button
                     onClick={handleClickViewScreenshot}
-                    Icon={HiShare}
+                    Icon={TbPdf}
                     btnSize="sm"
-                    text={'Share'}
                     border={true}
-                    btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                    btnStyles="!py-[0.2rem] !px-[0.5rem]"
+                />{' '}
+                <Button
+                    onClick={handleClickViewScreenshot}
+                    Icon={FiImage}
+                    btnSize="sm"
+                    border={true}
+                    btnStyles="!py-[0.2rem] !px-[0.5rem]"
                 />
             </div>
             <div

@@ -85,7 +85,7 @@ export function ChatParamsModal({
         toggleModal();
     };
     return (
-        <div className="mt-1 flex flex-col gap-5 overflow-y-auto px-5 py-3 sm:p-10">
+        <div className="mt-1 flex flex-col gap-5 overflow-y-auto px-5 py-3 ">
             <ModelParamsSection
                 isChatSetting={true}
                 allModels={allModels}
@@ -103,7 +103,7 @@ export function ChatParamsModal({
                 btnSize="lg"
                 border={true}
                 onClick={handleClickSave}
-                btnStyles="w-[5rem] self-start ml-1"
+                btnStyles="w-[5rem] self-start"
             />
         </div>
     );

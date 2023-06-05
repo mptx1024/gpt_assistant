@@ -22,14 +22,14 @@ const btnClasses = {
     base: 'flex items-center justify-center gap-2 rounded-md max-w-xs max-h-[3rem] font-normal cursor-pointer transition-all ease-in-out active:scale-[0.92]',
     shadow: 'hover:bg-gray-200 dark:hover:bg-gray-700',
     border: 'border-[1px] border-gray-300 hover:border-colorPrimary dark:border-gray-500 dark:hover:border-colorPrimary',
-    sm: 'px-1 py-1 text-sm',
+    sm: 'px-2 py-2 text-sm',
     md: 'px-2 py-2 text-base',
     lg: 'px-2 py-2 text-lg',
 };
 
 const iconClasses = {
     themeColor: 'text-colorPrimary dark:text-colorPrimary',
-    sm: 'h-4 w-4',
+    sm: 'h-4 w-4 ',
     md: 'h-5 w-5',
     lg: 'h-6 w-6',
     iconEffect: 'hover:scale-[1.1]',

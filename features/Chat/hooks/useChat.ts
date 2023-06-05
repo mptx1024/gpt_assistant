@@ -2,8 +2,8 @@ import { selectIsLoading, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 import { selectApiKey } from '@/store/settingSlice';
 import { abortController, generateReply, regenerate } from '@/utils/chat';
+import { getImage } from '@/utils/screenshot';
 import { useEffect, useRef, useState } from 'react';
-import { genImage } from '@/utils/screenshot';
 
 interface Props {
     chatId: string;
@@ -46,8 +46,8 @@ export default function useChat({ chatId }: Props) {
         }
     };
     const handleClickViewScreenshot = () => {
-        genImage();
-    }
+        getImage();
+    };
 
     useEffect(() => {
         if (textareaRef.current) {
@@ -70,6 +70,6 @@ export default function useChat({ chatId }: Props) {
         handleInputChange,
         handleClickStopGenerating,
         handleKeyDown,
-        handleClickViewScreenshot
+        handleClickViewScreenshot,
     };
 }

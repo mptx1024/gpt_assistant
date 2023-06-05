@@ -32,24 +32,20 @@ export default function ChatMessage({ messageId }: Props) {
     if (!message) {
         return null;
     }
-    const messageContainerClasses = clsx('group animate-slideInFromBottom', {
+    const messageContainerClasses = clsx('group flex animate-slideInFromBottom justify-center', {
         'bg-gray-base brightness-[0.97] dark:bg-gray-inverted dark:brightness-[1.15]':
             message.role === 'user',
     });
 
     return (
         <div className={messageContainerClasses}>
-            <div
-                className="m-auto flex gap-3 p-4 text-base
-            md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl
-            "
-            >
-                <div className="flex w-8 flex-shrink-0 flex-col items-end text-base">
+            <div className=" md:w-2xl lg:w-2xl xl:w-3xl relative flex w-[50rem] justify-center gap-3 overflow-hidden px-2 pb-10 pt-5 md:py-6 lg:px-0">
+                <div className="flex w-[2rem] flex-col text-base">
                     {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
                 </div>
 
                 {message.content ? (
-                    <div className="prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:w-[calc(100%-115px)] md:gap-3">
+                    <div className="prose relative flex min-w-0 flex-1 flex-col gap-1 dark:prose-invert sm:w-[30rem] md:w-[40rem] md:gap-3">
                         {!isEditing ? (
                             <Markdown message={message} />
                         ) : (
@@ -76,41 +72,48 @@ export default function ChatMessage({ messageId }: Props) {
                                 </div>
                             </div>
                         )}
-                        <div className="mt-2 flex justify-center self-end md:absolute md:right-0 md:top-0 md:mt-0 md:translate-x-full md:gap-3 md:self-center md:pl-2">
-                            {!isEditing && (
-                                <div className="flex transition-all duration-200 md:translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
-                                    {!isCopied ? (
-                                        <Button
-                                            Icon={HiOutlineClipboard}
-                                            onClick={handleClickCopy}
-                                            btnSize="md"
-                                            iconEffect={true}
-                                            iconStyles="!text-neutral-500"
-                                        />
-                                    ) : (
-                                        <Button
-                                            Icon={TbClipboardCheck}
-                                            btnSize="md"
-                                            iconStyles="!text-green-700"
-                                        />
-                                        // <TbClipboardCheck className="h-5 w-5 text-base text-green-500" />
-                                    )}
-                                    {message.role === 'user' && (
-                                        <Button
-                                            Icon={HiPencilSquare}
-                                            onClick={handleClickEdit}
-                                            btnSize="md"
-                                            iconEffect={true}
-                                            iconStyles="!text-neutral-500"
-                                        />
-                                    )}
-                                </div>
-                            )}
-                        </div>
                     </div>
                 ) : (
                     <ThreeDotsLoader className="fill-gray-inverted dark:fill-gray-base" />
                 )}
+
+                <div
+                    id="chat-message-btn-group"
+                    className={clsx(
+                        'flex w-[3rem] justify-end self-start',
+                        'absolute bottom-0 right-2 md:static'
+                    )}
+                >
+                    {!isEditing && (
+                        <div className="flex transition-all duration-200 md:translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
+                            {!isCopied ? (
+                                <Button
+                                    Icon={HiOutlineClipboard}
+                                    onClick={handleClickCopy}
+                                    btnSize="md"
+                                    iconEffect={true}
+                                    iconStyles="!text-neutral-500"
+                                />
+                            ) : (
+                                <Button
+                                    Icon={TbClipboardCheck}
+                                    btnSize="md"
+                                    iconStyles="!text-green-700"
+                                />
+                                // <TbClipboardCheck className="h-5 w-5 text-base text-green-500" />
+                            )}
+                            {message.role === 'user' && (
+                                <Button
+                                    Icon={HiPencilSquare}
+                                    onClick={handleClickEdit}
+                                    btnSize="md"
+                                    iconEffect={true}
+                                    iconStyles="!text-neutral-500"
+                                />
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
