@@ -16,7 +16,7 @@ const Markdown = ({ message }: Props) => {
         // <div className='debug-2 '>
         <ReactMarkdown
             // className="debug-2 prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:gap-3 lg:w-[calc(100%-115px)] [&>pre]:m-0 [&>pre]:p-0"
-            className="flex flex-col"
+            className="debug-3 prose flex flex-col dark:prose-invert"
             remarkPlugins={[remarkGfm, remarkMath]}
             rehypePlugins={[rehypeKatex]}
             components={{

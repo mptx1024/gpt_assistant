@@ -20,6 +20,7 @@ function ChatParamsCard({ chatId }: Props) {
     const chatRole = useAppSelector((state) => selectChatRole(state, chatId));
     return (
         <div
+            id='chat-params-card'
             key={Math.random()}
             onClick={toggleModal}
             className="border-color my-3 flex w-[90%] max-w-lg animate-slideInFromTop cursor-pointer flex-col items-start self-center rounded-md border p-3 transition-all  hover:border-colorPrimary sm:w-[40%]"

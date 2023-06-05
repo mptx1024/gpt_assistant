@@ -32,8 +32,8 @@ export default function ChatMessage({ messageId }: Props) {
     if (!message) {
         return null;
     }
-    const messageContainerClasses = clsx('group flex animate-slideInFromBottom justify-center', {
-        'bg-gray-base brightness-[0.97] dark:bg-gray-inverted dark:brightness-[1.15]':
+    const messageContainerClasses = clsx('group flex animate-slideInFromBottom justify-center bg-gray-base dark:bg-gray-inverted', {
+        'brightness-[0.95] dark:brightness-[1.2]':
             message.role === 'user',
     });
 
@@ -43,9 +43,8 @@ export default function ChatMessage({ messageId }: Props) {
                 <div className="flex w-[2rem] flex-col text-base">
                     {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
                 </div>
-
                 {message.content ? (
-                    <div className="prose relative flex min-w-0 flex-1 flex-col gap-1 dark:prose-invert sm:w-[30rem] md:w-[40rem] md:gap-3">
+                    <div className=" relative flex min-w-0 flex-1 flex-col gap-1 sm:w-[30rem] md:w-[40rem] md:gap-3">
                         {!isEditing ? (
                             <Markdown message={message} />
                         ) : (
