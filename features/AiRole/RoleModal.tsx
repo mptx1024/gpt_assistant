@@ -10,7 +10,7 @@ interface Props {
     role?: Role;
     isTemplate?: boolean;
     toggleModal: () => void;
-    handleClickUse: () => void;
+    handleClickUse: (e: React.MouseEvent) => void;
     handleClickEdit?: () => void;
     handleClickDelete?: () => void;
     handleClickAdd?: (e: React.MouseEvent) => void;

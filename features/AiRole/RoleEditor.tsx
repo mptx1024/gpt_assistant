@@ -7,7 +7,7 @@ import { Input, Textarea } from '@/components/InputField';
 import ModalWrapper from '@/components/Modal';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { Role } from '@/types';
-import { addOrEditRole } from '@/utils/roles';
+import { addOrEditRole } from '@/utils/role';
 
 interface Props {
     isOpen: boolean;

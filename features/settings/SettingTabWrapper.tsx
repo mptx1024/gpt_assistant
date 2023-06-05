@@ -14,9 +14,6 @@ function SettingTabWrapper(props: Props) {
     return (
         <div className="w-full overflow-auto ">
             <Tab.Group
-                onChange={(index) => {
-                    console.log('Changed selected tab to:', index);
-                }}
             >
                 <Tab.List className="border-color mx-auto flex w-[80%] space-x-1 rounded-xl border p-1 ">
                     {Object.keys(tabs).map((tab) => (
@@ -24,9 +21,9 @@ function SettingTabWrapper(props: Props) {
                             key={tab}
                             className={({ selected }) =>
                                 clsx(
-                                    'transition-all duration-150 w-full rounded-lg py-2 text-sm font-medium leading-5 ',
+                                    'w-full rounded-lg py-2 text-sm font-medium leading-5 ',
                                     'focus-ring-2 ring-opacity-60 ring-offset-2 focus:outline-none',
-                                    selected ? 'bg-white text-neutral-600 shadow' : ''
+                                    selected ? ' bg-neutral-300 text-neutral-600 shadow' : ''
                                 )
                             }
                         >
@@ -36,7 +33,7 @@ function SettingTabWrapper(props: Props) {
                 </Tab.List>
                 <Tab.Panels className="mt-2">
                     {/* <Tab.Panel>Content 1</Tab.Panel
-                    <Tab.Panel>Content 2</Tab.Panel>
+                    <Tab.Panel>Cointent 2</Tab.Panel>
                     <Tab.Panel>Content 3</Tab.Panel> */}
                     {Object.values(tabs).map((panel, idx) => (
                         <Tab.Panel key={idx}>{panel}</Tab.Panel>

@@ -3,6 +3,7 @@ import { useAppSelector } from '@/store/hooks';
 import { selectApiKey } from '@/store/settingSlice';
 import { abortController, generateReply, regenerate } from '@/utils/chat';
 import { useEffect, useRef, useState } from 'react';
+import { genImage } from '@/utils/screenshot';
 
 interface Props {
     chatId: string;
@@ -44,6 +45,10 @@ export default function useChat({ chatId }: Props) {
             handleClickSubmit(e);
         }
     };
+    const handleClickViewScreenshot = () => {
+        genImage();
+    }
+
     useEffect(() => {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'inherit';
@@ -65,5 +70,6 @@ export default function useChat({ chatId }: Props) {
         handleInputChange,
         handleClickStopGenerating,
         handleKeyDown,
+        handleClickViewScreenshot
     };
 }

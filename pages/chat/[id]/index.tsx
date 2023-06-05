@@ -3,9 +3,10 @@ import Input from '@/features/Chat/Input';
 import { MemoizedChatParamsCard } from '@/features/settings/ChatSetting';
 import { selectCurrentChat, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
+import { Router, useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 export default function DynamicChatPage() {
-    // const router = useRouter();
+    const router = useRouter();
     // const { id } = router.query;
     const currentChat = useAppSelector(selectCurrentChat);
     const chatId = typeof currentChat?.id === 'string' ? currentChat?.id : '';
@@ -37,7 +38,7 @@ export default function DynamicChatPage() {
 
     if (!currentChat) {
         //redirect to landing
-        return <p>123</p>;
+        router.push('/role')
     }
 
     return (
@@ -56,7 +57,7 @@ export default function DynamicChatPage() {
             {/* <button className="absolute bottom-[10rem] bg-red-600" onClick={onClick}>
                 Scroll to bottom
             </button> */}
-            <div
+            <div id="chat-input-container"
                 className="absolute bottom-0 left-1/2 flex min-h-[10rem] w-full -translate-x-1/2
             flex-col items-center justify-center bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
             >

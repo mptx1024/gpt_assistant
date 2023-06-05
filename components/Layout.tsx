@@ -48,7 +48,13 @@ export default function Layout({ children }: Props) {
                 dispatch(setAllChats(chats));
             }
             dispatch(
-                setCurrentChat(typeof router.query.id === 'string' ? router.query.id : chats[0]?.id)
+                setCurrentChat(
+                    typeof router.query.id === 'string'
+                        ? router.query.id
+                        : chats
+                        ? chats[0]?.id
+                        : ''
+                )
             );
             setIsLoading(false);
             const messages: Message[] = await idb.get('messages');
@@ -69,14 +75,13 @@ export default function Layout({ children }: Props) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="fixed inset-0 flex h-full">
+            <div  className="fixed inset-0 flex h-full">
                 <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                 <div
-                    className={clsx(
-                        'relative flex h-full w-full flex-col overflow-x-hidden',  
-                        {'blur-3xl': width && width <= 640 && sidebarOpen}
-                    )}
-                    // 
+                    className={clsx('relative flex h-full w-full flex-col overflow-x-hidden', {
+                        'blur-3xl': width && width <= 640 && sidebarOpen,
+                    })}
+                    //
                 >
                     <Navbar isSidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                     <Suspense fallback={<Loading />}>{children}</Suspense>

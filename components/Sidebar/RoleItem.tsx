@@ -2,13 +2,12 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/router';
 // import { FiUser } from 'react-icons/fi';
-import {FaRobot} from 'react-icons/fa'
-import {BsRobot} from 'react-icons/bs';
 import RoleEditor from '@/features/AiRole/RoleEditor';
 import RoleModal from '@/features/AiRole/RoleModal';
 import { Role } from '@/types';
 import { createNewChat } from '@/utils/chat';
-import { deleteRole } from '@/utils/roles';
+import { deleteRole } from '@/utils/role';
+import { BsRobot } from 'react-icons/bs';
 
 import SidebarCard from './SidebarCard';
 

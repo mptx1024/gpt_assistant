@@ -20,6 +20,7 @@ export default function Input({ chatId }: Props) {
         handleInputChange,
         handleClickStopGenerating,
         handleKeyDown,
+        handleClickViewScreenshot
     } = useChat({ chatId });
     // console.log(`in Input: current chat ID: ${chatId}`);
 
@@ -58,7 +59,7 @@ export default function Input({ chatId }: Props) {
                     />
                 )}
                 <Button
-                    // onClick=
+                    onClick={handleClickViewScreenshot}
                     Icon={HiShare}
                     btnSize="sm"
                     text={'Share'}

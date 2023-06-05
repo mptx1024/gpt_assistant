@@ -118,15 +118,20 @@ startAppListening({
 
 // Update msgs in IndexedDB
 startAppListening({
-    matcher: isAnyOf(addMessage, removeMessage, removeMessageUpTo, removeChat, setIsLoading),
+    matcher: isAnyOf(addMessage, removeMessage, removeMessageUpTo, removeChat, setIsLoading, removeAllChats),
     effect: async (action, listenerApi) => {
-        // console.log(`in middleware->updateMsg ${JSON.stringify(action)}`);
+        if (action.type === 'chats/removeAllChats') {
+            console.log(`in middleware->updateMsg ${JSON.stringify(action)}`);
+            await idb.del('messages');
+        }
+        else {
 
-        const messages: Message[] = selectAllMessages(listenerApi.getState());
-        // if (action.type === 'messages/setIsLoading' && action.playload === false) {
-        //     await idb.set('messages', messages);
-        // }
-        await idb.set('messages', messages);
+            const messages: Message[] = selectAllMessages(listenerApi.getState());
+            // if (action.type === 'messages/setIsLoading' && action.playload === false) {
+            //     await idb.set('messages', messages);
+            // }
+            await idb.set('messages', messages);
+        }
     },
 });
 
