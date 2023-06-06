@@ -43,16 +43,15 @@ export default function ChatMessage({ messageId }: Props) {
         <div className={messageContainerClasses}>
             <div
                 className={clsx(
-                    'debug-3 relative flex justify-center gap-3 overflow-hidden px-2 pb-10 pt-5 md:py-6 lg:px-0',
-                    // 'md:w-[30rem] lg:w-[40rem] xl:w-[50rem]'
-                    'w-[50rem]'
+                    'relative flex justify-center gap-3 overflow-hidden px-3 pb-10 pt-5 md:py-6',
+                    'w-full md:w-[40rem] lg:w-[43rem] xl:w-[45rem]'
                 )}
             >
-                <div className="debug-2 flex w-[2rem] flex-col text-base">
+                <div className="flex w-[2rem] flex-col text-base">
                     {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
                 </div>
                 {message.content ? (
-                    <div className="debug-1 relative flex min-w-0 flex-1 flex-col gap-1 px-0  md:gap-3">
+                    <div className="relative flex min-w-0 flex-1 flex-col gap-1 px-0  md:gap-3">
                         {!isEditing ? (
                             <Markdown message={message} />
                         ) : (
