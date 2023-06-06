@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply bg-gray-base text-black-base dark:bg-gray-inverted dark:text-black-inverted;
+        @apply bg-gray-base text-[1rem] text-black-base dark:bg-gray-inverted dark:text-black-inverted;
     }
 }
 

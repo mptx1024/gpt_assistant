@@ -1,14 +1,11 @@
 import download from 'downloadjs';
+import { jsPDF } from 'jspdf';
+
 import * as htmlToImage from 'html-to-image';
 const filter = (node: HTMLElement) => {
-    const excludedClasses = ['chat-params-card', 'chat-message-btn-group'];
-    console.log(
-        `node:${node.id}; excludedClasses.includes(node.id): ${excludedClasses.includes(node.id)}`
-    );
-
+    const excludedClasses = ['chat-params-card', 'chat-message-btn-group', 'chat-input-container'];
     return !excludedClasses.includes(node.id);
 };
-
 
 export const getImage = () => {
     const node = document.getElementById('chat-messages-container');
@@ -20,11 +17,6 @@ export const getImage = () => {
             cacheBust: true,
             height: node.scrollHeight,
             skipAutoScale: true,
-            style: {
-                color: '#000000',
-                backgroundColor: '#ffffff',
-                overflowWrap: 'break-word',
-            },
         })
         .then((dataUrl) => {
             download(dataUrl, 'my-node.png');
@@ -39,6 +31,29 @@ export const getImage = () => {
 };
 
 export const getPdf = () => {
-    const node = document.getElementById('chat-container');
+    const node = document.getElementById('chat-messages-container');
     if (!node) return;
+    htmlToImage
+        .toJpeg(node, {
+            filter: filter,
+            cacheBust: true,
+            height: node.scrollHeight,
+            skipAutoScale: true,
+        })
+        .then((dataUrl) => {
+            const pdf = new jsPDF({
+                unit: 'px',
+                format: [node.clientWidth, node.scrollHeight],
+                hotfixes: ['px_scaling'],
+            });
+            pdf.addImage(
+                dataUrl,
+                'JPEG',
+                0,
+                0,
+                pdf.internal.pageSize.getWidth(),
+                pdf.internal.pageSize.getHeight()
+            );
+            pdf.save('sample-file.pdf');
+        });
 };

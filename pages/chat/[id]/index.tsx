@@ -46,12 +46,12 @@ export default function DynamicChatPage() {
     return (
         <div
             id="chat-container"
-            className="mb-[10rem] flex h-full w-full flex-col items-center overflow-y-auto"
+            className="mb-[10rem] flex h-full w-full flex-col items-center overflow-y-auto "
             ref={containerRef}
         >
             <div
                 id="chat-messages-container"
-                className="flex w-full flex-col"
+                className="flex w-full flex-col "
                 ref={msgContainerRef}
             >
                 <MemoizedChatParamsCard chatId={chatId} />
@@ -65,7 +65,7 @@ export default function DynamicChatPage() {
             </button> */}
             <div
                 id="chat-input-container"
-                className="absolute bottom-0 left-1/2 flex min-h-[10rem] w-full -translate-x-1/2
+                className="absolute bottom-0 flex min-h-[10rem] w-full 
             flex-col items-center justify-center bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
             >
                 <Input chatId={chatId} />

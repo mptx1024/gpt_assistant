@@ -16,7 +16,8 @@ module.exports = {
                 colorPrimary: colors.teal[600],
                 colorSecondary: colors.amber[300],
                 black: {
-                    base: '#4d4c4c',
+                    base: '#615e5e',
+                    // base: colors.red[500],
                     DEFAULT: colors.black,
                     inverted: colors.neutral[300],
                 },
@@ -99,7 +100,6 @@ module.exports = {
                         opacity: '100%',
                     },
                 },
-
             },
             animation: {
                 typing: 'typing 0.5s',

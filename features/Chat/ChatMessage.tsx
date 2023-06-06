@@ -32,14 +32,16 @@ export default function ChatMessage({ messageId }: Props) {
     if (!message) {
         return null;
     }
-    const messageContainerClasses = clsx('group flex animate-slideInFromBottom justify-center bg-gray-base dark:bg-gray-inverted', {
-        'brightness-[0.95] dark:brightness-[1.2]':
-            message.role === 'user',
-    });
+    const messageContainerClasses = clsx(
+        'group flex animate-slideInFromBottom justify-center bg-gray-base dark:bg-gray-inverted',
+        {
+            'brightness-[0.95] dark:brightness-[1.2]': message.role === 'user',
+        }
+    );
 
     return (
         <div className={messageContainerClasses}>
-            <div className=" md:w-2xl lg:w-2xl xl:w-3xl relative flex w-[50rem] justify-center gap-3 overflow-hidden px-2 pb-10 pt-5 md:py-6 lg:px-0">
+            <div className="md:w-2xl lg:w-2xl xl:w-3xl relative flex w-[50rem] justify-center gap-3 overflow-hidden px-2 pb-10 pt-5 md:py-6 lg:px-0">
                 <div className="flex w-[2rem] flex-col text-base">
                     {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
                 </div>

@@ -22,6 +22,7 @@
         "eventsource-parser": "^1.0.0",
         "html-to-image": "^1.11.11",
         "idb-keyval": "^6.2.1",
+        "jspdf": "^2.5.1",
         "minisearch": "^6.1.0",
         "next": "^13.4.4",
         "next-themes": "^0.2.1",

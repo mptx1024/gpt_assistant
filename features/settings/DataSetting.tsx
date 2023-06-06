@@ -20,7 +20,7 @@ const DataSetting = (props: Props) => {
     return (
         <div
             id="data-setting"
-            className=" flex flex-col gap-3 overflow-auto px-10 py-5 sm:gap-5 sm:px-16"
+            className="flex flex-col gap-3 overflow-auto px-10 py-5 sm:gap-5 sm:px-16"
         >
             <div id="download" className="flex items-center justify-between">
                 <span className="text-title block">Download Data</span>

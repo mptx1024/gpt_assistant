@@ -2,7 +2,7 @@ import { selectIsLoading, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 import { selectApiKey } from '@/store/settingSlice';
 import { abortController, generateReply, regenerate } from '@/utils/chat';
-import { getImage } from '@/utils/screenshot';
+import { getImage, getPdf } from '@/utils/screenshot';
 import { useEffect, useRef, useState } from 'react';
 
 interface Props {
@@ -45,8 +45,11 @@ export default function useChat({ chatId }: Props) {
             handleClickSubmit(e);
         }
     };
-    const handleClickViewScreenshot = () => {
+    const handleClickGetImage = () => {
         getImage();
+    };
+    const handleClickGetPdf = () => {
+        getPdf();
     };
 
     useEffect(() => {
@@ -70,6 +73,7 @@ export default function useChat({ chatId }: Props) {
         handleInputChange,
         handleClickStopGenerating,
         handleKeyDown,
-        handleClickViewScreenshot,
+        handleClickGetImage,
+        handleClickGetPdf,
     };
 }

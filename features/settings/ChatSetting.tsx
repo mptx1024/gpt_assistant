@@ -1,4 +1,3 @@
-import { memo, useState } from 'react';
 import Button from '@/components/Button';
 import ModelParamsSection from '@/features/settings/ModelParamsSection';
 import SettingModal from '@/features/settings/SettingModal';
@@ -10,6 +9,7 @@ import {
 } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
+import { memo, useState } from 'react';
 interface Props {
     chatId: string;
 }
@@ -20,12 +20,12 @@ function ChatParamsCard({ chatId }: Props) {
     const chatRole = useAppSelector((state) => selectChatRole(state, chatId));
     return (
         <div
-            id='chat-params-card'
+            id="chat-params-card"
             key={Math.random()}
             onClick={toggleModal}
-            className="border-color my-3 flex w-[90%] max-w-lg animate-slideInFromTop cursor-pointer flex-col items-start self-center rounded-md border p-3 transition-all  hover:border-colorPrimary sm:w-[40%]"
+            className="border-color my-3 flex w-[80%] max-w-lg animate-slideInFromTop cursor-pointer flex-col items-start self-center rounded-md border p-3 transition-all  hover:border-colorPrimary md:w-[50%]"
         >
-            <span className="w-full truncate whitespace-nowrap text-colorPrimary">
+            <span className="w-full truncate whitespace-nowrap  text-colorPrimary">
                 {chatModalParams?.model.name}
             </span>
             <span className="text-subtitle whitespace-nowrap">

@@ -1,11 +1,9 @@
 import Button from '@/components/Button';
 import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
 import clsx from 'clsx';
+import { FiImage, FiSend } from 'react-icons/fi';
+import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle } from 'react-icons/hi2';
 import { TbPdf } from 'react-icons/tb';
-import {FaImage} from 'react-icons/fa';
-import {FiSend, FiImage} from 'react-icons/fi';
-import {AiOutlineFileImage, AiOutlineFilePdf} from 'react-icons/ai';
-import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle, HiShare } from 'react-icons/hi2';
 import useChat from './hooks/useChat';
 type Props = {
     chatId: string;
@@ -23,7 +21,8 @@ export default function Input({ chatId }: Props) {
         handleInputChange,
         handleClickStopGenerating,
         handleKeyDown,
-        handleClickViewScreenshot,
+        handleClickGetImage,
+        handleClickGetPdf,
     } = useChat({ chatId });
     // console.log(`in Input: current chat ID: ${chatId}`);
 
@@ -37,7 +36,7 @@ export default function Input({ chatId }: Props) {
     }
 
     return (
-        <div className="mb-4 flex w-10/12 max-w-3xl flex-grow flex-col lg:w-9/12">
+        <div className="mb-4 flex w-10/12  max-w-[35rem] flex-col">
             <div className="my-2 flex justify-center gap-2">
                 {loading ? (
                     <Button
@@ -60,14 +59,14 @@ export default function Input({ chatId }: Props) {
                     />
                 )}
                 <Button
-                    onClick={handleClickViewScreenshot}
+                    onClick={handleClickGetPdf}
                     Icon={TbPdf}
                     btnSize="sm"
                     border={true}
                     btnStyles="!py-[0.2rem] !px-[0.5rem]"
                 />{' '}
                 <Button
-                    onClick={handleClickViewScreenshot}
+                    onClick={handleClickGetImage}
                     Icon={FiImage}
                     btnSize="sm"
                     border={true}
