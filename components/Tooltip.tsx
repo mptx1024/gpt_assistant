@@ -1,15 +1,15 @@
 import { Tooltip } from 'react-tooltip';
 interface Props {
     anchorSelect: string;
-    content: string;
+    // content: string;
     place?: 'top' | 'right' | 'bottom' | 'left';
+    render: ({}: any) => JSX.Element;
 }
 const StyledTooltip = (props: Props) => {
-
     return (
         <Tooltip
             anchorSelect={props.anchorSelect}
-            content={props.content}
+            render={({ content }) => <div>{content}</div>}
             place={props?.place}
             style={{
                 backgroundColor: 'rgb(107 114 128)',

@@ -42,7 +42,7 @@ const Modal = (props: { children: React.ReactNode; isOpen: boolean; toggleModal:
                 </div>
             </Transition.Child>
         </Transition>,
-        document.body
+        document.getElementById('layout') || document.body
     );
 };
 export default Modal;

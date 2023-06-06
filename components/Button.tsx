@@ -1,14 +1,12 @@
 import clsx from 'clsx';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    onClick?: any;
     Icon?: React.ElementType;
     iconEffect?: boolean;
     text?: string;
     border?: boolean;
     shadow?: boolean;
     title?: string;
-    // disabled?: boolean;
     btnSize: 'sm' | 'md' | 'lg';
     type?: 'submit' | 'reset' | 'button' | undefined;
     iconThemeColor?: boolean;
@@ -16,6 +14,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     btnStyles?: string;
     textStyles?: string;
     tooltipSelector?: string;
+    dataTooltipId?: string;
 }
 
 const btnClasses = {

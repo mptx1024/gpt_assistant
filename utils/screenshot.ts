@@ -1,4 +1,3 @@
-import download from 'downloadjs';
 import { jsPDF } from 'jspdf';
 
 import * as htmlToImage from 'html-to-image';
@@ -19,11 +18,11 @@ export const getImage = () => {
             skipAutoScale: true,
         })
         .then((dataUrl) => {
-            download(dataUrl, 'my-node.png');
-            // const link = document.createElement('a');
-            // link.download = 'my-image-name.png';
-            // link.href = dataUrl;
-            // link.click();
+            // download(dataUrl, 'my-node.png');
+            const link = document.createElement('a');
+            link.download = 'gptAssistant_chat.png';
+            link.href = dataUrl;
+            link.click();
         })
         .catch(function (error) {
             console.error(error);
@@ -54,6 +53,6 @@ export const getPdf = () => {
                 pdf.internal.pageSize.getWidth(),
                 pdf.internal.pageSize.getHeight()
             );
-            pdf.save('sample-file.pdf');
+            pdf.save('gptAssistant_chat.pdf');
         });
 };

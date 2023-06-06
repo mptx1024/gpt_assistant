@@ -1,4 +1,3 @@
-import Tooltip from '@/components/Tooltip';
 import MiniSearch from 'minisearch';
 import { useEffect, useMemo, useState } from 'react';
 import { HiPlus } from 'react-icons/hi2';
@@ -6,8 +5,8 @@ import { HiPlus } from 'react-icons/hi2';
 import Button from '@/components/Button';
 import { Input } from '@/components/InputField';
 
-import RoleCard from './RoleCard';
 import RoleEditor from './RoleEditor';
+import RoleCard from './RoleLibraryCard';
 import rolesList from './utils/roleLibarary.json';
 const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -58,12 +57,8 @@ const RoleLibraryPage = () => {
                     onClick={toggleEditor}
                     border={true}
                     btnSize="md"
-                    tooltipSelector="create-role-library"
-                />
-                <Tooltip
-                    anchorSelect=".create-role-library"
-                    content="Create a new role"
-                    place="bottom"
+                    tooltipSelector="tooltip"
+                    data-tooltip-content="Create a new role"
                 />
             </div>
             <p className="my-5 self-center">

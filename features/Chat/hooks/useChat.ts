@@ -28,6 +28,10 @@ export default function useChat({ chatId }: Props) {
     };
     const handleClickRegenerate = (e: React.MouseEvent) => {
         e.preventDefault();
+        if (!hasMessages) {
+            alert('No message yet🙀');
+            return;
+        }
         regenerate();
     };
     const handleInputChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -46,9 +50,17 @@ export default function useChat({ chatId }: Props) {
         }
     };
     const handleClickGetImage = () => {
+        if (!hasMessages) {
+            alert('No message yet🙀');
+            return;
+        }
         getImage();
     };
     const handleClickGetPdf = () => {
+        if (!hasMessages) {
+            alert('No message yet🙀');
+            return;
+        }
         getPdf();
     };
 

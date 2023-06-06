@@ -45,17 +45,17 @@ export default function Input({ chatId }: Props) {
                         btnSize="sm"
                         text={'Stop Generating'}
                         border={true}
-                        btnStyles="w-fit h-fit !py-[0.5rem] "
+                        btnStyles="w-fit h-fit !py-[0.5rem]"
                     />
                 ) : (
                     <Button
                         onClick={handleClickRegenerate}
-                        disabled={!hasMessages}
                         Icon={HiArrowPath}
                         btnSize="sm"
-                        // text={'Regenerate'}
                         border={true}
-                        btnStyles="!py-[0.5rem]"
+                        btnStyles=""
+                        tooltipSelector="tooltip"
+                        data-tooltip-content="Regenerate last reply"
                     />
                 )}
                 <Button
@@ -63,14 +63,18 @@ export default function Input({ chatId }: Props) {
                     Icon={TbPdf}
                     btnSize="sm"
                     border={true}
-                    btnStyles="!py-[0.2rem] !px-[0.5rem]"
+                    btnStyles=""
+                    tooltipSelector="tooltip"
+                    data-tooltip-content="Download PDF of current chat"
                 />{' '}
                 <Button
                     onClick={handleClickGetImage}
                     Icon={FiImage}
                     btnSize="sm"
                     border={true}
-                    btnStyles="!py-[0.2rem] !px-[0.5rem]"
+                    btnStyles=""
+                    tooltipSelector="tooltip"
+                    data-tooltip-content="Download image of current chat"
                 />
             </div>
             <div

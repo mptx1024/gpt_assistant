@@ -1,10 +1,9 @@
 import Button from '@/components/Button';
 import ModalWrapper from '@/components/Modal';
-import Tooltip from '@/components/Tooltip';
+// import Tooltip from '@/components/Tooltip';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { Role } from '@/types';
 import { HiOutlineXMark } from 'react-icons/hi2';
-
 interface Props {
     isOpen: boolean;
     role?: Role;
@@ -44,7 +43,8 @@ const RoleModal = (props: Props) => {
                         text={'Use'}
                         onClick={props.handleClickUse}
                         border={true}
-                        tooltipSelector="use-role-roleModal"
+                        tooltipSelector="tooltip"
+                        data-tooltip-content="Create a new chat"
                     />
                     {props.isTemplate ? (
                         <Button
@@ -52,7 +52,8 @@ const RoleModal = (props: Props) => {
                             text={'Add to My List'}
                             onClick={props.handleClickAdd}
                             border={true}
-                            tooltipSelector="add-to-list"
+                            tooltipSelector="tooltip"
+                            data-tooltip-content="Create a new role"
                         />
                     ) : (
                         <>
@@ -72,9 +73,6 @@ const RoleModal = (props: Props) => {
                     )}
                 </div>
             </div>
-            <Tooltip anchorSelect=".use-role-roleModal" content="Create a new chat" />
-            <Tooltip anchorSelect=".add-to-list" content="Add role to your Role list" />
-
         </ModalWrapper>
     );
 };

@@ -41,9 +41,7 @@ const RoleCard = (props: Props) => {
                 btnStyles="self-end"
                 border
                 onClick={handleClickUse}
-                // tooltipSelector="use-role-roleCard"
             />
-            {/* <Tooltip anchorSelect=".use-role-roleCard" content="Create a new chat" /> */}
             <div className="flex h-[7rem] flex-col overflow-hidden">
                 <h3 className="mb-1 text-base font-semibold text-white sm:text-xl">
                     {props.role.roleName}

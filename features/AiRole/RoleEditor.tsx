@@ -79,7 +79,14 @@ const RoleEditor = (props: Props) => {
                             />
                         </div>
                     </div>
-                    <Button btnSize="lg" type={'submit'} border={true} text="Save" />
+                    <Button
+                        btnSize="lg"
+                        type={'submit'}
+                        border={true}
+                        text="Save"
+                        tooltipSelector="tooltip"
+                        data-tooltip-content="Update your Role list"
+                    />
                 </form>
             </div>
         </ModalWrapper>
