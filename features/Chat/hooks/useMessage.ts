@@ -19,8 +19,8 @@ export const useMessage = ({ messageId }: Props) => {
     );
     const chatModelParam = useAppSelector((state) => selectChatModelParams(state, message?.chatId));
 
-    const handleClickCopy = async (content: string) => {
-        await copyToClipboard(content, setIsCopied);
+    const handleClickCopy = async () => {
+        await copyToClipboard(userInput, setIsCopied);
     };
     const handleClickEdit = () => {
         setUserInput(message?.content || '');

@@ -66,7 +66,7 @@ export default function DynamicChatPage() {
             <div
                 id="chat-input-container"
                 className="absolute bottom-0 flex min-h-[10rem] w-full 
-            flex-col items-center justify-center bg-gray-base from-transparent pt-1 dark:bg-gray-inverted"
+            justify-center"
             >
                 <Input chatId={chatId} />
             </div>

@@ -46,7 +46,7 @@ export default function ChatMessage({ messageId }: Props) {
                     {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
                 </div>
                 {message.content ? (
-                    <div className=" relative flex min-w-0 flex-1 flex-col gap-1 sm:w-[30rem] md:w-[40rem] md:gap-3">
+                    <div className="relative flex min-w-0 flex-col gap-1 px-0 sm:w-[30rem] md:w-[40rem] md:gap-3">
                         {!isEditing ? (
                             <Markdown message={message} />
                         ) : (
@@ -86,7 +86,7 @@ export default function ChatMessage({ messageId }: Props) {
                     )}
                 >
                     {!isEditing && (
-                        <div className="flex transition-all duration-200 md:translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
+                        <div className="flex transition-all duration-200 md:translate-x-5 md:opacity-0 md:group-hover:translate-x-3 md:group-hover:opacity-100">
                             {!isCopied ? (
                                 <Button
                                     Icon={HiOutlineClipboard}
