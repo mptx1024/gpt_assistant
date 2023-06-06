@@ -9,6 +9,7 @@ import {
 } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
+import clsx from 'clsx';
 import { memo, useState } from 'react';
 interface Props {
     chatId: string;
@@ -23,7 +24,10 @@ function ChatParamsCard({ chatId }: Props) {
             id="chat-params-card"
             key={Math.random()}
             onClick={toggleModal}
-            className="border-color my-3 flex w-[80%] max-w-lg animate-slideInFromTop cursor-pointer flex-col items-start self-center rounded-md border p-3 transition-all  hover:border-colorPrimary md:w-[50%]"
+            className={clsx(
+                'border-color my-3 flex animate-slideInFromTop cursor-pointer flex-col items-start self-center rounded-md border p-3 transition-all hover:border-colorPrimary',
+                'w-[15rem] md:w-[18rem]'
+            )}
         >
             <span className="w-full truncate whitespace-nowrap  text-colorPrimary">
                 {chatModalParams?.model.name}

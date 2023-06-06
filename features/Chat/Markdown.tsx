@@ -12,17 +12,23 @@ interface Props {
 }
 
 const Markdown = ({ message }: Props) => {
+    if (message.role === 'user') {
+        return (
+            <div className="flex min-h-[20px] flex-col items-start gap-4 whitespace-pre-wrap break-words">
+                {message.content}
+            </div>
+        );
+    }
     return (
-        // <div className='debug-2 '>
         <ReactMarkdown
-            // className="debug-2 prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:gap-3 lg:w-[calc(100%-115px)] [&>pre]:m-0 [&>pre]:p-0"
-            className="flex flex-col prose dark:prose-invert"
+            className="prose break-words dark:prose-invert"
             remarkPlugins={[remarkGfm, remarkMath]}
             rehypePlugins={[rehypeKatex]}
             components={{
                 p: 'div',
                 code({ node, inline, className, children, style, ...props }) {
                     const match = /language-(\w+)/.exec(className || '');
+                    console.log(`in Markdown -> className: ${className}; Match: ${match}`);
 
                     // if code is not inline and has a language, use CodeBlock
                     return !inline ? (
@@ -47,11 +53,8 @@ const Markdown = ({ message }: Props) => {
                                 language={(match && match[1]) || 'text'}
                                 // PreTag='div'
                                 {...props}
-                                // eslint-disable-next-line react/no-children-prop
                                 children={String(children).replace(/\n$/, '')}
                             />
-                            {/* {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter> */}
                         </div>
                     ) : (
                         <code className={className} {...props}>
@@ -63,7 +66,6 @@ const Markdown = ({ message }: Props) => {
         >
             {message.content}
         </ReactMarkdown>
-        // </div>
     );
 };
 
