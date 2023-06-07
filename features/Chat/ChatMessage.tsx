@@ -43,7 +43,7 @@ export default function ChatMessage({ messageId }: Props) {
         <div className={messageContainerClasses}>
             <div
                 className={clsx(
-                    'relative flex justify-center gap-3 overflow-hidden px-3 pb-10 pt-5 md:py-6',
+                    'relative flex justify-normal gap-3 overflow-hidden px-3 pb-10 pt-5 md:py-6',
                     'w-full md:w-[40rem] lg:w-[43rem] xl:w-[45rem]'
                 )}
             >

@@ -12,9 +12,6 @@ type Props = {
     isSidebarOpen: boolean;
 };
 
-const navbarClasses =
-    'nav flex-shrink-0 flex h-16 w-full justify-between items-center pr-3 py-3  transition-all duration-300';
-
 export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const router = useRouter();
     // const { id } = router.query;
@@ -30,10 +27,7 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
         }
         return '';
     };
-    // useEffect(() => {
-    //     router.push(`/chat/${chatID}`);
-    //     console.log('🚀 ~ file: Navbar.tsx:29 ~ useEffect ~ chatID:', chatID);
-    // }, [chatID]);
+
     const { theme, setTheme } = useTheme();
     const handleClickNewChat = () => {
         createNewChat();
@@ -41,16 +35,13 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
     const toggleTheme = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
     };
-
+    const navbarClasses =
+        'nav flex-shrink-0 flex h-16 w-full justify-between items-center pr-3 py-3  transition-all duration-300';
     return (
         <div className={navbarClasses}>
-            {/* {isSidebarOpen ? null : <Button Icon={HiBars3} size="lg" onClick={toggleSidebar} />} */}
-            {/* <div className="btn-sidebar debug-2 !blur-none !filter-none"> */}
             <Button Icon={HiBars3} btnSize="lg" onClick={toggleSidebar} />
-            {/* </div> */}
             <span className=" mr-auto max-w-[80%] truncate pl-2 text-[1.1rem] font-medium">
                 {title()}
-                {/* <h1 className="debug-1 text-primary truncate">{chat?.title}</h1> */}
             </span>
             <div className="flex items-center justify-end gap-2">
                 <Button Icon={HiPlus} btnSize="lg" border={true} onClick={handleClickNewChat} />
