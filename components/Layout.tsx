@@ -78,8 +78,8 @@ export default function Layout({ children }: Props) {
             <div id="layout" className="fixed inset-0 flex h-full">
                 <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                 <div
-                    className={clsx('relative flex h-full w-full flex-col overflow-x-hidden', {
-                        'blur-3xl': width && width <= 640 && sidebarOpen,
+                    className={clsx('relative flex h-full w-full flex-col overflow-x-auto', {
+                        'blur-3xl': width && width < 640 && sidebarOpen,
                     })}
                     //
                 >

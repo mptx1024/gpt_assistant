@@ -36,7 +36,7 @@ export default function Input({ chatId }: Props) {
     }
 
     return (
-        <div className="mb-4 flex w-[20rem] md:w-[30rem] lg:w-[40rem] flex-col">
+        <div className="mb-4 mx-3 flex w-[23rem] flex-col sm:w-[30rem] md:w-[30rem] lg:w-[33rem]">
             <div className="my-2 flex justify-center gap-2">
                 {loading ? (
                     <Button

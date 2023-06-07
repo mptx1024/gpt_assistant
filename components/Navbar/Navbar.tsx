@@ -48,17 +48,17 @@ export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
             {/* <div className="btn-sidebar debug-2 !blur-none !filter-none"> */}
             <Button Icon={HiBars3} btnSize="lg" onClick={toggleSidebar} />
             {/* </div> */}
-            <span className=" mr-auto max-w-[80%] truncate pl-2 text-xl">
+            <span className=" mr-auto max-w-[80%] truncate pl-2 text-[1.1rem] font-medium">
                 {title()}
                 {/* <h1 className="debug-1 text-primary truncate">{chat?.title}</h1> */}
             </span>
             <div className="flex items-center justify-end gap-2">
-                <Button Icon={HiPlus} btnSize="md" border={true} onClick={handleClickNewChat} />
+                <Button Icon={HiPlus} btnSize="lg" border={true} onClick={handleClickNewChat} />
                 <Button
                     Icon={theme === 'dark' ? HiOutlineSun : HiMoon}
                     onClick={toggleTheme}
                     border={true}
-                    btnSize="md"
+                    btnSize="lg"
                 />
             </div>
         </div>

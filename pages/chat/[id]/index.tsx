@@ -46,7 +46,7 @@ export default function DynamicChatPage() {
     return (
         <div
             id="chat-container"
-            className="mb-[10rem] flex h-full w-full flex-col items-center overflow-y-auto "
+            className="mb-[10rem] flex h-full w-full flex-col items-center overflow-y-auto"
             ref={containerRef}
         >
             <div
@@ -65,7 +65,7 @@ export default function DynamicChatPage() {
             </button> */}
             <div
                 id="chat-input-container"
-                className="absolute bottom-0 flex min-h-[10rem] w-full 
+                className="absolute bottom-0 right-0 flex min-h-[10rem] w-full 
             justify-center"
             >
                 <Input chatId={chatId} />

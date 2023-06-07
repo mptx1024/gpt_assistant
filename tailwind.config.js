@@ -26,7 +26,7 @@ module.exports = {
                     inverted: colors.neutral[900],
                 },
                 gray: {
-                    base: colors.neutral[50],
+                    base: colors.neutral[100],
                     inverted: colors.neutral[800],
                 },
             },

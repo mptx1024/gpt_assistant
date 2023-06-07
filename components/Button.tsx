@@ -28,7 +28,7 @@ const btnClasses = {
 
 const iconClasses = {
     themeColor: 'text-colorPrimary dark:text-colorPrimary',
-    sm: 'h-4 w-4 ',
+    sm: 'h-4 w-4',
     md: 'h-5 w-5',
     lg: 'h-6 w-6',
     iconEffect: 'hover:scale-[1.1]',
