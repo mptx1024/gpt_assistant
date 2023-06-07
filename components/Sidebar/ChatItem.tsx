@@ -62,7 +62,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
 
     return (
         <SidebarCard isSelected={currentChatID === chat.id} onClick={handleClickChat}>
-            <div className="debug-1 absolute flex w-[75%] items-center gap-2">
+            <div className="flex w-[75%] items-center">
                 <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4 shrink-0" />
                 {edit ? (
                     <Input
@@ -75,17 +75,18 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         styles="bg-gray-base dark:bg-gray-inverted"
                     />
                 ) : (
-                    <p className="w-full animate-typing truncate">{chat.title}</p>
+                    <p className="w-screen animate-typing truncate">{chat.title}</p>
                 )}
             </div>
             {edit || remove ? (
-                <div className="right-1 debug-3 flex items-center">
+                <div className="right-1 flex items-center">
                     <Button
                         Icon={HiCheck}
                         onClick={handleClickConfirm}
                         btnSize="sm"
                         iconEffect={true}
                         iconThemeColor={false}
+                        btnStyles="!px-1"
                     />
                     <Button
                         Icon={HiOutlineXMark}
@@ -93,16 +94,18 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         btnSize="sm"
                         iconEffect={true}
                         iconThemeColor={false}
+                        btnStyles="!px-1"
                     />
                 </div>
             ) : (
-                <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-100 ease-in group-hover:right-1 group-hover:opacity-100">
+                <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-150 ease-in group-hover:right-1 group-hover:opacity-100">
                     <Button
                         onClick={handleClickEdit}
                         Icon={HiPencilSquare}
                         btnSize="sm"
                         iconEffect={true}
                         iconThemeColor={false}
+                        btnStyles="!px-1"
                     />
                     <Button
                         onClick={handleClickRemove}
@@ -110,6 +113,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         btnSize="sm"
                         iconEffect={true}
                         iconThemeColor={false}
+                        btnStyles="!px-1"
                     />
                 </div>
             )}

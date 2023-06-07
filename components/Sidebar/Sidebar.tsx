@@ -25,7 +25,7 @@ export default function Sidebar({ sidebarOpen: isSidebarOpen, toggleSidebar }: P
         <div
             className={clsx(
                 sidebarClasses,
-                isSidebarOpen ? 'w-[18rem] sm:w-[17rem] lg:w-[20rem] xl:w-[22rem]' : 'w-0 opacity-0'
+                isSidebarOpen ? 'w-[20rem] sm:w-[15rem] lg:w-[18rem] xl:w-[22rem]' : 'w-0 opacity-0'
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
