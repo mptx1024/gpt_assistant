@@ -22,12 +22,13 @@ export const messagesSlice = createSlice({
         },
         updateMessage: (
             state,
-            action: PayloadAction<{ messageId: string; chunkValue: string }>
+            action: PayloadAction<{ messageId: string; chunkValue: string; isError?: boolean }>
         ) => {
             const { messageId, chunkValue } = action.payload;
             const existingMessage = state.entities[messageId];
             if (existingMessage) {
                 existingMessage.content += chunkValue;
+                existingMessage.isError = action.payload.isError || false;
             }
         },
     },

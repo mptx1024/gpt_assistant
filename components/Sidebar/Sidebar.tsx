@@ -29,11 +29,11 @@ export default function Sidebar({ sidebarOpen: isSidebarOpen, toggleSidebar }: P
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
-            <div className="relative mb-10 flex h-[91%] flex-col overflow-hidden px-1">
+            <div className="relative mb-14 flex h-[91%] flex-col overflow-hidden">
                 <ChatList chats={chats} />
                 <RoleList roles={roles} />
             </div>
-            <div className=" absolute bottom-0 flex h-[3rem] w-full items-center bg-emerald-50/75 px-3 dark:bg-emerald-800/10 py-8 ">
+            <div className=" absolute bottom-0 flex h-[3rem] w-full items-center p-3 py-8 ">
                 <BottomSection />
             </div>
         </div>

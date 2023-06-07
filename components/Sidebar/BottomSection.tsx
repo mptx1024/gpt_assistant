@@ -1,14 +1,16 @@
 import SettingTabWrapper from '@/features/settings/SettingTabWrapper';
-import { useCallback, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { toggleAppSetting } from '@/store/uiSlice';
 import { AiOutlineGithub } from 'react-icons/ai';
 import { HiOutlineCog8Tooth } from 'react-icons/hi2';
 import SettingModal from '../../features/settings/SettingModal';
 import Button from '../Button';
 const BottomSection = () => {
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const toggleSettingModal = useCallback(() => {
-        setIsSettingsOpen(!isSettingsOpen);
-    }, [isSettingsOpen]);
+    const isAppSettingOpen = useAppSelector((state) => state.ui.appSettingOpen);
+    const dispatch = useAppDispatch();
+    const toggleSettingModal = () => {
+        dispatch(toggleAppSetting());
+    };
     return (
         <div className="flex w-full items-center justify-start">
             <Button
@@ -19,7 +21,7 @@ const BottomSection = () => {
             />
             <Button Icon={AiOutlineGithub} btnSize="lg" />
             <SettingModal
-                isOpen={isSettingsOpen}
+                isOpen={isAppSettingOpen}
                 toggleModal={toggleSettingModal}
                 title="Setting"
             >

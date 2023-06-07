@@ -5,6 +5,7 @@ export interface Message {
     role: string;
     content: string;
     isFirst?: boolean;
+    isError?: boolean;
 }
 
 export interface UserSubmitMessage {

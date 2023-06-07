@@ -45,10 +45,6 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     // };
     // const payload: OpenAIStreamPayload = await req.json();
     try {
-        // const stream = await OpenAIStream(payload, apiKey);
-        // const stream = await OpenAIStream(payload, authValue);
-        // return new Response(stream);
-        // return await OpenAIStream(req);
         const stream = await OpenAIStream(req);
         return new NextResponse(stream);
     } catch (error: any) {

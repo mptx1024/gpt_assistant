@@ -31,6 +31,7 @@ import {
     setOneRole,
     updateOneRole,
 } from './rolesSlice';
+import { setAppSetting } from './settingSlice';
 export const listenerMiddleware = createListenerMiddleware();
 
 type AppStartListening = TypedStartListening<RootState, AppDispatch>;
@@ -55,48 +56,30 @@ startAppListening({
     effect: async (action, listenerApi) => {
         if (removeAllChats.match(action)) {
             await idb.del('chats');
-        }
-
-        // if (action.type === 'messages/setIsLoading' && action.payload.status === false) {
-        //     const mostRecentReplyMessage =
-        //         listenerApi.getState().messages.entities[action.payload.messageId];
-        //     if (mostRecentReplyMessage?.isFirst) {
-        //         console.log(`in middleware. ${JSON.stringify(mostRecentReplyMessage)}`);
-        //         // TODO: call createTitle -> get title -> dispatch updateTitle
-        //         const title = await createTitle(mostRecentReplyMessage.content);
-        //         console.log('🚀 ~ file: listenerMiddleware.ts:71 ~ effect: ~ title:', title);
-        //     }
-        // }
-        else {
+        } else {
             const chats: Chat[] = selectAllChats(store.getState());
             await idb.set('chats', chats);
         }
     },
 });
 
-// Autonaming chat
+// Naming chat
 startAppListening({
     predicate: (action, currentState, previousState) => {
         return (
             setIsLoading.match(action) &&
             action.payload === false &&
             currentState.setting.defaultChatSetting.autoNameChat
-            // && !currentState.chats.currentChat.isLoading
         );
     },
     effect: async (action, listenerApi) => {
-        // console.log(
-        //     `inautonaming: currentState.setting.defaultChatSetting.autoNameChat: ${
-        //         listenerApi.getState().setting.defaultChatSetting.autoNameChat
-        //     }`
-        // );
         const mostRecentReplyMessage = selectMostRecentReplyMessage(listenerApi.getState());
-        if (mostRecentReplyMessage && mostRecentReplyMessage.isFirst) {
-            // console.log(
-            //     `in middleware->naming. lastReplyMessage: ${JSON.stringify(mostRecentReplyMessage)}`
-            // );
+        if (
+            mostRecentReplyMessage &&
+            mostRecentReplyMessage.isFirst &&
+            !mostRecentReplyMessage.isError
+        ) {
             const title: string = await createTitle(mostRecentReplyMessage.content);
-            // console.log('🚀 ~ file: listenerMiddleware.ts:71 ~ effect: ~ title:', title);
             listenerApi.dispatch(updateChatTitle({ chatId: mostRecentReplyMessage.chatId, title }));
         }
     },
@@ -106,11 +89,11 @@ startAppListening({
 startAppListening({
     matcher: isAnyOf(setOneRole, updateOneRole, removeOneRole, removeAllRoles),
 
-    effect: async (action) => {
+    effect: async (action, listenerApi) => {
         if (action.type === 'roles/removeAllRoles') {
             await idb.del('roles');
         } else {
-            const roles: Role[] = selectAllRoles(store.getState());
+            const roles: Role[] = selectAllRoles(listenerApi.getState());
             await idb.set('roles', roles);
         }
     },
@@ -118,24 +101,33 @@ startAppListening({
 
 // Update msgs in IndexedDB
 startAppListening({
-    matcher: isAnyOf(addMessage, removeMessage, removeMessageUpTo, removeChat, setIsLoading, removeAllChats),
+    matcher: isAnyOf(
+        addMessage,
+        removeMessage,
+        removeMessageUpTo,
+        removeChat,
+        setIsLoading,
+        removeAllChats
+    ),
     effect: async (action, listenerApi) => {
         if (action.type === 'chats/removeAllChats') {
-            console.log(`in middleware->updateMsg ${JSON.stringify(action)}`);
             await idb.del('messages');
-        }
-        else {
-
+        } else {
             const messages: Message[] = selectAllMessages(listenerApi.getState());
-            // if (action.type === 'messages/setIsLoading' && action.playload === false) {
-            //     await idb.set('messages', messages);
-            // }
             await idb.set('messages', messages);
         }
     },
 });
 
-// Routing after delete
+// Update setting
+startAppListening({
+    actionCreator: setAppSetting,
+    effect: (action, listenerApi) => {
+        localStorage.setItem('setting', JSON.stringify(listenerApi.getState().setting));
+    },
+});
+
+// Routing after deleteing a chat
 startAppListening({
     matcher: isAnyOf(removeChat, removeAllChats),
     effect: (action, listenerApi) => {

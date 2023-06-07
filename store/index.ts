@@ -22,10 +22,6 @@ export const store = configureStore({
     devTools: process.env.NODE_ENV !== 'production',
 });
 
-// Update setting to localStorage
-store.subscribe(() => {
-    localStorage.setItem('setting', JSON.stringify(store.getState().setting));
-});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,6 +1,7 @@
 import { selectIsLoading, selectMessageIdsByChat } from '@/store/chatsSlice';
-import { useAppSelector } from '@/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectApiKey } from '@/store/settingSlice';
+import { toggleAppSetting } from '@/store/uiSlice';
 import { abortController, generateReply, regenerate } from '@/utils/chat';
 import { getImage, getPdf } from '@/utils/screenshot';
 import { useEffect, useRef, useState } from 'react';
@@ -10,7 +11,6 @@ interface Props {
 }
 
 export default function useChat({ chatId }: Props) {
-    // console.log(`in useChat. chatId: ${chatId}`);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const apiKey = useAppSelector(selectApiKey);
     const [userInput, setUserInput] = useState<string>('');
@@ -19,6 +19,10 @@ export default function useChat({ chatId }: Props) {
     const handleClickSubmit = async (e: React.MouseEvent | React.KeyboardEvent) => {
         e.preventDefault();
         setUserInput('');
+        if (!apiKey) {
+            alert('Please enter your api key');
+            return;
+        }
         await generateReply({
             userInput,
             addController(controller) {
@@ -64,6 +68,11 @@ export default function useChat({ chatId }: Props) {
         getPdf();
     };
 
+    const dispatch = useAppDispatch();
+    const toggleSettingModal = () => {
+        dispatch(toggleAppSetting());
+    };
+
     useEffect(() => {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'inherit';
@@ -87,5 +96,6 @@ export default function useChat({ chatId }: Props) {
         handleKeyDown,
         handleClickGetImage,
         handleClickGetPdf,
+        toggleSettingModal,
     };
 }

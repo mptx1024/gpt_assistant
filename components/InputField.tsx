@@ -18,18 +18,15 @@ export function Input({ showborder, styles, onChange, onClick, ...props }: Input
             className={clsx(
                 styles,
                 inputBaseClasses,
-                showborder ? 'border-color border-[1.5px] focus:border-colorPrimary' : 'border-none'
+                showborder ? 'border-color border-[2px] focus:border-colorPrimary' : 'border-none'
             )}
-            // type={props.type}
-            // placeholder={props.placeholder}
-            // value={props.value}
             onChange={onChange}
             onClick={onClick}
         />
     );
 }
 
-interface TexareaProps {
+interface TexareaProps extends React.HTMLProps<HTMLTextAreaElement> {
     required?: boolean;
     placeholder?: string;
     value?: string;
@@ -37,13 +34,11 @@ interface TexareaProps {
     onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
     styles?: string;
     rows?: number;
-    // [x: string]: any;
     showborder?: boolean;
 }
-// focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300
 
 const textAreaBaseClasses =
-    'focus:border-colorPrimary border-[1.5px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none debug-1';
+    'focus:border-colorPrimary border-[2px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none debug-1';
 
 export function Textarea(props: TexareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);

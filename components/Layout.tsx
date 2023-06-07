@@ -14,7 +14,7 @@ import clsx from 'clsx';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Alert from './Alert';
-import Loading from './Loading';
+import Loading from './LoadingPage';
 import StyledTooltip from './Tooltip';
 type Props = { children: React.ReactNode };
 
@@ -38,14 +38,19 @@ export default function Layout({ children }: Props) {
     useEffect(() => {
         if (!router.isReady) return;
 
-        const loadRecords = async () => {
+        const loadState = async () => {
+            const returnVisit = localStorage.getItem('returnVisit');
             const roles: Role[] = await idb.get('roles');
             if (roles) {
                 dispatch(setAllRoles(roles));
+            } else if (!returnVisit) {
+                dispatch(setAllRoles([]));
             }
             const chats: Chat[] = await idb.get('chats');
             if (chats) {
                 dispatch(setAllChats(chats));
+            } else if (!returnVisit) {
+                dispatch(setAllChats([]));
             }
             dispatch(
                 setCurrentChat(
@@ -56,18 +61,19 @@ export default function Layout({ children }: Props) {
                         : ''
                 )
             );
-            setIsLoading(false);
             const messages: Message[] = await idb.get('messages');
             if (messages) {
                 dispatch(setAllMessages(messages));
             }
+            localStorage.setItem('returnVisit', 'true');
+            setIsLoading(false);
         };
-        loadRecords();
+        loadState();
     }, [router.isReady]);
 
-    return isLoading ? (
-        <Loading />
-    ) : (
+    if (isLoading) return <Loading />;
+
+    return (
         <>
             <Head>
                 <title>chatbot</title>
@@ -78,12 +84,15 @@ export default function Layout({ children }: Props) {
             <div id="layout" className="fixed inset-0 flex h-full">
                 <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
                 <div
-                    className={clsx('relative flex h-full w-full flex-col overflow-x-auto overflow-y-clip', {
-                        'blur-3xl': width && width < 640 && sidebarOpen,
-                    })}
+                    className={clsx(
+                        'relative flex h-full w-full flex-col overflow-x-auto overflow-y-clip',
+                        {
+                            'blur-3xl': width && width < 640 && sidebarOpen,
+                        }
+                    )}
                     //
                 >
-                    <Navbar isSidebarOpen={sidebarOpen} toggleSidebar={handleClickSidebar} />
+                    <Navbar toggleSidebar={handleClickSidebar} />
                     <Suspense fallback={<Loading />}>{children}</Suspense>
                 </div>
             </div>

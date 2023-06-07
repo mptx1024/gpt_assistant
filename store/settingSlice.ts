@@ -21,8 +21,6 @@ export const settingSlice = createSlice({
     initialState,
     reducers: {
         setAppSetting: (state, action) => {
-            console.log(`in settingSlice: ${JSON.stringify(action.payload)}`);
-
             return action.payload;
         },
     },

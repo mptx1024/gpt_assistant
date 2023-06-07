@@ -45,7 +45,7 @@ export const createNewChat = (selectedRole?: Role): string => {
         modelParams: appSetting.defaultModelParams,
     };
     console.log(`in createNewChat`);
-    
+
     store.dispatch(addChat(newChat));
     store.dispatch(setCurrentChat(newChat.id));
     Router.push(`/chat/${newChat.id}`, undefined, { shallow: true });
@@ -65,20 +65,15 @@ export const createTitle = async (content: string) => {
         throw new Error(response.statusText, { cause: response.status });
     }
     const data = await response.json();
-    // console.log('🚀 ~ file: chats.ts:52 ~ createTitle ~ data:', data);
-    //stringify?
     return data.choices[0].message.content;
 };
 
 export const abortController = {
     controllers: new Map(),
     setController(id: string, controller: AbortController) {
-        console.log(`In setController: ${id}`);
-
         this.controllers.set(id, controller);
     },
     stop(id: string) {
-        console.log(`In stop: ${id}`);
         this.controllers.get(id)?.abort();
         this.remove(id);
     },
@@ -103,7 +98,7 @@ export const generateReply = async ({
     if (!chat) return;
     const apiKey = selectApiKey(store.getState());
     const chatId = chat!.id;
-    console.log(`in generateReply. chatID: ${chatId}`);
+    // console.log(`in generateReply. chatID: ${chatId}`);
 
     const userMessage: Message = {
         id: uuid(),
@@ -165,6 +160,7 @@ export const generateReply = async ({
                 errorMsg = errorMessage.serverErrorMsg;
             }
             store.dispatch(updateMessage({ messageId: reply.id, chunkValue: errorMsg }));
+            store.dispatch(setIsLoading(false));
             return;
         }
 
@@ -184,16 +180,13 @@ export const generateReply = async ({
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
-            store.dispatch(updateMessage({ messageId: reply.id, chunkValue }));
+            store.dispatch(updateMessage({ messageId: reply.id, chunkValue, isError: true }));
         }
-
-        // console.log(`done: ${done}; controller signal: ${controller.signal.aborted}`);
     } catch (err: any) {
         if (err.name === 'TimeoutError') {
             console.error('Timeout');
         } else if (err.name === 'AbortError') {
             console.error('Fetch aborted by user or timeout');
-            // store.dispatch(setIsLoading({ status: false, messageId: reply.id }));
         } else if (err.name === 'TypeError') {
             console.error('AbortSignal.timeout() method is not supported');
         } else {

@@ -24,18 +24,15 @@ export const chatsSlice = createSlice({
         removeAllChats: chatsAdapter.removeAll,
 
         setCurrentChat: (state, action: PayloadAction<string>) => {
-            // console.log(`in setCurrentChat: ${action.payload}`);
             state.currentChat.id = action.payload;
         },
 
         setIsLoading: (state, action: PayloadAction<boolean>) => {
-            // console.log(`in setIsLoading: ${action.payload}`);
             state.currentChat.isLoading = action.payload;
         },
         removeChat: (state, action: PayloadAction<string>) => {
             chatsAdapter.removeOne(state, action.payload);
             state.currentChat.id = state.ids.length > 0 ? state.ids[0].toString() : '';
-            // console.log(`in removeChat -> ${state.currentChat.id}; `);
         },
 
         removeMessageUpTo: (state, action: PayloadAction<{ messageId: string }>) => {

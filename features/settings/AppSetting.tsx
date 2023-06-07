@@ -5,7 +5,6 @@ import { Input } from '@/components/InputField';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectAppSetting, setAppSetting } from '@/store/settingSlice';
 import { OpenAIModels } from '@/types';
-import { Tab } from '@headlessui/react'
 
 import ModelParamsSection from './ModelParamsSection';
 
@@ -81,10 +80,10 @@ function AppSetting({ toggleModal }: Props) {
                 </span>
                 <Input
                     type="text"
-                    placeholder="Enter Your API Key Here"
                     value={key}
                     onChange={(e) => setKey(e.target.value)}
                     showborder
+                    styles={`${!key && '!border-red-500'}`}
                 />
             </section>
             <section id="setting-auto-generate" className="flex items-center justify-between gap-2">
@@ -104,7 +103,7 @@ function AppSetting({ toggleModal }: Props) {
                         onChange={handleClickAutoNameChat}
                     />
 
-                    <span className="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-colorPrimary"></span>
+                    <span className="absolute inset-0 rounded-full bg-gray-500 transition peer-checked:bg-colorPrimary"></span>
 
                     <span className="absolute inset-y-0 start-0 m-1 h-5 w-5 rounded-full bg-white transition-all peer-checked:start-7"></span>
                 </label>

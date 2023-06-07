@@ -1,4 +1,5 @@
 import Button from '@/components/Button';
+import InfoBar from '@/components/InfoBar';
 import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
 import clsx from 'clsx';
 import { FiImage, FiSend } from 'react-icons/fi';
@@ -23,20 +24,36 @@ export default function Input({ chatId }: Props) {
         handleKeyDown,
         handleClickGetImage,
         handleClickGetPdf,
+        toggleSettingModal,
     } = useChat({ chatId });
-    // console.log(`in Input: current chat ID: ${chatId}`);
-
-    if (!apiKey) {
-        return (
-            <label className="btn btn-primary my-10 gap-2 capitalize" htmlFor="setting-modal">
-                <HiOutlineKey size="1rem" />
-                Enter Your openAI API Key to Start
-            </label>
-        );
-    }
 
     return (
-        <div className="mb-4 mx-3 flex w-[23rem] flex-col sm:w-[30rem] md:w-[30rem] lg:w-[33rem]">
+        <div className="mx-3 mb-4 flex w-[23rem] flex-col sm:w-[30rem] md:w-[30rem] lg:w-[33rem]">
+            {!apiKey && (
+                <div className="my-5 flex flex-col items-center justify-center gap-3">
+                    <InfoBar>
+                        <Button
+                            Icon={HiOutlineKey}
+                            btnSize="md"
+                            text="Enter Your openAI API Key to Start"
+                            btnStyles="h-5"
+                            iconThemeColor={false}
+                            onClick={toggleSettingModal}
+                        />
+                    </InfoBar>
+                    <p className="text-sm">
+                        You can obtain an API key from &nbsp;
+                        <a
+                            className="underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://platform.openai.com/account/api-keys"
+                        >
+                            OpenAI/account/api-keys
+                        </a>
+                    </p>
+                </div>
+            )}
             <div className="my-2 flex justify-center gap-2">
                 {loading ? (
                     <Button

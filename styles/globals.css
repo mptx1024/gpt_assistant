@@ -5,7 +5,7 @@
 @layer base {
 
     body {
-        @apply bg-gray-base text-[rem] text-black-base dark:bg-gray-inverted dark:text-black-inverted font-light;
+        @apply bg-gray-base text-[rem] text-black-base dark:bg-gray-inverted dark:text-black-inverted font-normal;
     }
 }
 

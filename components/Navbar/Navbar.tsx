@@ -9,10 +9,9 @@ import { createNewChat } from '@/utils/chat';
 import Button from '../Button';
 type Props = {
     toggleSidebar: () => void;
-    isSidebarOpen: boolean;
 };
 
-export default function Navbar({ toggleSidebar, isSidebarOpen }: Props) {
+export default function Navbar({ toggleSidebar }: Props) {
     const router = useRouter();
     // const { id } = router.query;
 

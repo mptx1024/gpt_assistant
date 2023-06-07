@@ -49,7 +49,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
     };
-    const handleClickConfirm = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleClickConfirm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.stopPropagation();
         if (edit) {
             dispatch(updateChatTitle({ chatId: chat.id, title }));
@@ -62,7 +62,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
 
     return (
         <SidebarCard isSelected={currentChatID === chat.id} onClick={handleClickChat}>
-            <div className="flex w-[75%] items-center gap-2">
+            <div className="debug-1 absolute flex w-[75%] items-center gap-2">
                 <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4 shrink-0" />
                 {edit ? (
                     <Input
@@ -79,7 +79,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                 )}
             </div>
             {edit || remove ? (
-                <div className="right-1 flex items-center">
+                <div className="right-1 debug-3 flex items-center">
                     <Button
                         Icon={HiCheck}
                         onClick={handleClickConfirm}
