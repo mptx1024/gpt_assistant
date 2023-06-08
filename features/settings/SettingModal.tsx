@@ -21,7 +21,7 @@ const SettingModal = memo(function SettingModal(props: Props) {
             <div
                 id="setting-modal"
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="border-color absolute flex h-full w-full flex-col border bg-gray-base text-left dark:bg-gray-inverted sm:top-10 sm:h-fit sm:max-h-[95vh] sm:max-w-2xl sm:rounded-xl"
+                className="border-color absolute flex h-full w-full flex-col border bg-gray-base text-left dark:bg-gray-inverted sm:top-10 sm:bottom-10 sm:h-fit sm:max-h-[95vh] sm:max-w-2xl sm:rounded-xl"
             >
                 <div className="flex items-center justify-between px-5 py-3 sm:pt-5 sm:px-10">
                     <span className="text-2xl font-semibold">{props.title}</span>

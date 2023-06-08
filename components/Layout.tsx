@@ -10,6 +10,7 @@ import { setAllRoles } from '@/store/rolesSlice';
 import { toggleSidebar } from '@/store/uiSlice';
 import { Chat, Message, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
+import templateData from '@/utils/templateData';
 import clsx from 'clsx';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -17,7 +18,6 @@ import Alert from './Alert';
 import Loading from './LoadingPage';
 import StyledTooltip from './Tooltip';
 type Props = { children: React.ReactNode };
-
 export default function Layout({ children }: Props) {
     const dispatch = useAppDispatch();
     const router = useRouter();
@@ -40,17 +40,28 @@ export default function Layout({ children }: Props) {
 
         const loadState = async () => {
             const returnVisit = localStorage.getItem('returnVisit');
+            if (!returnVisit) {
+                dispatch(setAllChats(templateData.chats));
+                dispatch(setAllMessages(templateData.messages));
+                dispatch(setAllRoles(templateData.roles));
+                await idb.set('chats', templateData.chats);
+                await idb.set('messages', templateData.messages);
+                await idb.set('roles', templateData.roles);
+                localStorage.setItem('returnVisit', 'true');
+                setIsLoading(false);
+                return;
+            }
             const roles: Role[] = await idb.get('roles');
             if (roles) {
                 dispatch(setAllRoles(roles));
-            } else if (!returnVisit) {
-                dispatch(setAllRoles([]));
             }
             const chats: Chat[] = await idb.get('chats');
             if (chats) {
                 dispatch(setAllChats(chats));
-            } else if (!returnVisit) {
-                dispatch(setAllChats([]));
+            }
+            const messages: Message[] = await idb.get('messages');
+            if (messages) {
+                dispatch(setAllMessages(messages));
             }
             dispatch(
                 setCurrentChat(
@@ -61,10 +72,6 @@ export default function Layout({ children }: Props) {
                         : ''
                 )
             );
-            const messages: Message[] = await idb.get('messages');
-            if (messages) {
-                dispatch(setAllMessages(messages));
-            }
             localStorage.setItem('returnVisit', 'true');
             setIsLoading(false);
         };

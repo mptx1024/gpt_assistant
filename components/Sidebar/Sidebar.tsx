@@ -25,11 +25,13 @@ export default function Sidebar({ sidebarOpen: isSidebarOpen, toggleSidebar }: P
         <div
             className={clsx(
                 sidebarClasses,
-                isSidebarOpen ? 'w-[20rem] sm:w-[15rem] lg:w-[18rem] xl:w-[22rem]' : 'w-0 opacity-0'
+                isSidebarOpen
+                    ? 'w-[20rem] shrink-0 sm:w-[15rem] lg:w-[18rem] xl:w-[22rem]'
+                    : 'w-0 opacity-0'
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
-            <div className="relative mb-14 flex h-[91%] flex-col overflow-hidden">
+            <div className="relative mb-14 flex h-[91%] flex-col overflow-x-hidden">
                 <ChatList chats={chats} />
                 <RoleList roles={roles} />
             </div>

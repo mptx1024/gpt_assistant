@@ -1,7 +1,7 @@
 // import { Chat, OpenAIMessage, OpenAIStreamPayload, defaultModelParams } from '@/types';
 // import { chatHistoryTrimer } from '@/utils/tokenizer';
 import { NextRequest, NextResponse } from 'next/server';
-import { OpenAIStream } from '../../utils/OpenAIStream';
+import { openAIStream } from '../../utils/openAIStream';
 
 export const config = {
     runtime: 'edge',
@@ -45,7 +45,7 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
     // };
     // const payload: OpenAIStreamPayload = await req.json();
     try {
-        const stream = await OpenAIStream(req);
+        const stream = await openAIStream(req);
         return new NextResponse(stream);
     } catch (error: any) {
         console.log(`error.message: ${error.message}; error.cause: ${error.cause};`);

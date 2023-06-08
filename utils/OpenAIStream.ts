@@ -1,7 +1,7 @@
 import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser';
 import { NextRequest } from 'next/server';
 
-export async function OpenAIStream(req: NextRequest) {
+export async function openAIStream(req: NextRequest) {
     const authValue = req.headers.get('Authorization') ?? '';
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
@@ -55,5 +55,4 @@ export async function OpenAIStream(req: NextRequest) {
     });
 
     return stream;
-
 }

@@ -43,7 +43,7 @@ const RoleList = (props: { roles: Role[] }) => {
                     />
                 </div>
             </div>
-            <div className="scrollbar dark:scrollbarDark flex flex-col gap-2 overflow-y-scroll">
+            <div className="scrollbar dark:scrollbarDark flex flex-col gap-2 overflow-y-scroll overflow-x-hidden">
                 {props.roles?.map((role) => (
                     <RoleItem key={role.id} role={role} />
                 ))}

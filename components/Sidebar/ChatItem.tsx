@@ -86,7 +86,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         btnSize="sm"
                         iconEffect={true}
                         iconThemeColor={false}
-                        btnStyles="!px-1"
+                        btnStyles="!px-1" 
+
                     />
                     <Button
                         Icon={HiOutlineXMark}
@@ -106,6 +107,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         iconEffect={true}
                         iconThemeColor={false}
                         btnStyles="!px-1"
+                        iconStyles="!text-neutral-500"
                     />
                     <Button
                         onClick={handleClickRemove}
@@ -114,6 +116,8 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         iconEffect={true}
                         iconThemeColor={false}
                         btnStyles="!px-1"
+                        iconStyles="!text-neutral-500"
+
                     />
                 </div>
             )}
