@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentChat } from '@/store/chatsSlice';
 import { createNewChat } from '@/utils/chat';
 
-import Button from '../Button';
+import Button from './Button';
 type Props = {
     toggleSidebar: () => void;
 };

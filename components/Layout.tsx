@@ -1,6 +1,6 @@
 import { Suspense, useCallback, useEffect, useState } from 'react';
 
-import Navbar from '@/components/navbar/Navbar';
+import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/sidebar/Sidebar';
 import useWindowDimensions from '@/hooks/useWindowDimension';
 import { setAllChats, setCurrentChat } from '@/store/chatsSlice';
