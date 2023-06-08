@@ -26,33 +26,33 @@
     },
     "rules": {
         "@typescript-eslint/no-var-requires": 0,
-        // "import/order": [
-        //     "error",
-        //     {
-        //         "groups": [
-        //             "builtin",
-        //             "external",
-        //             "internal",
-        //             ["parent", "sibling"],
-        //             "object",
-        //             "type",
-        //             "index"
-        //         ],
-        //         "pathGroups": [
-        //             {
-        //                 "pattern": "react",
-        //                 "group": "external",
-        //                 "position": "before"
-        //             }
-        //         ],
-        //         "pathGroupsExcludedImportTypes": ["react"]
-        //         // "newlines-between": "always",
-        //         // "alphabetize": {
-        //         //     "order": "asc",
-        //         //     "caseInsensitive": true
-        //         // }
-        //     }
-        // ],
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    ["parent", "sibling"],
+                    "object",
+                    "type",
+                    "index"
+                ],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "external",
+                        "position": "before"
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": ["react"]
+                // "newlines-between": "always",
+                // "alphabetize": {
+                //     "order": "asc",
+                //     "caseInsensitive": true
+                // }
+            }
+        ],
         "react/react-in-jsx-scope": "off",
         "no-empty-function": "off",
         "react/jsx-uses-react": "error",

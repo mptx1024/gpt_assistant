@@ -5,7 +5,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import Navbar from '@/components/Navbar';
-import Sidebar from '@/components/sidebar/Sidebar';
 import useWindowDimensions from '@/hooks/useWindowDimension';
 import { setAllChats, setCurrentChat } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -16,6 +15,7 @@ import { Chat, Message, Role } from '@/types';
 import * as idb from '@/utils/indexedDB';
 import templateData from '@/utils/templateData';
 
+import Sidebar from './sidebar/Sidebar';
 import Alert from './Alert';
 import Loading from './LoadingPage';
 import StyledTooltip from './Tooltip';
