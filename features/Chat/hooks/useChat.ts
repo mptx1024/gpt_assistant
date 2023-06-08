@@ -1,118 +1,101 @@
-import { useRef } from 'react';
+import { selectIsLoading, selectMessageIdsByChat } from '@/store/chatsSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectApiKey } from '@/store/settingSlice';
+import { toggleAppSetting } from '@/store/uiSlice';
+import { abortController, generateReply, regenerate } from '@/utils/chat';
+import { getImage, getPdf } from '@/utils/screenshot';
+import { useEffect, useRef, useState } from 'react';
 
-import { v4 as uuid } from 'uuid';
-
-import { store } from '@/store';
-import {
-    selectChatById,
-    addSingleMessage,
-    updateSingleMessage,
-    deleteMessageUpTo,
-} from '@/store/chatsSlice';
-import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { getApiKey } from '@/store/settingSlice';
-import { Message } from '@/types';
-import { errorMessage } from '@/utils/config';
-
-interface UseChatResult {
-    // generatedMessage: string;
-    isLoading: boolean;
-    generateReply: (userInput: string) => void;
-    regenerate: () => void;
-    setStopGenerating: () => void;
-}
 interface Props {
-    chatID: string;
+    chatId: string;
 }
 
-export default function useChat({ chatID }: Props): UseChatResult {
-    const isLoadingRef = useRef<boolean>(false);
-    const stopGeneratingRef = useRef<boolean>(false);
-    const apiKey = useAppSelector(getApiKey);
-    const dispatch = useAppDispatch();
-    const setStopGenerating = () => {
-        stopGeneratingRef.current = true;
-    };
-    const regenerate = async () => {
-        const currentChat = selectChatById(store.getState(), chatID);
-        const lastUserInput = currentChat?.messages[currentChat.messages.length - 2];
-        if (lastUserInput && lastUserInput.role === 'user') {
-            dispatch(deleteMessageUpTo({ message: lastUserInput }));
-            generateReply(lastUserInput.content);
-        }
-    };
-
-    const generateReply = async (userInput: string) => {
-        isLoadingRef.current = true;
-
-        const userMessage: Message = {
-            id: uuid(),
-            chatID,
-            timestamp: Date.now(),
-            role: 'user',
-            content: userInput,
-        };
-
-        dispatch(addSingleMessage({ chatID, message: userMessage }));
-
-        const currentChat = selectChatById(store.getState(), chatID);
-
-        const response = await fetch('/api/generateReply', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ currentChat, apiKey }),
-        });
-
-        const reply: Message = {
-            id: uuid(),
-            chatID: chatID,
-            timestamp: Date.now(),
-            role: 'assistant',
-            content: '',
-        };
-        dispatch(addSingleMessage({ chatID, message: reply }));
-
-        if (!response.ok) {
-            if (response.status === 401) {
-                dispatch(updateSingleMessage({ chatID, chunkValue: errorMessage.unauthorizedMsg }));
-            } else if (response.status === 400) {
-                dispatch(updateSingleMessage({ chatID, chunkValue: errorMessage.badRequestMsg }));
-            } else {
-                dispatch(updateSingleMessage({ chatID, chunkValue: errorMessage.serverErrorMsg }));
-            }
+export default function useChat({ chatId }: Props) {
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const apiKey = useAppSelector(selectApiKey);
+    const [userInput, setUserInput] = useState<string>('');
+    const loading = useAppSelector(selectIsLoading);
+    const hasMessages = useAppSelector((state) => selectMessageIdsByChat(state, chatId)).length > 0;
+    const handleClickSubmit = async (e: React.MouseEvent | React.KeyboardEvent) => {
+        e.preventDefault();
+        setUserInput('');
+        if (!apiKey) {
+            alert('Please enter your api key');
             return;
         }
-
-        // This data is a ReadableStream
-        const data: ReadableStream<Uint8Array> | undefined | null = response.body;
-        if (!data) {
-            throw new Error('Server error');
+        await generateReply({
+            userInput,
+            addController(controller) {
+                abortController.setController(chatId, controller);
+            },
+        });
+    };
+    const handleClickRegenerate = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (!hasMessages) {
+            alert('No message yet🙀');
+            return;
         }
-        const reader: ReadableStreamDefaultReader<Uint8Array> = data?.getReader();
-        const decoder = new TextDecoder();
-        let done = false;
-
-        while (!done) {
-            if (stopGeneratingRef.current) {
-                break;
-            }
-            const { value, done: doneReading } = await reader.read();
-            done = doneReading;
-            const chunkValue = decoder.decode(value);
-            dispatch(updateSingleMessage({ chatID, chunkValue }));
-        }
-
-        isLoadingRef.current = false;
-        stopGeneratingRef.current = false;
+        regenerate();
+    };
+    const handleInputChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
+        setUserInput(e.currentTarget.value);
     };
 
+    function handleClickStopGenerating(e: React.MouseEvent) {
+        e.preventDefault();
+        abortController.stop(chatId);
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleClickSubmit(e);
+        }
+    };
+    const handleClickGetImage = () => {
+        if (!hasMessages) {
+            alert('No message yet🙀');
+            return;
+        }
+        getImage();
+    };
+    const handleClickGetPdf = () => {
+        if (!hasMessages) {
+            alert('No message yet🙀');
+            return;
+        }
+        getPdf();
+    };
+
+    const dispatch = useAppDispatch();
+    const toggleSettingModal = () => {
+        dispatch(toggleAppSetting());
+    };
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'inherit';
+            // const scrollHeight = textareaRef.current.scrollHeight;
+            // textareaRef.current.style.height = scrollHeight + "px";
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    }, [userInput]);
+
     return {
-        // generatedMessage,
-        isLoading: isLoadingRef.current,
+        userInput,
+        apiKey,
+        loading,
+        textareaRef,
+        hasMessages,
         generateReply,
-        regenerate,
-        setStopGenerating,
+        handleClickSubmit,
+        handleClickRegenerate,
+        handleInputChange,
+        handleClickStopGenerating,
+        handleKeyDown,
+        handleClickGetImage,
+        handleClickGetPdf,
+        toggleSettingModal,
     };
 }

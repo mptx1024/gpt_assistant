@@ -1,16 +1,12 @@
-import { useState, useMemo, useEffect } from 'react';
-
 import MiniSearch from 'minisearch';
-import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
 import { HiPlus } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
 import { Input } from '@/components/InputField';
-import { Role } from '@/types';
 
-import RoleCard from './RoleCard';
 import RoleEditor from './RoleEditor';
-import { getRandomColor } from './utils/colors';
+import RoleCard from './RoleLibraryCard';
 import rolesList from './utils/roleLibarary.json';
 const RoleLibraryPage = () => {
     const [isEditorOpen, setIsEditorOpen] = useState(false);
@@ -42,35 +38,42 @@ const RoleLibraryPage = () => {
         setIsEditorOpen(!isEditorOpen);
     };
 
-    // prevent re-generating card colors on every render
-    const cardColors = useMemo(() => {
-        return rolesList.map(() => getRandomColor());
-    }, []);
-
     const cards = searchResults.map((role, index) => {
-        const color = cardColors[index];
-        return <RoleCard key={index} role={role} bgColor={color} />;
+        return <RoleCard key={index} role={role} bgColor={`bg-gray-500 dark:bg-gray-700`} />;
     });
     return (
-        <div className="h-full w-full overflow-y-scroll">
-            <div className="my-4 flex items-center justify-center gap-5">
+        <div className="flex h-full w-full flex-col py-4">
+            <div className="flex w-full items-center justify-center gap-5 px-10">
                 <Input
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
-                    placeholder="Search AI Role Library"
-                    // styles="max-w-[15rem]"
+                    placeholder="Search Library"
+                    showborder
+                    styles="max-w-md h-full"
                 />
                 <Button
-                    text={'Add Role'}
+                    text={'Create Role'}
                     Icon={HiPlus}
                     onClick={toggleEditor}
-                    shadow={true}
                     border={true}
-                    size="lg"
+                    btnSize="md"
+                    tooltipSelector="tooltip"
+                    data-tooltip-content="Create a new role"
                 />
             </div>
+            <p className="my-5 self-center">
+                From &nbsp;
+                <a
+                    style={{ textDecoration: 'underline' }}
+                    rel="noreferrer"
+                    target="_blank"
+                    href="https://github.com/f/awesome-chatgpt-prompts#-awesome-chatgpt-prompts"
+                >
+                    🧠 Awesome ChatGPT Prompts
+                </a>
+            </p>
             <div
-                className="grid animate-slideIn auto-cols-auto grid-cols-1 gap-2 
+                className="grid auto-cols-auto grid-cols-2 gap-2 overflow-y-scroll 
                 p-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-3 lg:p-8 xl:grid-cols-4 xl:gap-5 xl:p-10"
             >
                 {cards}

@@ -1,53 +1,71 @@
+import Button from '@/components/Button';
+import { Message } from '@/types';
+import { copyToClipboard } from '@/utils/chat';
+import { useState } from 'react';
+import { HiCheck, HiOutlineClipboard } from 'react-icons/hi2';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
-
-import { Message } from '@/types';
-
 interface Props {
     message: Message;
 }
 
 const Markdown = ({ message }: Props) => {
+    if (message.role === 'user') {
+        return (
+            <div className="prose prose-neutral flex min-h-[20px] flex-col items-start gap-4 whitespace-pre-wrap break-words dark:prose-invert">
+                {message.content}
+            </div>
+        );
+    }
+
     return (
-        // <div className='debug-2 '>
         <ReactMarkdown
-            // className="debug-2 prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:gap-3 lg:w-[calc(100%-115px)] [&>pre]:m-0 [&>pre]:p-0"
-            className="flex flex-grow flex-col"
+            className="prose prose-neutral break-words dark:prose-invert"
             remarkPlugins={[remarkGfm, remarkMath]}
             rehypePlugins={[rehypeKatex]}
             components={{
-                p: 'span',
+                p: 'div',
                 code({ node, inline, className, children, style, ...props }) {
                     const match = /language-(\w+)/.exec(className || '');
+                    const code = String(children).replace(/\n$/, '');
+                    // console.log(`in Markdown -> code: ${children}`);
+                    const [isCopied, setIsCopied] = useState(false);
 
-                    // if code is not inline and has a language, use CodeBlock
+                    const handleClickCopy = async () => {
+                        await copyToClipboard(code, setIsCopied);
+                    };
                     return !inline ? (
                         <div id="code-block" className="">
                             <div
                                 id="code-header"
-                                className="flex h-10 items-center justify-between pr-5 text-sm text-slate-300"
+                                className="flex h-4 items-center justify-between text-sm"
                             >
                                 <span>{(match && match[1]) || 'text'}</span>
-                                <button className="btn btn-ghost btn-sm border-none hover:bg-slate-700">
-                                    {/* icon */}
-                                    <span>Copy</span>
-                                </button>
+                                <Button
+                                    btnSize="sm"
+                                    Icon={isCopied ? HiCheck : HiOutlineClipboard}
+                                    text={isCopied ? 'Copied' : 'Copy Code'}
+                                    btnStyles="!px-0 !py-2 !gap-1 !text-[0.7rem]"
+                                    onClick={handleClickCopy}
+                                />
                             </div>
                             <SyntaxHighlighter
                                 style={oneDark}
-                                customStyle={{ margin: 0 }}
+                                customStyle={
+                                    {
+                                        // border: '1px solid #ccc',
+                                        // padding: 0,
+                                        // overflowWrap: 'break-word',
+                                    }
+                                }
                                 language={(match && match[1]) || 'text'}
-                                // PreTag='div'
                                 {...props}
-                                // eslint-disable-next-line react/no-children-prop
-                                children={String(children).replace(/\n$/, '')}
+                                children={code}
                             />
-                            {/* {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter> */}
                         </div>
                     ) : (
                         <code className={className} {...props}>
@@ -59,7 +77,6 @@ const Markdown = ({ message }: Props) => {
         >
             {message.content}
         </ReactMarkdown>
-        // </div>
     );
 };
 

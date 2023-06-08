@@ -20,20 +20,22 @@ export default function Sidebar({ sidebarOpen: isSidebarOpen, toggleSidebar }: P
     const roles: Role[] | null = useSelector(selectAllRoles);
 
     const sidebarClasses =
-        'relative flex flex-col h-full bg-white-base dark:bg-black transition-all duration-200';
+        'relative flex flex-col h-full bg-emerald-50/75 dark:bg-emerald-800/10 transition-all duration-200';
     return (
         <div
             className={clsx(
                 sidebarClasses,
-                isSidebarOpen ? 'w-full sm:w-[17rem] lg:w-[19rem] xl:w-[22rem]' : 'w-0 opacity-0'
+                isSidebarOpen
+                    ? 'w-[20rem] shrink-0 sm:w-[15rem] lg:w-[18rem] xl:w-[22rem]'
+                    : 'w-0 opacity-0'
             )}
         >
             <TopSection toggleSidebar={toggleSidebar} />
-            <div className="relative flex h-[calc(100%-9rem)] flex-col px-2">
+            <div className="relative mb-14 flex h-[91%] flex-col overflow-x-hidden">
                 <ChatList chats={chats} />
                 <RoleList roles={roles} />
             </div>
-            <div className="bottom-4 top-auto my-2 px-5">
+            <div className=" absolute bottom-0 flex h-[3rem] w-full items-center p-3 py-8 ">
                 <BottomSection />
             </div>
         </div>

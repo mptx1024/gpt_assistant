@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-
 import { defaultSetting, Setting } from '@/types';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '.';
 
@@ -23,12 +22,17 @@ export const settingSlice = createSlice({
     reducers: {
         setAppSetting: (state, action) => {
             return action.payload;
-
         },
     },
 });
 
 export const { setAppSetting } = settingSlice.actions;
 export default settingSlice.reducer;
-export const getApiKey = (state: RootState) => state.setting.apiKey;
-export const getAppSetting = (state: RootState) => state.setting;
+export const selectApiKey = (state: RootState) => state.setting.apiKey;
+export const selectAppSetting = (state: RootState) => state.setting;
+export const selectIsAutoNaming = (state: RootState) =>
+    state.setting.defaultChatSetting.autoNameChat;
+export const selectattchedMsgCount = createSelector(
+    (state: RootState) => state.setting,
+    (setting) => setting.defaultChatSetting.attachedMessageCount
+);

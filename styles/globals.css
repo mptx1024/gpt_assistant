@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+
     body {
-        @apply bg-gray-base text-black-base dark:bg-gray-inverted dark:text-black-inverted;
+        @apply bg-gray-base text-[rem] text-black-base dark:bg-gray-inverted dark:text-black-inverted font-normal;
     }
 }
 
@@ -29,9 +30,9 @@
         border-radius: 100vh;
         background: #111827;
     }
-    /* .text-primary {
-        @apply text-[0.9rem] text-primary-base dark:text-primary-dark;
-    } */
+    .text-title {
+        @apply text-base font-medium;
+    }
     .text-subtitle {
         @apply text-sm leading-4 text-neutral-500 dark:text-neutral-400;
     }

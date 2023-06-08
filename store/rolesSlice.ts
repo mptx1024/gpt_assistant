@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
 import { Role } from '@/types';
 
@@ -6,6 +6,7 @@ import type { RootState } from '.';
 
 const rolesAdapter = createEntityAdapter<Role>({
     selectId: (role: Role) => role.id,
+    sortComparer: () => -1,
 });
 
 const initialState = rolesAdapter.getInitialState();

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { setOne, removeOne } from './chatsSlice';
-import { removeOneRole } from './rolesSlice';
+import { addChat, removeAllChats, removeChat } from './chatsSlice';
+import { removeAllRoles, removeOneRole, setOneRole } from './rolesSlice';
 type AlertState = {
     message: string | null;
 };
@@ -24,12 +24,20 @@ const alertSlice = createSlice({
         builder.addCase(removeOneRole, (state) => {
             state.message = 'Role Deleted';
         });
-        builder.addCase(setOne, (state) => {
+        builder.addCase(removeAllRoles, (state) => {
+            state.message = 'All Role Records Deleted';
+        });
+        builder.addCase(setOneRole, (state) => {
+            state.message = 'Role List Updated';
+        });
+        builder.addCase(addChat, (state, action) => {
             state.message = 'New Chat Created';
         });
-        builder.addCase(removeOne, (state) => {
-
+        builder.addCase(removeChat, (state) => {
             state.message = 'Chat Deleted';
+        });
+        builder.addCase(removeAllChats, (state) => {
+            state.message = 'All Chat Records Deleted';
         });
     },
 });

@@ -2,59 +2,49 @@ import { useEffect, useRef } from 'react';
 
 import clsx from 'clsx';
 
-interface InputProps {
-    required?: boolean;
-    type?: string;
-    placeholder?: string;
-    value: string | number;
+interface InputProps extends React.HTMLProps<HTMLInputElement> {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onClick?: (e: React.MouseEvent) => void;
     styles?: string;
     showborder?: boolean;
 }
-const inputBaseClasses =
-    'my-2 p-1 w-full overflow-hidden border-none rounded-lg text-light-text dark:text-dark-text';
+const inputBaseClasses = 'p-1 w-full overflow-hidden rounded-lg outline-none';
 
-export function Input(props: InputProps) {
+export function Input({ showborder, styles, onChange, onClick, ...props }: InputProps) {
     return (
         <input
+            {...props}
             required={props.required}
             className={clsx(
-                props.styles,
+                styles,
                 inputBaseClasses,
-                props.showborder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
+                showborder ? 'border-color border-[2px] focus:border-colorPrimary' : 'border-none'
             )}
-            type={props.type}
-            placeholder={props.placeholder}
-            value={props.value}
-            onChange={props.onChange}
+            onChange={onChange}
+            onClick={onClick}
         />
     );
 }
 
-interface TexareaProps {
+interface TexareaProps extends React.HTMLProps<HTMLTextAreaElement> {
     required?: boolean;
     placeholder?: string;
     value?: string;
     onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
     styles?: string;
     rows?: number;
-    [x: string]: any;
     showborder?: boolean;
 }
 
 const textAreaBaseClasses =
-    'h-[15rem] max-h-[20rem] border-none resize-none px-2 py-2 rounded-md w-full';
+    'focus:border-colorPrimary border-[2px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none debug-1';
+
 export function Textarea(props: TexareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    // function auto_grow(element: HTMLTextAreaElement | null) {
-    //     if (element) {
-    //         element.style.height = 'inherit';
-    //         element.style.height = element.scrollHeight + 'px';
-    //     }
-    // }
     useEffect(() => {
         if (textareaRef.current) {
-            textareaRef.current.style.height = '5rem';
+            textareaRef.current.style.height = '7rem';
             // const scrollHeight = textareaRef.current.scrollHeight;
             // textareaRef.current.style.height = scrollHeight + "px";
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
@@ -64,16 +54,12 @@ export function Textarea(props: TexareaProps) {
         <textarea
             ref={textareaRef}
             required={props.required}
-            className={clsx(
-                textAreaBaseClasses,
-                props.styles,
-                props.showborder ? 'shadow-sm focus:outline-cyan-600' : 'outline-none'
-            )}
+            className={clsx(textAreaBaseClasses, props.styles)}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.onChange}
+            onKeyDown={props.onKeyDown}
             rows={props.rows}
-            {...props}
         />
     );
 }

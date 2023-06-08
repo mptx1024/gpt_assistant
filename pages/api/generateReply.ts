@@ -1,64 +1,57 @@
-import { Message, OpenAIMessage, Chat, defaultModelParams, OpenAIStreamPayload } from '@/types';
-import { chatHistoryTrimer } from '@/utils/tokenizer';
-
-import { OpenAIStream } from '../../utils/OpenAIStream';
+// import { Chat, OpenAIMessage, OpenAIStreamPayload, defaultModelParams } from '@/types';
+// import { chatHistoryTrimer } from '@/utils/tokenizer';
+import { NextRequest, NextResponse } from 'next/server';
+import { openAIStream } from '../../utils/openAIStream';
 
 export const config = {
     runtime: 'edge',
 };
 
-const handler = async (req: Request): Promise<Response> => {
+const handler = async (req: NextRequest): Promise<NextResponse> => {
     console.log(`incoming request: ${req.method} ${req.url}`);
+    // const authValue = req.headers.get('Authorization') ?? '';
 
-    const { currentChat, apiKey } = (await req.json()) as { currentChat: Chat; apiKey: string };
+    // const { chat, OpenAIMessages, apiKey } = (await req.json()) as {
+    //     chat: Chat;
+    //     OpenAIMessages: OpenAIMessage[];
+    //     apiKey: string;
+    // };
 
-    if (!currentChat.modelParams) {
-        currentChat.modelParams = defaultModelParams;
-    }
-    if (!currentChat.messages) {
-        console.log('No messages provided');
-        return new Response('No messages in the request', { status: 400 });
-    }
+    // if (!chat.modelParams) {
+    //     chat.modelParams = defaultModelParams;
+    // }
+    // if (!OpenAIMessages) {
+    //     console.log('No messages provided');
+    //     return new Response('No messages in the request', { status: 400 });
+    // }
 
-    const messages: OpenAIMessage[] = currentChat.messages.map((message: Message) => {
-        return {
-            role: message.role,
-            content: message.content,
-        };
-    });
+    // const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
+    //     messages: OpenAIMessages,
+    //     systemPrompt: chat.role.prompt,
+    //     tokenLimit: chat.modelParams.model.tokenLimit,
+    // });
 
-    const { messagesToSend, isTrimSuccess } = await chatHistoryTrimer({
-        messages,
-        systemPrompt: currentChat.role.prompt,
-        tokenLimit: currentChat.modelParams.model.tokenLimit,
-    });
-
-    if (!isTrimSuccess) {
-        return new Response('Trimming failed', { status: 400 });
-    }
+    // if (!isTrimSuccess) {
+    //     return new Response('Trimming failed', { status: 400 });
+    // }
     // console.log(`messagesToSend: ${JSON.stringify(messagesToSend)}`);
 
-    const payload: OpenAIStreamPayload = {
-        model: currentChat.modelParams.model.id,
-        messages: messagesToSend,
-        temperature: currentChat.modelParams.temperature,
-        max_tokens: currentChat.modelParams.max_tokens,
-        stream: true,
-    };
-
+    // const payload: OpenAIStreamPayload = {
+    //     model: chat.modelParams.model.id,
+    //     messages: messagesToSend,
+    //     temperature: chat.modelParams.temperature,
+    //     max_tokens: chat.modelParams.max_tokens,
+    //     stream: true,
+    // };
+    // const payload: OpenAIStreamPayload = await req.json();
     try {
-        const stream = await OpenAIStream(payload, apiKey);
-        return new Response(stream);
+        const stream = await openAIStream(req);
+        return new NextResponse(stream);
     } catch (error: any) {
         console.log(`error.message: ${error.message}; error.cause: ${error.cause};`);
-        if (error.cause === 401) {
-            return new Response(null, {
-                status: 401,
-                statusText: error.message,
-            });
-        }
-        return new Response(null, {
-            status: 500,
+        const status = error.cause === 401 ? 401 : 500;
+        return new NextResponse(null, {
+            status,
             statusText: error.message,
         });
     }

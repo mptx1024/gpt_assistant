@@ -1,119 +1,125 @@
-import React, { useState, useEffect, useRef } from 'react';
-
-import { FiSend } from 'react-icons/fi';
-import { HiArrowPath, HiOutlineKey, HiShare, HiOutlineStopCircle } from 'react-icons/hi2';
-
 import Button from '@/components/Button';
-import { useAppSelector } from '@/store/hooks';
-
+import InfoBar from '@/components/InfoBar';
+import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
+import clsx from 'clsx';
+import { FiImage, FiSend } from 'react-icons/fi';
+import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle } from 'react-icons/hi2';
+import { TbPdf } from 'react-icons/tb';
+import useChat from './hooks/useChat';
 type Props = {
-    generateReply: (content: string) => void;
-    regenerate: () => void;
-    isLoading: boolean;
-    setStopGenerating: () => void;
+    chatId: string;
 };
 
-export default React.memo(function Input({
-    generateReply,
-    regenerate,
-    isLoading,
-    setStopGenerating,
-}: Props) {
-    const [userInput, setUserInput] = useState('');
-    const apiKey = useAppSelector((state) => state.setting.apiKey);
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUserInput(event.target.value);
-    };
-
-    const handleSubmit = async () => {
-        generateReply(userInput);
-        setUserInput('');
-    };
-    const handleRegenerate = () => {
-        regenerate();
-    };
-    const handleStopGenerating = () => {
-        setStopGenerating();
-    };
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSubmit();
-        }
-    };
-    
-    useEffect(() => {
-        if (textareaRef.current) {
-            textareaRef.current.style.height = 'inherit';
-            // const scrollHeight = textareaRef.current.scrollHeight;
-            // textareaRef.current.style.height = scrollHeight + "px";
-            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-        }
-    }, [userInput]);
-
-    if (!apiKey) {
-        return (
-            <label className="btn btn-primary my-10 gap-2 capitalize" htmlFor="setting-modal">
-                <HiOutlineKey size="1rem" />
-                Enter Your openAI API Key to Start
-            </label>
-        );
-    }
+export default function Input({ chatId }: Props) {
+    const {
+        apiKey,
+        userInput,
+        loading,
+        textareaRef,
+        hasMessages,
+        handleClickSubmit,
+        handleClickRegenerate,
+        handleInputChange,
+        handleClickStopGenerating,
+        handleKeyDown,
+        handleClickGetImage,
+        handleClickGetPdf,
+        toggleSettingModal,
+    } = useChat({ chatId });
 
     return (
-        <div className="debug-1 mb-4 flex w-10/12  max-w-3xl flex-grow flex-col lg:w-9/12">
-            <div className="flex justify-center gap-2 py-1">
-                {isLoading ? (
+        <div className="mx-3 mb-4 flex w-[23rem] flex-col sm:w-[30rem] md:w-[30rem] lg:w-[33rem]">
+            {!apiKey && (
+                <div className="my-5 flex flex-col items-center justify-center gap-3">
+                    <InfoBar>
+                        <Button
+                            Icon={HiOutlineKey}
+                            btnSize="md"
+                            text="Enter Your openAI API Key to Start"
+                            btnStyles="h-5"
+                            iconThemeColor={false}
+                            onClick={toggleSettingModal}
+                        />
+                    </InfoBar>
+                    <p className="text-sm">
+                        You can obtain an API key from &nbsp;
+                        <a
+                            className="underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://platform.openai.com/account/api-keys"
+                        >
+                            OpenAI/account/api-keys
+                        </a>
+                    </p>
+                </div>
+            )}
+            <div className="my-2 flex justify-center gap-2">
+                {loading ? (
                     <Button
-                        onClick={handleStopGenerating}
+                        onClick={handleClickStopGenerating}
                         Icon={HiOutlineStopCircle}
-                        size="sm"
+                        btnSize="sm"
                         text={'Stop Generating'}
-                        shadow={true}
                         border={true}
-                        btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                        btnStyles="w-fit h-fit !py-[0.5rem]"
                     />
                 ) : (
                     <Button
-                        onClick={handleRegenerate}
+                        onClick={handleClickRegenerate}
                         Icon={HiArrowPath}
-                        size="sm"
-                        text={'Regenerate'}
-                        shadow={true}
+                        btnSize="sm"
                         border={true}
-                        btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                        btnStyles=""
+                        tooltipSelector="tooltip"
+                        data-tooltip-content="Regenerate last reply"
                     />
                 )}
                 <Button
-                    // onClick=
-                    Icon={HiShare}
-                    size="sm"
-                    text={'Share'}
-                    shadow={true}
+                    onClick={handleClickGetPdf}
+                    Icon={TbPdf}
+                    btnSize="sm"
                     border={true}
-                    btnStyles="w-fit h-fit !py-[0.5rem] bg-light-bg dark:bg-dark-bg"
+                    btnStyles=""
+                    tooltipSelector="tooltip"
+                    data-tooltip-content="Download PDF of current chat"
+                />{' '}
+                <Button
+                    onClick={handleClickGetImage}
+                    Icon={FiImage}
+                    btnSize="sm"
+                    border={true}
+                    btnStyles=""
+                    tooltipSelector="tooltip"
+                    data-tooltip-content="Download image of current chat"
                 />
             </div>
-            <div className="focus-within:border-1 flex min-h-[5rem] w-full items-center rounded-md border border-slate-300 bg-light-bg shadow-sm focus-within:border-cyan-600 dark:bg-dark-bg">
+            <div
+                className={clsx(
+                    'flex min-h-[5rem] w-full items-center rounded-md px-2 shadow-sm',
+                    'ring-1 ring-colorPrimary focus-within:ring-2 dark:ring-white/20'
+                )}
+            >
                 <textarea
                     ref={textareaRef}
                     value={userInput}
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    className="m-0 max-h-[20rem] w-full resize-none self-stretch bg-transparent px-2 py-2 outline-none"
+                    className="max-h-[20rem] w-full resize-none self-stretch bg-transparent px-2 py-2 outline-none"
                 />
-                <Button
-                    onClick={handleSubmit}
-                    disabled={!userInput}
-                    Icon={FiSend}
-                    size="md"
-                    shadow={true}
-                    btnStyles="mx-3"
-                />
+                {loading ? (
+                    <ThreeDotsLoader className="dark:fill-gray-base" />
+                ) : (
+                    <Button
+                        onClick={handleClickSubmit}
+                        disabled={!userInput}
+                        Icon={FiSend}
+                        btnSize="md"
+                        shadow={true}
+                        btnStyles="mx-3"
+                    />
+                )}
             </div>
         </div>
     );
-});
+}

@@ -30,10 +30,10 @@ const ModelParamsSection = ({
     setPrompt,
 }: Props) => {
     return (
-        <div className="flex flex-col gap-2 p-1 sm:gap-5">
-            <div id="setting-role-name" className="">
+        <div className="flex flex-col gap-2 py-1">
+            <div id="setting-prompt" className="">
                 <div className="mb-3">
-                    <span className="mb-2 block !text-base font-semibold">
+                    <span className="mb-2 block text-title">
                         {isChatSetting ? 'Prompt' : 'App Default Prompt'}
                     </span>
                     <p className="text-subtitle">
@@ -49,11 +49,8 @@ const ModelParamsSection = ({
                 />
             </div>
             <div id="model-params" className="flex flex-col rounded-md ">
-                <div
-                    id="setting-model"
-                    className="border-color flex items-center justify-between border-b p-3"
-                >
-                    <span className="block">Model</span>
+                <div id="setting-model" className="flex items-center justify-between py-3">
+                    <span className="text-title block">Model</span>
                     <ModelListBox
                         allModels={allModels}
                         selectedModel={selectedModel}
@@ -62,22 +59,24 @@ const ModelParamsSection = ({
                 </div>
                 <div
                     id="setting-temperature"
-                    className="border-b border-gray-300 p-3 sm:flex sm:items-center sm:justify-between"
+                    className=" py-3 sm:flex sm:items-center sm:justify-between"
                 >
                     <div className="mb-3 sm:mb-0 sm:mr-5 sm:w-6/12">
-                        <span className="block whitespace-nowrap">Temperature: {temperature}</span>
+                        <span className="text-title mb-1 block whitespace-nowrap">
+                            Temperature: {temperature}
+                        </span>
                         <span className="text-subtitle block">
-                            Higher values like 0.8 will make the output more random, while lower
-                            values like 0.2 will make it more focused and deterministic
+                            Higher values will make the output more random and creative, while lower
+                            values will make it more focused and deterministic
                         </span>
                     </div>
                     <div className="sm:w-6/12">
                         <TemperatureRangeSlider temp={temperature} setTemp={setTemperature} />
                     </div>
                 </div>
-                <div id="setting-maxToken" className="flex items-center justify-between p-3">
+                <div id="setting-maxToken" className="flex items-center justify-between py-3 gap-2">
                     <div className="">
-                        <span className="block">Max Token</span>
+                        <span className="block text-title">Max Token</span>
                         <span className="text-subtitle">
                             The maximum number of tokens to generate in the reply. 1000 tokens are
                             roughly 750 English words
@@ -105,30 +104,36 @@ interface ModelListBoxProps {
 function ModelListBox({ allModels, selectedModel, setSelectedModel }: ModelListBoxProps) {
     return (
         <Listbox value={selectedModel} onChange={setSelectedModel}>
-            <div className="relative w-36">
-                <Listbox.Button className="relative w-full">
-                    <Button
-                        Icon={HiChevronUpDown}
-                        size="md"
-                        text={selectedModel.name}
-                        // border={true}
-                        shadow={true}
-                        btnStyles="relative w-full justify-between"
-                        textStyles="text-sm"
-                    />
-                </Listbox.Button>
-                <Listbox.Options className="absolute w-full overflow-auto rounded-md border border-gray-300 bg-white py-1 text-base shadow-lg sm:text-sm">
-                    {allModels.map((model) => (
-                        <Listbox.Option
-                            key={model.id}
-                            value={model}
-                            className="text-light-text ui-active:bg-blue-500 ui-active:text-white"
+            {({ open }) => (
+                <div className="relative w-36">
+                    <Listbox.Button as="div">
+                        <Button
+                            Icon={HiChevronUpDown}
+                            btnSize="md"
+                            text={selectedModel.name}
+                            border={true}
+                            btnStyles=" w-full justify-between active:scale-100"
+                            textStyles="text-sm"
+                        />
+                    </Listbox.Button>
+                    {open && (
+                        <Listbox.Options
+                            static
+                            className="border-color absolute w-full overflow-auto rounded-md border bg-gray-base py-1 text-base shadow-lg dark:bg-gray-inverted sm:text-base"
                         >
-                            {model.name}
-                        </Listbox.Option>
-                    ))}
-                </Listbox.Options>
-            </div>
+                            {allModels.map((model) => (
+                                <Listbox.Option
+                                    key={model.id}
+                                    value={model}
+                                    className="cursor-pointer ui-active:bg-blue-500 ui-active:text-white"
+                                >
+                                    {model.name}
+                                </Listbox.Option>
+                            ))}
+                        </Listbox.Options>
+                    )}
+                </div>
+            )}
         </Listbox>
     );
 }

@@ -1,11 +1,10 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
     async redirects() {
         return [
             {
                 source: '/',
-                destination: '/chat',
+                destination: '/role',
                 permanent: true,
             },
         ];
@@ -15,7 +14,10 @@ const nextConfig = {
             asyncWebAssembly: true,
             layers: true,
         };
-
+        config.module.rules.push({
+            test: /\.svg$/,
+            use: ['@svgr/webpack'],
+        });
         return config;
     },
 };

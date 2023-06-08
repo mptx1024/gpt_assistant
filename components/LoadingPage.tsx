@@ -1,0 +1,10 @@
+import Spinner from '@/components/icons/spinner1.svg';
+
+function Loading() {
+    return (
+        <div className="debug-1 absolute inset-0 flex items-center justify-center">
+            <Spinner className="dark:fill-gray-base" />
+        </div>
+    );
+}
+export default Loading;

@@ -1,11 +1,9 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import Button from '@/components/Button';
 import { Input } from '@/components/InputField';
-import { useAppSelector } from '@/store/hooks';
-import { useAppDispatch } from '@/store/hooks';
-import { setAppSetting, getAppSetting } from '@/store/settingSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { selectAppSetting, setAppSetting } from '@/store/settingSlice';
 import { OpenAIModels } from '@/types';
 
 import ModelParamsSection from './ModelParamsSection';
@@ -15,7 +13,7 @@ interface Props {
 }
 function AppSetting({ toggleModal }: Props) {
     const dispatch = useAppDispatch();
-    let currentSetting = useAppSelector(getAppSetting);
+    let currentSetting = useAppSelector(selectAppSetting);
     const [key, setKey] = useState(currentSetting.apiKey || '');
 
     // Chat Setting
@@ -62,59 +60,69 @@ function AppSetting({ toggleModal }: Props) {
         toggleModal();
     };
     return (
-        <div className="mt-5 flex flex-col gap-3 overflow-auto">
-            <section id="setting-apikey" className="p-1">
-                <h3 className="font-semibold">API Key</h3>
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                    a link to openAI site
+        <div
+            id="app-setting"
+            className="flex flex-col gap-5 overflow-auto sm:gap-6 sm:pb-5 sm:pt-3"
+        >
+            <section id="setting-apikey" className="flex flex-col">
+                <span className="text-title block">OpenAI API Key</span>
+                <span className="text-subtitle mb-3">
+                    Apply & retrieve your OpenAI API key&nbsp;
+                    <a
+                        href="https://platform.openai.com/account/api-keys"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold underline"
+                    >
+                        here
+                    </a>
+                    .&nbsp;Your API Key is safely stored on your browser locally.
                 </span>
                 <Input
                     type="text"
-                    placeholder="Enter Your API Key Here"
                     value={key}
                     onChange={(e) => setKey(e.target.value)}
-                    showborder={true}
+                    showborder
+                    styles={`${!key && '!border-red-500'}`}
                 />
             </section>
-            <section id="setting-app-preference" className="p-1">
-                <div className="flex items-center justify-between gap-2">
-                    <div id="" className="">
-                        <span className="block">Auto-generate Chat Title</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                            description
-                        </span>
-                    </div>
-                    <label htmlFor="AcceptConditions" className="relative h-7 w-14 cursor-pointer">
-                        <input
-                            type="checkbox"
-                            id="AcceptConditions"
-                            className="peer sr-only"
-                            checked={autoNameChat}
-                            onChange={handleClickAutoNameChat}
-                        />
-
-                        <span className="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-cyan-600"></span>
-
-                        <span className="absolute inset-y-0 start-0 m-1 h-5 w-5 rounded-full bg-white transition-all peer-checked:start-7"></span>
-                    </label>
+            <section id="setting-auto-generate" className="flex items-center justify-between gap-2">
+                <div id="" className="flex w-[80%] flex-col">
+                    <span className="text-title block">Auto-generate Chat Title</span>
+                    <span className="text-subtitle">
+                        Summurize chat title based on the first reply message. This will consume
+                        more tokens used in the first message
+                    </span>
                 </div>
-                <div className="flex items-center justify-between">
-                    <div id="" className="">
-                        <span className="block">Include last N messages</span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                            description
-                        </span>
-                    </div>
-                    <div className="flex-shrink-0 basis-[5rem]">
-                        <Input
-                            value={attchedMsgCount}
-                            showborder={true}
-                            onChange={handleAttachedMsgCount}
-                        />
-                    </div>
+                <label htmlFor="auto-generate" className="relative h-7 w-14 cursor-pointer">
+                    <input
+                        type="checkbox"
+                        id="auto-generate"
+                        className="peer sr-only"
+                        checked={autoNameChat}
+                        onChange={handleClickAutoNameChat}
+                    />
+
+                    <span className="absolute inset-0 rounded-full bg-gray-500 transition peer-checked:bg-colorPrimary"></span>
+
+                    <span className="absolute inset-y-0 start-0 m-1 h-5 w-5 rounded-full bg-white transition-all peer-checked:start-7"></span>
+                </label>
+            </section>
+            <section id="setting-msg-count" className="flex items-center justify-between">
+                <div id="" className="w-[80%]">
+                    <span className="text-title block">Include last N messages</span>
+                    <span className="text-subtitle">
+                        Number of messages included per each request
+                    </span>
+                </div>
+                <div className="flex-shrink-0 basis-[4rem]">
+                    <Input
+                        value={attchedMsgCount}
+                        showborder={true}
+                        onChange={handleAttachedMsgCount}
+                    />
                 </div>
             </section>
-
             <section id="setting-model-params" className="">
                 <h3 className="font-semibold"></h3>
                 <ModelParamsSection
@@ -132,12 +140,12 @@ function AppSetting({ toggleModal }: Props) {
             </section>
             <div className="">
                 <Button
-                    size={'lg'}
+                    btnSize={'lg'}
                     text="Save"
-                    // border={true}
-                    shadow={true}
+                    border={true}
+                    // shadow={true}
                     onClick={handleClickSave}
-                    btnStyles="bg-cyan-400 dark:bg-cyan-800 text-gray-100 hover:bg-cyan-500 dark:hover:bg-cyan-700"
+                    btnStyles=""
                 />
             </div>
         </div>

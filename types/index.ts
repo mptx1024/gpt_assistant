@@ -1,9 +1,11 @@
 export interface Message {
     id: string;
-    chatID: string;
-    timestamp: number; // epoch time
+    chatId: string;
+    created: number; // epoch time
     role: string;
     content: string;
+    isFirst?: boolean;
+    isError?: boolean;
 }
 
 export interface UserSubmitMessage {
@@ -17,11 +19,10 @@ export interface OpenAIMessage {
 
 export interface Chat {
     id: string;
-    messages: Message[];
+    messages: string[];
     title: string;
     created: number;
     role: Role;
-    // model: OpenAIModel;
     modelParams: ModelParams;
 }
 export interface Role {
@@ -89,7 +90,7 @@ export interface OpenAIStreamPayload {
 // }
 
 export interface Setting {
-    apiKey: string | null;
+    apiKey: string;
     theme?: string;
     defaultModelParams: ModelParams;
     defaultRole: Role;

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -15,13 +15,10 @@ interface ChatListProps {
 const ChatList: FC<ChatListProps> = ({ chats }) => {
     const router = useRouter();
 
-    const currentChatID = useSelector((state: RootState) => state.chats.currentChatID);
-    useEffect(() => {
-        router.push(`/chat/${currentChatID}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentChatID]);
+    const currentChatID = useSelector((state: RootState) => state.chats.currentChat.id);
+
     return (
-        <div className="scrollbar dark:scrollbarDark mb-3 flex h-[60%] flex-col gap-2 overflow-y-auto overflow-x-clip py-2">
+        <div className="scrollbar dark:scrollbarDark mb-3 flex h-[60%] flex-col gap-2 overflow-y-auto py-2">
             {chats?.map((chat) => (
                 <ChatItem
                     key={chat.id}

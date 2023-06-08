@@ -1,5 +1,4 @@
-import { memo } from 'react';
-import React from 'react';
+import React, { memo } from 'react';
 
 import { HiOutlineXMark } from 'react-icons/hi2';
 
@@ -20,20 +19,20 @@ const SettingModal = memo(function SettingModal(props: Props) {
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
+                id="setting-modal"
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="border-color inset-0 flex h-full w-full flex-col gap-0 overflow-hidden border bg-white px-5 py-3 text-left dark:bg-white-inverted sm:h-[90vh] sm:max-w-xl sm:gap-3 sm:rounded-xl sm:py-6"
+                className="border-color absolute flex h-full w-full flex-col border bg-gray-base text-left dark:bg-gray-inverted sm:top-10 sm:bottom-10 sm:h-fit sm:max-h-[95vh] sm:max-w-2xl sm:rounded-xl"
             >
-                <div className="flex justify-between">
-                    <span className="text-3xl font-bold">{props.title}</span>
+                <div className="flex items-center justify-between px-5 py-3 sm:pt-5 sm:px-10">
+                    <span className="text-2xl font-semibold">{props.title}</span>
                     <Button
-                        size="lg"
+                        btnSize="lg"
                         Icon={HiOutlineXMark}
                         onClick={handleClickClose}
                         shadow={true}
                     />
                 </div>
-
-                {props.children}
+                <div className="overflow-y-auto px-5 py-2 sm:px-10">{props.children}</div>
             </div>
         </ModalWrapper>
     );

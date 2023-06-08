@@ -1,122 +1,124 @@
-import { useState } from 'react';
-
-import clsx from 'clsx';
-import { HiPencilSquare, HiOutlineClipboard } from 'react-icons/hi2';
-import { TbClipboardCheck } from 'react-icons/tb';
-import { useDispatch } from 'react-redux';
-
+import { Avatar } from '@/components/Avatar';
 import Button from '@/components/Button';
 import { Textarea } from '@/components/InputField';
-import { deleteMessageUpTo } from '@/store/chatsSlice';
-import { Message } from '@/types';
-import { copyToClipboard } from '@/utils/chats';
-
+import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
+import clsx from 'clsx';
+import { HiOutlineClipboard, HiPencilSquare } from 'react-icons/hi2';
+import { TbClipboardCheck } from 'react-icons/tb';
 import Markdown from './Markdown';
-
+import { useMessage } from './hooks/useMessage';
 interface Props {
-    message: Message;
-    generateReply: (content: string) => void;
+    messageId: string;
+    chatId: string;
 }
 
-export default function ChatMessage({ message, generateReply }: Props) {
-    const [isCopied, setIsCopied] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [editedContent, setEditedContent] = useState(message.content);
-    const dispatch = useDispatch();
+export default function ChatMessage({ messageId }: Props) {
+    const {
+        message,
+        userInput,
+        isCopied,
+        isEditing,
+        chatModelParam,
+        handleClickCopy,
+        handleClickEdit,
+        handleClickSaveSubmit,
+        handleKeyDown,
+        handleClickCancel,
+        handleInputChange,
+    } = useMessage({
+        messageId,
+    });
 
-    const handleCopyToClipboard = async () => {
-        await copyToClipboard(message.content, setIsCopied);
-    };
-    const handleEditContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setEditedContent(e.target.value);
-    };
-    const handleEdit = () => {
-        setIsEditing(true);
-    };
-
-    const handleSaveChanges = () => {
-        // change chat history in store
-        dispatch(deleteMessageUpTo({ message }));
-        // then regenerate reply
-        generateReply(editedContent);
-        setIsEditing(false);
-        setEditedContent('');
-    };
-
-    const handleCancel = () => {
-        setIsEditing(false);
-    };
-    const messageBackdropClasses = clsx(
-        'group dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50',
+    if (!message) {
+        return null;
+    }
+    const messageContainerClasses = clsx(
+        'group flex animate-slideInFromBottom justify-center bg-gray-base dark:bg-gray-inverted',
         {
-            'bg-gray-200 dark:bg-neutral-700': message.role === 'user',
-            'bg-gray-100 dark:bg-neutral-800': message.role !== 'user',
+            'brightness-[0.95] dark:brightness-[1.2]': message.role === 'user',
         }
     );
-    return (
-        <div className={messageBackdropClasses}>
-            <div
-                className="m-auto flex gap-3 p-4 text-base
-            md:max-w-2xl md:gap-6 md:py-6 lg:max-w-2xl lg:px-0 xl:max-w-3xl
-            "
-            >
-                <div className="flex w-8 flex-shrink-0 flex-col items-end text-base">
-                    {message.role === 'user' ? 'You' : 'AI'}
-                </div>
-                <div className="prose relative flex w-[calc(100%-50px)] flex-col gap-1 dark:prose-invert md:w-[calc(100%-115px)] md:gap-3">
-                    {!isEditing ? (
-                        <Markdown message={message} />
-                    ) : (
-                        <div className="">
-                            <Textarea value={editedContent} onChange={handleEditContent} />
-                            <div className="mt-1 flex h-8 justify-end gap-2">
-                                <Button
-                                    onClick={handleSaveChanges}
-                                    size="sm"
-                                    text="Save & Submit"
-                                    shadow={true}
-                                    border={true}
-                                />
 
-                                <Button
-                                    onClick={handleCancel}
-                                    text="Cancel"
-                                    shadow={true}
-                                    border={true}
-                                    size="sm"
+    return (
+        <div className={messageContainerClasses}>
+            <div
+                className={clsx(
+                    'relative flex justify-normal gap-3 overflow-hidden px-3 pb-10 pt-5 md:py-6',
+                    'w-full md:w-[40rem] lg:w-[43rem] xl:w-[45rem]'
+                )}
+            >
+                <div className="flex w-[2rem] flex-col text-base">
+                    {message.role === 'user' ? <Avatar /> : <Avatar modelPrams={chatModelParam} />}
+                </div>
+                {message.content ? (
+                    <div className="relative flex min-w-0 flex-1 flex-col gap-1 px-0  md:gap-3">
+                        {!isEditing ? (
+                            <Markdown message={message} />
+                        ) : (
+                            <div className="">
+                                <Textarea
+                                    value={userInput}
+                                    onChange={handleInputChange}
+                                    onKeyDown={handleKeyDown}
                                 />
-                            </div>
-                        </div>
-                    )}
-                    <div className="mt-2 flex justify-center self-end md:absolute md:right-0 md:top-0 md:mt-0 md:translate-x-full md:gap-3 md:self-center md:pl-2">
-                        {!isEditing && (
-                            <div className="flex transition-all duration-200 md:translate-x-2 md:opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100">
-                                {!isCopied ? (
+                                <div className="mt-1 flex h-8 justify-end gap-2">
                                     <Button
-                                        Icon={HiOutlineClipboard}
-                                        onClick={handleCopyToClipboard}
-                                        size="md"
-                                        iconEffect={true}
+                                        onClick={handleClickSaveSubmit}
+                                        btnSize="sm"
+                                        text="Save & Submit"
+                                        border={true}
                                     />
-                                ) : (
+
                                     <Button
-                                        Icon={TbClipboardCheck}
-                                        size="md"
-                                        iconStyles="!text-green-700"
+                                        onClick={handleClickCancel}
+                                        text="Cancel"
+                                        border={true}
+                                        btnSize="sm"
                                     />
-                                    // <TbClipboardCheck className="h-5 w-5 text-base text-green-500" />
-                                )}
-                                {message.role === 'user' && (
-                                    <Button
-                                        Icon={HiPencilSquare}
-                                        onClick={handleEdit}
-                                        size="md"
-                                        iconEffect={true}
-                                    />
-                                )}
+                                </div>
                             </div>
                         )}
                     </div>
+                ) : (
+                    <ThreeDotsLoader className="fill-gray-inverted dark:fill-gray-base" />
+                )}
+
+                <div
+                    id="chat-message-btn-group"
+                    className={clsx(
+                        'flex w-[3rem] justify-end self-start',
+                        'absolute bottom-0 right-2 md:static'
+                    )}
+                >
+                    {!isEditing && (
+                        <div className="flex transition-all duration-200 md:translate-x-5 md:opacity-0 md:group-hover:translate-x-3 md:group-hover:opacity-100">
+                            {!isCopied ? (
+                                <Button
+                                    Icon={HiOutlineClipboard}
+                                    onClick={handleClickCopy}
+                                    btnSize="md"
+                                    iconEffect={true}
+                                    iconStyles="!text-neutral-500"
+                                />
+                            ) : (
+                                <Button
+                                    Icon={TbClipboardCheck}
+                                    btnSize="md"
+                                    iconStyles="!text-green-700"
+                                />
+                                // <TbClipboardCheck className="h-5 w-5 text-base text-green-500" />
+                            )}
+                            {message.role === 'user' && (
+                                <Button
+                                    Icon={HiPencilSquare}
+                                    onClick={handleClickEdit}
+                                    btnSize="md"
+                                    iconEffect={true}
+                                    iconStyles="!text-neutral-500"
+                                />
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

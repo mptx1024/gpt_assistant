@@ -1,27 +1,26 @@
 import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser';
+import { NextRequest } from 'next/server';
 
-import { OpenAIStreamPayload } from '@/types';
-export type ChatGPTAgent = 'user' | 'system';
-
-export async function OpenAIStream(payload: OpenAIStreamPayload, apiKey?: string) {
+export async function openAIStream(req: NextRequest) {
+    const authValue = req.headers.get('Authorization') ?? '';
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
-
-    console.log(`payload: ${JSON.stringify(payload)}`);
+    let counter = 0;
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey ?? ''}`,
+            Authorization: authValue,
         },
         method: 'POST',
-        body: JSON.stringify(payload),
+        body: req.body,
+        signal: AbortSignal.timeout(3 * 60 * 1000),
     });
     if (!res.ok) {
+        console.log(`In OpenAIStream: Error: ${res.statusText} ${res.status}`);
         throw new Error(res.statusText, { cause: res.status });
     }
     const stream = new ReadableStream({
         async start(controller) {
-            // callback
             function onParse(event: ParsedEvent | ReconnectInterval) {
                 if (event.type === 'event') {
                     const data = event.data;
@@ -30,23 +29,25 @@ export async function OpenAIStream(payload: OpenAIStreamPayload, apiKey?: string
                         controller.close();
                         return;
                     }
-                    try {
-                        const json = JSON.parse(data);
-                        const text = json.choices[0].delta?.content || '';
-                        const queue = encoder.encode(text);
-                        controller.enqueue(queue);
-                    } catch (e) {
-                        // maybe parse error
-                        console.log(`Error parsing JSON: ${e}`);
-                        controller.error(e);
+                    // try {
+                    const json = JSON.parse(data);
+
+                    const text = json.choices[0].delta?.content || '';
+                    console.log(
+                        `event.data.choices.delta.content: ${JSON.stringify(text, null, 2)}`
+                    );
+
+                    if (counter < 2 && (text.match(/\n/) || []).length) {
+                        //  prefix character (i.e., "\n\n"), do nothing
+                        return;
                     }
+                    const queue = encoder.encode(text);
+                    controller.enqueue(queue);
+                    counter++;
                 }
             }
 
-            // stream response (SSE) from OpenAI may be fragmented into multiple chunks
-            // this ensures we properly read chunks and invoke an event for each SSE event stream
             const parser = createParser(onParse);
-            // https://web.dev/streams/#asynchronous-iteration
             for await (const chunk of res.body as any) {
                 parser.feed(decoder.decode(chunk));
             }

@@ -12,9 +12,12 @@ module.exports = {
             translate: ['dark'],
 
             colors: {
-                colorPrimary: colors.cyan[700],
+                // colorPrimary: colors.cyan[700],
+                colorPrimary: colors.teal[600],
+                colorSecondary: colors.amber[300],
                 black: {
-                    base: '#333333',
+                    base: '#615e5e',
+                    // base: colors.red[500],
                     DEFAULT: colors.black,
                     inverted: colors.neutral[300],
                 },
@@ -50,42 +53,62 @@ module.exports = {
                         borderColor: 'white',
                     },
                 },
-                slideIn: {
+                sideSlide: {
                     '0%': {
                         opacity: '0%',
-                        transform: 'translateY(-50%)',
+                        transform: 'translateX(20%)',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                        transform: 'translateX(0)',
+                    },
+                },
+                slideInFromTop: {
+                    '0%': {
+                        opacity: '0%',
+                        transform: 'translateY(-10%)',
                     },
                     '100%': {
                         opacity: '100%',
                         transform: 'translateY(0)',
                     },
                 },
-                slideInFromTop: {
+                alertSlideIn: {
                     '0%': {
-                        opacity: '0%',
+                        opacity: '0',
                         transform: 'translateY(-20px)',
                     },
                     '100%': {
                         opacity: '100%',
-                        // transform: 'translateY(0px)',
                     },
                 },
-
-                // alertOut: {
-                //     '0%': {
-                //         opacity: '100%',
-                //         // transform: 'translateY(-20px)',
-                //     },
-                //     '100%': {
-                //         opacity: '0%',
-                //         transform: 'translateY(-20px)',
-                //     },
-                // },
+                alertSlideOut: {
+                    '0%': {
+                        opacity: '100%',
+                    },
+                    '100%': {
+                        opacity: '0',
+                        transform: 'translateY(-20px)',
+                    },
+                },
+                slideInFromBottom: {
+                    '0%': {
+                        opacity: '0%',
+                        transform: 'translateY(20px)',
+                    },
+                    '100%': {
+                        opacity: '100%',
+                    },
+                },
             },
             animation: {
-                typing: 'typing 0.9s alternate',
-                slideIn: 'slideIn 0.4s ease',
-                slideInFromTop: 'slideInFromTop 0.3s ease',
+                typing: 'typing 0.5s',
+                sideSlide: 'sideSlide 0.8s ease-out',
+                alertSlideIn: 'alertSlideIn 0.3s ease-out',
+                alertSlideOut: 'alertSlideOut 0.3s ease-out',
+                slideInFromTop: 'slideInFromTop 0.4s ease-out',
+                alertSlide: 'alertSlide 3s ease-in-out',
+                slideInFromBottom: 'slideInFromBottom 0.3s ease ',
                 // alertOut: 'alertOut 0.6s ease',
                 // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },

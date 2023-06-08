@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { HiOutlineXMark } from 'react-icons/hi2';
 
@@ -7,7 +7,7 @@ import { Input, Textarea } from '@/components/InputField';
 import ModalWrapper from '@/components/Modal';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { Role } from '@/types';
-import { addOrEditRole } from '@/utils/roles';
+import { addOrEditRole } from '@/utils/role';
 
 interface Props {
     isOpen: boolean;
@@ -24,8 +24,7 @@ const RoleEditor = (props: Props) => {
         setPrompt(e.target.value);
     };
 
-    const handleClickSave = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleClickSave = () => {
         addOrEditRole(prompt, title, props.role);
         setTitle('');
         setPrompt('');
@@ -42,48 +41,52 @@ const RoleEditor = (props: Props) => {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="mx-5 flex h-[70vh] w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl bg-light-bg p-6 text-left shadow-xl dark:bg-dark-bg"
+                className="border-color flex  max-h-full min-h-[20rem]  w-full max-w-lg flex-col space-y-3 overflow-hidden rounded-xl border bg-gray-base p-6 text-left shadow-xl dark:bg-gray-inverted"
             >
                 <div className="mb-5 flex items-center justify-between">
                     <span className="text-2xl text-gray-500 dark:text-gray-400">
                         {props.role ? 'Edit Role' : 'Add Role'}
                     </span>
                     <Button
-                        size="lg"
+                        btnSize="lg"
                         Icon={HiOutlineXMark}
                         onClick={handleClickClose}
                         shadow={true}
                     />
                 </div>
-                <form onSubmit={(e) => handleClickSave(e)}>
-                    <div className="mb-8 flex flex-col">
-                        <div className="mb-5">
-                            <label className="text-md text-gray-500 dark:text-gray-400">
-                                Role Name
-                            </label>
+                <form onSubmit={handleClickSave}>
+                    <div className="mb-5 flex flex-col">
+                        <div className="mb-5 h-20 w-full">
+                            <label className="text-subtitle">Name</label>
                             <Input
                                 value={title}
                                 onChange={handleTitleChange}
                                 required={true}
-                                placeholder="Title"
                                 type="text"
                                 showborder={true}
+                                styles="mt-2"
                             />
                         </div>
                         <div>
-                            <label className="text-md text-gray-500 dark:text-gray-400">
-                                Prompt Insturction
-                            </label>
+                            <span className="text-subtitle">Prompt</span>
                             <Textarea
                                 required={true}
                                 value={prompt}
                                 onChange={handlePromptChange}
-                                placeholder="Prompt"
                                 showborder={true}
+                                rows={8}
+                                styles="mt-2"
                             />
                         </div>
                     </div>
-                    <Button size="lg" type={'submit'} shadow={true} border={true} text="Save" />
+                    <Button
+                        btnSize="lg"
+                        type={'submit'}
+                        border={true}
+                        text="Save"
+                        tooltipSelector="tooltip"
+                        data-tooltip-content="Update your Role list"
+                    />
                 </form>
             </div>
         </ModalWrapper>

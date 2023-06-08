@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/router';
-import { FiUser } from 'react-icons/fi';
-
+// import { FiUser } from 'react-icons/fi';
 import RoleEditor from '@/features/AiRole/RoleEditor';
 import RoleModal from '@/features/AiRole/RoleModal';
 import { Role } from '@/types';
-import { createNewChat } from '@/utils/chats';
-import { deleteRole } from '@/utils/roles';
+import { createNewChat } from '@/utils/chat';
+import { deleteRole } from '@/utils/role';
+import { BsRobot } from 'react-icons/bs';
 
 import SidebarCard from './SidebarCard';
 
@@ -25,14 +25,16 @@ const RoleItem = (props: Props) => {
     };
     const toggleRoleEditor = () => {
         setIsRoleEditorOpen(false);
+        setIsRoleModalOpen(true);
     };
     const handleClickUse = () => {
-        const chatID = createNewChat(props.role);
+        createNewChat(props.role);
         setIsRoleModalOpen(false);
         setIsRoleEditorOpen(false);
-        router.push(`/chat/${chatID}`);
     };
     const handleClickEdit = () => {
+        setIsRoleModalOpen(false);
+
         setIsRoleEditorOpen(true);
     };
     const handleClickDelete = () => {
@@ -49,7 +51,7 @@ const RoleItem = (props: Props) => {
             <div onClick={handleClick}>
                 <SidebarCard>
                     <div className="flex w-[80%] items-center gap-2">
-                        <FiUser />
+                        <BsRobot />
                         <div className="w-full truncate"> {props.role.roleName}</div>
                     </div>
                 </SidebarCard>
