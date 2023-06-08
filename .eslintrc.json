@@ -3,7 +3,11 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/warnings"
+    ],
     "overrides": [],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -34,7 +38,7 @@
                     }
                 ],
                 "pathGroupsExcludedImportTypes": ["react"],
-                "newlines-between": "always",
+                // "newlines-between": "always",
                 "alphabetize": {
                     "order": "asc",
                     "caseInsensitive": true
