@@ -1,4 +1,7 @@
 const nextConfig = {
+    experimental: {
+        appDir: true,
+    },
     reactStrictMode: false,
     async redirects() {
         return [

@@ -6,7 +6,8 @@
     "extends": [
         "next/core-web-vitals",
         "plugin:@typescript-eslint/recommended",
-        "plugin:import/warnings"
+        "plugin:import/warnings",
+        "prettier"
     ],
     "overrides": [],
     "parser": "@typescript-eslint/parser",
@@ -48,6 +49,8 @@
         "react/react-in-jsx-scope": "off",
         "no-empty-function": "off",
         "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error"
+        "react/jsx-uses-vars": "error",
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-page-custom-font": "off"
     }
 }
