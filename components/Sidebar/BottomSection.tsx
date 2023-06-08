@@ -1,9 +1,11 @@
+import { AiOutlineGithub } from 'react-icons/ai';
+import { HiOutlineCog8Tooth } from 'react-icons/hi2';
+
 import SettingTabWrapper from '@/features/settings/SettingTabWrapper';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggleAppSetting } from '@/store/uiSlice';
 import { projectUrl } from '@/utils/constant';
-import { AiOutlineGithub } from 'react-icons/ai';
-import { HiOutlineCog8Tooth } from 'react-icons/hi2';
+
 import SettingModal from '../../features/settings/SettingModal';
 import Button from '../Button';
 const BottomSection = () => {

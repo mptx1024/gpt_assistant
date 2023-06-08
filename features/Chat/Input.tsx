@@ -1,10 +1,12 @@
-import Button from '@/components/Button';
-import InfoBar from '@/components/InfoBar';
-import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
 import clsx from 'clsx';
 import { FiImage, FiSend } from 'react-icons/fi';
 import { HiArrowPath, HiOutlineKey, HiOutlineStopCircle } from 'react-icons/hi2';
 import { TbPdf } from 'react-icons/tb';
+
+import Button from '@/components/Button';
+import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
+import InfoBar from '@/components/InfoBar';
+
 import useChat from './hooks/useChat';
 type Props = {
     chatId: string;

@@ -1,12 +1,14 @@
-import { Avatar } from '@/components/Avatar';
-import Button from '@/components/Button';
-import { Textarea } from '@/components/InputField';
-import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
 import clsx from 'clsx';
 import { HiOutlineClipboard, HiPencilSquare } from 'react-icons/hi2';
 import { TbClipboardCheck } from 'react-icons/tb';
-import Markdown from './Markdown';
+
+import { Avatar } from '@/components/Avatar';
+import Button from '@/components/Button';
+import ThreeDotsLoader from '@/components/icons/threeDotsLoader.svg';
+import { Textarea } from '@/components/InputField';
+
 import { useMessage } from './hooks/useMessage';
+import Markdown from './Markdown';
 interface Props {
     messageId: string;
     chatId: string;

@@ -1,9 +1,10 @@
+import { HiOutlineXMark } from 'react-icons/hi2';
+
 import Button from '@/components/Button';
 import ModalWrapper from '@/components/Modal';
 // import Tooltip from '@/components/Tooltip';
 import { useKeyPress } from '@/hooks/useKeyPress';
 import { Role } from '@/types';
-import { HiOutlineXMark } from 'react-icons/hi2';
 interface Props {
     isOpen: boolean;
     role?: Role;

@@ -17,6 +17,7 @@ import {
 } from '@/store/messagesSlice';
 import { selectApiKey, selectAppSetting, selectattchedMsgCount } from '@/store/settingSlice';
 import { Chat, Message, OpenAIStreamPayload, Role } from '@/types';
+
 import { errorMessage } from './constant';
 
 export const copyToClipboard = async (

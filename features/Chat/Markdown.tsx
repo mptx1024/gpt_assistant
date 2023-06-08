@@ -1,7 +1,5 @@
-import Button from '@/components/Button';
-import { Message } from '@/types';
-import { copyToClipboard } from '@/utils/chat';
 import { useState } from 'react';
+
 import { HiCheck, HiOutlineClipboard } from 'react-icons/hi2';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -9,6 +7,10 @@ import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+
+import Button from '@/components/Button';
+import { Message } from '@/types';
+import { copyToClipboard } from '@/utils/chat';
 interface Props {
     message: Message;
 }
@@ -33,6 +35,7 @@ const Markdown = ({ message }: Props) => {
                     const match = /language-(\w+)/.exec(className || '');
                     const code = String(children).replace(/\n$/, '');
                     // console.log(`in Markdown -> code: ${children}`);
+                    // eslint-disable-next-line react-hooks/rules-of-hooks
                     const [isCopied, setIsCopied] = useState(false);
 
                     const handleClickCopy = async () => {
@@ -64,6 +67,7 @@ const Markdown = ({ message }: Props) => {
                                 }
                                 language={(match && match[1]) || 'text'}
                                 {...props}
+                                // eslint-disable-next-line react/no-children-prop
                                 children={code}
                             />
                         </div>

@@ -13,9 +13,9 @@ import { useDispatch } from 'react-redux';
 import { removeChat, setCurrentChat, updateChatTitle } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
+import SidebarCard from './SidebarCard';
 import Button from '../Button';
 import { Input } from '../InputField';
-import SidebarCard from './SidebarCard';
 interface ChatItemProps {
     chat: Chat;
     currentChatID: string;

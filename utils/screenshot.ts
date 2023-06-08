@@ -1,6 +1,6 @@
+import * as htmlToImage from 'html-to-image';
 import { jsPDF } from 'jspdf';
 
-import * as htmlToImage from 'html-to-image';
 const filter = (node: HTMLElement) => {
     const excludedClasses = ['chat-params-card', 'chat-message-btn-group', 'chat-input-container'];
     return !excludedClasses.includes(node.id);

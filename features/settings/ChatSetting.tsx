@@ -1,3 +1,7 @@
+import { memo, useState } from 'react';
+
+import clsx from 'clsx';
+
 import Button from '@/components/Button';
 import ModelParamsSection from '@/features/settings/ModelParamsSection';
 import SettingModal from '@/features/settings/SettingModal';
@@ -9,8 +13,6 @@ import {
 } from '@/store/chatsSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ModelParams, OpenAIModel, OpenAIModels, Role } from '@/types';
-import clsx from 'clsx';
-import { memo, useState } from 'react';
 interface Props {
     chatId: string;
 }

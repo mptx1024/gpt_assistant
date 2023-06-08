@@ -1,9 +1,12 @@
+import { useState } from 'react';
+
+import { HiPlus } from 'react-icons/hi2';
+
 import Button from '@/components/Button';
 import { Role } from '@/types';
 import { createNewChat } from '@/utils/chat';
 import { addOrEditRole } from '@/utils/role';
-import { useState } from 'react';
-import { HiPlus } from 'react-icons/hi2';
+
 import RoleModal from './RoleModal';
 
 interface Props {
