@@ -21,7 +21,7 @@ const RoleModal = (props: Props) => {
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div
                 onClick={(e) => e.stopPropagation()} // prevent modal from closing
-                className="border-color mx-5 flex max-h-[50%] min-h-[20rem] w-full max-w-lg flex-col justify-between gap-5 space-y-5 overflow-auto rounded-xl border bg-white p-6 text-left shadow-xl dark:bg-white-inverted"
+                className="border-color mx-5 flex max-h-[50%] min-h-[20rem] w-full max-w-lg flex-col justify-between gap-1 space-y-5 overflow-auto rounded-xl border bg-white p-6 text-left shadow-xl dark:bg-white-inverted"
             >
                 <div className="flex items-center justify-between">
                     <span className="text-2xl text-gray-500 dark:text-gray-400">Detail</span>
@@ -35,7 +35,7 @@ const RoleModal = (props: Props) => {
                 <span className="text-lg font-semibold sm:text-xl">{props.role?.roleName}</span>
                 <div className="flex flex-grow flex-col gap-2 overflow-y-clip">
                     <span className="text-subtitle !text-base">Prompt</span>
-                    <div className="overflow-y-auto text-base ">{props.role?.prompt}</div>
+                    <div className="overflow-y-auto text-base">{props.role?.prompt}</div>
                 </div>
                 <div id="btn-group" className="flex gap-2">
                     <Button

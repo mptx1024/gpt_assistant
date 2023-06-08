@@ -7,5 +7,4 @@ export const errorMessage = {
         'Oops.. it seems there is an error on the OpenAI server 🙈 Please try again later.',
 };
 
-
-
+export const projectUrl = 'https://github.com/stealthArcher1/ai_assistant';

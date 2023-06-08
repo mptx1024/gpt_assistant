@@ -22,7 +22,7 @@ export const chatHistoryTrimer = async (prop: chatHistoryTrimerProps) => {
     const encoding = new Tiktoken(model.bpe_ranks, model.special_tokens, model.pat_str);
     let tokensLength = encoding.encode(systemPrompt).length;
 
-    // count tokens of all messages
+    // count tokens 
     for (let i = 0; i < messages.length; i++) {
         if (tokenCache.has(messages[i].content)) {
             tokensLength += tokenCache.get(messages[i].content)!;

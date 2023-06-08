@@ -66,8 +66,8 @@ const ModelParamsSection = ({
                             Temperature: {temperature}
                         </span>
                         <span className="text-subtitle block">
-                            Higher values like 0.8 will make the output more random, while lower
-                            values like 0.2 will make it more focused and deterministic
+                            Higher values will make the output more random and creative, while lower
+                            values will make it more focused and deterministic
                         </span>
                     </div>
                     <div className="sm:w-6/12">
