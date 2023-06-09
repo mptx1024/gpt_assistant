@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 import {
@@ -9,13 +9,16 @@ import {
     HiPencilSquare,
 } from 'react-icons/hi2';
 import { useDispatch } from 'react-redux';
+import clsx from 'clsx';
 
 import { removeChat, setCurrentChat, updateChatTitle } from '@/store/chatsSlice';
 import { Chat } from '@/types';
 
+import { useKeyPress } from '@/hooks/useKeyPress';
 import SidebarCard from './SidebarCard';
 import Button from '../Button';
 import { Input } from '../InputField';
+
 interface ChatItemProps {
     chat: Chat;
     currentChatID: string;
@@ -41,29 +44,46 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
         e.stopPropagation();
         setRemove(true);
     };
-    const handleClickCancel = (e: React.MouseEvent) => {
-        e.stopPropagation();
+
+    const cancelAction = () => {
         setEdit(false);
         setRemove(false);
+    };
+    const confirmAction = () => {
+        if (edit) {
+            dispatch(updateChatTitle({ chatId: chat.id, title }));
+        } else if (remove) {
+            dispatch(removeChat(chat.id));
+        }
+        cancelAction();
+    };
+    const handleClickCancel = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        cancelAction();
     };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
     };
     const handleClickConfirm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.stopPropagation();
-        if (edit) {
-            dispatch(updateChatTitle({ chatId: chat.id, title }));
-        } else if (remove) {
-            dispatch(removeChat(chat.id));
-        }
-        setEdit(false);
-        setRemove(false);
+        confirmAction();
+        cancelAction();
     };
 
+    const enterPressed = useKeyPress('Enter');
+    const escapePressed = useKeyPress('Escape');
+    useEffect(() => {
+        if (enterPressed) {
+            confirmAction();
+        } else if (escapePressed) {
+            cancelAction();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [enterPressed, escapePressed]);
     return (
         <SidebarCard isSelected={currentChatID === chat.id} onClick={handleClickChat}>
             <div className="flex w-[75%] items-center">
-                <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4 shrink-0" />
+                <HiOutlineChatBubbleLeftEllipsis className="mr-2 h-4 w-4 shrink-0" />
                 {edit ? (
                     <Input
                         type="text"
@@ -86,8 +106,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         btnSize="sm"
                         iconEffect={true}
                         iconThemeColor={false}
-                        btnStyles="!px-1" 
-
+                        btnStyles="!px-1"
                     />
                     <Button
                         Icon={HiOutlineXMark}
@@ -99,7 +118,12 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                     />
                 </div>
             ) : (
-                <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-150 ease-in group-hover:right-1 group-hover:opacity-100">
+                <div
+                    className={clsx(
+                        'absolute right-1 flex items-center transition-all duration-150 ease-in',
+                        'md:-right-1 md:opacity-0  md:group-hover:right-1 md:group-hover:opacity-100'
+                    )}
+                >
                     <Button
                         onClick={handleClickEdit}
                         Icon={HiPencilSquare}
@@ -117,7 +141,6 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         iconThemeColor={false}
                         btnStyles="!px-1"
                         iconStyles="!text-neutral-500"
-
                     />
                 </div>
             )}

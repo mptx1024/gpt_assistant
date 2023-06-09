@@ -100,11 +100,6 @@ export interface Setting {
     };
 }
 
-// export const defaultSystemRole: Role = {
-//     prompt: `Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
-//     roleName: 'default',
-//     id: '001',
-// };
 export const defaultModelParams: ModelParams = {
     temperature: 0.7,
     max_tokens: 1000,
@@ -115,7 +110,7 @@ export const defaultSetting: Setting = {
     apiKey: '',
     defaultModelParams: defaultModelParams,
     defaultRole: {
-        prompt: `You are ChatGPT, a helpful assistant. Respond in markdown. Current date: ${new Date().toLocaleDateString()}`,
+        prompt: `You are ChatGPT, a helpful assistant. Respond in markdown`,
         roleName: 'default',
         id: '001',
     },

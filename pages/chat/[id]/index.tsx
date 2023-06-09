@@ -9,7 +9,6 @@ import { selectCurrentChat, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
 export default function DynamicChatPage() {
     const router = useRouter();
-    // const { id } = router.query;
     const currentChat = useAppSelector(selectCurrentChat);
     const chatId = typeof currentChat?.id === 'string' ? currentChat?.id : '';
     const messageIds: string[] = useAppSelector((state) =>
@@ -18,20 +17,20 @@ export default function DynamicChatPage() {
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const msgContainerRef = useRef<HTMLDivElement>(null);
-
+    useEffect(() => {
+        if (lastMessageRef.current) {
+            lastMessageRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messageIds]);
     useEffect(() => {
         if (!msgContainerRef.current) return;
         const resizeObserver = new ResizeObserver(() => {
-            // console.log(
-            //     `scrollHeight: ${containerRef.current?.scrollHeight}; offsetHeight: ${containerRef.current?.offsetHeight}; clientHeight: ${containerRef.current?.clientHeight}; scrollTop: ${containerRef.current?.scrollTop}`
-            // );
             if (containerRef.current) {
                 const isScrolledToBottom =
                     containerRef.current.scrollHeight -
                         containerRef.current.offsetHeight -
                         containerRef.current.scrollTop <
                     100;
-                // console.log(`isScrolledToBottom: ${isScrolledToBottom}`);
                 isScrolledToBottom &&
                     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
             }
@@ -58,16 +57,13 @@ export default function DynamicChatPage() {
             >
                 <MemoizedChatParamsCard chatId={chatId} />
                 {messageIds.map((messageId) => (
-                    <ChatMessage key={Math.random()} messageId={messageId} chatId={chatId} />
+                    <ChatMessage key={messageId} messageId={messageId} chatId={chatId} />
                 ))}
             </div>
             <div ref={lastMessageRef} />
-            {/* <button className="absolute bottom-[10rem] bg-red-600" onClick={onClick}>
-                Scroll to bottom
-            </button> */}
             <div
                 id="chat-input-container"
-                className="absolute bottom-0 right-0 flex min-h-[10rem] w-full 
+                className="bg-gray-base dark:bg-gray-inverted absolute bottom-0 right-0 flex min-h-[10rem] w-full 
             justify-center"
             >
                 <Input chatId={chatId} />

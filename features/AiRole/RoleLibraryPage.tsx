@@ -62,10 +62,10 @@ const RoleLibraryPage = () => {
                     data-tooltip-content="Create a new role"
                 />
             </div>
-            <p className="my-5 self-center">
+            <p className="my-5 self-center text-subtitle">
                 From &nbsp;
                 <a
-                    style={{ textDecoration: 'underline' }}
+                    className="underline"
                     rel="noreferrer"
                     target="_blank"
                     href="https://github.com/f/awesome-chatgpt-prompts#-awesome-chatgpt-prompts"

@@ -1,4 +1,4 @@
-export default {
+const temperatureData = {
     chats: [
         {
             id: 'dbfc73a4-b873-493f-9fe6-4de3dee86e3d',
@@ -50,6 +50,31 @@ export default {
                 },
             },
         },
+        {
+            id: 'afe3c6d0-4cfb-48f3-9855-43cbe691c7c8',
+            messages: [
+                'fe7d3492-62fa-4789-8501-818a1ec62747',
+                '949d1532-fedf-4030-9321-d8e3ec5867da',
+            ],
+            title: 'Table in Markdown',
+            created: 1686333113784,
+            role: {
+                prompt: 'You are ChatGPT, a helpful assistant. Respond in markdown.',
+                roleName: 'default',
+                id: '001',
+            },
+            modelParams: {
+                temperature: 0.7,
+                max_tokens: 1000,
+                stream: true,
+                model: {
+                    id: 'gpt-3.5-turbo',
+                    name: 'gpt-3.5-turbo',
+                    maxLength: 12000,
+                    tokenLimit: 3000,
+                },
+            },
+        },
     ],
     messages: [
         {
@@ -86,6 +111,23 @@ export default {
             isFirst: false,
             isError: true,
         },
+        {
+            id: 'fe7d3492-62fa-4789-8501-818a1ec62747',
+            chatId: 'afe3c6d0-4cfb-48f3-9855-43cbe691c7c8',
+            created: 1686333123565,
+            role: 'user',
+            content: 'show me a example of table in markdown',
+        },
+        {
+            id: '949d1532-fedf-4030-9321-d8e3ec5867da',
+            chatId: 'afe3c6d0-4cfb-48f3-9855-43cbe691c7c8',
+            created: 1686333123565,
+            role: 'assistant',
+            content:
+                "Sure! Here's an example of a simple table in markdown:\n\n| Name  | Age | Gender |\n|-------|-----|--------|\n| John  | 25  | Male   |\n| Emily | 29  | Female |\n| Alex  | 21  | Male   |\n\nIn this example, the table has three columns (Name, Age, and Gender) and three rows of data. The vertical lines separate the columns, and the dashes in the second row separate the table header from the data. You can add or remove columns and rows as needed to create a table that fits your needs.",
+            isFirst: true,
+            isError: true,
+        },
     ],
     roles: [
         {
@@ -93,5 +135,11 @@ export default {
             roleName: 'Fullstack Software Developer',
             id: '3d5ca919-f149-484c-afce-bce692651c51',
         },
+        {
+            prompt: 'I want you to act as a socrat. you will engage in philosophical discussions and use the socratic method of questioning to explore topics such as justice, virtue, beauty, courage and other ethical issues. ',
+            roleName: 'Socrat',
+            id: '7d80811f-552d-42fc-9ec9-85092b10e038',
+        },
     ],
 };
+export default temperatureData;

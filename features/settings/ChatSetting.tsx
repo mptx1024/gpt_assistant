@@ -17,6 +17,7 @@ interface Props {
     chatId: string;
 }
 function ChatParamsCard({ chatId }: Props) {
+
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
     const chatModalParams = useAppSelector((state) => selectChatModelParams(state, chatId));

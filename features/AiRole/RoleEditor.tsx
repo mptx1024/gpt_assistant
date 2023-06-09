@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { HiOutlineXMark } from 'react-icons/hi2';
 
@@ -17,6 +17,7 @@ interface Props {
 const RoleEditor = (props: Props) => {
     const [title, setTitle] = useState<string>(props.role ? props.role.roleName : '');
     const [prompt, setPrompt] = useState<string>(props.role ? props.role.prompt : '');
+
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
     };
@@ -35,7 +36,14 @@ const RoleEditor = (props: Props) => {
         setPrompt('');
         props.toggleModal();
     };
-    useKeyPress(handleClickClose, ['Escape']);
+
+    const escapePressed = useKeyPress('Escape');
+    useEffect(() => {
+        if (escapePressed) {
+            handleClickClose();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [escapePressed]);
 
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>

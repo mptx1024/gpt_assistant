@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             {
                 role: 'user',
                 content:
-                    'Craft A Topic Title Without Any Punctuation For Following Content Using Less Than 6 Words. Content: ' +
+                    'Craft A Topic Title For below Content Without Any Punctuation. Use Less Than 6 Words. Content: ' +
                     content,
             },
         ],

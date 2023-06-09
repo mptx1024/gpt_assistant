@@ -17,7 +17,7 @@ interface Props {
 export default function ChatMessage({ messageId }: Props) {
     const {
         message,
-        userInput,
+        content,
         isCopied,
         isEditing,
         chatModelParam,
@@ -34,12 +34,9 @@ export default function ChatMessage({ messageId }: Props) {
     if (!message) {
         return null;
     }
-    const messageContainerClasses = clsx(
-        'group flex animate-slideInFromBottom justify-center bg-gray-base dark:bg-gray-inverted',
-        {
-            'brightness-[0.95] dark:brightness-[1.2]': message.role === 'user',
-        }
-    );
+    const messageContainerClasses = clsx('group flex animate-slideInFromBottom justify-center', {
+        'backdrop-brightness-[0.97] dark:backdrop-brightness-110': message.role === 'user',
+    });
 
     return (
         <div className={messageContainerClasses}>
@@ -59,7 +56,7 @@ export default function ChatMessage({ messageId }: Props) {
                         ) : (
                             <div className="">
                                 <Textarea
-                                    value={userInput}
+                                    value={content}
                                     onChange={handleInputChange}
                                     onKeyDown={handleKeyDown}
                                 />
