@@ -46,11 +46,6 @@
                     }
                 ],
                 "pathGroupsExcludedImportTypes": ["react"]
-                // "newlines-between": "always",
-                // "alphabetize": {
-                //     "order": "asc",
-                //     "caseInsensitive": true
-                // }
             }
         ],
         "react/react-in-jsx-scope": "off",
