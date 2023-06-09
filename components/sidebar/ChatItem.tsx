@@ -9,6 +9,8 @@ import {
     HiPencilSquare,
 } from 'react-icons/hi2';
 import { useDispatch } from 'react-redux';
+import clsx from 'clsx';
+import useWindowDimensions from '@/hooks/useWindowDimension';
 
 import { removeChat, setCurrentChat, updateChatTitle } from '@/store/chatsSlice';
 import { Chat } from '@/types';
@@ -63,7 +65,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
     return (
         <SidebarCard isSelected={currentChatID === chat.id} onClick={handleClickChat}>
             <div className="flex w-[75%] items-center">
-                <HiOutlineChatBubbleLeftEllipsis className="mr-1 h-4 w-4 shrink-0" />
+                <HiOutlineChatBubbleLeftEllipsis className="mr-2 h-4 w-4 shrink-0" />
                 {edit ? (
                     <Input
                         type="text"
@@ -86,8 +88,7 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         btnSize="sm"
                         iconEffect={true}
                         iconThemeColor={false}
-                        btnStyles="!px-1" 
-
+                        btnStyles="!px-1"
                     />
                     <Button
                         Icon={HiOutlineXMark}
@@ -99,7 +100,12 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                     />
                 </div>
             ) : (
-                <div className="absolute -right-1 flex items-center opacity-0 transition-all duration-150 ease-in group-hover:right-1 group-hover:opacity-100">
+                <div
+                    className={clsx(
+                        'absolute right-1 flex items-center transition-all duration-150 ease-in',
+                        'md:-right-1 md:opacity-0  md:group-hover:right-1 md:group-hover:opacity-100'
+                    )}
+                >
                     <Button
                         onClick={handleClickEdit}
                         Icon={HiPencilSquare}
@@ -117,7 +123,6 @@ const ChatItem: FC<ChatItemProps> = ({ chat, currentChatID }) => {
                         iconThemeColor={false}
                         btnStyles="!px-1"
                         iconStyles="!text-neutral-500"
-
                     />
                 </div>
             )}
