@@ -24,7 +24,6 @@ const ChatList: FC<ChatListProps> = ({ chats }) => {
                     key={chat.id}
                     chat={chat}
                     currentChatID={currentChatID}
-                    // setCurrentChat={setCurrentChat}
                 />
             ))}
         </div>
@@ -33,6 +32,3 @@ const ChatList: FC<ChatListProps> = ({ chats }) => {
 
 export default ChatList;
 
-// transition-transform  ease-in duration-300 ${
-//     isSidebarOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
-// }

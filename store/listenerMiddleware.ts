@@ -56,7 +56,7 @@ startAppListening({
         updateChatRole
     ),
 
-    effect: async (action, listenerApi) => {
+    effect: async (action) => {
         if (removeAllChats.match(action)) {
             await idb.del('chats');
         } else {
@@ -68,7 +68,7 @@ startAppListening({
 
 // Naming chat
 startAppListening({
-    predicate: (action, currentState, previousState) => {
+    predicate: (action, currentState) => {
         return (
             setIsLoading.match(action) &&
             action.payload === false &&

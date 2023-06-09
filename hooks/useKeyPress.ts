@@ -1,17 +1,5 @@
 import { useEffect, useState } from 'react';
 
-// export function useKeyPress(callback: () => void, keyCodes: string[], deps: DependencyList) {
-//     const handler = ({ code }: KeyboardEvent): void => {
-//         if (keyCodes.includes(code)) {
-//             callback();
-//         }
-//     };
-//     useEffect(() => {
-//         window.addEventListener('keydown', handler);
-//         return () => window.removeEventListener('keydown', handler);
-//     }, [...deps]);
-// }
-
 export const useKeyPress = (targetKey: string) => {
     const [keyPressed, setKeyPressed] = useState(false);
     const downHandler = ({ key }: KeyboardEvent) => {
@@ -32,6 +20,7 @@ export const useKeyPress = (targetKey: string) => {
             window.removeEventListener('keydown', downHandler);
             window.removeEventListener('keyup', upHandler);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return keyPressed;

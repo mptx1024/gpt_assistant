@@ -2,7 +2,6 @@
 import * as idb from 'idb-keyval';
 const supported = true;
 // const inMemoryCache = new Map<string, any>();
-
 // const testDB = indexedDB.open('test');
 // testDB.onerror = () => {
 //     supported = false;

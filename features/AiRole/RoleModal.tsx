@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { HiOutlineXMark } from 'react-icons/hi2';
 
 import Button from '@/components/Button';
@@ -17,7 +18,14 @@ interface Props {
 }
 
 const RoleModal = (props: Props) => {
-    useKeyPress(props.toggleModal, ['Escape']);
+    const escapePressed = useKeyPress('Escape');
+    useEffect(() => {
+        if (escapePressed) {
+            props.toggleModal();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [escapePressed]);
+    
     return (
         <ModalWrapper isOpen={props.isOpen} toggleModal={props.toggleModal}>
             <div

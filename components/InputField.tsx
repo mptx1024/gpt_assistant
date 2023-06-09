@@ -45,8 +45,6 @@ export function Textarea(props: TexareaProps) {
     useEffect(() => {
         if (textareaRef.current) {
             textareaRef.current.style.height = '7rem';
-            // const scrollHeight = textareaRef.current.scrollHeight;
-            // textareaRef.current.style.height = scrollHeight + "px";
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
         }
     }, [textareaRef, props.value]);

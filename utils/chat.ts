@@ -99,7 +99,6 @@ export const generateReply = async ({
     if (!chat) return;
     const apiKey = selectApiKey(store.getState());
     const chatId = chat!.id;
-    // console.log(`in generateReply. chatID: ${chatId}`);
 
     const userMessage: Message = {
         id: uuid(),
