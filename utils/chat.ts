@@ -181,7 +181,7 @@ export const generateReply = async ({
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
-            store.dispatch(updateMessage({ messageId: reply.id, chunkValue, isError: true }));
+            store.dispatch(updateMessage({ messageId: reply.id, chunkValue}));
         }
     } catch (err: any) {
         if (err.name === 'TimeoutError') {
