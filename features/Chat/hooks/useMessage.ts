@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const useMessage = ({ messageId }: Props) => {
-    const [userInput, setUserInput] = useState<string>('');
+    const [content, setContent] = useState<string>('');
     const [isCopied, setIsCopied] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const message: Message | undefined = useAppSelector((state) =>
@@ -21,10 +21,12 @@ export const useMessage = ({ messageId }: Props) => {
     const chatModelParam = useAppSelector((state) => selectChatModelParams(state, message?.chatId));
 
     const handleClickCopy = async () => {
-        await copyToClipboard(userInput, setIsCopied);
+        if (message?.content) {
+            await copyToClipboard(message.content, setIsCopied);
+        }
     };
     const handleClickEdit = () => {
-        setUserInput(message?.content || '');
+        setContent(message?.content || '');
         setIsEditing(true);
     };
 
@@ -38,13 +40,13 @@ export const useMessage = ({ messageId }: Props) => {
         store.dispatch(removeMessageUpTo({ messageId }));
         //  regenerate reply
         await generateReply({
-            userInput,
+            userInput: content,
             addController(controller) {
                 abortController.setController(message?.chatId || '', controller);
             },
         });
         setIsEditing(false);
-        setUserInput('');
+        setContent('');
     };
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -52,11 +54,11 @@ export const useMessage = ({ messageId }: Props) => {
         }
     };
     const handleInputChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
-        setUserInput(e.currentTarget.value);
+        setContent(e.currentTarget.value);
     };
     return {
         message,
-        userInput,
+        content,
         isCopied,
         isEditing,
         chatModelParam,

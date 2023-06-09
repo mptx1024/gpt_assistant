@@ -5,7 +5,6 @@ export async function openAIStream(req: NextRequest) {
     const authValue = req.headers.get('Authorization') ?? '';
     const encoder = new TextEncoder();
     const decoder = new TextDecoder();
-    let counter = 0;
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
         headers: {
             'Content-Type': 'application/json',
@@ -29,21 +28,14 @@ export async function openAIStream(req: NextRequest) {
                         controller.close();
                         return;
                     }
-                    // try {
                     const json = JSON.parse(data);
 
                     const text = json.choices[0].delta?.content || '';
-                    console.log(
-                        `event.data.choices.delta.content: ${JSON.stringify(text, null, 2)}`
-                    );
-
-                    if (counter < 2 && (text.match(/\n/) || []).length) {
-                        //  prefix character (i.e., "\n\n"), do nothing
-                        return;
-                    }
+                    // console.log(
+                    //     `event.data.choices.delta.content: ${JSON.stringify(text, null, 2)}`
+                    // );
                     const queue = encoder.encode(text);
                     controller.enqueue(queue);
-                    counter++;
                 }
             }
 
