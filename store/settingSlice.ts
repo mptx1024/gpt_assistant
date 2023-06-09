@@ -1,5 +1,6 @@
-import { defaultSetting, Setting } from '@/types';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
+
+import { defaultSetting, Setting } from '@/types';
 
 import { RootState } from '.';
 

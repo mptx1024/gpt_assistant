@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
-import RoleEditor from '@/features/AiRole/RoleEditor';
-import { Role } from '@/types';
 import { useRouter } from 'next/router';
 import { HiOutlineBuildingLibrary, HiPlus } from 'react-icons/hi2';
+
+import RoleEditor from '@/features/AiRole/RoleEditor';
+import { Role } from '@/types';
 // import { Tooltip } from 'react-tooltip';
 
-import Button from '../Button';
 import RoleItem from './RoleItem';
+import Button from '../Button';
 
 const RoleList = (props: { roles: Role[] }) => {
     const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);

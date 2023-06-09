@@ -1,5 +1,6 @@
-import MiniSearch from 'minisearch';
 import { useEffect, useMemo, useState } from 'react';
+
+import MiniSearch from 'minisearch';
 import { HiPlus } from 'react-icons/hi2';
 
 import Button from '@/components/Button';

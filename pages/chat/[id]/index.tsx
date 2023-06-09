@@ -1,10 +1,12 @@
+import { useEffect, useRef } from 'react';
+
+import { useRouter } from 'next/router';
+
 import ChatMessage from '@/features/Chat/ChatMessage';
 import Input from '@/features/Chat/Input';
 import { MemoizedChatParamsCard } from '@/features/settings/ChatSetting';
 import { selectCurrentChat, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
-import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
 export default function DynamicChatPage() {
     const router = useRouter();
     // const { id } = router.query;

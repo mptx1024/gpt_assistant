@@ -1,7 +1,8 @@
 // import { Chat, OpenAIMessage, OpenAIStreamPayload, defaultModelParams } from '@/types';
 // import { chatHistoryTrimer } from '@/utils/tokenizer';
 import { NextRequest, NextResponse } from 'next/server';
-import { openAIStream } from '../../utils/openAIStream';
+
+import { openAIStream } from '@/utils/openAIStream';
 
 export const config = {
     runtime: 'edge',

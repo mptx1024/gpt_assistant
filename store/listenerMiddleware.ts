@@ -1,6 +1,10 @@
-import { Chat, Message, Role } from '@/types';
-import * as idb from '@/utils/indexedDB';
 import { addListener, createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
+import Router from 'next/router';
+
+import { Chat, Message, Role } from '@/types';
+import { createTitle } from '@/utils/chat';
+import * as idb from '@/utils/indexedDB';
+
 import {
     addChat,
     removeAllChats,
@@ -18,12 +22,6 @@ import {
     selectAllMessages,
     selectMostRecentReplyMessage,
 } from './messagesSlice';
-
-import type { TypedAddListener, TypedStartListening } from '@reduxjs/toolkit';
-
-import { createTitle } from '@/utils/chat';
-import Router from 'next/router';
-import { AppDispatch, RootState, store } from './';
 import {
     removeAllRoles,
     removeOneRole,
@@ -32,6 +30,11 @@ import {
     updateOneRole,
 } from './rolesSlice';
 import { setAppSetting } from './settingSlice';
+
+import type { TypedAddListener, TypedStartListening } from '@reduxjs/toolkit';
+
+import { AppDispatch, RootState, store } from './';
+
 export const listenerMiddleware = createListenerMiddleware();
 
 type AppStartListening = TypedStartListening<RootState, AppDispatch>;

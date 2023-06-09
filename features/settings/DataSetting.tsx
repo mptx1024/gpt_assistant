@@ -1,13 +1,14 @@
+import { AiOutlineDownload } from 'react-icons/ai';
+import { BsLightbulb } from 'react-icons/bs';
+import { HiOutlineTrash } from 'react-icons/hi';
+
 import Button from '@/components/Button';
 import InfoBar from '@/components/InfoBar';
 import { removeAllChats } from '@/store/chatsSlice';
 import { useAppDispatch } from '@/store/hooks';
 import { removeAllRoles } from '@/store/rolesSlice';
-import { AiOutlineDownload } from 'react-icons/ai';
-import { BsLightbulb } from 'react-icons/bs';
-import { HiOutlineTrash } from 'react-icons/hi';
-interface Props {}
-const DataSetting = (props: Props) => {
+
+const DataSetting = () => {
     const dispatch = useAppDispatch();
     const handleClickDeleteChats = () => {
         dispatch(removeAllChats());
