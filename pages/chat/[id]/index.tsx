@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
-
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-
+import Loading from '@/components/LoadingPage';
 import ChatMessage from '@/features/Chat/ChatMessage';
-import Input from '@/features/Chat/Input';
+// import Input from '@/features/Chat/Input';
+const Input = dynamic(() => import('@/features/Chat/Input'), { loading:() => <Loading /> });
 import { MemoizedChatParamsCard } from '@/features/settings/ChatSetting';
 import { selectCurrentChat, selectMessageIdsByChat } from '@/store/chatsSlice';
 import { useAppSelector } from '@/store/hooks';
@@ -63,8 +64,8 @@ export default function DynamicChatPage() {
             <div ref={lastMessageRef} />
             <div
                 id="chat-input-container"
-                className="bg-gray-base dark:bg-gray-inverted absolute bottom-0 right-0 flex min-h-[10rem] w-full 
-            justify-center"
+                className="absolute bottom-0 right-0 flex min-h-[10rem] w-full justify-center bg-gray-base 
+            dark:bg-gray-inverted"
             >
                 <Input chatId={chatId} />
             </div>

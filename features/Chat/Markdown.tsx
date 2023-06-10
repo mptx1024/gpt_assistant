@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import { Message } from '@/types';
@@ -21,7 +20,7 @@ const Markdown = memo(({ message }: Props) => {
         <ReactMarkdown
             className="prose prose-neutral break-words dark:prose-invert"
             remarkPlugins={[remarkGfm, remarkMath]}
-            rehypePlugins={[rehypeKatex]}
+            // rehypePlugins={[rehypeKatex]}
             components={{
                 p: 'div',
                 code: CodeBlock,

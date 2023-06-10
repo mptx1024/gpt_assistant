@@ -18,7 +18,6 @@ export const getImage = () => {
             skipAutoScale: true,
         })
         .then((dataUrl) => {
-            // download(dataUrl, 'my-node.png');
             const link = document.createElement('a');
             link.download = 'gptAssistant_chat.png';
             link.href = dataUrl;
