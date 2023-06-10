@@ -49,7 +49,7 @@ const RoleCard = (props: Props) => {
                 <h3 className="mb-1 text-base font-semibold text-white sm:text-xl">
                     {props.role.roleName}
                 </h3>
-                <p className="text-sm text-neutral-300 line-clamp-3 dark:text-neutral-400 md:line-clamp-4">
+                <p className="line-clamp-3 text-sm text-neutral-300 dark:text-neutral-400 md:line-clamp-4">
                     {props.role.prompt}
                 </p>
             </div>
