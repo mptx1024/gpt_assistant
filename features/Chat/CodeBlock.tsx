@@ -13,7 +13,6 @@ interface CodeBlockProps {
 }
 
 const CodeBlock = memo(({ inline = false, className, children, ...props }: CodeBlockProps) => {
-
     const [isCopied, setIsCopied] = useState(false);
     const handleClickCopy = async (code: string) => {
         await copyToClipboard(code, setIsCopied);
@@ -25,7 +24,7 @@ const CodeBlock = memo(({ inline = false, className, children, ...props }: CodeB
     return !inline ? (
         <div id="code-block" className="">
             <div id="code-header" className="flex h-4 items-center justify-between text-sm">
-                <span>{(match && match[1]) || 'javascript'}</span>
+                <span>{(match && match[1]) || 'text'}</span>
                 <Button
                     btnSize="sm"
                     Icon={isCopied ? HiCheck : HiOutlineClipboard}
@@ -36,7 +35,7 @@ const CodeBlock = memo(({ inline = false, className, children, ...props }: CodeB
             </div>
             <SyntaxHighlighter
                 style={oneDark}
-                language={(match && match[1]) || 'javascript'}
+                language={(match && match[1]) || 'text'}
                 {...props}
                 // eslint-disable-next-line react/no-children-prop
                 children={code}
