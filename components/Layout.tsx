@@ -31,6 +31,8 @@ export default function Layout({ children }: Props) {
     };
 
     const [isLoading, setIsLoading] = useState(true);
+    const [mounted, setMounted] = useState(false);
+
     useEffect(() => {
         if (width && width <= 640 && sidebarOpen) {
             handleClickSidebar();
@@ -82,6 +84,12 @@ export default function Layout({ children }: Props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router.isReady]);
 
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return <></>;
+
     if (isLoading) return <Loading />;
 
     return (
@@ -104,7 +112,7 @@ export default function Layout({ children }: Props) {
                     //
                 >
                     <Navbar toggleSidebar={handleClickSidebar} />
-                    <Suspense fallback={<Loading />}>{children}</Suspense>
+                    <Suspense fallback={null}>{children}</Suspense>
                 </div>
             </div>
             <Alert />
