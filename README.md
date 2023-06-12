@@ -10,9 +10,11 @@
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+<br>
+
+![AppVeyor](https://img.shields.io/appveyor/build/eaasyIce/gpt_assistant)
 
 </p>
-<br>
 
 ### Web app designed to enhance your interaction with OpenAI's language models.
 
