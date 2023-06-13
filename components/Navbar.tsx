@@ -38,7 +38,7 @@ export default function Navbar({ toggleSidebar }: Props) {
         return null;
     }
     const toggleTheme = () => {
-        console.log(`theme: ${theme}`);
+        setTheme(theme === 'dark' ? 'light' : 'dark');
     };
     const navbarClasses =
         'nav flex-shrink-0 flex h-16 w-full justify-between items-center pr-3 py-3  transition-all duration-300';
