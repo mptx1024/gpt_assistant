@@ -146,7 +146,6 @@ export const generateReply = async ({
                 Authorization: `Bearer ${apiKey.trim()}`,
             },
             body: JSON.stringify(payload),
-            // signal: AbortSignal.timeout(3 * 60 * 1000),
             signal: controller.signal,
         });
 
