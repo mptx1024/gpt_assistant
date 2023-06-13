@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-    /* body {
+    body {
         @apply bg-gray-base font-normal text-black-base dark:bg-gray-inverted dark:text-black-inverted;
-    } */
+    }
 }
 
 @layer utilities {

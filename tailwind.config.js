@@ -109,8 +109,6 @@ module.exports = {
                 slideInFromTop: 'slideInFromTop 0.4s ease-out',
                 alertSlide: 'alertSlide 3s ease-in-out',
                 slideInFromBottom: 'slideInFromBottom 0.3s ease ',
-                // alertOut: 'alertOut 0.6s ease',
-                // typing:'typing 2.7s ease-out .8s infinite alternate both',
             },
         },
     },
