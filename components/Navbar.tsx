@@ -31,14 +31,19 @@ export default function Navbar({ toggleSidebar }: Props) {
         createNewChat();
     };
     useEffect(() => {
+        console.log(`inital theme: ${theme}`);
+
         setMounted(true);
     }, []);
 
     if (!mounted) {
         return null;
     }
+
     const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark');
+        console.log(`current theme: ${theme}`);
+
+        setTheme(theme === 'light' ? 'dark' : 'light');
     };
     const navbarClasses =
         'nav flex-shrink-0 flex h-16 w-full justify-between items-center pr-3 py-3  transition-all duration-300';
