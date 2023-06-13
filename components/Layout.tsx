@@ -1,3 +1,4 @@
+'use client';
 import { Suspense, useEffect, useState } from 'react';
 
 import clsx from 'clsx';
@@ -88,7 +89,7 @@ export default function Layout({ children }: Props) {
         setMounted(true);
     }, []);
 
-    if (!mounted) return <></>;
+    if (!mounted) return null;
 
     if (isLoading) return <Loading />;
 

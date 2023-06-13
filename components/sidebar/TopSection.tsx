@@ -9,7 +9,7 @@ const TopSection = (props: Props) => {
     return (
         <div className="flex h-[4rem] justify-between items-center px-5 py-3">
             <div className="flex shrink-0 items-baseline">
-                <h1 className=" whitespace-nowrap bg-gradient-to-r from-green-700 via-teal-500 to-blue-600 bg-clip-text text-2xl font-bold text-transparent">
+                <h1 className="whitespace-nowrap bg-gradient-to-r from-green-700 via-teal-500 to-blue-600 bg-clip-text text-2xl font-bold text-transparent">
                     GPT Assistant
                 </h1>
                 <span className="text-[0.7rem]">&nbsp;&nbsp; v1.1 </span>

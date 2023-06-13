@@ -55,17 +55,17 @@ export const createNewChat = (selectedRole?: Role): string => {
 
 export const createTitle = async (content: string) => {
     const apiKey = store.getState().setting.apiKey;
-    const response = await fetch('/api/generateTitle', {
+    const res = await fetch('/api/generateTitle', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ content, apiKey }),
     });
-    if (!response.ok) {
-        throw new Error(response.statusText, { cause: response.status });
+    if (!res.ok) {
+        throw new Error(res.statusText, { cause: res.status });
     }
-    const data = await response.json();
+    const data = await res.json();
     return data.choices[0].message.content;
 };
 
@@ -139,7 +139,7 @@ export const generateReply = async ({
     };
     store.dispatch(setIsLoading(true));
     try {
-        const response = await fetch('/api/generateReply', {
+        const res = await fetch('/api/generateReply', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -150,21 +150,27 @@ export const generateReply = async ({
             signal: controller.signal,
         });
 
-        if (!response.ok) {
+        if (!res.ok) {
             let errorMsg;
-            if (response.status === 401) {
+            if (res.status === 401) {
                 errorMsg = errorMessage.unauthorizedMsg;
-            } else if (response.status === 400) {
+            } else if (res.status === 400) {
                 errorMsg = errorMessage.badRequestMsg;
             } else {
-                errorMsg = errorMessage.serverErrorMsg;
+                errorMsg = await res.text();
+                errorMsg = 'Error message from OpenAI:\n ~~~json\n' + errorMsg + '\n~~~';
             }
-            store.dispatch(updateMessage({ messageId: reply.id, chunkValue: errorMsg }));
+            store.dispatch(
+                updateMessage({
+                    messageId: reply.id,
+                    chunkValue: errorMsg,
+                })
+            );
             store.dispatch(setIsLoading(false));
             return;
         }
 
-        const data: ReadableStream<Uint8Array> | undefined | null = response.body;
+        const data: ReadableStream<Uint8Array> | undefined | null = res.body;
         if (!data) {
             throw new Error('Server error');
         }
@@ -180,7 +186,7 @@ export const generateReply = async ({
             const { value, done: doneReading } = await reader.read();
             done = doneReading;
             const chunkValue = decoder.decode(value);
-            store.dispatch(updateMessage({ messageId: reply.id, chunkValue}));
+            store.dispatch(updateMessage({ messageId: reply.id, chunkValue }));
         }
     } catch (err: any) {
         if (err.name === 'TimeoutError') {

@@ -15,8 +15,9 @@ export async function openAIStream(req: NextRequest) {
         signal: AbortSignal.timeout(3 * 60 * 1000),
     });
     if (!res.ok) {
-        console.log(`In OpenAIStream: Error: ${res.statusText} ${res.status}`);
-        throw new Error(res.statusText, { cause: res.status });
+        // console.log(`${res.statusText} ${res.status}`);
+        const extraInfo = await res.clone().text();
+        throw new Error(extraInfo, { cause: res.status });
     }
     const stream = new ReadableStream({
         async start(controller) {
@@ -32,7 +33,7 @@ export async function openAIStream(req: NextRequest) {
 
                     const text = json.choices[0].delta?.content || '';
                     // console.log(
-                    //     `event.data.choices.delta.content: ${JSON.stringify(text, null, 2)}`
+                    //     `${JSON.stringify(text, null, 2)}`
                     // );
                     const queue = encoder.encode(text);
                     controller.enqueue(queue);

@@ -3,13 +3,11 @@
 <h1>👨‍🎨 GPT Assistant</h1>
 
 ### Web app designed to enhance your interaction with OpenAI's language models.
-
 <p>
 <br>
 <a style='font-size: 1.5rem;' href='https://gpt-assist-teal.vercel.app/role'>Visit Demo Site</a>
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FeaasyIce%2Fgpt_assistant&project-name=gpt-assistant&demo-url=https%3A%2F%2Fai-assist-teal.vercel.app)
-
 </p>
 <p align='center'>
 
@@ -23,7 +21,7 @@
 
 </p>
 
-<img src='./images/combined.png' alt="screenshot" width="500" height="440">
+<img src='./images/combined.png' alt="screenshot" width="400" height="440">
 </div>
 
 ## Features
