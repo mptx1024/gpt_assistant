@@ -6,7 +6,7 @@
 
 <p>
 <br>
-<a style='font-size: 1.5rem;' href='https://ai-assist-teal.vercel.app/role'>Visit Demo Site</a>
+<a style='font-size: 1.5rem;' href='https://gpt-assist-teal.vercel.app/role'>Visit Demo Site</a>
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FeaasyIce%2Fgpt_assistant&project-name=gpt-assistant&demo-url=https%3A%2F%2Fai-assist-teal.vercel.app)
 
@@ -19,18 +19,16 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 <br>
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/eaasyice/gpt_assistant/main)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/eaasyice/gpt_assistant/refactor_ui)
 
 </p>
 
-<img src='./images/dark.png' alt="screenshot" width="450" height="220">
-<br>
-<img src='./images/light.png' alt="screenshot" width="450" height="220">
+<img src='./images/combined.png' alt="screenshot" width="500" height="440">
 </div>
 
 ## Features
 
--   Create your own assistant role, or use one from the library which has been ported from 'Awesome Prompts'
+-   Create your own assistant role, or use one from the ['Awesome Prompts' library](https://github.com/f/awesome-chatgpt-prompts#-awesome-chatgpt-prompts)
 -   Responsive design with a dark mode
 -   Streamming response
 -   Adjust conversation parameters at both app and chat level
