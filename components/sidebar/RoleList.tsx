@@ -5,7 +5,6 @@ import { HiOutlineBuildingLibrary, HiPlus } from 'react-icons/hi2';
 
 import RoleEditor from '@/features/AiRole/RoleEditor';
 import { Role } from '@/types';
-// import { Tooltip } from 'react-tooltip';
 
 import RoleItem from './RoleItem';
 import Button from '../Button';
@@ -44,7 +43,7 @@ const RoleList = (props: { roles: Role[] }) => {
                     />
                 </div>
             </div>
-            <div className="scrollbar dark:scrollbarDark flex flex-col gap-2 overflow-y-scroll overflow-x-hidden">
+            <div className="scrollbar dark:scrollbarDark flex flex-col gap-2 overflow-x-hidden overflow-y-scroll">
                 {props.roles?.map((role) => (
                     <RoleItem key={role.id} role={role} />
                 ))}

@@ -2,29 +2,36 @@
 <br>
 <h1>👨‍🎨 GPT Assistant</h1>
 
-[Demo Site](https://ai-assist-teal.vercel.app/role)
+### Web app designed to enhance your interaction with OpenAI's language models.
 
+<p>
+<br>
+<a style='font-size: 1.5rem;' href='https://gpt-assist-teal.vercel.app/role'>Visit Demo Site</a>
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FeaasyIce%2Fgpt_assistant&project-name=gpt-assistant&demo-url=https%3A%2F%2Fai-assist-teal.vercel.app)
+
+</p>
 <p align='center'>
 
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-
-</p>
 <br>
 
-### Web app designed to enhance your interaction with OpenAI's language models.
+![GitHub branch checks state](https://img.shields.io/github/checks-status/eaasyice/gpt_assistant/refactor_ui)
 
-![screenshot](./images/screenshot.png)
+</p>
 
+<img src='./images/combined.png' alt="screenshot" width="500" height="440">
 </div>
 
 ## Features
 
--   **Customizable AI Assistant**: Create your own assistant role, or choose one from 'Awesome Prompts' library
--   **Responsive Design**: Responsive, minimalist design with a dark mode
--   **Rapid Responses**: Fast streamming response
--   **Fine-Tuned Interactions**: Adjust conversation parameters, such as prompt instructions, temperature, and maximum tokens, at both app and chat level
--   **Security** data are safely stored locally
--   **Sharing** Save chats in PDF or image formats
+-   Create your own assistant role, or use one from the ['Awesome Prompts' library](https://github.com/f/awesome-chatgpt-prompts#-awesome-chatgpt-prompts)
+-   Responsive design with a dark mode
+-   Streamming response
+-   Adjust conversation parameters at both app and chat level
+-   Data are stored locally in your broswer
+-   Save chats in PDF or image formats
+-   One click deployment to Vercel
