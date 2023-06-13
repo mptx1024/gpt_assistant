@@ -10,7 +10,7 @@ import type { AppProps } from 'next/app';
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" enableSystem={false}>
             <Provider store={store}>
                 <Layout>
                     <Component {...pageProps} />
