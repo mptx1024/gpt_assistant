@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useTheme } from 'next-themes';
 import { HiBars3, HiMoon, HiOutlineSun, HiPlus } from 'react-icons/hi2';
@@ -14,6 +15,7 @@ type Props = {
 export default function Navbar({ toggleSidebar }: Props) {
     const router = useRouter();
     const chat = useSelector(selectCurrentChat);
+    const [mounted, setMounted] = useState(false);
 
     const title = () => {
         if (router.pathname === '/role') {
@@ -28,6 +30,13 @@ export default function Navbar({ toggleSidebar }: Props) {
     const handleClickNewChat = () => {
         createNewChat();
     };
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) {
+        return null;
+    }
     const toggleTheme = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
     };

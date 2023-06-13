@@ -25,11 +25,8 @@ const handler = async (req: NextRequest): Promise<NextResponse> => {
         const stream = await openAIStream(req);
         return new NextResponse(stream);
     } catch (error: any) {
-        console.log(`error.message: ${error.message}; error.cause: ${error.cause};`);
-        const status = error.cause === 401 ? 401 : 500;
-        return new NextResponse(null, {
-            status,
-            statusText: error.message,
+        return new NextResponse(error.message, {
+            status: error.cause || 500,
         });
     }
 };
