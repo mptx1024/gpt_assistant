@@ -19,7 +19,7 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 <br>
 
-![GitHub branch checks state](https://img.shields.io/github/checks-status/eaasyice/gpt_assistant/refactor_ui)
+![GitHub branch checks state](https://img.shields.io/github/checks-status/eaasyice/gpt_assistant/main)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/eaasyice/gpt_assistant)
 
 </p>
