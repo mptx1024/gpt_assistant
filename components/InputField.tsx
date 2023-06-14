@@ -38,7 +38,7 @@ interface TexareaProps extends React.HTMLProps<HTMLTextAreaElement> {
 }
 
 const textAreaBaseClasses =
-    'focus:border-colorPrimary border-[2px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none debug-1';
+    'focus:border-colorPrimary border-[2px] border-color max-h-[20rem] resize-none p-1 rounded-md w-full outline-none';
 
 export function Textarea(props: TexareaProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
