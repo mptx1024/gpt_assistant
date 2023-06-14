@@ -33,7 +33,7 @@ const ModelParamsSection = ({
         <div className="flex flex-col gap-2 py-1">
             <div id="setting-prompt" className="">
                 <div className="mb-3">
-                    <span className="mb-2 block text-title">
+                    <span className="text-title mb-2 block">
                         {isChatSetting ? 'Prompt' : 'App Default Prompt'}
                     </span>
                     <p className="text-subtitle">
@@ -50,7 +50,25 @@ const ModelParamsSection = ({
             </div>
             <div id="model-params" className="flex flex-col rounded-md ">
                 <div id="setting-model" className="flex items-center justify-between py-3">
-                    <span className="text-title block">Model</span>
+                    <div className="w-8/12">
+                        <span className="text-title block">Model</span>
+                        <span className="text-subtitle block">
+                            GPT-4 API is currently in its beta stage. You must clear the{' '}
+                            <a
+                                href="https://openai.com/waitlist/gpt-4-api"
+                                className="font-semibold underline"
+                            >
+                                waitlist
+                            </a>
+                            &nbsp;to gain access.&nbsp;
+                            <a
+                                href="https://platform.openai.com/account/rate-limits"
+                                className="font-semibold underline"
+                            >
+                                Check if you have access to GPT-4
+                            </a>
+                        </span>
+                    </div>
                     <ModelListBox
                         allModels={allModels}
                         selectedModel={selectedModel}
@@ -74,9 +92,9 @@ const ModelParamsSection = ({
                         <TemperatureRangeSlider temp={temperature} setTemp={setTemperature} />
                     </div>
                 </div>
-                <div id="setting-maxToken" className="flex items-center justify-between py-3 gap-2">
+                <div id="setting-maxToken" className="flex items-center justify-between gap-2 py-3">
                     <div className="">
-                        <span className="block text-title">Max Token</span>
+                        <span className="text-title block">Max Token</span>
                         <span className="text-subtitle">
                             The maximum number of tokens to generate in the reply. 1000 tokens are
                             roughly 750 English words

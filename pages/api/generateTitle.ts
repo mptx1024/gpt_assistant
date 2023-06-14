@@ -6,6 +6,10 @@ interface GenerateTitleRequestBody {
     content: string;
     apiKey: string;
 }
+
+export const config = {
+    runtime: 'edge',
+};
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log(`incoming request: ${req.method} ${req.url}`);
 

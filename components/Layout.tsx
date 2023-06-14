@@ -1,4 +1,3 @@
-'use client';
 import { Suspense, useEffect, useState } from 'react';
 
 import clsx from 'clsx';

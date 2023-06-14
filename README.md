@@ -18,7 +18,7 @@
 <br>
 
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/eaasyice/gpt_assistant/refactor_ui)
-
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/eaasyice/gpt_assistant)
 </p>
 
 <img src='./images/combined.png' alt="screenshot" width="400" height="440">
